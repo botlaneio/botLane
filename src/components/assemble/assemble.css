@@ -1,0 +1,79 @@
+/* Scroll-to-assemble board. Board coordinates are a fixed 1240 × 600 space,
+   scaled to fit the viewport by the controller. */
+
+.bl-stage { position: relative; height: 640vh; min-height: 4800px; }
+.bl-sticky {
+  position: sticky; top: 0; height: 100vh; min-height: 720px; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: linear-gradient(#ffffff, #f3f4f7 70%, #ffffff);
+}
+.bl-fit { position: relative; flex: 1 1 auto; min-height: 0; }
+.bl-scaler {
+  position: absolute; left: 50%; top: 50%; width: 1240px; height: 600px;
+  transform: translate(-50%, -50%); perspective: 2200px; perspective-origin: 50% 30%;
+}
+.bl-board {
+  position: absolute; inset: 0 auto auto 0; width: 1240px; height: 600px;
+  transform-origin: 50% 45%; transform-style: preserve-3d;
+  transform: rotateX(16deg) rotateY(-10deg) rotateZ(1.5deg);
+}
+.bl-floor {
+  position: absolute; left: -32px; top: -28px; width: 1304px; height: 664px; border-radius: 36px;
+  background: rgba(255, 255, 255, 0.6); border: 1px solid #e6e7ec; transform: translateZ(-40px);
+}
+.bl-layer { position: absolute; transform-style: preserve-3d; }
+.bl-abs { position: absolute; }
+.bl-fill { width: 100%; height: 100%; }
+
+.bl-card {
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  border: 1px solid #ebebef; border-radius: 20px;
+  box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(20, 20, 40, 0.04), 0 18px 40px rgba(20, 20, 40, 0.08);
+}
+.bl-slab {
+  position: absolute; top: 0; height: 600px; box-sizing: border-box; border-radius: 28px; padding: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.55) 100%);
+  border: 1px solid #e7e8ed;
+  box-shadow: inset 0 1px 0 #ffffff, 0 24px 60px rgba(20, 20, 40, 0.05);
+}
+.bl-num {
+  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid #d2d2d7; background: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex: none;
+}
+.bl-tile {
+  width: 38px; height: 38px; border-radius: 11px; background: #fff; border: 1px solid #ececf0;
+  box-shadow: 0 2px 6px rgba(20, 20, 40, 0.06);
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+.bl-tile-ok { background: var(--bl-green-tint); border-color: transparent; box-shadow: none; }
+.bl-pill {
+  font-size: 12px; font-weight: 500; border-radius: 9999px; padding: 4px 10px;
+  background: #f2f2f5; color: #3a3a3c; white-space: nowrap; flex: none;
+}
+.bl-pill-red { background: var(--bl-red-tint); color: var(--bl-red-ink); }
+.bl-box {
+  position: relative; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #d2d2d7;
+  box-sizing: border-box; flex: none; background: #fff;
+}
+.bl-box > span {
+  position: absolute; left: -1.5px; top: -1.5px; width: 18px; height: 18px; border-radius: 5px;
+  background: #1d1d1f; display: flex; align-items: center; justify-content: center;
+}
+.bl-pop { transform-box: fill-box; transform-origin: center; }
+.bl-btn {
+  border: 0; border-radius: 8px; background: #1d1d1f; color: #fff; font-size: 14px; font-weight: 500;
+  cursor: pointer; box-shadow: 0 6px 14px rgba(20, 20, 40, 0.18); height: 44px;
+}
+.bl-btn-2 {
+  height: 40px; border: 1px solid #e0e0e4; border-radius: 8px; background: #fff; color: #1d1d1f;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.bl-eye {
+  width: 7px; height: 7px; border-radius: 50%; background: #ff453a; box-shadow: 0 0 6px 1px rgba(255, 69, 58, 0.8);
+}
+.bl-traveller { position: absolute; opacity: 0; }
+
+@media (max-width: 760px) {
+  .bl-sysrow { display: none !important; }
+}

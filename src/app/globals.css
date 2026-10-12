@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* BotLane tokens — Apple-quiet: white, near-black, one Lane red. */
+:root {
+  --bl-bg: #ffffff;
+  --bl-ink: #1d1d1f;
+  --bl-ink-2: #3a3a3c;
+  --bl-muted: #6e6e73;
+  --bl-faint: #8e8e93;
+  --bl-line: #ececef;
+  --bl-surface: #f5f5f7;
+  --bl-red: #e0312b;
+  --bl-red-strong: #d1291f;
+  --bl-red-ink: #b3261e;
+  --bl-red-tint: #fdeceb;
+  --bl-green: #1a7f37;
+  --bl-green-tint: #e8f5ec;
+}
+
+@theme inline {
+  --color-bg: var(--bl-bg);
+  --color-ink: var(--bl-ink);
+  --color-ink-2: var(--bl-ink-2);
+  --color-muted: var(--bl-muted);
+  --color-faint: var(--bl-faint);
+  --color-line: var(--bl-line);
+  --color-surface: var(--bl-surface);
+  --color-lane: var(--bl-red);
+  --color-lane-strong: var(--bl-red-strong);
+  --color-lane-ink: var(--bl-red-ink);
+  --color-ok: var(--bl-green);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  background: var(--bl-bg);
+  color: var(--bl-ink);
+}
+
+body {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--bl-red);
+  outline-offset: 3px;
+}
