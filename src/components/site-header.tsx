@@ -260,13 +260,6 @@ export function SiteHeader() {
             </div>
 
             <Link
-              href="/systems"
-              className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
-            >
-              Systems
-            </Link>
-
-            <Link
               href="/pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
