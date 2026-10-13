@@ -8,13 +8,13 @@ import {
   Menu,
   X,
   Layers,
-  Sparkles,
   GitCommit,
   RotateCw,
   Sliders,
   CheckCircle2,
 } from "lucide-react";
 import { Wordmark } from "./wordmark";
+import { accountCta, useAccountState } from "@/lib/account-state";
 import { DemoModal } from "./demo-modal";
 
 interface SystemItem {
@@ -63,6 +63,7 @@ export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSystemsOpen, setMobileSystemsOpen] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
+  const cta = accountCta(useAccountState());
 
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -283,16 +284,18 @@ export function SiteHeader() {
 
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
           <div className="flex items-center gap-3 shrink-0">
-            <Link
-              href="/demo"
-              className="group relative inline-flex h-9 items-center gap-1.5 rounded-[8px] bg-ink px-4 text-[13px] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
-            >
-              <span>Book a demo</span>
-              <ArrowRight
-                size={13}
-                className="transition-transform duration-150 group-hover:translate-x-0.5"
-              />
-            </Link>
+            {cta && (
+              <Link
+                href={cta.href}
+                className="group relative inline-flex h-9 items-center gap-1.5 rounded-[8px] bg-ink px-4 text-[13px] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
+              >
+                <span>{cta.label}</span>
+                <ArrowRight
+                  size={13}
+                  className="transition-transform duration-150 group-hover:translate-x-0.5"
+                />
+              </Link>
+            )}
 
             {/* Mobile Hamburger Button */}
             <button
@@ -388,16 +391,18 @@ export function SiteHeader() {
               </Link>
             </nav>
 
-            <div className="mt-4 pt-4 border-t border-line/60">
-              <Link
-                href="/demo"
-                onClick={handleLinkClick}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-ink text-sm font-medium text-white transition-all hover:bg-black shadow-sm"
-              >
-                <Sparkles size={15} className="text-lane" />
-                <span>Book a Demo Walkthrough</span>
-              </Link>
-            </div>
+            {cta && (
+              <div className="mt-4 pt-4 border-t border-line/60">
+                <Link
+                  href={cta.href}
+                  onClick={handleLinkClick}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-ink text-sm font-medium text-white transition-all hover:bg-black shadow-sm"
+                >
+                  <span>{cta.label}</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </header>
