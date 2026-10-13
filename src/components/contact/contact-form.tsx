@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
-import { ArrowRight, CheckCircle2, ChevronDown, Lock } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, ChevronDown, Lock } from "lucide-react";
 import { submitContactMessage, type ContactFormState } from "./actions";
 import { CONTACT_INTERESTS } from "./interests";
 
@@ -19,20 +20,12 @@ export function ContactForm() {
     status: "idle",
   });
   const errors = state.fieldErrors ?? {};
+  const router = useRouter();
 
-  if (state.status === "ok") {
-    return (
-      <div role="status" className="rounded-[20px] border border-line bg-white p-8 text-center">
-        <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-ok/10 text-ok">
-          <CheckCircle2 className="size-6" />
-        </span>
-        <h2 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-ink">Message sent.</h2>
-        <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
-          Thanks for reaching out. We&apos;ll reply to your work email within 1 business day.
-        </p>
-      </div>
-    );
-  }
+  // Once the message is in, move to the confirmation page.
+  useEffect(() => {
+    if (state.status === "ok") router.push("/company/contact/sent");
+  }, [state.status, router]);
 
   return (
     <form action={action} className="space-y-3" noValidate>
@@ -93,7 +86,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || state.status === "ok"}
         className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-[12px] bg-ink text-base font-medium text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)] transition hover:bg-black disabled:opacity-70"
       >
         {pending ? "Sending…" : "Send message"}
