@@ -15,13 +15,13 @@ export default function ContactSentPage() {
       <SiteHeader />
       <main className="flex min-h-[calc(100vh-80px)] items-center justify-center px-6 py-24">
         <div className="text-center">
-          <span className="mx-auto flex size-36 items-center justify-center rounded-full bg-lane/[0.07] shadow-[0_0_60px_rgba(224,49,43,0.12)]">
-            <Check className="size-16 text-lane" strokeWidth={3} />
+          <span className="mx-auto flex size-28 sm:size-36 items-center justify-center rounded-full bg-lane/[0.07] shadow-[0_0_60px_rgba(224,49,43,0.12)]">
+            <Check className="size-12 text-lane sm:size-16" strokeWidth={3} />
           </span>
-          <h1 className="mt-10 text-[clamp(40px,5vw,64px)] font-bold leading-none tracking-[-0.045em] text-ink">
+          <h1 className="mt-8 text-[clamp(40px,5vw,64px)] sm:mt-10 font-bold leading-none tracking-[-0.045em] text-ink">
             Message sent!
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-muted sm:text-xl">
+          <p className="mt-5 text-base leading-relaxed text-muted sm:mt-6 sm:text-xl">
             Thanks for reaching out.
             <br />
             We&rsquo;ll get back to you within 1 business day.

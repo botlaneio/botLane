@@ -32,7 +32,7 @@ export default function ContactPage() {
     <>
       <SiteHeader />
       <main className="min-h-screen">
-        <section className="mx-auto grid max-w-[1200px] gap-16 px-6 pt-12 pb-24 sm:pt-16 lg:grid-cols-[minmax(0,620px)_minmax(0,1fr)] lg:gap-24">
+        <section className="mx-auto grid max-w-[1200px] gap-8 px-6 pt-8 pb-20 sm:gap-16 sm:pt-16 sm:pb-24 lg:grid-cols-[minmax(0,620px)_minmax(0,1fr)] lg:gap-24">
           <div>
             <div className="inline-flex rounded-[8px] bg-surface px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.14em] text-ink-2">
               Get in touch
@@ -45,22 +45,22 @@ export default function ContactPage() {
               day.
             </p>
 
-            <div className="mt-9">
+            <div className="mt-7 sm:mt-9">
               <ContactForm />
             </div>
           </div>
 
-          <ol className="space-y-12 lg:pt-[268px]">
+          <ol className="space-y-3 lg:space-y-12 lg:pt-[268px]">
             {NEXT.map((step) => {
               const Icon = step.icon;
               return (
-                <li key={step.title} className="flex gap-7">
-                  <span className="flex size-14 shrink-0 items-center justify-center rounded-[14px] bg-lane/10 text-lane">
-                    <Icon className="size-6" />
+                <li key={step.title} className="flex items-start gap-4 rounded-[16px] border border-line bg-white p-4 lg:gap-7 lg:border-0 lg:bg-transparent lg:p-0">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-[14px] bg-lane/10 text-lane lg:size-14">
+                    <Icon className="size-5 lg:size-6" />
                   </span>
-                  <div className="border-l border-line pl-7">
-                    <h2 className="text-lg font-semibold tracking-[-0.01em] text-ink">{step.title}</h2>
-                    <p className="mt-2 max-w-[300px] text-[15px] leading-relaxed text-muted">{step.text}</p>
+                  <div className="lg:border-l lg:border-line lg:pl-7">
+                    <h2 className="text-base font-semibold lg:text-lg tracking-[-0.01em] text-ink">{step.title}</h2>
+                    <p className="mt-1 max-w-[300px] text-sm leading-relaxed text-muted lg:mt-2 lg:text-[15px]">{step.text}</p>
                   </div>
                 </li>
               );

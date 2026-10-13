@@ -101,7 +101,7 @@ export default function PricingPage() {
     <>
       <SiteHeader />
       <main className="min-h-screen">
-        <section className="mx-auto max-w-[1200px] px-6 pt-12 sm:pt-16">
+        <section className="mx-auto max-w-[1200px] px-6 pt-8 sm:pt-16">
           <div className="inline-flex rounded-[8px] bg-surface px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.14em] text-ink-2">
             Pricing
           </div>
@@ -114,13 +114,13 @@ export default function PricingPage() {
         </section>
 
         {/* Tiers */}
-        <section className="mx-auto grid max-w-[1200px] gap-5 px-6 pt-12 lg:grid-cols-3">
+        <section className="mx-auto grid max-w-[1200px] gap-5 px-6 pt-10 sm:pt-12 lg:grid-cols-3">
           {TIERS.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-[22px] border bg-white p-7 sm:p-8 ${
+              className={`relative flex flex-col rounded-[22px] border bg-white p-6 sm:p-8 ${
                 tier.featured
-                  ? "border-ink/80 shadow-[0_30px_60px_-30px_rgba(20,20,40,0.35)]"
+                  ? "order-first border-ink/80 lg:order-none shadow-[0_30px_60px_-30px_rgba(20,20,40,0.35)]"
                   : "border-line shadow-[0_4px_24px_rgba(20,20,40,0.04)]"
               }`}
             >
@@ -132,7 +132,7 @@ export default function PricingPage() {
               <h2 className="text-xl font-semibold tracking-[-0.02em] text-ink">{tier.name}</h2>
               <div className="mt-1 text-base text-muted">Starting at</div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-5xl font-bold tracking-[-0.04em] text-ink">{tier.price}</span>
+                <span className="text-[44px] font-bold sm:text-5xl tracking-[-0.04em] text-ink">{tier.price}</span>
                 <span className="text-xl text-muted">/ month</span>
               </div>
               <ul className="mt-6 flex-1 space-y-3 border-t border-line pt-6">
@@ -160,18 +160,18 @@ export default function PricingPage() {
 
         {/* What's included */}
         <section className="mx-auto max-w-[1200px] px-6 pt-5 pb-24">
-          <div className="rounded-[22px] border border-line bg-white p-7 shadow-[0_4px_24px_rgba(20,20,40,0.04)] sm:p-8">
+          <div className="rounded-[22px] border border-line bg-white p-5 shadow-[0_4px_24px_rgba(20,20,40,0.04)] sm:p-8">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-ink">What&rsquo;s included</h2>
             <ul className="mt-4 grid gap-x-10 md:grid-cols-2">
               {INCLUDED.map((item) => (
                 <li key={item.title} className="border-b border-line last:border-b-0 md:[&:nth-last-child(2)]:border-b-0">
-                  <Link href={item.href} className="group flex items-center gap-5 py-4">
-                    <span className={`flex size-14 shrink-0 items-center justify-center rounded-[14px] ${item.tone}`}>
+                  <Link href={item.href} className="group flex items-center gap-4 py-3.5 sm:gap-5 sm:py-4">
+                    <span className={`flex size-11 shrink-0 items-center justify-center rounded-[12px] sm:size-14 sm:rounded-[14px] ${item.tone}`}>
                       {item.icon}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-base font-medium text-ink">{item.title}</span>
-                      <span className="block text-sm leading-snug text-muted">{item.text}</span>
+                      <span className="block text-[15px] font-medium text-ink sm:text-base">{item.title}</span>
+                      <span className="block text-[13px] leading-snug text-muted sm:text-sm">{item.text}</span>
                     </span>
                     <ChevronRight className="size-5 text-muted transition-transform group-hover:translate-x-0.5" />
                   </Link>
