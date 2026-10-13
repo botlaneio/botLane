@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SYSTEMS, type System } from "@/content/systems";
 import { Eyebrow, FaqSection, HireLane, PageHero, PageShell, Section, SectionHeading } from "./page/parts";
+import { ClientReportingHero } from "./client-reporting-hero";
 import { SystemFlow } from "./system-flow";
 import { ToolTile } from "./tool-logo";
 
@@ -115,21 +116,28 @@ export function SystemPage({ system }: { system: System }) {
   const tilt = system.slug === "client-reporting";
   return (
     <PageShell>
-      <PageHero
-        eyebrow={`${system.num} · ${system.shape} · ${system.title}`}
-        title={
-          <>
-            {system.title}: <span className="text-muted">{system.tagline.toLowerCase().replace(/\.$/, "")}.</span>
-          </>
-        }
-        lead={system.lead}
-        secondary={{ href: "#how-it-works", label: "See how it works" }}
-      />
+      {tilt ? (
+        // Client Reporting gets its own landing hero: a live 3D run of one report
+        <ClientReportingHero />
+      ) : (
+        <>
+          <PageHero
+            eyebrow={`${system.num} · ${system.shape} · ${system.title}`}
+            title={
+              <>
+                {system.title}: <span className="text-muted">{system.tagline.toLowerCase().replace(/\.$/, "")}.</span>
+              </>
+            }
+            lead={system.lead}
+            secondary={{ href: "#how-it-works", label: "See how it works" }}
+          />
 
-      {/* The workflow: 3D on Client Reporting, flat on the others */}
-      <div className="mx-auto max-w-[1200px] px-6 pb-8">
-        <SystemFlow flow={system.flow} tilt={tilt} />
-      </div>
+          {/* The workflow: 3D on Client Reporting, flat on the others */}
+          <div className="mx-auto max-w-[1200px] px-6 pb-8">
+            <SystemFlow flow={system.flow} tilt={tilt} />
+          </div>
+        </>
+      )}
 
       <Section id="how-it-works">
         <div className="flex flex-wrap items-end justify-between gap-6">
