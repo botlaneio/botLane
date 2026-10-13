@@ -13,6 +13,20 @@ npm run build    # production build
 npm run lint
 ```
 
+## Deploy (Cloudflare Workers)
+
+Built with [OpenNext](https://opennext.js.org/cloudflare). Workers Builds settings:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npx opennextjs-cloudflare build` |
+| Deploy command | `npx wrangler deploy` |
+| Non-production / preview command | `npx wrangler versions upload` |
+
+`npm run preview` runs the Worker locally; `npm run deploy` builds and deploys from your machine.
+
+Next.js is pinned to 16.3.8 and `cacheComponents` is off: Next 16.4 and Cache Components both break the Worker on OpenNext 1.20.10. Check the OpenNext release notes before upgrading.
+
 ## Where things live
 
 | Path | What it is |
