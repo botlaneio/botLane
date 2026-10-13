@@ -1,34 +1,58 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { LaneMarkCycle } from "./lane-mark-cycle";
+import { DemoModal } from "./demo-modal";
 
-export function Hero() {
+interface HeroProps {
+  onOpenDemo?: () => void;
+}
+
+export function Hero({ onOpenDemo }: HeroProps) {
+  const [demoOpen, setDemoOpen] = useState(false);
+
+  const handleBookDemo = () => {
+    if (onOpenDemo) {
+      onOpenDemo();
+    } else {
+      setDemoOpen(true);
+    }
+  };
+
   return (
-    <section className="mx-auto flex max-w-[1200px] flex-col items-center px-6 pt-20 pb-10 text-center">
-      <div className="mb-6 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted">
-        <LaneMarkCycle size={16} />
-        <span>Lane — AI workforce</span>
-      </div>
-      <h1 className="max-w-[900px] text-[clamp(48px,7.4vw,104px)] leading-[0.96] font-semibold tracking-[-0.05em] text-balance">
-        Meet your newest hire.
-      </h1>
-      <p className="mt-6 max-w-[620px] text-xl leading-[1.45] tracking-[-0.01em] text-muted text-balance">
-        Lane takes the scattered pieces of your week and puts them together: client reporting, lead
-        follow-up and invoice follow-up. You just approve.
-      </p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-        <Link
-          href="/demo"
-          className="flex h-12 items-center justify-center rounded-[8px] bg-lane-strong px-6 text-base font-medium text-white shadow-sm transition-all hover:bg-lane-ink active:scale-[0.98]"
-        >
-          Book a demo
-        </Link>
-        <Link href="#systems" className="flex h-12 items-center px-1 text-base font-medium hover:underline">
-          See the three systems →
-        </Link>
-      </div>
-      <div aria-hidden="true" className="mt-10 font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
-        Scroll ↓
-      </div>
-    </section>
+    <>
+      <section className="mx-auto flex max-w-[1200px] flex-col items-center px-6 pt-20 pb-10 text-center">
+        <div className="mb-6 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted">
+          <LaneMarkCycle size={16} />
+          <span>Lane — AI workforce</span>
+        </div>
+        <h1 className="max-w-[900px] text-[clamp(48px,7.4vw,104px)] leading-[0.96] font-semibold tracking-[-0.05em] text-balance">
+          Meet your newest hire.
+        </h1>
+        <p className="mt-6 max-w-[620px] text-xl leading-[1.45] tracking-[-0.01em] text-muted text-balance">
+          Lane takes the scattered pieces of your week and puts them together: client reporting, lead
+          follow-up and invoice follow-up. You just approve.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          <button
+            type="button"
+            onClick={handleBookDemo}
+            className="flex h-12 cursor-pointer items-center justify-center rounded-[8px] bg-lane-strong px-6 text-base font-medium text-white shadow-sm transition-all hover:bg-lane-ink active:scale-[0.98]"
+          >
+            Book a demo
+          </button>
+          <Link href="#systems" className="flex h-12 items-center px-1 text-base font-medium hover:underline">
+            See the three systems →
+          </Link>
+        </div>
+        <div aria-hidden="true" className="mt-10 font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
+          Scroll ↓
+        </div>
+      </section>
+
+      {/* Instant Demo Booking Modal */}
+      <DemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
+    </>
   );
 }

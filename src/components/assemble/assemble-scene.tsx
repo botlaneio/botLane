@@ -1,9 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
+import Image from "next/image";
 import { LaneMark } from "../lane-mark";
 import {
   APPROVALS,
   CAPTIONS,
-  ICON,
   REPORT_BARS,
   RUNS,
   SOURCES,
@@ -29,15 +29,6 @@ import {
 // <AssembleController> finds the pieces by their data-* attributes and animates them.
 
 const mono = "font-mono";
-
-function Icon({ d, size = 20, color = "#1d1d1f" }: { d: string; size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={1.8}
-      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d={d} />
-    </svg>
-  );
-}
 
 function SourceCompanyLogo({ name }: { name: string }) {
   switch (name) {
@@ -208,8 +199,15 @@ export function AssembleScene() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <LaneMark size={48} state="ready" data-lanemark="" className="drop-shadow-[0_6px_14px_rgba(20,20,40,0.18)]" />
-                  <span data-lanepill="" data-state="ready" className="bl-pill bl-lane-pill">Ready</span>
+                  <span className="flex size-11 items-center justify-center rounded-xl bg-ink shadow-[0_6px_14px_rgba(20,20,40,0.18)]">
+                    <span className="flex h-[11px] w-[30px] items-center justify-center overflow-hidden rounded-md bg-ink-2">
+                      <span data-eye="" className="bl-eye" />
+                    </span>
+                  </span>
+                  <span className="relative h-6 w-[74px]">
+                    <span data-lpw="" className="bl-pill bl-pill-red absolute top-0 right-0">Working</span>
+                    <span data-lpr="" className="bl-pill absolute top-0 right-0" style={{ opacity: 0 }}>Ready</span>
+                  </span>
                 </div>
                 {RUNS.map((r, k) => (
                   <div key={r.run} data-ls={k} className="absolute inset-x-[18px] top-20 bottom-[18px]" style={k ? { opacity: 0 } : undefined}>
@@ -242,9 +240,16 @@ export function AssembleScene() {
                 <div data-ring="" aria-hidden="true" className="pointer-events-none absolute -inset-[3px] rounded-[22px] border-2 border-lane"
                   style={{ boxShadow: "0 0 0 6px rgba(224,49,43,0.10)", opacity: 0 }} />
                 <div className="absolute inset-x-[18px] top-[18px] flex items-center gap-3">
-                  <span className="flex size-11 flex-none items-center justify-center rounded-full border border-[#e6e6ea] bg-[#f0f0f3]">
-                    <Icon d={ICON.person} size={22} />
-                  </span>
+                  <div className="relative size-11 flex-none overflow-hidden rounded-full border border-[#dcdce3] shadow-[0_2px_8px_rgba(20,20,40,0.08)]">
+                    <Image
+                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=80"
+                      alt="Your photo"
+                      fill
+                      sizes="44px"
+                      className="object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
                   <div>
                     <div className="text-base font-semibold">You</div>
                     <div className="relative h-[18px] w-[140px] text-[13px] font-medium whitespace-nowrap">
@@ -357,9 +362,18 @@ export function AssembleScene() {
             <Slot x={24} y={236} w={240} h={108} z={32}>
               <div data-lead="" className="bl-card bl-fill flex flex-col gap-2.5 rounded-[18px] p-4">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-10 flex-none items-center justify-center rounded-full bg-[#fdeceb] text-sm font-semibold text-lane-ink">SC</span>
+                  <div className="relative size-10 flex-none overflow-hidden rounded-full border border-[#f5c6c4] shadow-[0_2px_6px_rgba(224,49,43,0.12)]">
+                    <Image
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80"
+                      alt="Zuheb"
+                      fill
+                      sizes="40px"
+                      className="object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
                   <div className="min-w-0">
-                    <div className="text-[15px] font-semibold whitespace-nowrap">Sarah Chen</div>
+                    <div className="text-[15px] font-semibold whitespace-nowrap">Zuheb</div>
                     <div className="flex items-center gap-1.5 text-[13px] whitespace-nowrap text-muted">
                       <TypeformLogo size={13} />
                       <span>Website form · 2 min ago</span>

@@ -29,7 +29,7 @@ export const SOURCE_STEP = 88;
 /** What Lane works on for each system (the Automation card). */
 export const RUNS = [
   { run: "RUN-1842", title: "Weekly client report", steps: ["Pulled 4 sources", "Built the charts", "Wrote the summary"] },
-  { run: "RUN-1843", title: "Reply to Sarah Chen", steps: ["Read her enquiry", "Checked your calendar", "Drafted 3 messages"] },
+  { run: "RUN-1843", title: "Reply to Zuheb", steps: ["Read his enquiry", "Checked your calendar", "Drafted 3 messages"] },
   { run: "RUN-1844", title: "INV-2041 · Acme Co", steps: ["Matched bank payments", "14 days still unpaid", "Drafted a firmer note"] },
 ] as const;
 
@@ -44,7 +44,7 @@ export const APPROVALS = [
     done: "Approved · sending",
   },
   {
-    question: "Reply to Sarah and start her follow-ups?",
+    question: "Reply to Zuheb and start his follow-ups?",
     icon: ICON.mail,
     doc: "Reply + 2 follow-ups",
     meta: "Written in your tone",
