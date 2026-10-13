@@ -16,7 +16,7 @@ interface AuthShellProps {
 export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtitle, form, aside }: AuthShellProps) {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-white to-surface/70">
-      <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-6 py-6">
+      <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-6 py-5">
         <Link href="/" aria-label="BotLane home" className="text-ink">
           <Wordmark className="text-[22px]" />
         </Link>
@@ -29,16 +29,16 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-[1200px] flex-1 items-start gap-12 px-6 pt-8 pb-16 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)] lg:gap-16 lg:pt-14">
+      <main className="mx-auto grid w-full max-w-[1200px] flex-1 items-center gap-12 px-6 pt-6 pb-20 lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:gap-20 lg:pt-8 lg:pb-24 xl:gap-28">
         <div>
-          <h1 className="text-[clamp(40px,5vw,60px)] font-semibold leading-[1] tracking-[-0.05em] text-ink">{title}</h1>
-          <p className="mt-4 max-w-[440px] text-lg leading-[1.45] tracking-[-0.01em] text-muted">{subtitle}</p>
-          <div className="mt-9">{form}</div>
+          <h1 className="text-[clamp(34px,4vw,48px)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">{title}</h1>
+          <p className="mt-3 max-w-[420px] text-base leading-[1.5] text-muted">{subtitle}</p>
+          <div className="mt-7">{form}</div>
         </div>
         <div className="relative hidden lg:block">{aside}</div>
       </main>
 
-      <footer className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-8 text-xs text-muted">
+      <footer className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-4 border-t border-line/70 px-6 py-6 text-xs text-muted">
         <div className="flex items-center gap-5">
           <Wordmark className="text-lg text-ink" />
           <span>© {new Date().getFullYear()} BotLane. All rights reserved.</span>

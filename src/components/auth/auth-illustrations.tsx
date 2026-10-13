@@ -35,7 +35,7 @@ function Rail({ active }: { active: number }) {
 /** Sign-in illustration: the hero's workspace window, tilted and stacked, running off the right edge. */
 export function SignInIllustration() {
   return (
-    <div aria-hidden className="pointer-events-none select-none pt-6 [perspective:1600px]">
+    <div aria-hidden className="pointer-events-none select-none [perspective:1600px]">
       <div className="relative w-[640px] origin-left [transform:rotateY(-22deg)_rotateX(8deg)_rotateZ(-7deg)] [transform-style:preserve-3d]">
         <Ghosts />
         <div className={windowClass}>
@@ -125,12 +125,12 @@ const ACTIVITY = [
 export function SignUpIllustration() {
   return (
     <div className="select-none">
-      <ul className="max-w-[340px] space-y-8 pt-2">
+      <ul className="max-w-[420px] space-y-6">
         {LANES.map((lane) => {
           const Icon = lane.icon;
           return (
             <li key={lane.num} className="flex items-start gap-5">
-              <span className={`flex size-[52px] shrink-0 items-center justify-center rounded-[14px] ${lane.tone}`}>
+              <span className={`flex size-12 shrink-0 items-center justify-center rounded-[14px] ${lane.tone}`}>
                 <Icon className="size-5" />
               </span>
               <div>
@@ -143,7 +143,7 @@ export function SignUpIllustration() {
         })}
       </ul>
 
-      <div aria-hidden className="pointer-events-none mt-10 ml-6 [perspective:1400px]">
+      <div aria-hidden className="pointer-events-none mt-12 ml-10 [perspective:1400px]">
         <div className="relative w-[440px] origin-left [transform:rotateY(-24deg)_rotateX(10deg)_rotateZ(7deg)] [transform-style:preserve-3d]">
           <Ghosts />
           <div className={windowClass}>
