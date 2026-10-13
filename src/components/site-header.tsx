@@ -16,7 +16,7 @@ export function SiteHeader() {
         className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-6 px-6"
       >
         <Link href="/" aria-label="BotLane home" className="flex items-center gap-2.5 py-2.5">
-          <LaneMark />
+          <LaneMark size={28} animated />
           <span className="text-lg font-semibold tracking-[-0.03em]">botlane</span>
         </Link>
         <div className="hidden items-center gap-8 font-mono text-xs uppercase tracking-[0.08em] md:flex">

@@ -7,7 +7,7 @@
 .bl-sticky {
   position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 600px;
   display: flex; flex-direction: column;
-  background: linear-gradient(#ffffff, #f3f4f7 70%, #ffffff);
+  background: linear-gradient(var(--bl-bg), color-mix(in srgb, var(--bl-bg), #20203a 3.5%) 70%, var(--bl-bg));
 }
 .bl-fit { position: relative; flex: 1 1 auto; min-height: 0; }
 .bl-scaler {
@@ -72,7 +72,7 @@
   font-size: 14px; font-weight: 500; cursor: pointer;
 }
 .bl-eye {
-  width: 7px; height: 7px; border-radius: 50%; background: #ff453a; box-shadow: 0 0 6px 1px rgba(255, 69, 58, 0.8);
+  width: 7px; height: 7px; border-radius: 50%; background: #e0312b; box-shadow: 0 0 4px rgba(224, 49, 43, 0.45);
 }
 .bl-traveller { position: absolute; opacity: 0; }
 

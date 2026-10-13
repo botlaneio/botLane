@@ -1,10 +1,23 @@
-/** The BotLane mark: a dark tile with Lane's red eye. */
-export function LaneMark({ size = 24 }: { size?: number }) {
+import "./lane-mark.css";
+
+/**
+ * The BotLane mark: Lane's dark tile with a white visor and red eye.
+ * With `animated`, the eye glances along the visor, then turns into a green check:
+ * Lane does the work, you OK it. CSS only; prefers-reduced-motion keeps it still.
+ */
+export function LaneMark({ size = 24, animated = false }: { size?: number; animated?: boolean }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 420 420" aria-hidden="true">
-      <rect x="0" y="0" width="420" height="420" rx="104" fill="#1d1d1f" />
-      <rect x="62" y="166" width="296" height="88" rx="44" fill="#3a3a3c" />
-      <circle cx="250" cy="210" r="28" fill="#e0312b" />
+    <svg className={animated ? "bl-lanemark is-live" : "bl-lanemark"} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="9" fill="#1d1d1f" />
+      <rect x="6" y="12.5" width="20" height="7" rx="3.5" fill="#ffffff" />
+      <g className="bl-lm-eye">
+        <circle cx="16" cy="16" r="2.2" fill="#e0312b" />
+      </g>
+      <g className="bl-lm-ok">
+        <circle cx="16" cy="16" r="5" fill="#1a7f37" />
+        <path d="M13.6 16.1l1.7 1.7 3.2-3.3" fill="none" stroke="#ffffff" strokeWidth="1.6"
+          strokeLinecap="round" strokeLinejoin="round" />
+      </g>
     </svg>
   );
 }

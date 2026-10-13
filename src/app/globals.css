@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* BotLane tokens — Apple-quiet: white, near-black, one Lane red. */
+/* BotLane tokens — Apple-quiet: off-white canvas, white cards, near-black, one Lane red. */
 :root {
-  --bl-bg: #ffffff;
+  --bl-bg: #f8f8f6;
   --bl-ink: #1d1d1f;
   --bl-ink-2: #3a3a3c;
   --bl-muted: #6e6e73;

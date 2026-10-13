@@ -158,7 +158,7 @@ export function AssembleScene() {
               <div data-fx="lane" data-cx={472} data-cy={290} className="bl-card bl-fill relative p-[18px]">
                 <div className="flex items-center justify-between">
                   <span className="flex size-11 items-center justify-center rounded-xl bg-ink shadow-[0_6px_14px_rgba(20,20,40,0.18)]">
-                    <span className="flex h-[11px] w-[30px] items-center justify-center overflow-hidden rounded-md bg-ink-2">
+                    <span className="flex h-[11px] w-[30px] items-center justify-center overflow-hidden rounded-md bg-white">
                       <span data-eye="" className="bl-eye" />
                     </span>
                   </span>
