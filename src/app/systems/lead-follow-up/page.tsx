@@ -104,7 +104,7 @@ export default function LeadFollowUpPage() {
               href="/pricing"
               className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
-              <span>$490/mo Standalone Retainer</span>
+              <span>$600/mo Standalone Retainer</span>
             </Link>
           </div>
 
@@ -357,7 +357,7 @@ export default function LeadFollowUpPage() {
               Turn your inbound leads into booked meetings.
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-white/70">
-              Deploy System 02 on a flat $490/mo retainer or as part of the full suite. 30-day money-back guarantee.
+              Deploy System 02 on a flat $600/mo retainer or as part of the full suite. 30-day money-back guarantee.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link

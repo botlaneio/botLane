@@ -10,7 +10,7 @@ const TIERS = [
   {
     name: "Single System",
     description: "Ideal if you want Lane to master one specific workflow first.",
-    price: "$490",
+    price: "$600",
     period: "/month",
     features: [
       "Choose Client reporting, Lead follow-up, or Invoices",
@@ -25,7 +25,7 @@ const TIERS = [
   {
     name: "Full Suite",
     description: "All three core engines working in tandem for your business.",
-    price: "$1,190",
+    price: "$1,500",
     period: "/month",
     features: [
       "All 3 systems: Funnel, Line, and Loop",

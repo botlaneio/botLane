@@ -61,7 +61,7 @@ export default function NotFound() {
                 className="group rounded-[14px] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] text-lane font-semibold">$490+</span>
+                  <span className="font-mono text-[11px] text-lane font-semibold">$600+</span>
                   <ArrowRight size={12} className="text-muted transition-transform group-hover:translate-x-1" />
                 </div>
                 <div className="mt-2 text-xs font-semibold text-ink">Pricing Retainer</div>

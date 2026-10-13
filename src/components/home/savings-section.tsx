@@ -188,7 +188,7 @@ export function SavingsSection() {
               </div>
               <div className="rounded-[12px] bg-lane/5 p-3.5 border border-lane/20">
                 <div className="text-xs font-medium text-lane">BotLane Full Suite</div>
-                <div className="mt-1 font-mono text-lg font-bold text-lane">$1,190 / mo</div>
+                <div className="mt-1 font-mono text-lg font-bold text-lane">$1,500 / mo</div>
                 <div className="text-[11px] text-muted mt-1">Live in 15 mins, zero payroll tax, 100% precision</div>
               </div>
             </div>
