@@ -105,9 +105,13 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const heads = qa('[data-fx="head"]');
   const lane = q('[data-fx="lane"]');
   const you = q('[data-fx="you"]');
-  const s0 = qa("[data-s0]");
   const chips = qa("[data-chip]");
+  const beams = qa("[data-beam]");
   const report = q("[data-report]");
+  const chipLusters = qa("[data-chip-luster]");
+  const laneLuster = q("[data-lane-luster]");
+  const youLuster = q("[data-you-luster]");
+  const reportLuster = q("[data-report-luster]");
   const bars = qa("[data-bar]");
   const owait = q("[data-owait]");
   const odone = q("[data-odone]");
@@ -135,64 +139,88 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const ring = q("[data-ring]");
   const tcs = qa("[data-tc]");
 
-  /* ---- the opening: pieces scattered in a seeded, repeatable way ---- */
-  let seed = 7;
-  const rnd = () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
-  const scatter = (el: Element) => {
-    const cx = Number(el.getAttribute("data-cx"));
-    const cy = Number(el.getAttribute("data-cy"));
-    const dx = cx - 620;
-    const dy = cy - 300;
-    const len = Math.max(Math.hypot(dx, dy), 1);
-    const dist = 90 + rnd() * 140;
-    return {
-      translateX: (dx / len) * dist + (rnd() - 0.5) * 120,
-      translateY: (dy / len) * dist * (dy < 0 ? 0.25 : 0.6) + (rnd() - 0.3) * 90,
-      translateZ: 30 + rnd() * 170,
-      rotateX: (rnd() - 0.5) * 40,
-      rotateY: (rnd() - 0.5) * 40,
-      rotateZ: (rnd() - 0.5) * 30,
-      scale: 0.85 + rnd() * 0.2,
-      opacity: 0.94,
-    };
-  };
+  /* ---- the opening: pieces scattered across the board in a balanced, evenly distributed composition ---- */
   const home = { translateX: 0, translateY: 0, translateZ: 0, rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1, opacity: 1 };
-  const pieces = [...heads, lane, you, ...s0];
-  const scattered = new Map(pieces.map((el) => [el, scatter(el)]));
+
+  // Explicit, artfully directed scattered transforms for each piece.
+  // Perfectly balanced across the 1240 × 600 canvas with zero collisions,
+  // comfortable breathing room, and a natural floating 3D paper/card aesthetic.
+  const slabScatter = [
+    // 01: Input slab (left: 0, w: 288) -> subtle architectural drift in background
+    { translateX: -12, translateY: 14, translateZ: -20, rotateX: 2.2, rotateY: -1.8, rotateZ: -1.0, scale: 0.985, opacity: 0.76 },
+    // 02: Automation slab (left: 344, w: 252)
+    { translateX: 8, translateY: -10, translateZ: -16, rotateX: 1.8, rotateY: 1.4, rotateZ: 0.8, scale: 0.985, opacity: 0.76 },
+    // 03: Approval slab (left: 616, w: 268)
+    { translateX: -8, translateY: 12, translateZ: -22, rotateX: -1.6, rotateY: -1.2, rotateZ: -0.8, scale: 0.985, opacity: 0.76 },
+    // 04: Output slab (left: 936, w: 320)
+    { translateX: 12, translateY: -12, translateZ: -18, rotateX: 2.0, rotateY: 1.6, rotateZ: 1.0, scale: 0.985, opacity: 0.76 },
+  ];
+
+  const chipScatter = [
+    // 0: Google Ads (home: x=24, y=120) -> Upper-left floating card with gentle tilt
+    { translateX: 34, translateY: -36, translateZ: 65, rotateX: 3.5, rotateY: -3.5, rotateZ: -5.5, scale: 0.96, opacity: 0.98 },
+    // 1: Analytics (home: x=24, y=208) -> Upper-mid-left, staggered right to fill the column gap
+    { translateX: 124, translateY: 6, translateZ: 95, rotateX: -3.0, rotateY: 4.5, rotateZ: 4.8, scale: 0.96, opacity: 0.98 },
+    // 2: Meta Ads (home: x=24, y=296) -> Lower-left floating card
+    { translateX: 20, translateY: 74, translateZ: 50, rotateX: 4.0, rotateY: -4.0, rotateZ: -4.0, scale: 0.96, opacity: 0.98 },
+    // 3: HubSpot (home: x=24, y=384) -> Lower-mid-left, staggered right into lower gap
+    { translateX: 180, translateY: 56, translateZ: 105, rotateX: -3.5, rotateY: 3.5, rotateZ: 5.8, scale: 0.96, opacity: 0.98 },
+  ];
+
+  const laneScatter = {
+    // Lane card (home: x=372, y=150) -> Center-left anchor, lifted higher & forward
+    translateX: -18,
+    translateY: -38,
+    translateZ: 115,
+    rotateX: 4.0,
+    rotateY: -3.0,
+    rotateZ: -3.0,
+    scale: 0.97,
+    opacity: 0.98,
+  };
+
+  const youScatter = {
+    // You card (home: x=640, y=140) -> Center-right anchor, positioned with breathing room from Lane
+    translateX: 28,
+    translateY: 34,
+    translateZ: 95,
+    rotateX: -3.5,
+    rotateY: 4.0,
+    rotateZ: 3.8,
+    scale: 0.97,
+    opacity: 0.98,
+  };
+
+  const reportScatter = {
+    // Report card (home: x=960, y=130) -> Upper-right anchor, comfortably framed within canvas bounds
+    translateX: -22,
+    translateY: -22,
+    translateZ: 75,
+    rotateX: 3.5,
+    rotateY: -3.0,
+    rotateZ: -4.2,
+    scale: 0.96,
+    opacity: 0.98,
+  };
+
+  const scattered = new Map<Element, typeof home>();
+  heads.forEach((h, i) => scattered.set(h, slabScatter[i] ?? slabScatter[0]));
+  chips.forEach((c, i) => scattered.set(c, chipScatter[i] ?? chipScatter[0]));
+  scattered.set(lane, laneScatter);
+  scattered.set(you, youScatter);
+  scattered.set(report, reportScatter);
+
+  const pieces = [...heads, lane, you, ...chips, report];
   pieces.forEach((el) => A.utils.set(el, scattered.get(el)!));
 
   /* ---- starting state ---- */
   const set = A.utils.set;
   // Set back a little and gently tilted; it comes forward as the pieces land.
-  set(board, { rotateX: 24, rotateY: -10, rotateZ: -3, translateZ: -160 });
-
-  // Scattered pieces may poke out above and below the stage (it doesn't clip), but not
-  // past the screen's sides: any piece beyond VIEW's sides is eased back toward home.
-  const LIMIT = { left: VIEW.left + 8, top: -Infinity, right: VIEW.right - 8, bottom: Infinity };
-  for (let pass = 0; pass < 20; pass++) {
-    const box = scaler.getBoundingClientRect();
-    const s = box.width / 1240 || 1;
-    let clipped = false;
-    pieces.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      const out =
-        (r.left - box.left) / s < LIMIT.left || (r.right - box.left) / s > LIMIT.right ||
-        (r.top - box.top) / s < LIMIT.top || (r.bottom - box.top) / s > LIMIT.bottom;
-      if (!out) return;
-      clipped = true;
-      const p = scattered.get(el)!;
-      (["translateX", "translateY", "translateZ", "rotateX", "rotateY", "rotateZ"] as const).forEach((k) => (p[k] *= 0.85));
-      p.scale = 1 + (p.scale - 1) * 0.85;
-      A.utils.set(el, p);
-    });
-    if (!clipped) break;
-  }
+  set(board, { rotateX: 20, rotateY: -8, rotateZ: -2, translateZ: -120 });
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
   set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone], { opacity: 0 });
+  set(beams, { opacity: 0 });
   set(dots, { opacity: 0 });
   set([...n1, ...n1d, ...n1l, ...n2, ...n2d], { opacity: 0 });
   set(cks.flat(), { opacity: 0, scale: 0.5 });
@@ -229,6 +257,34 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     return 1;
   };
   const settle = (duration: number, stag: number): AnimationParams => ({ duration, delay: A.stagger(stag), ease: "inOutSine", ...home });
+  const flipSettle = (duration: number, stag = 0): AnimationParams =>
+    ({
+      duration,
+      delay: stag ? A.stagger(stag) : 0,
+      ease: "inOutSine",
+      translateX: 0,
+      translateY: 0,
+      translateZ: [
+        { to: 140, duration: duration * 0.45, ease: "outQuad" },
+        { to: 0, duration: duration * 0.55, ease: "inQuad" },
+      ],
+      rotateX: [
+        { to: 10, duration: duration * 0.4, ease: "outSine" },
+        { to: 0, duration: duration * 0.6, ease: "inSine" },
+      ],
+      rotateY: 360,
+      rotateZ: 0,
+      scale: 1,
+      opacity: 1,
+    } as unknown as AnimationParams);
+  /* Dynamic metallic luster sweep across card back during 180° rotation (Detail #6) */
+  const lusterSweep = (duration = 310, stag = 0): AnimationParams =>
+    ({
+      translateX: [0, 480],
+      duration,
+      delay: stag ? A.stagger(stag) : 0,
+      ease: "easeInOutSine",
+    } as unknown as AnimationParams);
   const drawIn = (names: string[], at: number, duration: number, stag = 0) =>
     add(drs(names), { draw: ["0 0", "0 1"], duration, delay: A.stagger(stag), ease: "outQuad" }, at);
   const drawOut = (names: string[], at: number, duration: number) =>
@@ -261,14 +317,18 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
 
   /* ---- 0 → 690 · pieces assemble ---- */
   // Long, overlapping, sine-eased moves: every piece is drifting home at once,
-  // so no single scroll step makes anything jump.
+  // with foreground cards performing a stunning 3D flip-and-dock into their slots.
   add(board, { rotateX: 16, rotateY: -10, rotateZ: 1.5, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
   add(floor, { opacity: 1, scale: 1, duration: 420, ease: "inOutSine" }, 40);
-  add(heads, settle(500, 40), 30);
-  add(lane, settle(500, 0), 90);
-  add(chips, settle(480, 30), 120);
-  add(you, settle(500, 0), 150);
-  add(report, settle(500, 0), 190);
+  add(heads, settle(520, 35), 20);
+  add(chips, flipSettle(500, 35), 70);
+  add(chipLusters, lusterSweep(300, 35), 160);
+  add(lane, flipSettle(510, 0), 100);
+  add(laneLuster, lusterSweep(310), 190);
+  add(you, flipSettle(510, 0), 140);
+  add(youLuster, lusterSweep(310), 230);
+  add(report, flipSettle(510, 0), 180);
+  add(reportLuster, lusterSweep(310), 270);
 
   /* ---- 01 · Client reporting: a funnel ---- */
   drawIn(["f0", "f1", "f2", "f3"], 690, 140, 25);
@@ -279,6 +339,12 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     travel(d, PATH[`f${i}`], t0, 130);
     fadeIn(d, t0, 15);
     fadeOut(d, t0 + 112, 20);
+
+    // Active source card subtle hover-lift & radiant border beam
+    add(chips[i], { translateY: [0, -5], translateZ: [0, 16], duration: 40, ease: "outQuad" }, t0 - 15);
+    add(beams[i], { opacity: [0, 1], duration: 35 }, t0 - 15);
+    add(chips[i], { translateY: 0, translateZ: 0, duration: 50, ease: "inOutQuad" }, t0 + 105);
+    add(beams[i], { opacity: 0, duration: 45 }, t0 + 110);
   });
   work(0, 740, 190);
   add(bars, { scaleY: [0, 1], duration: 100, delay: A.stagger(10), ease: "outQuad" }, 860);
@@ -438,10 +504,11 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     demoAnim?.pause();
     demoAnim = null;
   };
+  const NAV_OFFSET = 64;
   const scrollRange = () => stage.offsetHeight - window.innerHeight;
   const scrollT = () => {
     const total = scrollRange();
-    return total > 0 ? (-stage.getBoundingClientRect().top / total) * TOTAL : 0;
+    return total > 0 ? ((-stage.getBoundingClientRect().top + NAV_OFFSET) / total) * TOTAL : 0;
   };
 
   // Scroll sets a target; the story eases toward it each frame, so wheel steps glide
@@ -504,7 +571,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     demoOn = false;
     userTouched = true;
     if (range > 0 && window.scrollY > 0) {
-      const top = stage.getBoundingClientRect().top + window.scrollY;
+      const top = stage.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
       window.scrollTo({ top: top + (goal / TOTAL) * range, behavior: "smooth" });
     } else {
       glideTo(goal, 1100);
@@ -547,7 +614,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     // scattered start as soon as the visitor scrolled.
     timers.push(
       setTimeout(() => {
-        const atTop = stage.getBoundingClientRect().top <= 0;
+        const atTop = stage.getBoundingClientRect().top <= NAV_OFFSET;
         if (alive && !userTouched && t === 0 && atTop && window.scrollY === 0) void demo();
       }, 2200),
     );
