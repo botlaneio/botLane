@@ -1,9 +1,11 @@
 /* Scroll-to-assemble board. Board coordinates are a fixed 1240 × 600 space,
    scaled to fit the viewport by the controller. */
 
-.bl-stage { position: relative; height: 640vh; min-height: 4800px; }
+/* Scattered pieces may poke out of the sticky frame, so it doesn't clip; the stage
+   clips only sideways (clip, unlike hidden, keeps position: sticky working). */
+.bl-stage { position: relative; height: 640vh; min-height: 4800px; overflow-x: clip; }
 .bl-sticky {
-  position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 600px; overflow: hidden;
+  position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 600px;
   display: flex; flex-direction: column;
   background: linear-gradient(#ffffff, #f3f4f7 70%, #ffffff);
 }

@@ -54,12 +54,19 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- fit the 1240 × 600 board to the viewport ---- */
   // Wide screens see the whole board. Narrow screens get a camera that zooms in
   // and pans across the board, following the work from Input to Output.
+  // VIEW is the board-space area always kept on screen: the tilted board leans right
+  // and up, so it reaches past the 1240 × 600 box. The scattered opening stays inside it.
+  const VIEW = { left: -10, top: -40, right: 1310, bottom: 650 };
+  const VW = VIEW.right - VIEW.left;
+  const VH = VIEW.bottom - VIEW.top;
+  const VCX = (VIEW.left + VIEW.right) / 2;
+  const VCY = (VIEW.top + VIEW.bottom) / 2;
   let t = 0;
   let view = { w: 1240, h: 600, whole: 1, close: 1, mobile: false };
   const fit = () => {
     const w = fitEl.clientWidth || 1240;
     const h = fitEl.clientHeight || 600;
-    const whole = Math.max(0.2, Math.min(1, w / 1300, h / 700));
+    const whole = Math.max(0.2, Math.min(1, w / VW, h / VH));
     const mobile = w < 760;
     const close = mobile ? Math.min(1, w / 470, h / 640) : whole;
     view = { w, h, whole, close, mobile };
@@ -69,7 +76,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const camera = (time: number) => {
     const { w, whole, close, mobile } = view;
     if (!mobile) {
-      scaler.style.transform = `translate(-50%, -50%) scale(${whole})`;
+      scaler.style.transform = `translate(-50%, -50%) translate(${(620 - VCX) * whole}px, ${(300 - VCY) * whole}px) scale(${whole})`;
       return;
     }
     const [fx, m] = shotAt(time);
@@ -78,8 +85,8 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     const half = w / (2 * s);
     const lo = -30 + half;
     const hi = 1270 - half;
-    const x = lo < hi ? Math.min(hi, Math.max(lo, 620 + (fx - 620) * m)) : 620;
-    scaler.style.transform = `translate(-50%, -50%) translateX(${-(x - 620) * s}px) scale(${s})`;
+    const x = lo < hi ? Math.min(hi, Math.max(lo, 620 + (fx - 620) * m)) : VCX;
+    scaler.style.transform = `translate(-50%, -50%) translate(${-(x - 620) * s}px, ${(300 - VCY) * s}px) scale(${s})`;
   };
   const ro = new ResizeObserver(fit);
   ro.observe(fitEl);
@@ -142,24 +149,49 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     const dx = cx - 620;
     const dy = cy - 300;
     const len = Math.max(Math.hypot(dx, dy), 1);
-    const dist = 120 + rnd() * 200;
+    const dist = 90 + rnd() * 140;
     return {
-      translateX: (dx / len) * dist + (rnd() - 0.5) * 160,
-      translateY: (dy / len) * dist * (dy < 0 ? 0.25 : 0.7) + (rnd() - 0.3) * 120,
-      translateZ: 40 + rnd() * 260,
-      rotateX: (rnd() - 0.5) * 60,
-      rotateY: (rnd() - 0.5) * 60,
-      rotateZ: (rnd() - 0.5) * 50,
-      scale: 0.8 + rnd() * 0.3,
-      opacity: 0.92,
+      translateX: (dx / len) * dist + (rnd() - 0.5) * 120,
+      translateY: (dy / len) * dist * (dy < 0 ? 0.25 : 0.6) + (rnd() - 0.3) * 90,
+      translateZ: 30 + rnd() * 170,
+      rotateX: (rnd() - 0.5) * 40,
+      rotateY: (rnd() - 0.5) * 40,
+      rotateZ: (rnd() - 0.5) * 30,
+      scale: 0.85 + rnd() * 0.2,
+      opacity: 0.94,
     };
   };
   const home = { translateX: 0, translateY: 0, translateZ: 0, rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1, opacity: 1 };
-  [...heads, lane, you, ...s0].forEach((el) => A.utils.set(el, scatter(el)));
+  const pieces = [...heads, lane, you, ...s0];
+  const scattered = new Map(pieces.map((el) => [el, scatter(el)]));
+  pieces.forEach((el) => A.utils.set(el, scattered.get(el)!));
 
   /* ---- starting state ---- */
   const set = A.utils.set;
-  set(board, { rotateX: 34, rotateY: -20, rotateZ: -8, translateZ: 0 });
+  // Set back a little and gently tilted; it comes forward as the pieces land.
+  set(board, { rotateX: 24, rotateY: -10, rotateZ: -3, translateZ: -160 });
+
+  // Scattered pieces may poke out above and below the stage (it doesn't clip), but not
+  // past the screen's sides: any piece beyond VIEW's sides is eased back toward home.
+  const LIMIT = { left: VIEW.left + 8, top: -Infinity, right: VIEW.right - 8, bottom: Infinity };
+  for (let pass = 0; pass < 20; pass++) {
+    const box = scaler.getBoundingClientRect();
+    const s = box.width / 1240 || 1;
+    let clipped = false;
+    pieces.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      const out =
+        (r.left - box.left) / s < LIMIT.left || (r.right - box.left) / s > LIMIT.right ||
+        (r.top - box.top) / s < LIMIT.top || (r.bottom - box.top) / s > LIMIT.bottom;
+      if (!out) return;
+      clipped = true;
+      const p = scattered.get(el)!;
+      (["translateX", "translateY", "translateZ", "rotateX", "rotateY", "rotateZ"] as const).forEach((k) => (p[k] *= 0.85));
+      p.scale = 1 + (p.scale - 1) * 0.85;
+      A.utils.set(el, p);
+    });
+    if (!clipped) break;
+  }
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
   set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone, lpr], { opacity: 0 });
@@ -198,7 +230,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     for (let i = 0; i <= 200; i++) if (test(path.getPointAtLength((L * i) / 200))) return i / 200;
     return 1;
   };
-  const settle = (duration: number, stag: number): AnimationParams => ({ duration, delay: A.stagger(stag), ease: "inOutCubic", ...home });
+  const settle = (duration: number, stag: number): AnimationParams => ({ duration, delay: A.stagger(stag), ease: "inOutSine", ...home });
   const drawIn = (names: string[], at: number, duration: number, stag = 0) =>
     add(drs(names), { draw: ["0 0", "0 1"], duration, delay: A.stagger(stag), ease: "outQuad" }, at);
   const drawOut = (names: string[], at: number, duration: number) =>
@@ -233,14 +265,16 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     add(waits[k], { opacity: [0, 1], duration: 40 }, at + 60);
   };
 
-  /* ---- 0 → 700 · pieces assemble ---- */
-  add(board, { rotateX: 16, rotateY: -10, rotateZ: 1.5, duration: 700, ease: "inOutQuad" }, 0);
-  add(floor, { opacity: 1, scale: 1, duration: 300, ease: "outQuad" }, 120);
-  add(heads, settle(300, 40), 160);
-  add(lane, settle(320, 0), 220);
-  add(chips, settle(320, 45), 240);
-  add(you, settle(320, 0), 300);
-  add(report, settle(320, 0), 380);
+  /* ---- 0 → 690 · pieces assemble ---- */
+  // Long, overlapping, sine-eased moves: every piece is drifting home at once,
+  // so no single scroll step makes anything jump.
+  add(board, { rotateX: 16, rotateY: -10, rotateZ: 1.5, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
+  add(floor, { opacity: 1, scale: 1, duration: 420, ease: "inOutSine" }, 40);
+  add(heads, settle(500, 40), 30);
+  add(lane, settle(500, 0), 90);
+  add(chips, settle(480, 30), 120);
+  add(you, settle(500, 0), 150);
+  add(report, settle(500, 0), 190);
 
   /* ---- 01 · Client reporting: a funnel ---- */
   drawIn(["f0", "f1", "f2", "f3"], 690, 140, 25);
@@ -395,28 +429,53 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     return total > 0 ? (-stage.getBoundingClientRect().top / total) * TOTAL : 0;
   };
 
+  // Scroll sets a target; the story eases toward it each frame, so wheel steps glide
+  // instead of jumping.
+  let target = 0;
+  let raf = 0;
+  let lastFrame = 0;
+  const follow = (now: number) => {
+    const dt = Math.min(64, now - lastFrame || 16);
+    lastFrame = now;
+    const next = t + (target - t) * (1 - Math.exp(-dt / 160));
+    if (Math.abs(target - next) < 0.5) {
+      setT(target);
+      raf = 0;
+      return;
+    }
+    setT(next);
+    raf = requestAnimationFrame(follow);
+  };
+  const followTo = (v: number) => {
+    target = Math.max(0, Math.min(TOTAL, v));
+    if (raf) return;
+    lastFrame = performance.now();
+    raf = requestAnimationFrame(follow);
+  };
+  const stopFollow = () => {
+    cancelAnimationFrame(raf);
+    raf = 0;
+  };
+
   let lastY = window.scrollY;
-  let ticking = false;
   const onScroll = () => {
     if (Math.abs(window.scrollY - lastY) > 2) stopDemo();
     lastY = window.scrollY;
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      if (!demoOn) setT(scrollT());
-    });
+    if (!demoOn) followTo(scrollT());
   };
   const onScrub = () => {
     stopDemo();
+    stopFollow();
     setT((Number(scrub.value) / 1000) * TOTAL);
+    target = t;
   };
 
   const proxy = { t: 0 };
-  const glideTo = (target: number, duration: number) => {
+  const glideTo = (to: number, duration: number) => {
+    stopFollow();
     demoAnim?.pause();
     proxy.t = t;
-    demoAnim = A.animate(proxy, { t: target, duration, ease: "inOutSine", onUpdate: () => setT(proxy.t) });
+    demoAnim = A.animate(proxy, { t: to, duration, ease: "inOutSine", onUpdate: () => setT(proxy.t) });
     return demoAnim;
   };
 
@@ -425,15 +484,15 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     const b = (e.target as Element).closest?.("[data-approve]");
     if (!b) return;
     const k = Number(b.getAttribute("data-approve"));
-    const target = STOP[k] + AFTER[k];
+    const goal = STOP[k] + AFTER[k];
     const range = scrollRange();
     demoOn = false;
     userTouched = true;
     if (range > 0 && window.scrollY > 0) {
       const top = stage.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: top + (target / TOTAL) * range, behavior: "smooth" });
+      window.scrollTo({ top: top + (goal / TOTAL) * range, behavior: "smooth" });
     } else {
-      glideTo(target, 1100);
+      glideTo(goal, 1100);
     }
   };
   board.addEventListener("click", onClick);
@@ -467,14 +526,16 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     setT(TOTAL);
   } else {
     setT(scrollT());
+    target = t;
     eyeAnim = A.animate(qa("[data-eye]"), { translateX: [-9, 9], duration: 1100, alternate: true, loop: true, ease: "inOutSine" });
     window.addEventListener("scroll", onScroll, { passive: true });
-    // Only auto-play when the stage is already on screen and untouched.
+    // Only auto-play when the stage fills the screen untouched (it's the first thing seen).
+    // Below the hero, scrolling drives it: an auto-played board would snap back to the
+    // scattered start as soon as the visitor scrolled.
     timers.push(
       setTimeout(() => {
-        const r = stage.getBoundingClientRect();
-        const onScreen = r.top < window.innerHeight && r.bottom > 0;
-        if (alive && !userTouched && t === 0 && onScreen && window.scrollY === 0) void demo();
+        const atTop = stage.getBoundingClientRect().top <= 0;
+        if (alive && !userTouched && t === 0 && atTop && window.scrollY === 0) void demo();
       }, 2200),
     );
   }
@@ -483,6 +544,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   return () => {
     alive = false;
     stopDemo();
+    stopFollow();
     timers.forEach(clearTimeout);
     ro.disconnect();
     eyeAnim?.revert();
