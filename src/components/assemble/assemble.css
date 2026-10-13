@@ -83,10 +83,10 @@
 .bl-chip {
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* only the shadow eases: the timeline drives position, so a transform transition would lag the scroll */
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bl-chip:hover {
-  transform: translateY(-3px) translateZ(12px);
   box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(224, 49, 43, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
 }
 .bl-chip:hover .bl-border-beam {

@@ -195,7 +195,7 @@ export function SiteHeader() {
                       {SYSTEMS.map((item) => {
                         const Icon = item.icon;
                         return (
-                          <a
+                          <Link
                             key={item.title}
                             href={item.href}
                             onClick={handleLinkClick}
@@ -226,7 +226,7 @@ export function SiteHeader() {
                                 className="text-muted opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-hover:text-lane"
                               />
                             </div>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -240,40 +240,40 @@ export function SiteHeader() {
                           You review every draft with a 1-click approval desk.
                         </span>
                       </div>
-                      <a
+                      <Link
                         href="/#systems"
                         onClick={handleLinkClick}
                         className="flex items-center gap-1 text-xs font-medium text-lane hover:underline whitespace-nowrap"
                       >
                         <span>Explore details</span>
                         <ArrowRight size={12} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            <a
+            <Link
               href="/#systems"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               How it works
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/#about"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               About
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/#pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               Pricing
-            </a>
+            </Link>
           </nav>
 
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
@@ -328,7 +328,7 @@ export function SiteHeader() {
                 {mobileSystemsOpen && (
                   <div className="my-1.5 ml-4 space-y-1.5 border-l-2 border-line pl-3">
                     {SYSTEMS.map((item) => (
-                      <a
+                      <Link
                         key={item.title}
                         href={item.href}
                         onClick={handleLinkClick}
@@ -336,35 +336,35 @@ export function SiteHeader() {
                       >
                         <div className="font-semibold text-ink">{item.title}</div>
                         <div className="text-[11px] text-muted">{item.highlight}</div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
               </div>
 
-              <a
+              <Link
                 href="/#systems"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 How it works
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/#about"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 About
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/#pricing"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 Pricing
-              </a>
+              </Link>
             </nav>
 
             <div className="mt-4 pt-4 border-t border-line/60">
