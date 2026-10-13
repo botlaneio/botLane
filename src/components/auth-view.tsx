@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { LaneMarkCycle } from "./lane-mark-cycle";
 import { LaneMark } from "./lane-mark";
+import { Wordmark } from "./wordmark";
 
 interface AuthViewProps {
   initialMode?: "signin" | "signup";
@@ -85,12 +86,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
             aria-label="Back to BotLane homepage"
             className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
           >
-            <div className="transition-transform duration-200 group-hover:scale-105">
-              <LaneMarkCycle size={28} />
-            </div>
-            <span className="text-[17px] font-semibold tracking-[-0.035em] text-ink">
-              botlane
-            </span>
+            <Wordmark className="text-[19px] text-ink" />
           </Link>
 
           <Link

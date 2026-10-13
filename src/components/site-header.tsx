@@ -14,7 +14,7 @@ import {
   Sliders,
   CheckCircle2,
 } from "lucide-react";
-import { LaneMarkCycle } from "./lane-mark-cycle";
+import { Wordmark } from "./wordmark";
 import { DemoModal } from "./demo-modal";
 
 interface SystemItem {
@@ -144,12 +144,7 @@ export function SiteHeader() {
             aria-label="BotLane home"
             className="group flex items-center gap-2.5 transition-opacity hover:opacity-90 shrink-0"
           >
-            <div className="transition-transform duration-200 group-hover:scale-105">
-              <LaneMarkCycle size={28} />
-            </div>
-            <span className="text-[17px] font-semibold tracking-[-0.035em] text-ink">
-              botlane
-            </span>
+            <Wordmark className="text-[19px] text-ink" />
           </Link>
 
           {/* Zone 2: Navigation Links with Mega Menu */}

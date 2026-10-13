@@ -172,6 +172,9 @@
 }
 .bl-traveller { position: absolute; opacity: 0; }
 
+/* Gives the angled finale cards their depth. */
+.bl-trio-row { perspective: 1600px; }
+
 @media (max-width: 760px) {
   .bl-sysrow { display: none !important; }
 
