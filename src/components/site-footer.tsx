@@ -19,6 +19,7 @@ const COLUMNS = [
       { label: "About", href: "/company/about" },
       { label: "Pricing", href: "/pricing" },
       { label: "Partners", href: "/partners", tag: "20%" },
+      { label: "Contact", href: "/company/contact" },
     ],
   },
   {

@@ -46,7 +46,7 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
         <nav className="flex items-center gap-6">
           <Link href="/legal/terms" className="hover:text-ink">Terms</Link>
           <Link href="/legal/privacy" className="hover:text-ink">Privacy</Link>
-          <Link href="/demo" className="hover:text-ink">Contact</Link>
+          <Link href="/company/contact" className="hover:text-ink">Contact</Link>
         </nav>
       </footer>
     </div>
