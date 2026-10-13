@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { LaneMark } from "../lane-mark";
 import {
   APPROVALS,
   CAPTIONS,
@@ -157,15 +158,8 @@ export function AssembleScene() {
             <Slot x={372} y={150} w={200} h={280} z={44}>
               <div data-fx="lane" data-cx={472} data-cy={290} className="bl-card bl-fill relative p-[18px]">
                 <div className="flex items-center justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-ink shadow-[0_6px_14px_rgba(20,20,40,0.18)]">
-                    <span className="flex h-[11px] w-[30px] items-center justify-center overflow-hidden rounded-md bg-white">
-                      <span data-eye="" className="bl-eye" />
-                    </span>
-                  </span>
-                  <span className="relative h-6 w-[74px]">
-                    <span data-lpw="" className="bl-pill bl-pill-red absolute top-0 right-0">Working</span>
-                    <span data-lpr="" className="bl-pill absolute top-0 right-0" style={{ opacity: 0 }}>Ready</span>
-                  </span>
+                  <LaneMark size={48} state="ready" data-lanemark="" className="drop-shadow-[0_6px_14px_rgba(20,20,40,0.18)]" />
+                  <span data-lanepill="" data-state="ready" className="bl-pill bl-lane-pill">Ready</span>
                 </div>
                 {RUNS.map((r, k) => (
                   <div key={r.run} data-ls={k} className="absolute inset-x-[18px] top-20 bottom-[18px]" style={k ? { opacity: 0 } : undefined}>

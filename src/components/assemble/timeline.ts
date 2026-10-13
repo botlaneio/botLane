@@ -128,8 +128,6 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const cntB = q('[data-cnt="b"]');
   const ls = qa("[data-ls]");
   const yl = qa("[data-yl]");
-  const lpw = q("[data-lpw]");
-  const lpr = q("[data-lpr]");
   const cks = [0, 1, 2].map((k) => qa(`[data-ck="${k}"]`));
   const waits = qa("[data-wait]");
   const dones = qa("[data-done]");
@@ -194,7 +192,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   }
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
-  set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone, lpr], { opacity: 0 });
+  set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone], { opacity: 0 });
   set(dots, { opacity: 0 });
   set([...n1, ...n1d, ...n1l, ...n2, ...n2d], { opacity: 0 });
   set(cks.flat(), { opacity: 0, scale: 0.5 });
@@ -253,12 +251,8 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   // Lane ticks off its checklist, then flips to Ready.
   const work = (k: number, at: number, dur: number) => {
     add(cks[k], { opacity: [0, 1], scale: [0.5, 1], duration: 24, delay: A.stagger(dur / 3), ease: "outBack" }, at);
-    add(lpw, { opacity: 0, duration: 30 }, at + dur);
-    add(lpr, { opacity: [0, 1], duration: 30 }, at + dur);
   };
   const nextSystem = (k: number, at: number) => {
-    add(lpr, { opacity: 0, duration: 30 }, at + 20);
-    add(lpw, { opacity: [0, 1], duration: 30 }, at + 20);
     swap(ls, k, at + 40);
     swap(yl, k, at + 40);
     add(dones[k - 1], { opacity: 0, duration: 40 }, at + 40);
@@ -398,11 +392,32 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
 
   /* ---- progress: scroll, scrubber, Approve, idle demo ---- */
   fit();
+  // Lane's mark in the board shows the same state as the story: working on each
+  // system, waiting at its approval, approved once you OK it.
+  const laneMark = q<SVGSVGElement>("[data-lanemark]");
+  const lanePill = q<HTMLElement>("[data-lanepill]");
+  const PILL = { ready: "Ready", working: "Working", waiting: "Needs your OK", done: "Done" } as const;
+  const WORK_FROM = [740, T1 + 210, T2 + 210];
+  const SYSTEM_END = [T1, T2, TF];
+  const laneState = (time: number): keyof typeof PILL => {
+    if (time >= TF) return "done";
+    for (let k = 0; k < 3; k++) {
+      if (time >= WORK_FROM[k] && time < SYSTEM_END[k]) {
+        if (time < STOP[k] - 150) return "working";
+        if (time < STOP[k]) return "waiting";
+        return "done";
+      }
+    }
+    return "ready";
+  };
   const setT = (v: number) => {
     t = Math.max(0, Math.min(TOTAL, v));
     tl.seek(t);
     camera(t);
     scrub.value = String(Math.round((t / TOTAL) * 1000));
+    const ls = laneState(t);
+    if (laneMark && laneMark.dataset.state !== ls) laneMark.dataset.state = ls;
+    if (lanePill && lanePill.dataset.state !== ls) { lanePill.dataset.state = ls; lanePill.textContent = PILL[ls]; }
     btns.forEach((b, k) => {
       const active = t >= STOP[k] - 150 && t < STOP[k];
       b.style.pointerEvents = active ? "auto" : "none";
@@ -521,13 +536,11 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     }
   };
 
-  let eyeAnim: JSAnimation | null = null;
   if (reduce) {
     setT(TOTAL);
   } else {
     setT(scrollT());
     target = t;
-    eyeAnim = A.animate(qa("[data-eye]"), { translateX: [-9, 9], duration: 1100, alternate: true, loop: true, ease: "inOutSine" });
     window.addEventListener("scroll", onScroll, { passive: true });
     // Only auto-play when the stage fills the screen untouched (it's the first thing seen).
     // Below the hero, scrolling drives it: an auto-played board would snap back to the
@@ -547,7 +560,6 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     stopFollow();
     timers.forEach(clearTimeout);
     ro.disconnect();
-    eyeAnim?.revert();
     tl.revert();
     window.removeEventListener("scroll", onScroll);
     scrub.removeEventListener("input", onScrub);
