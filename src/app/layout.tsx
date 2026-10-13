@@ -23,13 +23,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children, modal }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="min-h-full bg-bg text-ink">
-        {children}
-        {modal}
-      </body>
+      <body className="min-h-full bg-bg text-ink">{children}</body>
     </html>
   );
 }

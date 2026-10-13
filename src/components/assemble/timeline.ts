@@ -12,10 +12,6 @@ const AFTER = [200, 220, 280]; // how far an Approve click moves the story on
 
 // Phone camera: [time, board x to centre on, zoom 0 = whole board … 1 = close-up].
 // Columns: Input ≈ 144, Lane ≈ 470, You ≈ 750, Output ≈ 1096.
-// How far the cards turn on the flat board, in degrees.
-const LANE_TURN = 10; // Lane and You face each other
-const TRIO_TURN = 16; // the outer finale cards face the middle
-
 const SHOTS: [number, number, number][] = [
   [0, 620, 0], [640, 620, 0],
   [760, 300, 1], [900, 560, 1], [990, 750, 1], [1090, 1000, 1], [1180, 1000, 1], // 01 funnel
@@ -58,9 +54,8 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- fit the 1240 × 600 board to the viewport ---- */
   // Wide screens see the whole board. Narrow screens get a camera that zooms in
   // and pans across the board, following the work from Input to Output.
-  // VIEW is the board-space area always kept on screen: the board itself is flat, but
-  // angled cards reach a little past the 1240 × 600 box, evenly on both sides.
-  const VIEW = { left: -40, top: -40, right: 1280, bottom: 650 };
+  // VIEW is the board-space area kept on screen, centered on the 1240 × 600 canvas.
+  const VIEW = { left: -30, top: -20, right: 1270, bottom: 620 };
   const VW = VIEW.right - VIEW.left;
   const VH = VIEW.bottom - VIEW.top;
   const VCX = (VIEW.left + VIEW.right) / 2;
@@ -148,63 +143,63 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- the opening: pieces scattered across the board in a balanced, evenly distributed composition ---- */
   const home = { translateX: 0, translateY: 0, translateZ: 0, rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1, opacity: 1 };
 
-  // Explicit, artfully directed scattered transforms for each piece.
-  // Perfectly balanced across the 1240 × 600 canvas with zero collisions,
-  // comfortable breathing room, and a natural floating 3D paper/card aesthetic.
+  // Symmetrical, artfully balanced scattered transforms across the 1240 × 600 canvas.
+  // Maintains organic 3D floating presence while keeping the horizontal baseline and center
+  // of gravity level, eliminating any uneven declining trajectory from right to left.
   const slabScatter = [
-    // 01: Input slab (left: 0, w: 288) -> subtle architectural drift in background
-    { translateX: -12, translateY: 14, translateZ: -20, rotateX: 2.2, rotateY: -1.8, rotateZ: -1.0, scale: 0.985, opacity: 0.76 },
-    // 02: Automation slab (left: 344, w: 252)
-    { translateX: 8, translateY: -10, translateZ: -16, rotateX: 1.8, rotateY: 1.4, rotateZ: 0.8, scale: 0.985, opacity: 0.76 },
-    // 03: Approval slab (left: 616, w: 268)
-    { translateX: -8, translateY: 12, translateZ: -22, rotateX: -1.6, rotateY: -1.2, rotateZ: -0.8, scale: 0.985, opacity: 0.76 },
-    // 04: Output slab (left: 936, w: 320)
-    { translateX: 12, translateY: -12, translateZ: -18, rotateX: 2.0, rotateY: 1.6, rotateZ: 1.0, scale: 0.985, opacity: 0.76 },
+    // 01: Input slab (left: 0, w: 288) -> outer-left structural anchor
+    { translateX: -8, translateY: 0, translateZ: -20, rotateX: 1.5, rotateY: 1.2, rotateZ: -0.6, scale: 0.99, opacity: 0.76 },
+    // 02: Automation slab (left: 344, w: 252) -> inner-left slab
+    { translateX: -4, translateY: 0, translateZ: -16, rotateX: 1.2, rotateY: 0.8, rotateZ: -0.4, scale: 0.99, opacity: 0.76 },
+    // 03: Approval slab (left: 616, w: 268) -> inner-right slab
+    { translateX: 4, translateY: 0, translateZ: -16, rotateX: 1.2, rotateY: -0.8, rotateZ: 0.4, scale: 0.99, opacity: 0.76 },
+    // 04: Output slab (left: 936, w: 320) -> outer-right structural anchor
+    { translateX: 8, translateY: 0, translateZ: -20, rotateX: 1.5, rotateY: -1.2, rotateZ: 0.6, scale: 0.99, opacity: 0.76 },
   ];
 
   const chipScatter = [
-    // 0: Google Ads (home: x=24, y=120) -> Upper-left floating card with gentle tilt
-    { translateX: 34, translateY: -36, translateZ: 65, rotateX: 3.5, rotateY: -3.5, rotateZ: -5.5, scale: 0.96, opacity: 0.98 },
-    // 1: Analytics (home: x=24, y=208) -> Upper-mid-left, staggered right to fill the column gap
-    { translateX: 124, translateY: 6, translateZ: 95, rotateX: -3.0, rotateY: 4.5, rotateZ: 4.8, scale: 0.96, opacity: 0.98 },
-    // 2: Meta Ads (home: x=24, y=296) -> Lower-left floating card
-    { translateX: 20, translateY: 74, translateZ: 50, rotateX: 4.0, rotateY: -4.0, rotateZ: -4.0, scale: 0.96, opacity: 0.98 },
-    // 3: HubSpot (home: x=24, y=384) -> Lower-mid-left, staggered right into lower gap
-    { translateX: 180, translateY: 56, translateZ: 105, rotateX: -3.5, rotateY: 3.5, rotateZ: 5.8, scale: 0.96, opacity: 0.98 },
+    // 0: Google Ads (home: x=24, y=120) -> gentle floating card, balanced top
+    { translateX: -12, translateY: 10, translateZ: 70, rotateX: 2.5, rotateY: 2.0, rotateZ: -2.5, scale: 0.96, opacity: 0.98 },
+    // 1: Analytics (home: x=24, y=208) -> gentle right drift, balanced upper-mid
+    { translateX: 16, translateY: -6, translateZ: 85, rotateX: -2.0, rotateY: -2.2, rotateZ: 2.2, scale: 0.96, opacity: 0.98 },
+    // 2: Meta Ads (home: x=24, y=296) -> gentle left drift, balanced lower-mid
+    { translateX: -14, translateY: 6, translateZ: 75, rotateX: 2.2, rotateY: 2.0, rotateZ: -2.0, scale: 0.96, opacity: 0.98 },
+    // 3: HubSpot (home: x=24, y=384) -> gentle right drift, lifted to prevent bottom sagging
+    { translateX: 14, translateY: -12, translateZ: 90, rotateX: -2.2, rotateY: -1.8, rotateZ: 2.4, scale: 0.96, opacity: 0.98 },
   ];
 
   const laneScatter = {
-    // Lane card (home: x=372, y=150) -> Center-left anchor, lifted higher & forward
-    translateX: -18,
-    translateY: -38,
-    translateZ: 115,
-    rotateX: 4.0,
-    rotateY: -3.0,
-    rotateZ: -3.0,
+    // Lane card (home: x=372, y=150) -> Center-left hero card, mirror-symmetric with You
+    translateX: -14,
+    translateY: -4,
+    translateZ: 95,
+    rotateX: 2.5,
+    rotateY: -2.5,
+    rotateZ: -2.0,
     scale: 0.97,
     opacity: 0.98,
   };
 
   const youScatter = {
-    // You card (home: x=640, y=140) -> Center-right anchor, positioned with breathing room from Lane
-    translateX: 28,
-    translateY: 34,
+    // You card (home: x=640, y=140) -> Center-right hero card, mirror-symmetric with Lane
+    translateX: 14,
+    translateY: -4,
     translateZ: 95,
-    rotateX: -3.5,
-    rotateY: 4.0,
-    rotateZ: 3.8,
+    rotateX: 2.5,
+    rotateY: 2.5,
+    rotateZ: 2.0,
     scale: 0.97,
     opacity: 0.98,
   };
 
   const reportScatter = {
-    // Report card (home: x=960, y=130) -> Upper-right anchor, comfortably framed within canvas bounds
-    translateX: -22,
-    translateY: -22,
-    translateZ: 75,
-    rotateX: 3.5,
-    rotateY: -3.0,
-    rotateZ: -4.2,
+    // Report card (home: x=960, y=130) -> Outer-right hero card, balanced with left chips
+    translateX: 14,
+    translateY: 6,
+    translateZ: 85,
+    rotateX: 2.8,
+    rotateY: -2.0,
+    rotateZ: 2.2,
     scale: 0.96,
     opacity: 0.98,
   };
@@ -221,10 +216,9 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
 
   /* ---- starting state ---- */
   const set = A.utils.set;
-  // Set back a little and gently tilted; it comes forward as the pieces land.
-  // The board stays flat and level; depth comes from the cards, which are angled
-  // symmetrically instead (Lane and You face each other, the side finale cards face the middle).
-  set(board, { rotateX: 0, rotateY: 0, rotateZ: 0, translateZ: -120 });
+  // Level horizon with balanced 3D isometric pitch; comes forward as the pieces land.
+  // Level and centred: a gentle tilt back for depth (7° at rest), no sideways turn or roll.
+  set(board, { rotateX: 11, rotateY: 0, rotateZ: 0, translateZ: -100 });
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
   set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone, lpr], { opacity: 0 });
@@ -330,14 +324,14 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- 0 → 690 · pieces assemble ---- */
   // Long, overlapping, sine-eased moves: every piece is drifting home at once,
   // with foreground cards performing a stunning 3D flip-and-dock into their slots.
-  add(board, { translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
+  add(board, { rotateX: 7, rotateY: 0, rotateZ: 0, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
   add(floor, { opacity: 1, scale: 1, duration: 420, ease: "inOutSine" }, 40);
   add(heads, settle(520, 35), 20);
   add(chips, flipSettle(500, 35), 70);
   add(chipLusters, lusterSweep(300, 35), 160);
-  add(lane, { ...flipSettle(510, 0), rotateY: 360 + LANE_TURN }, 100);
+  add(lane, flipSettle(510, 0), 100);
   add(laneLuster, lusterSweep(310), 190);
-  add(you, { ...flipSettle(510, 0), rotateY: 360 - LANE_TURN }, 140);
+  add(you, flipSettle(510, 0), 140);
   add(youLuster, lusterSweep(310), 230);
   add(report, flipSettle(510, 0), 180);
   add(reportLuster, lusterSweep(310), 270);
@@ -452,12 +446,6 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   add(board, { translateZ: [0, -160], duration: 200, ease: "inOutQuad" }, TF);
   add(scaler, { opacity: [1, 0.12], duration: 200, ease: "inOutQuad" }, TF);
   add(tcs, { opacity: [0, 1], translateY: [24, 0], duration: 140, delay: A.stagger(40), ease: "outCubic" }, TF + 60);
-  // The outer finale cards turn their outer edges toward you, so the row faces the middle.
-  // Phones stack the cards, so they stay flat there.
-  if (!window.matchMedia?.("(max-width: 760px)").matches) {
-    set(tcs[0], { rotateY: TRIO_TURN, transformOrigin: "0% 50%" });
-    set(tcs[2], { rotateY: -TRIO_TURN, transformOrigin: "100% 50%" });
-  }
 
   /* ---- captions + system label ---- */
   const capOut = (i: number, at: number) => add(caps[i], { opacity: 0, translateY: -12, duration: 60 }, at);
