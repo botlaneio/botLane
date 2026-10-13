@@ -128,35 +128,101 @@ const rise: Variants = {
   visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: EASING } },
 };
 
+// One-time intro timeline (ms from page load). It plays once on Lane 01, then stops.
+const INTRO = {
+  syncStart: 500,
+  syncStep: 350,
+  countStart: 1500,
+  countLength: 900,
+  typeStart: 2500,
+  msPerChar: 16,
+  cursorMove: 900,
+  clickHold: 100,
+  cursorFade: 500,
+};
+
+const INTRO_LANE = SYSTEMS[0];
+const TOTAL_CHARS = INTRO_LANE.lines.reduce((sum, line) => sum + line.length, 0);
+const CURSOR_START = INTRO.typeStart + TOTAL_CHARS * INTRO.msPerChar + 250;
+const CLICK_AT = CURSOR_START + INTRO.cursorMove;
+const INTRO_END = CLICK_AT + INTRO.clickHold + INTRO.cursorFade;
+
+const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+const easeOut = (p: number) => 1 - Math.pow(1 - p, 3);
+
+/** Counts "$5,570" or "4.21x" up from zero, keeping its prefix, suffix and decimals. */
+function countUp(value: string, progress: number) {
+  const match = value.match(/^([^\d-]*)(-?[\d,]*\.?\d+)(.*)$/);
+  if (!match || progress >= 1) return value;
+  const [, prefix, num, suffix] = match;
+  const target = parseFloat(num.replace(/,/g, ""));
+  const decimals = num.includes(".") ? num.split(".")[1].length : 0;
+  const current = (target * easeOut(progress)).toLocaleString("en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+  return `${prefix}${num.includes(",") ? current : current.replace(/,/g, "")}${suffix}`;
+}
+
+/** Splits a running character budget across the bullet lines, in order. */
+function typedLines(lines: string[], chars: number) {
+  let left = chars;
+  return lines.map((line) => {
+    const shown = line.slice(0, Math.max(0, left));
+    left -= line.length;
+    return shown;
+  });
+}
+
 export function Hero() {
   const [activeId, setActiveId] = useState<SystemId>("reporting");
-  const [autoCycle, setAutoCycle] = useState(true);
-  const [approved, setApproved] = useState(false);
+  const [manualApproved, setManualApproved] = useState(false);
+  // Milliseconds into the intro; INTRO_END means it has finished (or was skipped)
+  const [t, setT] = useState(0);
 
   const active = SYSTEMS.find((s) => s.id === activeId) ?? SYSTEMS[0];
 
-  // Auto-advance through the three systems until the visitor picks one
+  // Play the intro once per page load. Reduced-motion visitors see the final frame.
   useEffect(() => {
-    if (!autoCycle) return;
-    const interval = setInterval(() => {
-      setApproved(false);
-      setActiveId((prev) => {
-        const i = SYSTEMS.findIndex((s) => s.id === prev);
-        return SYSTEMS[(i + 1) % SYSTEMS.length].id;
-      });
-    }, 7000);
-    return () => clearInterval(interval);
-  }, [autoCycle]);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = requestAnimationFrame(() => setT(INTRO_END));
+      return () => cancelAnimationFrame(id);
+    }
+    let frame = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const elapsed = Math.min(INTRO_END, now - start);
+      setT(elapsed);
+      if (elapsed < INTRO_END) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  const introRunning = t < INTRO_END;
+  const inIntro = activeId === INTRO_LANE.id;
+  // Outside the intro lane, everything shows in its finished state
+  const at = inIntro ? t : INTRO_END;
+
+  const syncedCount = Math.floor((at - INTRO.syncStart) / INTRO.syncStep) + 1;
+  const countProgress = clamp01((at - INTRO.countStart) / INTRO.countLength);
+  const lines = inIntro
+    ? typedLines(active.lines, Math.floor((at - INTRO.typeStart) / INTRO.msPerChar))
+    : active.lines;
+  const typingLine = inIntro && introRunning ? lines.findIndex((l, i) => l.length < active.lines[i].length) : -1;
+  const cursorVisible = inIntro && t >= CURSOR_START && t < INTRO_END;
+  const cursorPressed = t >= CLICK_AT;
+  const approved = manualApproved || (inIntro && t >= CLICK_AT + INTRO.clickHold);
 
   const pick = (id: SystemId) => {
     setActiveId(id);
-    setApproved(false);
-    setAutoCycle(false);
+    setManualApproved(false);
+    setT(INTRO_END);
   };
 
   const approve = useCallback(() => {
-    setApproved(true);
-    setTimeout(() => setApproved(false), 3500);
+    setManualApproved(true);
+    setT(INTRO_END);
   }, []);
 
   return (
@@ -255,15 +321,10 @@ export function Hero() {
                 </div>
                 <span className="text-[13px] text-muted">workspace.lane.ai</span>
               </div>
-              <button
-                type="button"
-                onClick={() => setAutoCycle(!autoCycle)}
-                className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted transition hover:text-ink"
-                title="Toggle automatic preview"
-              >
-                <span className={`size-2 rounded-full ${autoCycle ? "bg-emerald-500" : "bg-neutral-400"}`} />
-                <span>{autoCycle ? "Auto-preview" : "Paused"}</span>
-              </button>
+              <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted">
+                <span className="size-2 rounded-full bg-emerald-500" />
+                <span>Auto-preview</span>
+              </span>
             </div>
 
             <div className="flex">
@@ -356,14 +417,14 @@ export function Hero() {
                               key={kpi.label}
                               className="rounded-[12px] border border-line bg-white px-2 py-3 text-center"
                             >
-                              <div className="text-base font-semibold tracking-tight text-ink sm:text-lg">
-                                {kpi.value}
+                              <div className="text-base font-semibold tracking-tight text-ink tabular-nums sm:text-lg">
+                                {countUp(kpi.value, countProgress)}
                               </div>
                               <div className="text-[10px] text-muted sm:text-[11px]">{kpi.label}</div>
                               <div
-                                className={`mt-1 text-[10px] font-medium sm:text-[11px] ${
+                                className={`mt-1 text-[10px] font-medium transition-opacity duration-300 sm:text-[11px] ${
                                   kpi.tone === "ok" ? "text-ok" : "text-ink-2"
-                                }`}
+                                } ${countProgress < 1 ? "opacity-0" : "opacity-100"}`}
                               >
                                 {kpi.delta}
                               </div>
@@ -372,10 +433,21 @@ export function Hero() {
                         </div>
 
                         <ul className="mt-4 space-y-1.5 text-xs leading-relaxed text-ink-2">
-                          {active.lines.map((line) => (
-                            <li key={line} className="flex items-start gap-2">
-                              <span className="mt-[7px] size-1 shrink-0 rounded-full bg-lane" />
-                              <span>{line}</span>
+                          {active.lines.map((line, i) => (
+                            <li key={line} className="relative flex items-start gap-2">
+                              <span
+                                className={`mt-[7px] size-1 shrink-0 rounded-full bg-lane transition-opacity ${
+                                  lines[i].length ? "opacity-100" : "opacity-0"
+                                }`}
+                              />
+                              {/* Full line keeps the height steady while the typed copy sits on top */}
+                              <span className="invisible">{line}</span>
+                              <span className="absolute left-3 top-0">
+                                {lines[i]}
+                                {typingLine === i && (
+                                  <span className="ml-px inline-block h-3 w-px translate-y-0.5 bg-ink" />
+                                )}
+                              </span>
                             </li>
                           ))}
                         </ul>
@@ -388,40 +460,90 @@ export function Hero() {
                     <div className="flex-1 rounded-[16px] border border-line bg-surface/50 p-3">
                       <div className="flex items-center justify-between px-1">
                         <span className="text-xs font-semibold text-ink">Data intake</span>
-                        <span className="size-1.5 rounded-full bg-ok" />
+                        <span
+                          className={`size-1.5 rounded-full transition-colors ${
+                            syncedCount >= active.intake.length ? "bg-ok" : "bg-amber-400"
+                          }`}
+                        />
                       </div>
                       <div className="mt-2.5 space-y-2">
-                        {active.intake.map((feed) => (
-                          <div
-                            key={feed.name}
-                            className="flex items-center gap-2.5 rounded-[10px] border border-line bg-white p-2"
-                          >
-                            <span className="flex size-7 shrink-0 items-center justify-center">{feed.logo}</span>
-                            <div className="min-w-0">
-                              <div className="truncate text-[11px] font-medium text-ink">{feed.name}</div>
-                              <div className="truncate text-[10px] text-muted">{feed.detail}</div>
+                        {active.intake.map((feed, i) => {
+                          const synced = i < syncedCount;
+                          return (
+                            <div
+                              key={feed.name}
+                              className={`flex items-center gap-2.5 rounded-[10px] border border-line bg-white p-2 transition-all duration-300 ${
+                                synced ? "opacity-100" : "translate-y-1 opacity-40"
+                              }`}
+                            >
+                              <span className="flex size-7 shrink-0 items-center justify-center">{feed.logo}</span>
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-[11px] font-medium text-ink">{feed.name}</div>
+                                <div className="truncate text-[10px] text-muted">{feed.detail}</div>
+                              </div>
+                              <Check
+                                className={`size-3 shrink-0 text-ok transition-all duration-300 ${
+                                  synced ? "scale-100 opacity-100" : "scale-50 opacity-0"
+                                }`}
+                              />
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
 
-                    {approved ? (
-                      <div className="flex h-11 items-center justify-center gap-2 rounded-[12px] border border-emerald-200 bg-emerald-50 text-xs font-medium text-emerald-800">
-                        <CheckCircle2 className="size-4 text-emerald-600" />
-                        <span>Approved & sent</span>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={approve}
-                        className="group flex h-11 items-center justify-center gap-2 rounded-[12px] bg-ink text-xs font-medium text-white shadow-sm transition hover:bg-black active:scale-[0.98]"
-                      >
-                        <Check className="size-3.5" />
-                        <span>{active.action}</span>
-                        <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </button>
-                    )}
+                    <div className="relative">
+                      {approved ? (
+                        <div className="flex h-11 items-center justify-center gap-2 rounded-[12px] border border-emerald-200 bg-emerald-50 text-xs font-medium text-emerald-800">
+                          <CheckCircle2 className="size-4 text-emerald-600" />
+                          <span>Approved & sent</span>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={approve}
+                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[12px] bg-ink text-xs font-medium text-white shadow-sm transition hover:bg-black active:scale-[0.98] ${
+                            cursorPressed && inIntro && introRunning ? "scale-[0.97] bg-black" : ""
+                          }`}
+                        >
+                          <Check className="size-3.5" />
+                          <span>{active.action}</span>
+                          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                        </button>
+                      )}
+
+                      {/* Pointer that clicks Approve once, at the end of the intro */}
+                      {cursorVisible && (
+                        <motion.svg
+                          aria-hidden
+                          width="18"
+                          height="22"
+                          viewBox="0 0 18 22"
+                          className="pointer-events-none absolute left-1/2 top-1/2 drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)]"
+                          initial={{ x: 90, y: 80, opacity: 0 }}
+                          animate={{
+                            x: 4,
+                            y: 2,
+                            opacity: t >= CLICK_AT + INTRO.clickHold ? 0 : 1,
+                            scale: cursorPressed ? 0.85 : 1,
+                          }}
+                          transition={{
+                            x: { duration: INTRO.cursorMove / 1000, ease: EASING },
+                            y: { duration: INTRO.cursorMove / 1000, ease: EASING },
+                            opacity: { duration: 0.3 },
+                            scale: { duration: 0.1 },
+                          }}
+                        >
+                          <path
+                            d="M1 1l15 9.5-6.6 1.4 3.9 7.6-2.8 1.4-3.9-7.6L1 18z"
+                            fill="#1d1d1f"
+                            stroke="#fff"
+                            strokeWidth="1.4"
+                            strokeLinejoin="round"
+                          />
+                        </motion.svg>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
