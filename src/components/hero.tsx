@@ -17,7 +17,7 @@ export function Hero() {
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
         <Link
-          href="#demo"
+          href="/demo"
           className="flex h-12 items-center justify-center rounded-[8px] bg-lane-strong px-6 text-base font-medium text-white shadow-sm transition-all hover:bg-lane-ink active:scale-[0.98]"
         >
           Book a demo

@@ -33,7 +33,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Client reporting",
     description: "Ingests Google Ads, Meta, and HubSpot into client-ready weekly PDFs.",
     highlight: "Many sources → 1 report",
-    href: "/#client-reporting",
+    href: "/systems/client-reporting",
     icon: Layers,
   },
   {
@@ -42,7 +42,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Lead follow-up",
     description: "Replies to form leads in minutes, then sends calibrated nudges until booked.",
     highlight: "Multi-touch cadence",
-    href: "/#lead-follow-up",
+    href: "/systems/lead-follow-up",
     icon: GitCommit,
   },
   {
@@ -51,7 +51,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Invoice follow-up",
     description: "Sends polite, graduated payment reminders that halt as soon as funds clear.",
     highlight: "Loops until paid",
-    href: "/#invoice-follow-up",
+    href: "/systems/invoice-follow-up",
     icon: RotateCw,
   },
 ];
@@ -255,21 +255,22 @@ export function SiteHeader() {
             </div>
 
             <Link
-              href="/#systems"
+              href="/#getting-started"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               How it works
             </Link>
 
             <Link
-              href="/#about"
+              href="/partners"
+              scroll={false}
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
-              About
+              Partners
             </Link>
 
             <Link
-              href="/#pricing"
+              href="/pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               Pricing
@@ -279,7 +280,7 @@ export function SiteHeader() {
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
           <div className="flex items-center gap-3 shrink-0">
             <Link
-              href="/#demo"
+              href="/demo"
               className="group relative inline-flex h-9 items-center gap-1.5 rounded-[8px] bg-ink px-4 text-[13px] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
             >
               <span>Book a demo</span>
@@ -343,7 +344,7 @@ export function SiteHeader() {
               </div>
 
               <Link
-                href="/#systems"
+                href="/#getting-started"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
@@ -351,15 +352,16 @@ export function SiteHeader() {
               </Link>
 
               <Link
-                href="/#about"
+                href="/partners"
+              scroll={false}
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                About
+                Partners
               </Link>
 
               <Link
-                href="/#pricing"
+                href="/pricing"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
@@ -369,7 +371,7 @@ export function SiteHeader() {
 
             <div className="mt-4 pt-4 border-t border-line/60">
               <Link
-                href="/#demo"
+                href="/demo"
                 onClick={handleLinkClick}
                 className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-lane-strong text-sm font-medium text-white transition-all hover:bg-lane-ink shadow-sm"
               >
