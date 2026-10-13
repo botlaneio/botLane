@@ -18,10 +18,13 @@ export const metadata: Metadata = {
     "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children, modal }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="min-h-full bg-bg text-ink">{children}</body>
+      <body className="min-h-full bg-bg text-ink">
+        {children}
+        {modal}
+      </body>
     </html>
   );
 }
