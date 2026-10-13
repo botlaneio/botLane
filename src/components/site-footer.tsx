@@ -1,130 +1,118 @@
-"use client";
-
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Wordmark } from "./wordmark";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+
+const COLUMNS = [
+  {
+    title: "Systems",
+    links: [
+      { label: "Overview", href: "/systems" },
+      { label: "Client reporting", href: "/systems/client-reporting", tag: "01" },
+      { label: "Lead follow-up", href: "/systems/lead-follow-up", tag: "02" },
+      { label: "Invoice follow-up", href: "/systems/invoice-follow-up", tag: "03" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "How it works", href: "/how-it-works" },
+      { label: "About", href: "/company/about" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Partners", href: "/partners", tag: "20%" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", href: "/legal/privacy" },
+      { label: "Terms", href: "/legal/terms" },
+    ],
+  },
+];
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-line bg-white/50">
-      <div className="mx-auto max-w-[1200px] px-6 pt-16 pb-12">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2.5 text-ink group">
-              <Wordmark className="text-lg" />
-            </Link>
-
-            <p className="text-xs leading-relaxed text-muted max-w-sm">
-              Not a chatbot. An autonomous operations coworker for agencies and service teams.
-              Lane synthesizes your data, formats deliverables, and waits on your approval.
+    <footer className="relative overflow-hidden border-t border-line bg-surface/60">
+      <div className="mx-auto max-w-[1200px] px-6">
+        {/* Closing line + demo */}
+        <div className="flex flex-col gap-6 border-b border-line py-14 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-[clamp(28px,3.6vw,44px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+              Lane prepares.
+              <br />
+              <span className="text-muted">You approve.</span>
             </p>
-
-            <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-600">
-              <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>All systems operational · Human-in-the-loop enforced</span>
-            </div>
           </div>
-
-          {/* Column: The 3 Systems */}
-          <div className="space-y-3 text-xs">
-            <div className="font-mono font-semibold uppercase tracking-wider text-ink text-[11px]">
-              Workforce Systems
-            </div>
-            <ul className="space-y-2 text-muted">
-              <li>
-                <Link href="/systems" className="hover:text-ink transition">
-                  Overview & Comparison
-                </Link>
-              </li>
-              <li>
-                <Link href="/systems/client-reporting" className="hover:text-ink transition flex items-center justify-between">
-                  <span>01 · Client Reporting</span>
-                  <span className="font-mono text-[9px] text-lane">FUNNEL</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/systems/lead-follow-up" className="hover:text-ink transition flex items-center justify-between">
-                  <span>02 · Lead Follow-Up</span>
-                  <span className="font-mono text-[9px] text-lane">LINE</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/systems/invoice-follow-up" className="hover:text-ink transition flex items-center justify-between">
-                  <span>03 · Invoice Follow-Up</span>
-                  <span className="font-mono text-[9px] text-lane">LOOP</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column: Solutions & Growth */}
-          <div className="space-y-3 text-xs">
-            <div className="font-mono font-semibold uppercase tracking-wider text-ink text-[11px]">
-              Engage & Deploy
-            </div>
-            <ul className="space-y-2 text-muted">
-              <li>
-                <Link href="/pricing" className="hover:text-ink transition">
-                  Retainer Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="/demo" className="hover:text-ink transition flex items-center gap-1 text-ink font-medium">
-                  <span>Book a Demo</span>
-                  <ArrowRight size={11} className="text-lane" />
-                </Link>
-              </li>
-              <li>
-                <Link href="/partners" className="hover:text-ink transition">
-                  Partner Programme (20%)
-                </Link>
-              </li>
-              <li>
-                <Link href="/auth" className="hover:text-ink transition">
-                  Sign In / Client Desk
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column: Governance & Trust */}
-          <div className="space-y-3 text-xs">
-            <div className="font-mono font-semibold uppercase tracking-wider text-ink text-[11px]">
-              Legal & Security
-            </div>
-            <ul className="space-y-2 text-muted">
-              <li>
-                <Link href="/legal/privacy" className="hover:text-ink transition">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/legal/terms" className="hover:text-ink transition">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <span className="inline-flex items-center gap-1 text-[11px] text-muted">
-                  <ShieldCheck size={12} className="text-emerald-600" />
-                  <span>Zero LLM Data Training</span>
-                </span>
-              </li>
-            </ul>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/demo"
+              className="group inline-flex h-11 items-center gap-2 rounded-[8px] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+            >
+              <span>Book a demo</span>
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/pricing"
+              className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/20"
+            >
+              See pricing
+            </Link>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line/60 pt-8 text-[11px] text-muted font-mono">
-          <div>
-            © {new Date().getFullYear()} BotLane LLC. All rights reserved.
+        {/* Links */}
+        <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="sm:col-span-2 lg:col-span-6">
+            <Link href="/" aria-label="BotLane home" className="text-ink">
+              <Wordmark className="text-xl" />
+            </Link>
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
+              An AI coworker for agencies. Lane runs client reporting, lead follow-up and invoice
+              follow-up, and nothing goes out without your OK.
+            </p>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/legal/privacy" className="hover:text-ink">Privacy</Link>
-            <span>·</span>
-            <Link href="/legal/terms" className="hover:text-ink">Terms</Link>
-            <span>·</span>
-            <Link href="/demo" className="text-lane hover:underline">Schedule Walkthrough</Link>
+
+          {COLUMNS.map((col) => (
+            <nav key={col.title} aria-label={col.title} className="lg:col-span-2">
+              <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-faint">
+                {col.title}
+              </div>
+              <ul className="mt-4 space-y-2.5">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center gap-2 text-sm text-ink-2 transition hover:text-ink"
+                    >
+                      <span>{link.label}</span>
+                      {"tag" in link && link.tag && (
+                        <span className="rounded-full bg-white px-1.5 py-px font-mono text-[10px] text-lane ring-1 ring-line group-hover:ring-lane/30">
+                          {link.tag}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col gap-3 border-t border-line py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+          <span>© {new Date().getFullYear()} BotLane LLC</span>
+          <span className="inline-flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-ok" />
+            <span>Every send waits for your approval</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Oversized wordmark */}
+      <div aria-hidden className="pointer-events-none select-none overflow-hidden">
+        <div className="mx-auto max-w-[1200px] px-6">
+          <div className="-mb-[0.22em] text-[clamp(96px,22vw,300px)] font-semibold leading-none tracking-[-0.06em] text-ink/[0.045]">
+            botlane
           </div>
         </div>
       </div>
