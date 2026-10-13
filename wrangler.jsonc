@@ -10,5 +10,12 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  // botlane.io and www.botlane.io serve this Worker. Deploys create the DNS records
+  // and certificates for both; the workers.dev address keeps working too.
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "botlane.io", "custom_domain": true },
+    { "pattern": "www.botlane.io", "custom_domain": true }
+  ]
 }
