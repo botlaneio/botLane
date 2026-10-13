@@ -1,0 +1,29 @@
+/* LaneMark motion: scan left, scan right, settle, the eye becomes a check, back to the eye. */
+.bl-lanemark { display: block; flex: none; overflow: visible; }
+.bl-lanemark .bl-lm-ok { opacity: 0; }
+
+.bl-lanemark.is-live .bl-lm-eye { animation: bl-lm-eye 7s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.bl-lanemark.is-live .bl-lm-ok {
+  opacity: 1; transform: scale(0); transform-box: fill-box; transform-origin: center;
+  animation: bl-lm-ok 7s ease-out infinite;
+}
+
+@keyframes bl-lm-eye {
+  0%, 8% { transform: translateX(0); opacity: 1; }
+  20%, 28% { transform: translateX(-5px); opacity: 1; }
+  40%, 48% { transform: translateX(5px); opacity: 1; }
+  58% { transform: translateX(0); opacity: 1; }
+  62%, 88% { transform: translateX(0); opacity: 0; }
+  94%, 100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes bl-lm-ok {
+  0%, 58% { transform: scale(0); }
+  64% { transform: scale(1.15); }
+  68%, 86% { transform: scale(1); }
+  92%, 100% { transform: scale(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-lanemark.is-live .bl-lm-eye, .bl-lanemark.is-live .bl-lm-ok { animation: none; }
+  .bl-lanemark.is-live .bl-lm-ok { opacity: 0; }
+}

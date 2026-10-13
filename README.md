@@ -32,7 +32,9 @@ Next.js is pinned to 16.3.8 and `cacheComponents` is off: Next 16.4 and Cache Co
 | Path | What it is |
 | --- | --- |
 | `src/app/page.tsx` | The homepage: header, hero, scroll board, three systems, footer |
-| `src/app/globals.css` | Colour tokens (white, near-black, Lane red) and Tailwind theme |
+| `src/app/globals.css` | Colour tokens (off-white canvas, white cards, near-black, Lane red) and Tailwind theme |
+| `src/components/lane-mark.tsx` | The logo: Lane's tile, white visor and red eye. `animated` runs the scan-then-check loop (header) |
+| `src/app/icon.svg`, `favicon.ico`, `apple-icon.png` | Browser and home-screen icons, drawn from the same mark |
 | `src/components/assemble/` | The scroll-to-assemble hero board |
 | `src/components/assemble/data.ts` | All board copy: tools, runs, approvals, captions. **Edit content here** |
 | `src/components/assemble/assemble-scene.tsx` | The board markup (server-rendered, no JS) |
