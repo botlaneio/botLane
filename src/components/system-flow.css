@@ -1,0 +1,26 @@
+/* The tilted workflow hero: the board leans back, level and centred, and the
+   columns and cards rise into place one after another. Flat on small screens. */
+@media (min-width: 1024px) {
+  .sf-stage { perspective: 2200px; perspective-origin: 50% 20%; padding: 8px 0 40px; }
+  .sf-board { transform: rotateX(16deg); transform-style: preserve-3d; transform-origin: 50% 0; }
+  .sf-board .sf-col { animation: sf-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .sf-board .sf-col:nth-child(2) { animation-delay: 0.08s; }
+  .sf-board .sf-col:nth-child(3) { animation-delay: 0.16s; }
+  .sf-board .sf-col:nth-child(4) { animation-delay: 0.24s; }
+  .sf-board .sf-card { animation: sf-card 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .sf-board .sf-col:nth-child(1) .sf-card { animation-delay: 0.35s; }
+  .sf-board .sf-col:nth-child(2) .sf-card { animation-delay: 0.5s; }
+  .sf-board .sf-col:nth-child(3) .sf-card { animation-delay: 0.65s; }
+  .sf-board .sf-col:nth-child(4) .sf-card { animation-delay: 0.8s; }
+}
+@keyframes sf-rise {
+  from { opacity: 0; transform: translateY(40px) translateZ(-60px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sf-card {
+  from { opacity: 0; transform: translateZ(90px) translateY(-12px) rotateX(-8deg); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sf-board .sf-col, .sf-board .sf-card { animation: none !important; }
+}

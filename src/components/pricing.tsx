@@ -35,9 +35,10 @@ const TIERS = [
   },
 ];
 
-export function Pricing() {
+export function Pricing({ heading = true }: { heading?: boolean }) {
   return (
-    <section id="pricing" className="mx-auto max-w-[1200px] scroll-mt-20 px-6 pt-16 pb-28">
+    <section id="pricing" className={`mx-auto max-w-[1200px] scroll-mt-20 px-6 ${heading ? "pt-16 pb-28" : "pt-0 pb-20"}`}>
+      {heading && (
       <div className="mx-auto max-w-2xl text-center">
         <div className="font-mono text-xs uppercase tracking-[0.08em] text-lane">
           Straightforward Investment
@@ -49,8 +50,9 @@ export function Pricing() {
           Lane replaces dozens of scattered hours each week with a clean 30-second approval tap.
         </p>
       </div>
+      )}
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:max-w-4xl lg:mx-auto">
+      <div className={`${heading ? "mt-12" : ""} grid gap-6 md:grid-cols-2 lg:max-w-4xl lg:mx-auto`}>
         {TIERS.map((tier) => (
           <div
             key={tier.name}
@@ -92,7 +94,7 @@ export function Pricing() {
             </div>
 
             <Link
-              href="#demo"
+              href="/demo"
               className={`mt-8 flex h-11 w-full items-center justify-center rounded-[8px] text-sm font-medium transition-all ${
                 tier.highlight
                   ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_4px_14px_rgba(224,49,43,0.2)]"
