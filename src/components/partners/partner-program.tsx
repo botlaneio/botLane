@@ -17,7 +17,7 @@ export function PartnerProgram({ titleId = "partner-title" }: { titleId?: string
       <div className="relative overflow-hidden bg-[#111113] px-7 pt-8 pb-9 text-white md:px-9 md:pt-9">
         <div aria-hidden="true" className="pointer-events-none absolute -top-32 -right-24 size-80 rounded-full bg-[radial-gradient(circle,rgba(224,49,43,0.35),transparent_65%)]" />
         <div className="relative flex items-center gap-2.5">
-          <LaneMark size={26} />
+          <LaneMark size={28} tone="light" />
           <span className="font-mono text-[11px] tracking-[0.14em] text-white/60 uppercase">Partner programme</span>
         </div>
 

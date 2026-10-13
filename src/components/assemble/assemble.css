@@ -54,6 +54,10 @@
   background: #f2f2f5; color: #3a3a3c; white-space: nowrap; flex: none;
 }
 .bl-pill-red { background: var(--bl-red-tint); color: var(--bl-red-ink); }
+.bl-lane-pill { transition: background 0.3s ease, color 0.3s ease; }
+.bl-lane-pill[data-state="working"] { background: var(--bl-red-tint); color: var(--bl-red-ink); }
+.bl-lane-pill[data-state="waiting"] { background: #fdf3dc; color: #9a6206; }
+.bl-lane-pill[data-state="done"] { background: var(--bl-green-tint); color: #1a7f37; }
 .bl-box {
   position: relative; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #d2d2d7;
   box-sizing: border-box; flex: none; background: #fff;
@@ -70,9 +74,6 @@
 .bl-btn-2 {
   height: 40px; border: 1px solid #e0e0e4; border-radius: 8px; background: #fff; color: #1d1d1f;
   font-size: 14px; font-weight: 500; cursor: pointer;
-}
-.bl-eye {
-  width: 7px; height: 7px; border-radius: 50%; background: #e0312b; box-shadow: 0 0 4px rgba(224, 49, 43, 0.45);
 }
 .bl-traveller { position: absolute; opacity: 0; }
 

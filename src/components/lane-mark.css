@@ -1,29 +1,42 @@
-/* LaneMark motion: scan left, scan right, settle, the eye becomes a check, back to the eye. */
-.bl-lanemark { display: block; flex: none; overflow: visible; }
-.bl-lanemark .bl-lm-ok { opacity: 0; }
+/* LaneMark: only the iris changes. One group per state; the active one fades in. */
+.bl-lm { display: block; flex: none; overflow: visible; }
+.bl-lm .bl-lm-g { opacity: 0; transition: opacity 0.35s ease; }
+.bl-lm[data-state="ready"] .bl-lm-ready,
+.bl-lm[data-state="working"] .bl-lm-working,
+.bl-lm[data-state="waiting"] .bl-lm-waiting,
+.bl-lm[data-state="done"] .bl-lm-done,
+.bl-lm[data-state="paused"] .bl-lm-paused,
+.bl-lm[data-state="issue"] .bl-lm-issue { opacity: 1; }
 
-.bl-lanemark.is-live .bl-lm-eye { animation: bl-lm-eye 7s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
-.bl-lanemark.is-live .bl-lm-ok {
-  opacity: 1; transform: scale(0); transform-box: fill-box; transform-origin: center;
-  animation: bl-lm-ok 7s ease-out infinite;
-}
+/* The ring stays quiet, so the mark never reads as a red bullseye. */
+.bl-lm .bl-lm-ring { transition: stroke 0.4s ease, stroke-opacity 0.4s ease; }
+.bl-lm[data-state="waiting"] .bl-lm-ring { stroke: #f2a516; stroke-opacity: 0.45; }
+.bl-lm[data-state="done"] .bl-lm-ring { stroke: #1a7f37; stroke-opacity: 0.3; }
 
-@keyframes bl-lm-eye {
-  0%, 8% { transform: translateX(0); opacity: 1; }
-  20%, 28% { transform: translateX(-5px); opacity: 1; }
-  40%, 48% { transform: translateX(5px); opacity: 1; }
-  58% { transform: translateX(0); opacity: 1; }
-  62%, 88% { transform: translateX(0); opacity: 0; }
-  94%, 100% { transform: translateX(0); opacity: 1; }
+.bl-lm .bl-lm-orbit,
+.bl-lm .bl-lm-breath,
+.bl-lm .bl-lm-pop { transform-box: view-box; transform-origin: 16px 16px; }
+
+/* Working: a short arc orbits while the eye drifts, like a lens finding focus. */
+.bl-lm[data-state="working"] .bl-lm-orbit { animation: bl-lm-spin 1.6s linear infinite; }
+.bl-lm[data-state="working"] .bl-lm-pupil { animation: bl-lm-drift 3.2s ease-in-out infinite; }
+/* Awaiting your OK: the ring breathes. */
+.bl-lm[data-state="waiting"] .bl-lm-breath { animation: bl-lm-breathe 1.6s ease-in-out infinite; }
+/* Approved: the check pops in. */
+.bl-lm[data-state="done"] .bl-lm-pop { animation: bl-lm-pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+
+@keyframes bl-lm-spin { to { transform: rotate(360deg); } }
+@keyframes bl-lm-drift {
+  0%, 100% { transform: translateX(0); }
+  30% { transform: translateX(1.4px); }
+  65% { transform: translateX(-1.4px); }
 }
-@keyframes bl-lm-ok {
-  0%, 58% { transform: scale(0); }
-  64% { transform: scale(1.15); }
-  68%, 86% { transform: scale(1); }
-  92%, 100% { transform: scale(0); }
+@keyframes bl-lm-breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.14); opacity: 0.55; }
 }
+@keyframes bl-lm-pop { from { transform: scale(0.3); } to { transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .bl-lanemark.is-live .bl-lm-eye, .bl-lanemark.is-live .bl-lm-ok { animation: none; }
-  .bl-lanemark.is-live .bl-lm-ok { opacity: 0; }
+  .bl-lm * { animation: none !important; }
 }
