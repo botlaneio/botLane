@@ -38,7 +38,7 @@ function Field({
   return (
     <label className="block">
       <span className="text-sm font-medium text-ink">{label}</span>
-      <span className="relative mt-2 block">
+      <span className="relative mt-1.5 block">
         <Icon className="pointer-events-none absolute top-1/2 left-3.5 size-[18px] -translate-y-1/2 text-muted" />
         {children}
       </span>
@@ -47,7 +47,7 @@ function Field({
 }
 
 const inputClass =
-  "h-12 w-full rounded-[10px] border border-line bg-white pr-11 pl-11 text-sm text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
+  "h-11 w-full rounded-[10px] border border-line bg-white pr-11 pl-11 text-sm text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
 
 function PasswordInput({ placeholder, autoComplete }: { placeholder: string; autoComplete: string }) {
   const [shown, setShown] = useState(false);
@@ -92,27 +92,29 @@ function NotOpenYet() {
 function SocialButtons({ onClick }: { onClick: () => void }) {
   return (
     <>
-      <div className="my-6 flex items-center gap-4 text-xs text-muted">
+      <div className="my-5 flex items-center gap-4 text-xs text-muted">
         <span className="h-px flex-1 bg-line" />
-        OR
+        or continue with
         <span className="h-px flex-1 bg-line" />
       </div>
-      <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
           onClick={onClick}
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
+          aria-label="Continue with Google"
+          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
         >
           <GoogleIcon />
-          Continue with Google
+          Google
         </button>
         <button
           type="button"
           onClick={onClick}
-          className="flex h-12 w-full items-center justify-center gap-3 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
+          aria-label="Continue with Microsoft"
+          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
         >
           <MicrosoftIcon />
-          Continue with Microsoft
+          Microsoft
         </button>
       </div>
     </>
@@ -135,10 +137,10 @@ function Checkbox({ name, required, defaultChecked, children }: { name: string; 
 }
 
 const cardClass =
-  "rounded-[22px] border border-line bg-white p-6 shadow-[0_20px_50px_-24px_rgba(20,20,40,0.16)] sm:p-8";
+  "rounded-[22px] border border-line bg-white p-6 shadow-[0_20px_50px_-24px_rgba(20,20,40,0.16)] sm:p-7";
 
 const submitClass =
-  "group flex h-12 w-full items-center justify-center gap-2 rounded-[10px] bg-ink text-sm font-medium text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)] transition hover:bg-black active:scale-[0.99]";
+  "group flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-ink text-sm font-medium text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)] transition hover:bg-black active:scale-[0.99]";
 
 export function SignInForm() {
   const [notice, setNotice] = useState(false);
@@ -150,7 +152,7 @@ export function SignInForm() {
           e.preventDefault();
           setNotice(true);
         }}
-        className="space-y-5"
+        className="space-y-4"
       >
         <Field label="Email address" icon={Mail}>
           <input name="email" type="email" required autoComplete="email" placeholder="you@acmecorp.com" className={inputClass} />
@@ -176,7 +178,7 @@ export function SignInForm() {
 
       <SocialButtons onClick={() => setNotice(true)} />
 
-      <p className="mt-6 text-center text-xs leading-relaxed text-muted">
+      <p className="mt-5 text-center text-xs leading-relaxed text-muted">
         By signing in, you agree to our{" "}
         <Link href="/legal/terms" className="hover:text-ink">Terms of Service</Link> and{" "}
         <Link href="/legal/privacy" className="hover:text-ink">Privacy Policy</Link>.
@@ -195,16 +197,18 @@ export function SignUpForm() {
           e.preventDefault();
           setNotice(true);
         }}
-        className="space-y-5"
+        className="space-y-4"
       >
-        <Field label="Full name" icon={User}>
-          <input name="name" required autoComplete="name" placeholder="John Doe" className={inputClass} />
-        </Field>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Full name" icon={User}>
+            <input name="name" required autoComplete="name" placeholder="John Doe" className={inputClass} />
+          </Field>
+          <Field label="Company" icon={Building2}>
+            <input name="company" required autoComplete="organization" placeholder="Acme Corp" className={inputClass} />
+          </Field>
+        </div>
         <Field label="Work email" icon={Mail}>
           <input name="email" type="email" required autoComplete="email" placeholder="you@acmecorp.com" className={inputClass} />
-        </Field>
-        <Field label="Company name" icon={Building2}>
-          <input name="company" required autoComplete="organization" placeholder="Acme Corp" className={inputClass} />
         </Field>
         <Field label="Password" icon={Lock}>
           <PasswordInput placeholder="Create a password (min 8 characters)" autoComplete="new-password" />
