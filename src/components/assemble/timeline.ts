@@ -54,9 +54,9 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- fit the 1240 × 600 board to the viewport ---- */
   // Wide screens see the whole board. Narrow screens get a camera that zooms in
   // and pans across the board, following the work from Input to Output.
-  // VIEW is the board-space area always kept on screen: the tilted board leans right
-  // and up, so it reaches past the 1240 × 600 box. The scattered opening stays inside it.
-  const VIEW = { left: -10, top: -40, right: 1310, bottom: 650 };
+  // VIEW is the board-space area always kept on screen: the tilted board reaches a
+  // little past the 1240 × 600 box, evenly on both sides. The scattered opening stays inside it.
+  const VIEW = { left: -40, top: -40, right: 1280, bottom: 650 };
   const VW = VIEW.right - VIEW.left;
   const VH = VIEW.bottom - VIEW.top;
   const VCX = (VIEW.left + VIEW.right) / 2;
@@ -216,7 +216,9 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- starting state ---- */
   const set = A.utils.set;
   // Set back a little and gently tilted; it comes forward as the pieces land.
-  set(board, { rotateX: 20, rotateY: -8, rotateZ: -2, translateZ: -120 });
+  // Level and centred: only a forward tilt for depth, no sideways turn or roll,
+  // so the scattered opening reads as balanced rather than sloping to one side.
+  set(board, { rotateX: 20, rotateY: 0, rotateZ: 0, translateZ: -120 });
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
   set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone], { opacity: 0 });
@@ -318,7 +320,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- 0 → 690 · pieces assemble ---- */
   // Long, overlapping, sine-eased moves: every piece is drifting home at once,
   // with foreground cards performing a stunning 3D flip-and-dock into their slots.
-  add(board, { rotateX: 16, rotateY: -10, rotateZ: 1.5, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
+  add(board, { rotateX: 16, rotateY: 0, rotateZ: 0, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
   add(floor, { opacity: 1, scale: 1, duration: 420, ease: "inOutSine" }, 40);
   add(heads, settle(520, 35), 20);
   add(chips, flipSettle(500, 35), 70);
