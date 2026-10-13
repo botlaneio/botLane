@@ -32,16 +32,12 @@ Next.js is pinned to 16.3.8 and `cacheComponents` is off: Next 16.4 and Cache Co
 | Path | What it is |
 | --- | --- |
 | `src/app/page.tsx` | The homepage: header, hero, scroll board, three systems, footer |
-| `src/app/globals.css` | Colour tokens (off-white canvas, white cards, near-black, Lane red) and Tailwind theme |
-| `src/components/lane-mark.tsx` | The logo: Lane's tile, white visor and red eye. `animated` runs the scan-then-check loop (header) |
-| `src/app/icon.svg`, `favicon.ico`, `apple-icon.png` | Browser and home-screen icons, drawn from the same mark |
+| `src/app/globals.css` | Colour tokens (white, near-black, Lane red) and Tailwind theme |
 | `src/components/assemble/` | The scroll-to-assemble hero board |
 | `src/components/assemble/data.ts` | All board copy: tools, runs, approvals, captions. **Edit content here** |
 | `src/components/assemble/assemble-scene.tsx` | The board markup (server-rendered, no JS) |
 | `src/components/assemble/timeline.ts` | The animation: one anime.js timeline seeked by scroll |
 | `src/components/assemble/assemble-controller.tsx` | Client wrapper: lazy-loads anime.js when the board nears the viewport |
-| `src/components/partners/` | Partner programme: modal, form and the server action that writes to Google Sheets |
-| `src/app/@modal/`, `src/app/partners/` | `/partners` opens as a modal from inside the site and as a full page from a direct link |
 
 ## How the board works
 
@@ -50,10 +46,6 @@ The board lives in a fixed 1240 × 600 coordinate space and is scaled to fit the
 The story: pieces assemble → **01 Client reporting** (a funnel: four sources into one report) → **02 Lead follow-up** (a line: one lead, a run of touches) → **03 Invoice follow-up** (a loop: reminders until it's paid) → the three shapes side by side. Lane and You stay fixed throughout; each system stops at an approval moment.
 
 Respects `prefers-reduced-motion` (shows the final frame).
-
-## Partner programme form
-
-Applications go to the "BotLane Partner Applications" Google Sheet. Setup: [`integrations/google-sheets/README.md`](integrations/google-sheets/README.md). Needs `PARTNER_SHEET_WEBHOOK_URL` and `PARTNER_SHEET_SECRET` set as Cloudflare secrets.
 
 ## To do
 

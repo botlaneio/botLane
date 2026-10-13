@@ -1,42 +1,39 @@
-/* LaneMark: only the iris changes. One group per state; the active one fades in. */
-.bl-lm { display: block; flex: none; overflow: visible; }
-.bl-lm .bl-lm-g { opacity: 0; transition: opacity 0.35s ease; }
-.bl-lm[data-state="ready"] .bl-lm-ready,
-.bl-lm[data-state="working"] .bl-lm-working,
-.bl-lm[data-state="waiting"] .bl-lm-waiting,
-.bl-lm[data-state="done"] .bl-lm-done,
-.bl-lm[data-state="paused"] .bl-lm-paused,
-.bl-lm[data-state="issue"] .bl-lm-issue { opacity: 1; }
-
-/* The ring stays quiet, so the mark never reads as a red bullseye. */
-.bl-lm .bl-lm-ring { transition: stroke 0.4s ease, stroke-opacity 0.4s ease; }
-.bl-lm[data-state="waiting"] .bl-lm-ring { stroke: #f2a516; stroke-opacity: 0.45; }
-.bl-lm[data-state="done"] .bl-lm-ring { stroke: #1a7f37; stroke-opacity: 0.3; }
-
-.bl-lm .bl-lm-orbit,
-.bl-lm .bl-lm-breath,
-.bl-lm .bl-lm-pop { transform-box: view-box; transform-origin: 16px 16px; }
-
-/* Working: a short arc orbits while the eye drifts, like a lens finding focus. */
-.bl-lm[data-state="working"] .bl-lm-orbit { animation: bl-lm-spin 1.6s linear infinite; }
-.bl-lm[data-state="working"] .bl-lm-pupil { animation: bl-lm-drift 3.2s ease-in-out infinite; }
-/* Awaiting your OK: the ring breathes. */
-.bl-lm[data-state="waiting"] .bl-lm-breath { animation: bl-lm-breathe 1.6s ease-in-out infinite; }
-/* Approved: the check pops in. */
-.bl-lm[data-state="done"] .bl-lm-pop { animation: bl-lm-pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
-
-@keyframes bl-lm-spin { to { transform: rotate(360deg); } }
-@keyframes bl-lm-drift {
-  0%, 100% { transform: translateX(0); }
-  30% { transform: translateX(1.4px); }
-  65% { transform: translateX(-1.4px); }
+@keyframes lane-eye-cycle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  22% {
+    transform: translateX(-92px);
+  }
+  48% {
+    transform: translateX(92px);
+  }
+  72% {
+    transform: translateX(-36px);
+  }
+  86% {
+    transform: translateX(54px);
+  }
 }
-@keyframes bl-lm-breathe {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.14); opacity: 0.55; }
-}
-@keyframes bl-lm-pop { from { transform: scale(0.3); } to { transform: scale(1); } }
 
-@media (prefers-reduced-motion: reduce) {
-  .bl-lm * { animation: none !important; }
+@keyframes lane-pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255, 69, 58, 0.65));
+    opacity: 0.95;
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(255, 69, 58, 0.95));
+    opacity: 1;
+  }
 }
+
+.lane-eye-animated {
+  transform-box: view-box;
+  animation: lane-eye-cycle 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transform-origin: 210px 210px;
+}
+
+.lane-eye-glow {
+  animation: lane-pulse-glow 2.2s ease-in-out infinite;
+}
+

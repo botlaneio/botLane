@@ -54,9 +54,9 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- fit the 1240 × 600 board to the viewport ---- */
   // Wide screens see the whole board. Narrow screens get a camera that zooms in
   // and pans across the board, following the work from Input to Output.
-  // VIEW is the board-space area always kept on screen: the tilted board reaches a
-  // little past the 1240 × 600 box, evenly on both sides. The scattered opening stays inside it.
-  const VIEW = { left: -40, top: -40, right: 1280, bottom: 650 };
+  // VIEW is the board-space area always kept on screen: the tilted board leans right
+  // and up, so it reaches past the 1240 × 600 box. The scattered opening stays inside it.
+  const VIEW = { left: -10, top: -40, right: 1310, bottom: 650 };
   const VW = VIEW.right - VIEW.left;
   const VH = VIEW.bottom - VIEW.top;
   const VCX = (VIEW.left + VIEW.right) / 2;
@@ -132,6 +132,8 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const cntB = q('[data-cnt="b"]');
   const ls = qa("[data-ls]");
   const yl = qa("[data-yl]");
+  const lpw = q("[data-lpw]");
+  const lpr = q("[data-lpr]");
   const cks = [0, 1, 2].map((k) => qa(`[data-ck="${k}"]`));
   const waits = qa("[data-wait]");
   const dones = qa("[data-done]");
@@ -142,7 +144,9 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- the opening: pieces scattered across the board in a balanced, evenly distributed composition ---- */
   const home = { translateX: 0, translateY: 0, translateZ: 0, rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1, opacity: 1 };
 
-  // The four column slabs only drift a little: they are the board itself.
+  // Explicit, artfully directed scattered transforms for each piece.
+  // Perfectly balanced across the 1240 × 600 canvas with zero collisions,
+  // comfortable breathing room, and a natural floating 3D paper/card aesthetic.
   const slabScatter = [
     // 01: Input slab (left: 0, w: 288) -> subtle architectural drift in background
     { translateX: -12, translateY: 14, translateZ: -20, rotateX: 2.2, rotateY: -1.8, rotateZ: -1.0, scale: 0.985, opacity: 0.76 },
@@ -154,34 +158,59 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     { translateX: 12, translateY: -12, translateZ: -18, rotateX: 2.0, rotateY: 1.6, rotateZ: 1.0, scale: 0.985, opacity: 0.76 },
   ];
 
-  // The cards spread across the whole board, as if scattered inside its rectangle.
-  // Depth does the rest: cards nearer the viewer (higher translateZ) read bigger,
-  // cards further back read smaller. Each entry is where the card's centre lands
-  // in board space (1240 × 600), its depth, and a little tilt.
-  type Spot = { x: number; y: number; z: number; rx: number; ry: number; rz: number };
-  const place = (el: Element, home: { x: number; y: number }, to: Spot) => ({
-    translateX: to.x - home.x, translateY: to.y - home.y, translateZ: to.z,
-    rotateX: to.rx, rotateY: to.ry, rotateZ: to.rz, scale: 1, opacity: 1,
-  });
-  // home centres come from the slots in assemble-scene.tsx
-  const chipHome = (i: number) => ({ x: 144, y: 156 + i * 88 });
-  const chipSpots: Spot[] = [
-    { x: 160, y: 72, z: 40, rx: 4, ry: -4, rz: -7 },     // Google Ads: top left, set back
-    { x: 1080, y: 76, z: 120, rx: -3, ry: 5, rz: 6 },    // Analytics: top right, nearer
-    { x: 160, y: 540, z: 150, rx: 3, ry: -5, rz: 5 },    // Meta Ads: bottom left, nearer
-    { x: 1080, y: 536, z: 60, rx: -4, ry: 4, rz: -6 },   // HubSpot: bottom right, set back
+  const chipScatter = [
+    // 0: Google Ads (home: x=24, y=120) -> Upper-left floating card with gentle tilt
+    { translateX: 34, translateY: -36, translateZ: 65, rotateX: 3.5, rotateY: -3.5, rotateZ: -5.5, scale: 0.96, opacity: 0.98 },
+    // 1: Analytics (home: x=24, y=208) -> Upper-mid-left, staggered right to fill the column gap
+    { translateX: 124, translateY: 6, translateZ: 95, rotateX: -3.0, rotateY: 4.5, rotateZ: 4.8, scale: 0.96, opacity: 0.98 },
+    // 2: Meta Ads (home: x=24, y=296) -> Lower-left floating card
+    { translateX: 20, translateY: 74, translateZ: 50, rotateX: 4.0, rotateY: -4.0, rotateZ: -4.0, scale: 0.96, opacity: 0.98 },
+    // 3: HubSpot (home: x=24, y=384) -> Lower-mid-left, staggered right into lower gap
+    { translateX: 180, translateY: 56, translateZ: 105, rotateX: -3.5, rotateY: 3.5, rotateZ: 5.8, scale: 0.96, opacity: 0.98 },
   ];
-  const laneSpot: Spot = { x: 360, y: 320, z: 280, rx: 5, ry: -6, rz: -5 };   // front left, biggest
-  const youSpot: Spot = { x: 880, y: 320, z: 240, rx: -4, ry: 6, rz: 4.5 };   // front right, big
-  const reportSpot: Spot = { x: 620, y: 300, z: 20, rx: 3, ry: 0, rz: 2 };   // centre, furthest back
+
+  const laneScatter = {
+    // Lane card (home: x=372, y=150) -> Center-left anchor, lifted higher & forward
+    translateX: -18,
+    translateY: -38,
+    translateZ: 115,
+    rotateX: 4.0,
+    rotateY: -3.0,
+    rotateZ: -3.0,
+    scale: 0.97,
+    opacity: 0.98,
+  };
+
+  const youScatter = {
+    // You card (home: x=640, y=140) -> Center-right anchor, positioned with breathing room from Lane
+    translateX: 28,
+    translateY: 34,
+    translateZ: 95,
+    rotateX: -3.5,
+    rotateY: 4.0,
+    rotateZ: 3.8,
+    scale: 0.97,
+    opacity: 0.98,
+  };
+
+  const reportScatter = {
+    // Report card (home: x=960, y=130) -> Upper-right anchor, comfortably framed within canvas bounds
+    translateX: -22,
+    translateY: -22,
+    translateZ: 75,
+    rotateX: 3.5,
+    rotateY: -3.0,
+    rotateZ: -4.2,
+    scale: 0.96,
+    opacity: 0.98,
+  };
 
   const scattered = new Map<Element, typeof home>();
   heads.forEach((h, i) => scattered.set(h, slabScatter[i] ?? slabScatter[0]));
-  const aim = new Map<Element, Spot>();
-  chips.forEach((c, i) => { const sp = chipSpots[i] ?? chipSpots[0]; aim.set(c, sp); scattered.set(c, place(c, chipHome(i), sp)); });
-  aim.set(lane, laneSpot); scattered.set(lane, place(lane, { x: 472, y: 290 }, laneSpot));
-  aim.set(you, youSpot); scattered.set(you, place(you, { x: 750, y: 290 }, youSpot));
-  aim.set(report, reportSpot); scattered.set(report, place(report, { x: 1096, y: 280 }, reportSpot));
+  chips.forEach((c, i) => scattered.set(c, chipScatter[i] ?? chipScatter[0]));
+  scattered.set(lane, laneScatter);
+  scattered.set(you, youScatter);
+  scattered.set(report, reportScatter);
 
   const pieces = [...heads, lane, you, ...chips, report];
   pieces.forEach((el) => A.utils.set(el, scattered.get(el)!));
@@ -189,46 +218,10 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- starting state ---- */
   const set = A.utils.set;
   // Set back a little and gently tilted; it comes forward as the pieces land.
-  // Level and centred: only a forward tilt for depth, no sideways turn or roll,
-  // so the scattered opening reads as balanced rather than sloping to one side.
-  set(board, { rotateX: 20, rotateY: 0, rotateZ: 0, translateZ: -120 });
-
-  // The board leans back, so a card brought forward also rises on screen. Nudge each
-  // card until its centre lands on its spot as seen on screen, then keep every card
-  // inside the board's rectangle (near cards are larger, so they can reach past it).
-  const RECT = { left: 12, top: 12, right: 1228, bottom: 588 };
-  const nudge = (fix: (el: Element, l: number, t: number, r: number, b: number) => [number, number]) => {
-    for (let pass = 0; pass < 24; pass++) {
-      const box = scaler.getBoundingClientRect();
-      const k = box.width / 1240;
-      if (!k) return;
-      let moved = false;
-      aim.forEach((_, el) => {
-        // measure the card's visible content: a tool card also holds a large spinning
-        // highlight layer that would throw the measurement off
-        const body = el.querySelector(":scope > :not(.bl-card-back):not([data-beam])") ?? el;
-        const r = (el.hasAttribute("data-chip") ? body : el).getBoundingClientRect();
-        const [rawX, rawY] = fix(el, (r.left - box.left) / k, (r.top - box.top) / k, (r.right - box.left) / k, (r.bottom - box.top) / k);
-        const dx = Math.max(-200, Math.min(200, rawX || 0));
-        const dy = Math.max(-200, Math.min(200, rawY || 0));
-        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
-        const p = scattered.get(el)!;
-        p.translateX += dx * 0.9;
-        p.translateY += dy * 0.9;
-        A.utils.set(el, p);
-        moved = true;
-      });
-      if (!moved) return;
-    }
-  };
-  nudge((el, l, t, r, b) => { const sp = aim.get(el)!; return [sp.x - (l + r) / 2, sp.y - (t + b) / 2]; });
-  nudge((_, l, t, r, b) => [
-    l < RECT.left ? RECT.left - l : r > RECT.right ? RECT.right - r : 0,
-    t < RECT.top ? RECT.top - t : b > RECT.bottom ? RECT.bottom - b : 0,
-  ]);
+  set(board, { rotateX: 20, rotateY: -8, rotateZ: -2, translateZ: -120 });
   set(floor, { opacity: 0, scale: 0.85 });
   set(bars, { scaleY: 0 });
-  set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone], { opacity: 0 });
+  set([lead, inv, meet, bankc, av, coin, cntA, cntB, n2l, ring, odone, lpr], { opacity: 0 });
   set(beams, { opacity: 0 });
   set(dots, { opacity: 0 });
   set([...n1, ...n1d, ...n1l, ...n2, ...n2d], { opacity: 0 });
@@ -316,8 +309,12 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   // Lane ticks off its checklist, then flips to Ready.
   const work = (k: number, at: number, dur: number) => {
     add(cks[k], { opacity: [0, 1], scale: [0.5, 1], duration: 24, delay: A.stagger(dur / 3), ease: "outBack" }, at);
+    add(lpw, { opacity: 0, duration: 30 }, at + dur);
+    add(lpr, { opacity: [0, 1], duration: 30 }, at + dur);
   };
   const nextSystem = (k: number, at: number) => {
+    add(lpr, { opacity: 0, duration: 30 }, at + 20);
+    add(lpw, { opacity: [0, 1], duration: 30 }, at + 20);
     swap(ls, k, at + 40);
     swap(yl, k, at + 40);
     add(dones[k - 1], { opacity: 0, duration: 40 }, at + 40);
@@ -327,7 +324,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- 0 → 690 · pieces assemble ---- */
   // Long, overlapping, sine-eased moves: every piece is drifting home at once,
   // with foreground cards performing a stunning 3D flip-and-dock into their slots.
-  add(board, { rotateX: 16, rotateY: 0, rotateZ: 0, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
+  add(board, { rotateX: 16, rotateY: -10, rotateZ: 1.5, translateZ: 0, duration: 690, ease: "inOutSine" }, 0);
   add(floor, { opacity: 1, scale: 1, duration: 420, ease: "inOutSine" }, 40);
   add(heads, settle(520, 35), 20);
   add(chips, flipSettle(500, 35), 70);
@@ -467,32 +464,11 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
 
   /* ---- progress: scroll, scrubber, Approve, idle demo ---- */
   fit();
-  // Lane's mark in the board shows the same state as the story: working on each
-  // system, waiting at its approval, approved once you OK it.
-  const laneMark = q<SVGSVGElement>("[data-lanemark]");
-  const lanePill = q<HTMLElement>("[data-lanepill]");
-  const PILL = { ready: "Ready", working: "Working", waiting: "Needs your OK", done: "Done" } as const;
-  const WORK_FROM = [740, T1 + 210, T2 + 210];
-  const SYSTEM_END = [T1, T2, TF];
-  const laneState = (time: number): keyof typeof PILL => {
-    if (time >= TF) return "done";
-    for (let k = 0; k < 3; k++) {
-      if (time >= WORK_FROM[k] && time < SYSTEM_END[k]) {
-        if (time < STOP[k] - 150) return "working";
-        if (time < STOP[k]) return "waiting";
-        return "done";
-      }
-    }
-    return "ready";
-  };
   const setT = (v: number) => {
     t = Math.max(0, Math.min(TOTAL, v));
     tl.seek(t);
     camera(t);
     scrub.value = String(Math.round((t / TOTAL) * 1000));
-    const ls = laneState(t);
-    if (laneMark && laneMark.dataset.state !== ls) laneMark.dataset.state = ls;
-    if (lanePill && lanePill.dataset.state !== ls) { lanePill.dataset.state = ls; lanePill.textContent = PILL[ls]; }
     btns.forEach((b, k) => {
       const active = t >= STOP[k] - 150 && t < STOP[k];
       b.style.pointerEvents = active ? "auto" : "none";
@@ -612,11 +588,13 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     }
   };
 
+  let eyeAnim: JSAnimation | null = null;
   if (reduce) {
     setT(TOTAL);
   } else {
     setT(scrollT());
     target = t;
+    eyeAnim = A.animate(qa("[data-eye]"), { translateX: [-9, 9], duration: 1100, alternate: true, loop: true, ease: "inOutSine" });
     window.addEventListener("scroll", onScroll, { passive: true });
     // Only auto-play when the stage fills the screen untouched (it's the first thing seen).
     // Below the hero, scrolling drives it: an auto-played board would snap back to the
@@ -636,6 +614,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     stopFollow();
     timers.forEach(clearTimeout);
     ro.disconnect();
+    eyeAnim?.revert();
     tl.revert();
     window.removeEventListener("scroll", onScroll);
     scrub.removeEventListener("input", onScrub);

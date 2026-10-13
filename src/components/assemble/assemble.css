@@ -83,10 +83,10 @@
 .bl-chip {
   position: relative;
   overflow: hidden;
-  /* only the shadow eases: the timeline drives position, so a transform transition would lag the scroll */
-  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bl-chip:hover {
+  transform: translateY(-3px) translateZ(12px);
   box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(224, 49, 43, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
 }
 .bl-chip:hover .bl-border-beam {
@@ -150,10 +150,6 @@
   background: #f2f2f5; color: #3a3a3c; white-space: nowrap; flex: none;
 }
 .bl-pill-red { background: var(--bl-red-tint); color: var(--bl-red-ink); }
-.bl-lane-pill { transition: background 0.3s ease, color 0.3s ease; }
-.bl-lane-pill[data-state="working"] { background: var(--bl-red-tint); color: var(--bl-red-ink); }
-.bl-lane-pill[data-state="waiting"] { background: #fdf3dc; color: #9a6206; }
-.bl-lane-pill[data-state="done"] { background: var(--bl-green-tint); color: #1a7f37; }
 .bl-box {
   position: relative; width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #d2d2d7;
   box-sizing: border-box; flex: none; background: #fff;
@@ -170,6 +166,9 @@
 .bl-btn-2 {
   height: 40px; border: 1px solid #e0e0e4; border-radius: 8px; background: #fff; color: #1d1d1f;
   font-size: 14px; font-weight: 500; cursor: pointer;
+}
+.bl-eye {
+  width: 7px; height: 7px; border-radius: 50%; background: #ff453a; box-shadow: 0 0 6px 1px rgba(255, 69, 58, 0.8);
 }
 .bl-traveller { position: absolute; opacity: 0; }
 

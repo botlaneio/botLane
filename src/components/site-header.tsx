@@ -15,6 +15,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { LaneMarkCycle } from "./lane-mark-cycle";
+import { DemoModal } from "./demo-modal";
 
 interface SystemItem {
   num: string;
@@ -33,7 +34,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Client reporting",
     description: "Ingests Google Ads, Meta, and HubSpot into client-ready weekly PDFs.",
     highlight: "Many sources → 1 report",
-    href: "/systems/client-reporting",
+    href: "#client-reporting",
     icon: Layers,
   },
   {
@@ -42,7 +43,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Lead follow-up",
     description: "Replies to form leads in minutes, then sends calibrated nudges until booked.",
     highlight: "Multi-touch cadence",
-    href: "/systems/lead-follow-up",
+    href: "#lead-follow-up",
     icon: GitCommit,
   },
   {
@@ -51,7 +52,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Invoice follow-up",
     description: "Sends polite, graduated payment reminders that halt as soon as funds clear.",
     highlight: "Loops until paid",
-    href: "/systems/invoice-follow-up",
+    href: "#invoice-follow-up",
     icon: RotateCw,
   },
 ];
@@ -61,6 +62,7 @@ export function SiteHeader() {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSystemsOpen, setMobileSystemsOpen] = useState(false);
+  const [demoOpen, setDemoOpen] = useState(false);
 
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -72,14 +74,22 @@ export function SiteHeader() {
       setIsScrolled(window.scrollY > 15);
     };
 
+    const handleHash = () => {
+      if (window.location.hash === "#demo") {
+        setDemoOpen(true);
+      }
+    };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("hashchange", handleHash);
 
     // Initial check
     handleScroll();
+    handleHash();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", handleHash);
     };
   }, []);
 
@@ -195,7 +205,7 @@ export function SiteHeader() {
                       {SYSTEMS.map((item) => {
                         const Icon = item.icon;
                         return (
-                          <Link
+                          <a
                             key={item.title}
                             href={item.href}
                             onClick={handleLinkClick}
@@ -226,7 +236,7 @@ export function SiteHeader() {
                                 className="text-muted opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-hover:text-lane"
                               />
                             </div>
-                          </Link>
+                          </a>
                         );
                       })}
                     </div>
@@ -240,47 +250,46 @@ export function SiteHeader() {
                           You review every draft with a 1-click approval desk.
                         </span>
                       </div>
-                      <Link
-                        href="/#systems"
+                      <a
+                        href="#systems"
                         onClick={handleLinkClick}
                         className="flex items-center gap-1 text-xs font-medium text-lane hover:underline whitespace-nowrap"
                       >
                         <span>Explore details</span>
                         <ArrowRight size={12} />
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            <Link
-              href="/#getting-started"
+            <a
+              href="#systems"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               How it works
-            </Link>
+            </a>
 
-            <Link
-              href="/partners"
-              scroll={false}
+            <a
+              href="#about"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
-              Partners
-            </Link>
+              About
+            </a>
 
-            <Link
-              href="/pricing"
+            <a
+              href="#pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               Pricing
-            </Link>
+            </a>
           </nav>
 
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
           <div className="flex items-center gap-3 shrink-0">
             <Link
-              href="/demo"
+              href="/auth"
               className="group relative inline-flex h-9 items-center gap-1.5 rounded-[8px] bg-ink px-4 text-[13px] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
             >
               <span>Book a demo</span>
@@ -329,7 +338,7 @@ export function SiteHeader() {
                 {mobileSystemsOpen && (
                   <div className="my-1.5 ml-4 space-y-1.5 border-l-2 border-line pl-3">
                     {SYSTEMS.map((item) => (
-                      <Link
+                      <a
                         key={item.title}
                         href={item.href}
                         onClick={handleLinkClick}
@@ -337,52 +346,53 @@ export function SiteHeader() {
                       >
                         <div className="font-semibold text-ink">{item.title}</div>
                         <div className="text-[11px] text-muted">{item.highlight}</div>
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 )}
               </div>
 
-              <Link
-                href="/#getting-started"
+              <a
+                href="#systems"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 How it works
-              </Link>
+              </a>
 
-              <Link
-                href="/partners"
-              scroll={false}
+              <a
+                href="#about"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                Partners
-              </Link>
+                About
+              </a>
 
-              <Link
-                href="/pricing"
+              <a
+                href="#pricing"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 Pricing
-              </Link>
+              </a>
             </nav>
 
             <div className="mt-4 pt-4 border-t border-line/60">
               <Link
-                href="/demo"
+                href="/auth"
                 onClick={handleLinkClick}
                 className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-lane-strong text-sm font-medium text-white transition-all hover:bg-lane-ink shadow-sm"
               >
                 <Sparkles size={15} />
-                <span>Book a demo</span>
+                <span>Book a demo / Sign up</span>
               </Link>
             </div>
           </div>
         )}
       </header>
 
+      {/* Interactive Walkthrough Modal */}
+      <DemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
     </>
   );
 }
