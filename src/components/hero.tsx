@@ -234,7 +234,7 @@ export function Hero() {
           className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-ink shadow-2xs"
         >
           <LaneMarkCycle size={15} />
-          <span>Agent Lane · Three operational lanes</span>
+          <span>Agent Lane</span>
         </motion.div>
 
         <motion.h1
