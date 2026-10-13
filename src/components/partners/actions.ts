@@ -11,7 +11,8 @@ export type PartnerFormState = {
   fieldErrors?: Partial<Record<"name" | "agency" | "email" | "clients", string>>;
 };
 
-const CLIENT_RANGES = ["1–5", "6–20", "21–50", "50+"];
+// The roster sizes the partner form on /partners offers.
+const CLIENT_RANGES = ["5-15 clients", "16-35 clients", "36-70 clients", "70+ clients"];
 
 function text(formData: FormData, key: string, max = 200) {
   const v = formData.get(key);

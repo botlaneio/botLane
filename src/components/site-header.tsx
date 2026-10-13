@@ -34,7 +34,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Client reporting",
     description: "Ingests Google Ads, Meta, and HubSpot into client-ready weekly PDFs.",
     highlight: "Many sources → 1 report",
-    href: "#client-reporting",
+    href: "/systems/client-reporting",
     icon: Layers,
   },
   {
@@ -43,7 +43,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Lead follow-up",
     description: "Replies to form leads in minutes, then sends calibrated nudges until booked.",
     highlight: "Multi-touch cadence",
-    href: "#lead-follow-up",
+    href: "/systems/lead-follow-up",
     icon: GitCommit,
   },
   {
@@ -52,7 +52,7 @@ const SYSTEMS: SystemItem[] = [
     title: "Invoice follow-up",
     description: "Sends polite, graduated payment reminders that halt as soon as funds clear.",
     highlight: "Loops until paid",
-    href: "#invoice-follow-up",
+    href: "/systems/invoice-follow-up",
     icon: RotateCw,
   },
 ];
@@ -245,46 +245,46 @@ export function SiteHeader() {
                           You review every draft with a 1-click approval desk.
                         </span>
                       </div>
-                      <a
-                        href="#systems"
+                      <Link
+                        href="/systems"
                         onClick={handleLinkClick}
                         className="flex items-center gap-1 text-xs font-medium text-lane hover:underline whitespace-nowrap"
                       >
                         <span>Explore details</span>
                         <ArrowRight size={12} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            <a
-              href="#systems"
+            <Link
+              href="/systems"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
-              How it works
-            </a>
+              Systems
+            </Link>
 
-            <a
-              href="#about"
-              className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
-            >
-              About
-            </a>
-
-            <a
-              href="#pricing"
+            <Link
+              href="/pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
               Pricing
-            </a>
+            </Link>
+
+            <Link
+              href="/partners"
+              className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
+            >
+              Partners
+            </Link>
           </nav>
 
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
           <div className="flex items-center gap-3 shrink-0">
             <Link
-              href="/auth"
+              href="/demo"
               className="group relative inline-flex h-9 items-center gap-1.5 rounded-[8px] bg-ink px-4 text-[13px] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
             >
               <span>Book a demo</span>
@@ -347,39 +347,47 @@ export function SiteHeader() {
                 )}
               </div>
 
-              <a
-                href="#systems"
+              <Link
+                href="/systems"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                How it works
-              </a>
+                All 3 Systems (Overview)
+              </Link>
 
-              <a
-                href="#about"
+              <Link
+                href="/pricing"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                About
-              </a>
+                Pricing Retainer
+              </Link>
 
-              <a
-                href="#pricing"
+              <Link
+                href="/partners"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                Pricing
-              </a>
+                Partner Programme (20%)
+              </Link>
+
+              <Link
+                href="/demo"
+                onClick={handleLinkClick}
+                className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-lane transition-colors hover:bg-surface"
+              >
+                Book a 20-min Demo
+              </Link>
             </nav>
 
             <div className="mt-4 pt-4 border-t border-line/60">
               <Link
-                href="/auth"
+                href="/demo"
                 onClick={handleLinkClick}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-lane-strong text-sm font-medium text-white transition-all hover:bg-lane-ink shadow-sm"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-ink text-sm font-medium text-white transition-all hover:bg-black shadow-sm"
               >
-                <Sparkles size={15} />
-                <span>Book a demo / Sign up</span>
+                <Sparkles size={15} className="text-lane" />
+                <span>Book a Demo Walkthrough</span>
               </Link>
             </div>
           </div>
