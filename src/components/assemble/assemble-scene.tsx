@@ -12,6 +12,18 @@ import {
   SYSTEM_LABELS,
   TOUCHES,
 } from "./data";
+import {
+  GoogleAdsLogo,
+  GoogleAnalyticsLogo,
+  MetaAdsLogo,
+  HubSpotLogo,
+  StripeLogo,
+  GoogleCalendarLogo,
+  TypeformLogo,
+  GmailLogo,
+  GoogleDriveLogo,
+  PlaidLogo,
+} from "./company-icons";
 
 // Static markup for the scroll-to-assemble board. It renders on the server;
 // <AssembleController> finds the pieces by their data-* attributes and animates them.
@@ -26,6 +38,36 @@ function Icon({ d, size = 20, color = "#1d1d1f" }: { d: string; size?: number; c
     </svg>
   );
 }
+
+function SourceCompanyLogo({ name }: { name: string }) {
+  switch (name) {
+    case "Google Ads":
+      return <GoogleAdsLogo size={22} />;
+    case "Analytics":
+      return <GoogleAnalyticsLogo size={22} />;
+    case "Meta Ads":
+      return <MetaAdsLogo size={22} />;
+    case "HubSpot":
+      return <HubSpotLogo size={22} />;
+    default:
+      return null;
+  }
+}
+
+function ApprovalCompanyLogo({ index }: { index: number }) {
+  switch (index) {
+    case 0:
+      return <GoogleDriveLogo size={19} />;
+    case 1:
+      return <GmailLogo size={19} />;
+    case 2:
+      return <StripeLogo size={19} />;
+    default:
+      return null;
+  }
+}
+
+
 
 function Check({ size = 14, stroke = 2 }: { size?: number; stroke?: number }) {
   return (
@@ -157,6 +199,14 @@ export function AssembleScene() {
             {/* ===== Lane (fixed) ===== */}
             <Slot x={372} y={150} w={200} h={280} z={44}>
               <div data-fx="lane" data-cx={472} data-cy={290} className="bl-card bl-fill relative p-[18px]">
+                {/* Dynamic metallic card back with luster reflection (Detail #6) */}
+                <div className="bl-card-back" aria-hidden="true">
+                  <span data-lane-luster="" className="bl-card-back-luster" />
+                  <div className="bl-card-back-mark">
+                    <LaneMark size={14} />
+                    <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between">
                   <LaneMark size={48} state="ready" data-lanemark="" className="drop-shadow-[0_6px_14px_rgba(20,20,40,0.18)]" />
                   <span data-lanepill="" data-state="ready" className="bl-pill bl-lane-pill">Ready</span>
@@ -181,6 +231,14 @@ export function AssembleScene() {
             {/* ===== You (fixed) ===== */}
             <Slot x={640} y={140} w={220} h={300} z={52}>
               <div data-fx="you" data-cx={750} data-cy={290} className="bl-card bl-fill relative">
+                {/* Dynamic metallic card back with luster reflection (Detail #6) */}
+                <div className="bl-card-back" aria-hidden="true">
+                  <span data-you-luster="" className="bl-card-back-luster" />
+                  <div className="bl-card-back-mark">
+                    <LaneMark size={14} />
+                    <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
+                  </div>
+                </div>
                 <div data-ring="" aria-hidden="true" className="pointer-events-none absolute -inset-[3px] rounded-[22px] border-2 border-lane"
                   style={{ boxShadow: "0 0 0 6px rgba(224,49,43,0.10)", opacity: 0 }} />
                 <div className="absolute inset-x-[18px] top-[18px] flex items-center gap-3">
@@ -204,7 +262,9 @@ export function AssembleScene() {
                     style={k ? { opacity: 0 } : undefined}>
                     <div className="text-base leading-[1.25] font-semibold tracking-[-0.02em]">{a.question}</div>
                     <div className="flex items-center gap-2.5 rounded-xl border border-[#ececf0] bg-white px-2.5 py-[9px]">
-                      <span className="bl-tile" style={{ width: 32, height: 32, borderRadius: 9 }}><Icon d={a.icon} size={18} /></span>
+                      <span className="bl-tile" style={{ width: 32, height: 32, borderRadius: 8 }}>
+                        <ApprovalCompanyLogo index={k} />
+                      </span>
                       <div className="min-w-0">
                         <div className="text-[13px] font-semibold whitespace-nowrap">{a.doc}</div>
                         <div className="text-xs text-muted">{a.meta}</div>
@@ -223,14 +283,36 @@ export function AssembleScene() {
               const top = SOURCE_TOP + SOURCE_STEP * i;
               return (
                 <Slot key={s.name} x={24} y={top} w={240} h={72} z={32}>
-                  <div data-chip="" data-s0="" data-cx={144} data-cy={top + 36}
-                    className="bl-card bl-fill flex items-center gap-3 rounded-[18px] pr-3 pl-3.5">
-                    <span className="bl-tile"><Icon d={s.icon} /></span>
-                    <div className="min-w-0 flex-auto">
-                      <div className="text-[15px] font-semibold whitespace-nowrap">{s.name}</div>
-                      <div className="truncate text-xs text-muted">{s.meta}</div>
+                  <div
+                    data-chip=""
+                    data-s0=""
+                    data-cx={144}
+                    data-cy={top + 36}
+                    className="bl-card bl-chip bl-fill flex items-center gap-3 rounded-[18px] pr-3 pl-3.5 group cursor-pointer"
+                  >
+                    {/* Dynamic metallic card back with luster reflection (Detail #6) */}
+                    <div className="bl-card-back" aria-hidden="true">
+                      <span data-chip-luster="" className="bl-card-back-luster" />
+                      <div className="bl-card-back-mark">
+                        <span className="size-1.5 rounded-full bg-[#1d1d1f]" />
+                        <span className="text-[10px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
+                      </div>
                     </div>
-                    <span className={"hot" in s ? "bl-pill bl-pill-red" : "bl-pill"}>{s.pill}</span>
+
+                    {/* Subtle border beam highlight effect */}
+                    <div data-beam="" className="bl-border-beam" aria-hidden="true">
+                      <div className="bl-beam-spinner" />
+                      <div className="bl-beam-mask" />
+                    </div>
+
+                    <div className="relative z-10 flex items-center gap-3 w-full">
+                      <span className="bl-tile"><SourceCompanyLogo name={s.name} /></span>
+                      <div className="min-w-0 flex-auto">
+                        <div className="text-[15px] font-semibold whitespace-nowrap">{s.name}</div>
+                        <div className="truncate text-xs text-muted">{s.meta}</div>
+                      </div>
+                      <span className={"hot" in s ? "bl-pill bl-pill-red" : "bl-pill"}>{s.pill}</span>
+                    </div>
                   </div>
                 </Slot>
               );
@@ -238,6 +320,14 @@ export function AssembleScene() {
 
             <Slot x={960} y={130} w={272} h={300} z={40}>
               <div data-report="" data-s0="" data-cx={1096} data-cy={280} className="bl-card bl-fill flex flex-col gap-3.5 p-[18px]">
+                {/* Dynamic metallic card back with luster reflection (Detail #6) */}
+                <div className="bl-card-back" aria-hidden="true">
+                  <span data-report-luster="" className="bl-card-back-luster" />
+                  <div className="bl-card-back-mark">
+                    <span className="size-2 rounded-full bg-[#1d1d1f]" />
+                    <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
+                  </div>
+                </div>
                 <div className="relative h-8">
                   <span data-owait="" className="absolute top-0 left-0 flex h-8 items-center gap-2.5 text-sm font-semibold whitespace-nowrap text-faint">
                     <span className="size-[30px] rounded-full border-[1.5px] border-dashed border-[#c7c8cf]" />
@@ -249,10 +339,10 @@ export function AssembleScene() {
                   </span>
                 </div>
                 <div className="flex items-center gap-3 border-t border-[#efeff2] pt-3">
-                  <span className="bl-tile"><Icon d={ICON.doc} /></span>
+                  <span className="bl-tile"><GoogleDriveLogo size={20} /></span>
                   <div>
                     <div className="text-[15px] font-semibold">Weekly client report</div>
-                    <div className="text-xs text-muted">Acme Co · Week 41</div>
+                    <div className="text-xs text-muted">Google Drive · Week 41</div>
                   </div>
                 </div>
                 <div className="flex flex-auto items-end gap-2.5 border-b border-[#efeff2] px-1">
@@ -270,7 +360,10 @@ export function AssembleScene() {
                   <span className="flex size-10 flex-none items-center justify-center rounded-full bg-[#fdeceb] text-sm font-semibold text-lane-ink">SC</span>
                   <div className="min-w-0">
                     <div className="text-[15px] font-semibold whitespace-nowrap">Sarah Chen</div>
-                    <div className="text-[13px] whitespace-nowrap text-muted">Website form · 2 min ago</div>
+                    <div className="flex items-center gap-1.5 text-[13px] whitespace-nowrap text-muted">
+                      <TypeformLogo size={13} />
+                      <span>Website form · 2 min ago</span>
+                    </div>
                   </div>
                 </div>
                 <div className={`${mono} self-start rounded-full bg-[#fdeceb] px-2.5 py-1 text-[11px] tracking-[0.06em] text-lane-ink uppercase`}>New lead</div>
@@ -284,10 +377,12 @@ export function AssembleScene() {
             ))}
             <Slot x={960} y={404} w={256} h={76} z={40}>
               <div data-meet="" className="bl-card bl-fill flex items-center gap-3 rounded-[18px] px-4">
-                <span className="bl-tile bl-tile-ok"><Icon d={ICON.calendar} color="#1a7f37" /></span>
+                <span className="bl-tile" style={{ background: "#ffffff" }}>
+                  <GoogleCalendarLogo size={22} />
+                </span>
                 <div className="min-w-0">
                   <div className="text-[15px] font-semibold whitespace-nowrap">Meeting booked</div>
-                  <div className="text-[13px] whitespace-nowrap text-muted">Thu 2:00 pm · on your calendar</div>
+                  <div className="text-[13px] whitespace-nowrap text-muted">Thu 2:00 pm · on Google Calendar</div>
                 </div>
               </div>
             </Slot>
@@ -296,9 +391,9 @@ export function AssembleScene() {
             <Slot x={24} y={226} w={240} h={128} z={32}>
               <div data-inv="" className="bl-card bl-fill flex flex-col gap-2.5 rounded-[18px] p-4">
                 <div className="flex items-center gap-3">
-                  <span className="bl-tile"><Icon d={ICON.ledger} /></span>
+                  <span className="bl-tile"><StripeLogo size={22} /></span>
                   <div className="min-w-0">
-                    <div className={`${mono} text-[13px] text-muted`}>INV-2041</div>
+                    <div className={`${mono} text-[13px] text-muted`}>INV-2041 · Stripe</div>
                     <div className="text-[15px] font-semibold whitespace-nowrap">Acme Co · $4,200</div>
                   </div>
                 </div>
@@ -318,10 +413,12 @@ export function AssembleScene() {
             </div>
             <Slot x={968} y={440} w={224} h={64} z={40}>
               <div data-bankc="" className="bl-card bl-fill flex items-center gap-3 rounded-[18px] px-3.5">
-                <span className="bl-tile bl-tile-ok" style={{ width: 34, height: 34 }}><Icon d={ICON.bank} color="#1a7f37" /></span>
+                <span className="bl-tile" style={{ width: 34, height: 34, background: "#ffffff" }}>
+                  <PlaidLogo size={20} />
+                </span>
                 <div className="min-w-0">
                   <div className="text-[15px] font-semibold whitespace-nowrap text-ok">+$4,200 received</div>
-                  <div className="text-xs whitespace-nowrap text-muted">Bank feed · today</div>
+                  <div className="text-xs whitespace-nowrap text-muted">Plaid bank feed · today</div>
                 </div>
               </div>
             </Slot>

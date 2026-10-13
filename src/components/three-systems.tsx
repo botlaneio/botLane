@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "motion/react";
+
 const SYSTEMS = [
   {
     id: "client-reporting",
@@ -31,10 +35,12 @@ export function ThreeSystems() {
       </h2>
       <div className="mt-14 grid gap-6 md:grid-cols-3">
         {SYSTEMS.map((s) => (
-          <article
+          <motion.article
             key={s.id}
             id={s.id}
-            className="scroll-mt-24 rounded-[20px] border border-line bg-white p-7 shadow-[0_18px_40px_rgba(20,20,40,0.06)]"
+            whileHover={{ scale: 1.025, y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="scroll-mt-24 rounded-[20px] border border-line bg-white p-7 shadow-[0_18px_40px_rgba(20,20,40,0.06)] hover:shadow-[0_24px_50px_rgba(20,20,40,0.10)] hover:border-lane/20 transition-colors cursor-pointer"
           >
             <div className="font-mono text-xs tracking-[0.06em] text-lane">
               {s.num} · {s.shape.toUpperCase()}
@@ -45,7 +51,7 @@ export function ThreeSystems() {
               <span className="size-[7px] rounded-full bg-lane" />
               You approve every send
             </div>
-          </article>
+          </motion.article>
         ))}
       </div>
     </section>
