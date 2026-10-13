@@ -10,6 +10,28 @@ export const TOTAL = 2900;
 export const STOP = [1000, 1600, 2250]; // the three approval moments
 const AFTER = [200, 220, 280]; // how far an Approve click moves the story on
 
+// Phone camera: [time, board x to centre on, zoom 0 = whole board … 1 = close-up].
+// Columns: Input ≈ 144, Lane ≈ 470, You ≈ 750, Output ≈ 1096.
+const SHOTS: [number, number, number][] = [
+  [0, 620, 0], [640, 620, 0],
+  [760, 300, 1], [900, 560, 1], [990, 750, 1], [1090, 1000, 1], [1180, 1000, 1], // 01 funnel
+  [1280, 300, 1], [1500, 560, 1], [1590, 750, 1], [1700, 1000, 1], [1820, 1000, 1], // 02 line
+  [1920, 300, 1], [2150, 560, 1], [2240, 750, 1], [2340, 1060, 1], [2600, 1060, 1], // 03 loop
+  [2700, 620, 0], [TOTAL, 620, 0],
+];
+const smooth = (x: number) => x * x * (3 - 2 * x);
+function shotAt(time: number): [number, number] {
+  for (let i = 1; i < SHOTS.length; i++) {
+    const [t1, x1, m1] = SHOTS[i];
+    if (time <= t1) {
+      const [t0, x0, m0] = SHOTS[i - 1];
+      const k = smooth(Math.min(1, Math.max(0, (time - t0) / Math.max(1, t1 - t0))));
+      return [x0 + (x1 - x0) * k, m0 + (m1 - m0) * k];
+    }
+  }
+  return [620, 0];
+}
+
 /**
  * Wires the board inside `root` (markup from <AssembleScene>) to scroll, the scrubber,
  * Approve clicks and an idle demo. Returns a cleanup function.
@@ -30,15 +52,35 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   const sysLabels = qa("[data-sys]");
 
   /* ---- fit the 1240 × 600 board to the viewport ---- */
+  // Wide screens see the whole board. Narrow screens get a camera that zooms in
+  // and pans across the board, following the work from Input to Output.
+  let t = 0;
+  let view = { w: 1240, h: 600, whole: 1, close: 1, mobile: false };
   const fit = () => {
     const w = fitEl.clientWidth || 1240;
     const h = fitEl.clientHeight || 600;
-    const s = Math.max(0.2, Math.min(1, w / 1300, h / 700));
-    const tf = `translate(-50%, -50%) scale(${s})`;
-    scaler.style.transform = tf;
-    trioScale.style.transform = tf;
+    const whole = Math.max(0.2, Math.min(1, w / 1300, h / 700));
+    const mobile = w < 760;
+    const close = mobile ? Math.min(1, w / 470, h / 640) : whole;
+    view = { w, h, whole, close, mobile };
+    trioScale.style.transform = `translate(-50%, -50%) scale(${whole})`;
+    camera(t);
   };
-  fit();
+  const camera = (time: number) => {
+    const { w, whole, close, mobile } = view;
+    if (!mobile) {
+      scaler.style.transform = `translate(-50%, -50%) scale(${whole})`;
+      return;
+    }
+    const [fx, m] = shotAt(time);
+    const s = whole + (close - whole) * m;
+    // keep the visible window on the board
+    const half = w / (2 * s);
+    const lo = -30 + half;
+    const hi = 1270 - half;
+    const x = lo < hi ? Math.min(hi, Math.max(lo, 620 + (fx - 620) * m)) : 620;
+    scaler.style.transform = `translate(-50%, -50%) translateX(${-(x - 620) * s}px) scale(${s})`;
+  };
   const ro = new ResizeObserver(fit);
   ro.observe(fitEl);
 
@@ -321,10 +363,11 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   add({}, { duration: 1 }, TOTAL - 1);
 
   /* ---- progress: scroll, scrubber, Approve, idle demo ---- */
-  let t = 0;
+  fit();
   const setT = (v: number) => {
     t = Math.max(0, Math.min(TOTAL, v));
     tl.seek(t);
+    camera(t);
     scrub.value = String(Math.round((t / TOTAL) * 1000));
     btns.forEach((b, k) => {
       const active = t >= STOP[k] - 150 && t < STOP[k];
