@@ -17,7 +17,7 @@
 .bl-board {
   position: absolute; inset: 0 auto auto 0; width: 1240px; height: 600px;
   transform-origin: 50% 45%; transform-style: preserve-3d;
-  transform: none;
+  transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
 .bl-floor {
   position: absolute; left: -32px; top: -28px; width: 1304px; height: 664px; border-radius: 36px;
@@ -171,9 +171,6 @@
   width: 7px; height: 7px; border-radius: 50%; background: #ff453a; box-shadow: 0 0 6px 1px rgba(255, 69, 58, 0.8);
 }
 .bl-traveller { position: absolute; opacity: 0; }
-
-/* Gives the angled finale cards their depth. */
-.bl-trio-row { perspective: 1600px; }
 
 @media (max-width: 760px) {
   .bl-sysrow { display: none !important; }
