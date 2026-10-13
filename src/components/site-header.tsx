@@ -260,6 +260,13 @@ export function SiteHeader() {
             </div>
 
             <Link
+              href="/how-it-works"
+              className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
+            >
+              How it works
+            </Link>
+
+            <Link
               href="/pricing"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
@@ -267,10 +274,10 @@ export function SiteHeader() {
             </Link>
 
             <Link
-              href="/partners"
+              href="/company/about"
               className="rounded-[8px] px-3.5 py-1.5 text-[13px] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
             >
-              Partners
+              About
             </Link>
           </nav>
 
@@ -349,6 +356,14 @@ export function SiteHeader() {
               </Link>
 
               <Link
+                href="/how-it-works"
+                onClick={handleLinkClick}
+                className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
+              >
+                How it works
+              </Link>
+
+              <Link
                 href="/pricing"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
@@ -357,11 +372,11 @@ export function SiteHeader() {
               </Link>
 
               <Link
-                href="/partners"
+                href="/company/about"
                 onClick={handleLinkClick}
                 className="rounded-[8px] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
-                Partner Programme (20%)
+                About
               </Link>
 
               <Link
