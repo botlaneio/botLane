@@ -1,8 +1,8 @@
 # botlane.io
 
-Marketing site for BotLane, a managed AI automation partner. We design, run and maintain AI workflows inside the tools a business already uses, and nothing goes out until a person approves it.
+Marketing site for BotLane: Lane, the AI hire that runs client reporting, lead follow-up and invoice follow-up while you approve.
 
-Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Radix primitives and GSAP (home hero only).
+Built with Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4 and anime.js 4.
 
 ## Run it
 
@@ -11,8 +11,6 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint
-npm test         # unit tests (Vitest)
-npm start & npm run smoke   # every page, 404s and old-URL redirects
 ```
 
 ## Deploy (Cloudflare Workers)
@@ -33,28 +31,25 @@ Next.js is pinned to 16.3.8 and `cacheComponents` is off: Next 16.4 and Cache Co
 
 | Path | What it is |
 | --- | --- |
-| `src/app/globals.css` | Design tokens (colours, fonts, 8px buttons, gutters) and shared classes |
-| `src/app/(site)/` | Marketing pages: home, solutions (+ 5 detail pages), how it works, pricing, safeguards, about, legal |
-| `src/app/(focus)/` | Conversion pages without the main nav: `/book`, `/assessment` |
-| `src/content/` | **All page copy.** `solutions.ts`, `process.ts`, `safeguards.ts`, `site.ts` (nav, footer) |
-| `src/components/hero/` | The home hero. `home-hero.tsx` is the markup; `hero-stage.tsx` runs the scroll animation |
-| `src/components/illustrations/` | Small product-card illustrations used across pages (all marked "Example") |
-| `src/lib/contact.ts` | WhatsApp, email and booking links from env vars (hidden when unset) |
-| `src/lib/inquiry.ts` | Assessment form validation, spam checks and delivery |
-| `docs/plans/` | The implementation plan for this version |
+| `src/app/page.tsx` | The homepage: header, hero, scroll board, three systems, footer |
+| `src/app/globals.css` | Colour tokens (white, near-black, Lane red) and Tailwind theme |
+| `src/components/assemble/` | The scroll-to-assemble hero board |
+| `src/components/assemble/data.ts` | All board copy: tools, runs, approvals, captions. **Edit content here** |
+| `src/components/assemble/assemble-scene.tsx` | The board markup (server-rendered, no JS) |
+| `src/components/assemble/timeline.ts` | The animation: one anime.js timeline seeked by scroll |
+| `src/components/assemble/assemble-controller.tsx` | Client wrapper: lazy-loads anime.js when the board nears the viewport |
 
-## How the hero works
+## How the board works
 
-The hero lives in a fixed 1200 × 900 stage scaled to the screen. On desktops (1024px and wider, motion allowed) the section is 300vh tall with a sticky inner panel, and a GSAP ScrollTrigger timeline scrubbed to scroll flies the four cards from their scattered start positions into the BotLane window. Phones, tablets and `prefers-reduced-motion` get the finished window as a static picture.
+The board lives in a fixed 1240 × 600 coordinate space and is scaled to fit the screen. Every animated piece carries a `data-*` attribute; `timeline.ts` finds them and builds a single timeline (0 → 2900). Scroll position inside the tall stage seeks that timeline, so motion is smooth in both directions and never re-renders React.
 
-## Settings (env vars)
+The story: pieces assemble → **01 Client reporting** (a funnel: four sources into one report) → **02 Lead follow-up** (a line: one lead, a run of touches) → **03 Invoice follow-up** (a loop: reminders until it's paid) → the three shapes side by side. Lane and You stay fixed throughout; each system stops at an approval moment.
 
-| Variable | Used for |
-| --- | --- |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | WhatsApp buttons (digits, with country code). Hidden when empty |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Email link in the footer and on conversion pages. Hidden when empty |
-| `NEXT_PUBLIC_DEMO_CALENDAR_URL` | Booking page embedded on `/book` (https). Without it, `/book` points to the assessment form |
-| `INQUIRY_WEBHOOK_URL`, `INQUIRY_WEBHOOK_SECRET` | Where assessment requests are posted (full JSON) |
-| `PARTNER_SHEET_WEBHOOK_URL`, `PARTNER_SHEET_SECRET` | Fallback: requests go to the existing Google Sheet (see `integrations/google-sheets`) |
+Respects `prefers-reduced-motion` (shows the final frame).
 
-`NEXT_PUBLIC_*` values are built into the pages, so set them in the build environment and rebuild after changing them.
+## To do
+
+- Replace placeholder tool icons with official logo files in `public/logos/` (follow each brand's guidelines)
+- Swap placeholder names, numbers and tools in `data.ts` for real ones
+- Mobile layout for the board (it currently scales down)
+- Pages for each system and pricing

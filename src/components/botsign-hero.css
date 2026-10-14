@@ -1,0 +1,1417 @@
+@theme inline {
+--color-void: #08090a; --color-carbon: #0f1011; --color-paper: #fff; --color-mist: #d2d5db;
+--color-fog: #a3a8b0; --color-ash: #6e737c; --color-ember: #f2a33c;
+--color-amber: #f2d84c; --color-pulse-green: #27a644; --color-signal-teal: #02b8cc;
+}
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.botsign-hero { color-scheme:dark; color:#fff; background:#08090a;
+--color-void:#08090a;--color-carbon:#0f1011;--color-obsidian:#161718;--color-graphite:#23252a;
+--color-smoke:#383b3f;--color-ash:#6e737c;--color-fog:#a3a8b0;--color-mist:#d2d5db;--color-paper:#fff;
+--color-ember:#f2a33c;--color-amber:#f2d84c;--color-pulse-green:#27a644;--color-signal-teal:#02b8cc;
+--glass-divider:rgba(255,255,255,.10);--glass-rail:#141516;--lamp:#ff5e4d;--color-signal-red:#ecedef;
+--color-on-accent:#08090a;--color-action:#ecedef;
+--beam-angle:0deg;--bloom-red:255,94,77;
+--glass-edge:rgba(255,255,255,0.08);--glass-highlight:rgba(255,255,255,0.12);
+--glass-blur:16px;--glass-saturation:1.1;--radius-glass-shell:16px;
+--glass-shell:rgba(14,15,17,0.78);--shadow-glass-shell:0 24px 60px rgba(0,0,0,0.6);
+--spacing-64:64px;--spacing-80:80px;
+}
+.botsign-hero .container-page{width:min(100% - 48px,1200px);margin-inline:auto}
+.botsign-hero .text-hero{font-size:clamp(46px,6vw,88px);line-height:1.04;letter-spacing:-.055em;font-weight:600}
+.botsign-hero .text-body{font-size:18px;line-height:1.6;color:#d2d5db}
+.botsign-hero .hero-console{background:#0f1011;color:#fff}
+.botsign-hero .hero-console__rail{background:#141516;border-right:1px solid var(--glass-divider)}
+.botsign-hero .glass-shell{border:1px solid #383b3f;background:#101114;border-radius:16px;box-shadow:0 28px 90px rgba(0,0,0,.5)}
+.botsign-hero .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.botsign-hero .badge{border:1px solid #383b3f;border-radius:4px;padding:2px 6px;font-size:10px}
+
+
+
+.container-page {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-action);
+  color: var(--color-on-accent);
+  border: none;
+  border-radius: var(--radius-buttons);
+  padding: 10px 16px;
+  font-family: var(--font-inter-variable);
+  font-size: 14px;
+  font-weight: var(--font-weight-w510);
+  letter-spacing: -0.011em;
+  line-height: 1.2;
+  font-feature-settings: "cv01" on, "ss03" on, "zero" on;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+
+.btn-primary:hover {
+  background: var(--color-action-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(236, 237, 239, 0.22);
+}
+
+
+.btn-primary:active {
+  background: var(--color-action-active);
+  transform: translateY(0);
+}
+
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-accent);
+}
+
+
+/* ── Secondary Button with Traveling Border Beam Animation ── */
+.btn-secondary,
+.btn-border-beam {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0d0f12;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: var(--radius-buttons);
+  padding: 8px 16px;
+  min-height: 40px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.5);
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* The rotating specular beam of white light traveling along edges */
+.btn-secondary::before,
+.btn-border-beam::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320%;
+  height: 320%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 65deg,
+    rgba(255, 255, 255, 0.15) 76deg,
+    rgba(255, 255, 255, 0.98) 90deg,
+    rgba(255, 255, 255, 0.15) 104deg,
+    transparent 115deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* Run exactly 2 full cycles when entering view, then gently fade out to rest */
+.hero-actions .btn-secondary::before,
+.reveal--in .btn-secondary::before,
+.section--in-view .btn-secondary::before,
+.reveal--in .btn-border-beam::before,
+.section--in-view .btn-border-beam::before,
+html:not([data-reveal="1"]) .btn-secondary::before,
+html:not([data-reveal="1"]) .btn-border-beam::before {
+  animation: border-beam-intro 5.6s cubic-bezier(0.25, 1, 0.5, 1) 200ms 1 forwards;
+}
+
+
+/* Inner surface cut-out that preserves dark button interior, leaving 1px border beam visible */
+.btn-secondary::after,
+.btn-border-beam::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: #0d0f12;
+  border-radius: calc(var(--radius-buttons) - 1px);
+  z-index: 1;
+  pointer-events: none;
+  transition: background 180ms ease;
+}
+
+
+/* Content layer sits explicitly above the beam and mask with high contrast */
+.btn-secondary > *,
+.btn-border-beam > * {
+  position: relative;
+  z-index: 3;
+  color: #ffffff !important;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.btn-secondary:hover,
+.btn-border-beam:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 14px -3px rgba(0, 0, 0, 0.65),
+    0 0 16px -4px rgba(255, 255, 255, 0.16);
+}
+
+
+.btn-secondary:hover::after,
+.btn-border-beam:hover::after {
+  background: #14171d;
+}
+
+
+/* On hover, re-activate continuous smooth beam while hovered */
+.btn-secondary:hover::before,
+.btn-border-beam:hover::before {
+  opacity: 1;
+  animation: border-beam-sweep 3.2s linear infinite;
+}
+
+
+.btn-secondary:active,
+.btn-border-beam:active {
+  transform: translateY(0);
+}
+
+
+.btn-secondary:focus-visible,
+.btn-border-beam:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-void), 0 0 0 4px rgba(255, 255, 255, 0.28);
+}
+
+
+.btn-secondary .arrow,
+.btn-border-beam .arrow {
+  display: inline-block;
+  margin-left: 2px;
+  transition: transform 180ms ease;
+}
+
+
+.btn-secondary:hover .arrow,
+.btn-border-beam:hover .arrow {
+  transform: translateX(2px);
+}
+
+
+@keyframes border-beam-sweep {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+
+/* Clear fixed nav — do NOT use Tailwind pt-32 here: @theme --spacing-32 is 32px */
+
+/* Hero CTAs — always side-by-side, compact padding */
+.hero-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.hero-actions .btn-primary,
+.hero-actions .btn-secondary,
+.hero-actions .btn-ghost {
+  width: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  min-height: 40px;
+  padding: 8px 14px;
+}
+
+
+.hero-actions .link-arrow {
+  min-height: 40px;
+  padding: 8px 4px;
+}
+
+
+.page-hero {
+  padding-top: calc(var(--nav-h) + 40px);
+}
+@media (min-width: 768px){
+  .page-hero {
+    padding-top: calc(var(--nav-h) + 64px);
+  }
+}
+
+
+.btn-primary.w-full {
+  width: 100%;
+}
+
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-fog);
+  border-radius: var(--radius-badges);
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+
+.badge-success {
+  color: var(--color-pulse-green);
+  background: var(--color-pulse-green-wash);
+}
+
+
+.badge-info {
+  color: var(--color-signal-teal);
+  background: var(--color-signal-teal-wash);
+}
+
+
+.badge-warning {
+  color: var(--color-amber);
+  background: var(--color-amber-wash);
+}
+
+
+.badge-error {
+  color: var(--color-ember);
+  background: var(--color-ember-wash);
+}
+
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-mist);
+  border-radius: var(--radius-pills);
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+
+.mono {
+  font-family: var(--font-berkeley-mono);
+  font-feature-settings: "cv01" on, "ss03" on;
+  letter-spacing: -0.013em;
+}
+
+
+.hero-floor {
+  background: linear-gradient(
+    180deg,
+    rgb(8, 9, 10) 20%,
+    rgb(160, 168, 180) 100%
+  );
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+
+.atmos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+.atmos-glow-cool {
+  position: absolute;
+  width: 55%;
+  height: 50%;
+  left: 22%;
+  top: -8%;
+  background: radial-gradient(ellipse at center, var(--glow-cool), transparent 70%);
+}
+
+
+.atmos-glow-cool--subtle {
+  width: 48%;
+  height: 40%;
+  left: 10%;
+  top: 0;
+  opacity: 0.7;
+}
+
+
+.atmos-glow-accent {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  left: 20%;
+  top: 10%;
+  background: radial-gradient(ellipse at center, var(--glow-accent), transparent 70%);
+}
+
+
+/* Grid stripe layer — 72px cell (52px below 560px), masked dissolve */
+.atmos-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  opacity: 0.45;
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 62% at 50% 8%,
+    #000 18%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 62% at 50% 8%,
+    #000 18%,
+    transparent 72%
+  );
+}
+@media (max-width: 560px){
+  .atmos-grid {
+    background-size: 52px 52px;
+  }
+}
+
+
+.text-hero {
+  font-size: clamp(39px, 6.1vw, 67px);
+  font-weight: 510;
+  line-height: 0.96;
+  letter-spacing: -0.038em;
+  color: var(--color-paper);
+}
+
+
+/* The homepage headline is set to hold two lines at every width, so the size
+   has to follow the container rather than the viewport. Its longer line,
+   "The managed lane through", measures 12.30x the font size in this face at
+   this tracking; dividing the container by 12.6 leaves about 2% of slack for
+   the metric differences between platforms. The container is the page gutter
+   subtracted from the viewport, which is why --gutter appears here: it steps
+   down at three breakpoints and a fixed inset would be wrong at two of them.
+
+   The type stops growing at 60px rather than the 72px of .text-hero, which is
+   what takes the line off three lines and onto two inside the 768px measure
+   the copy below it already uses: 60 x 12.30 is 738px. */
+.hero-title {
+  font-size: min(56px, calc((100vw - 2 * var(--gutter)) / 12.6));
+}
+
+
+.text-body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.58;
+  letter-spacing: -0.013em;
+  color: var(--color-mist);
+}
+
+
+.text-body-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.013em;
+  color: var(--color-mist);
+}
+
+
+.link-arrow .arrow {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+
+.link-arrow:hover .arrow {
+  transform: translateX(3px);
+}
+
+
+/* ── Glass shell (large operational console) ── */
+.glass-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-glass-shell);
+  background: var(--glass-shell);
+  box-shadow: var(--shadow-glass-shell);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+}
+
+
+.glass-shell--product {
+  border-radius: 12px;
+  background: rgba(12, 13, 14, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 16px 40px -8px rgba(0, 0, 0, 0.75),
+    0 32px 72px -16px rgba(0, 0, 0, 0.88),
+    0 0 60px -15px rgba(56, 189, 248, 0.07);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+}
+
+
+/* Hero Console Background Depth */
+.hero-console-depth {
+  position: absolute;
+  inset: -36px -24px -48px -24px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+@media (min-width: 768px){
+  .hero-console-depth {
+    inset: -60px -54px -76px -54px;
+  }
+}
+
+
+.hero-console-depth__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, #000 15%, transparent 75%);
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, #000 15%, transparent 75%);
+  opacity: 0.65;
+}
+
+
+.hero-console-depth__glow-primary {
+  position: absolute;
+  width: 92%;
+  height: 85%;
+  left: 4%;
+  top: 6%;
+  background: radial-gradient(
+    ellipse 65% 55% at 50% 45%,
+    rgba(56, 189, 248, 0.085) 0%,
+    rgba(99, 102, 241, 0.035) 45%,
+    transparent 75%
+  );
+  filter: blur(32px);
+}
+
+
+.hero-console-depth__glow-accent {
+  position: absolute;
+  width: 78%;
+  height: 48%;
+  left: 11%;
+  bottom: 2%;
+  background: radial-gradient(
+    ellipse 60% 40% at 50% 80%,
+    rgba(255, 94, 77, 0.04) 0%,
+    transparent 70%
+  );
+  filter: blur(36px);
+}
+
+
+.hero-console-depth__horizon {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 12%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(56, 189, 248, 0.16) 50%,
+    rgba(255, 255, 255, 0.03) 80%,
+    transparent 100%
+  );
+  opacity: 0.6;
+}
+
+
+/* Atmosphere fields behind glass (decorative) — muted by default */
+.glass-atmos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+}
+
+
+.glass-atmos__field {
+  position: absolute;
+  border-radius: 50%;
+  filter: none;
+}
+
+
+.glass-atmos__field--green {
+  width: 55%;
+  height: 70%;
+  left: -8%;
+  top: 10%;
+  background: radial-gradient(ellipse at center, rgba(35, 81, 61, 0.10), transparent 70%);
+}
+
+
+.glass-atmos__field--violet {
+  width: 50%;
+  height: 65%;
+  right: -5%;
+  top: -5%;
+  background: radial-gradient(ellipse at center, rgba(77, 56, 86, 0.08), transparent 70%);
+}
+
+
+.glass-atmos__field--accent {
+  width: 40%;
+  height: 50%;
+  left: 35%;
+  bottom: -10%;
+  background: radial-gradient(ellipse at center, rgba(236, 237, 239, 0.05), transparent 70%);
+}
+
+
+.product-band__link .arrow {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+
+.product-band__link:hover .arrow {
+  transform: translateX(3px);
+}
+
+
+@keyframes bll-glow {
+  0% { opacity: 0; }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce){
+
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .btn-ghost-accent:hover,
+  .btn-pill-white:hover,
+  .iso-feature-card:hover,
+  .iso-feature-card:hover .iso-art,
+  .card-frame:hover,
+  .glass-card:hover,
+  .product-band__fg.glass-card:hover,
+  .product-band__bg.glass-card:hover,
+  .integrations-chip:hover,
+  .integrations-chip-wrapper:hover,
+  .practice-studio__item:hover,
+  .workflow-rail__step:hover,
+  .workflow-rail__step:hover .workflow-rail__art,
+  .release-gate-card:hover,
+  .release-gate-spotlight:hover,
+  .nav-link:hover,
+  .nav-systems__trigger:hover,
+  .nav-systems__item:hover,
+  .nav-systems__all:hover,
+  .nav-logo:hover,
+  .nav-toggle:hover,
+  .nav-drawer a:hover,
+  .nav-drawer__cta:hover,
+  .nav-drawer__accordion:hover,
+  .nav-drawer__nested a:hover,
+  .link-arrow:hover .arrow,
+  .product-band__link:hover .arrow {
+    transform: none !important;
+  }
+}
+
+
+.practice-studio__stage-atmos {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+
+.practice-studio__stage-atmos .atmos-grid {
+  position: absolute;
+  inset: 0;
+}
+
+
+@keyframes practice-floor-glow {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+}
+
+
+/* SYS-01: ArtReporting (Circled Stacked Plates Illustration) */
+.iso-art--in-view .iso-base-glow,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-base-glow {
+  animation: iso-glow-breathe 4.6s ease-in-out infinite alternate;
+}
+
+
+.iso-art--in-view .iso-layer-base,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-layer-base {
+  animation: iso-plate-base-in 650ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+.iso-art--in-view .iso-hash-line,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-hash-line {
+  animation: iso-hash-draw 600ms cubic-bezier(0.16, 1, 0.3, 1) 320ms both;
+}
+
+
+/* Stacked Plates with Staggered Entrance Elevation & Continuous Multi-Phase Float */
+.iso-art--in-view .iso-layer-stack--1,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-layer-stack--1 {
+  animation:
+    iso-stack-layer-1-enter 750ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both,
+    iso-float-stack-1 5.8s ease-in-out 830ms infinite alternate;
+  transform-origin: center;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.iso-art--in-view .iso-layer-stack--2,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-layer-stack--2 {
+  animation:
+    iso-stack-layer-2-enter 850ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both,
+    iso-float-stack-2 4.9s ease-in-out 1030ms infinite alternate;
+  transform-origin: center;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.iso-art--in-view .iso-layer-stack--3,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-layer-stack--3 {
+  animation:
+    iso-stack-layer-3-enter 950ms cubic-bezier(0.16, 1, 0.3, 1) 280ms both,
+    iso-float-stack-3 4.1s ease-in-out 1230ms infinite alternate;
+  transform-origin: center;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.iso-art--in-view .iso-report-line,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-report-line {
+  animation: iso-line-slide 550ms cubic-bezier(0.16, 1, 0.3, 1) 420ms both;
+}
+
+
+/* SYS-02: Pipeline Follow-up */
+.iso-art--in-view .iso-stage-step--1,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-stage-step--1 {
+  animation: iso-stack-layer-1-enter 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.iso-art--in-view .iso-stage-step--2,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-stage-step--2 {
+  animation: iso-stack-layer-2-enter 680ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+
+.iso-art--in-view .iso-stage-step--3,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-stage-step--3 {
+  animation: iso-stack-layer-3-enter 760ms cubic-bezier(0.16, 1, 0.3, 1) 240ms both;
+}
+
+.iso-art--in-view .iso-arrow-track,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-arrow-track {
+  animation: iso-line-slide 700ms cubic-bezier(0.16, 1, 0.3, 1) 360ms both;
+}
+
+
+/* SYS-03: Inbox Triage */
+.iso-art--in-view .iso-triage-hopper,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-triage-hopper {
+  animation:
+    iso-stack-layer-3-enter 750ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    iso-float-stack-3 4.4s ease-in-out 750ms infinite alternate;
+}
+
+.iso-art--in-view .iso-connector-line,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-connector-line {
+  animation: iso-hash-draw 600ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+
+.iso-art--in-view .iso-triage-lanes,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-triage-lanes {
+  animation: iso-plate-base-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 280ms both;
+}
+
+
+/* SYS-04: Invoice Follow-up */
+.iso-art--in-view .iso-invoice-card,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-invoice-card {
+  animation:
+    iso-stack-layer-2-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    iso-float-stack-2 4.8s ease-in-out 700ms infinite alternate;
+}
+
+.iso-art--in-view .iso-chase-path,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-chase-path {
+  animation: iso-chase-dash 2s linear infinite;
+}
+
+.iso-art--in-view .iso-reminder-plate,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-reminder-plate {
+  animation: iso-stack-layer-1-enter 800ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+}
+
+
+/* SYS-05: Intake Funnel */
+.iso-art--in-view .iso-intake-funnel,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-intake-funnel {
+  animation:
+    iso-stack-layer-3-enter 750ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    iso-float-stack-3 4.2s ease-in-out 750ms infinite alternate;
+}
+
+.iso-art--in-view .iso-intake-cube,
+html[data-reveal="1"] .practice-studio.reveal--in .iso-intake-cube {
+  animation: iso-plate-base-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 250ms both;
+}
+
+
+@keyframes iso-glow-breathe {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.95);
+    transform-origin: 130px 148px;
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.06);
+    transform-origin: 130px 148px;
+  }
+}
+
+
+.workflow-rail__step > .mono {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+
+/* ── Soft page motion (Linear-quality, reduced-motion + SSR/no-JS safe) ──
+   .reveal stays visible by default. Client JS sets html[data-reveal="1"]
+   only when motion is allowed — then unreaveled nodes fade/rise in.
+   Without JS (or with prefers-reduced-motion / scripting:none), content paints. */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference){
+  html[data-reveal="1"] .reveal:not(.reveal--in) {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+
+  html[data-reveal="1"] .reveal.reveal--in {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+
+  .breathe {
+    animation: botsign-breathe 8s ease-in-out infinite;
+  }
+
+
+  .breathe-slow {
+    animation: botsign-breathe 10s ease-in-out infinite;
+  }
+
+
+  @keyframes botsign-breathe {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+
+  /* Staggered children when a reveal wrapper becomes visible.
+
+     fill-mode is `backwards`, not `both`, on purpose. `backwards` holds the
+     from-state through the delay, which is what makes the stagger read; `both`
+     would additionally pin the to-state forever, and a filling animation
+     outranks every author declaration — so `transform: translateY(0)` stayed
+     applied and silently killed the :hover lift on every staggered child.
+     Releasing it costs nothing, because the to-state is the natural state. */
+  html[data-reveal="1"] .reveal--stagger.reveal--in > *:nth-child(1),
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .workflow-rail__step:nth-child(1) {
+    animation: botsign-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 0ms;
+  }
+
+  html[data-reveal="1"] .reveal--stagger.reveal--in > *:nth-child(2),
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .workflow-rail__step:nth-child(2) {
+    animation: botsign-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 70ms;
+  }
+
+  html[data-reveal="1"] .reveal--stagger.reveal--in > *:nth-child(3),
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .workflow-rail__step:nth-child(3) {
+    animation: botsign-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 140ms;
+  }
+
+  html[data-reveal="1"] .reveal--stagger.reveal--in > *:nth-child(4),
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .workflow-rail__step:nth-child(4) {
+    animation: botsign-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 210ms;
+  }
+
+  html[data-reveal="1"] .reveal--stagger.reveal--in > *:nth-child(5),
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .workflow-rail__step:nth-child(5) {
+    animation: botsign-rise 640ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: 280ms;
+  }
+}
+
+
+/* ── Hero Console Intro Animations ── */
+@keyframes hero-console-entry {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+@keyframes hero-item-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+@keyframes hero-stat-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes hero-step-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes hero-progress-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+@keyframes hero-radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(52, 211, 153, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+
+
+.hero-console-frame {
+  animation: hero-console-entry 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+.hero-console-sidebar-item {
+  animation: hero-item-slide-in 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+.hero-console-stat-card {
+  animation: hero-stat-fade-up 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+.hero-console-step-row {
+  animation: hero-step-reveal 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal,
+  .reveal.reveal--in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+
+  .breathe,
+  .breathe-slow,
+  .hero-console-frame,
+  .hero-console-sidebar-item,
+  .hero-console-stat-card,
+  .hero-console-step-row,
+  .hero-radar-dot,
+  .hero-progress-line::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+
+  .reveal--stagger.reveal--in > *,
+  .reveal--stagger-host.reveal--in .workflow-rail__step {
+    animation: none !important;
+  }
+}
+@media (prefers-reduced-motion: no-preference){
+  html[data-reveal="1"] .reveal--stagger-host.reveal--in .release-gates__item {
+    animation: botsign-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--release-stagger, 0) * 35ms);
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .reveal--stagger-host.reveal--in .release-gates__item {
+    animation: none !important;
+  }
+}
+
+
+/* ── Hero console: depth + live signals ───────────────────────────────────
+   Depth is static (shadow, scrim, recessed rail) so it survives
+   prefers-reduced-motion. The live signals follow this file's convention of
+   being *defined* only under no-preference rather than disabled afterwards. */
+
+.hero-console {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(var(--bloom-red), 0.1), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0) 200px),
+    rgba(8, 9, 10, 0.94);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
+  backdrop-filter: blur(18px) saturate(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.022),
+    0 26px 64px rgba(0, 0, 0, 0.5);
+}
+
+
+/* rail sits below the record surface */
+.hero-console__rail {
+  background: var(--glass-rail);
+  box-shadow:
+    inset -1px 0 0 var(--glass-divider),
+    inset -14px 0 26px -14px rgba(0, 0, 0, 0.6);
+}
+
+
+/* the record continues past the frame */
+.hero-console__scrim {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 72px;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 10, 11, 0), rgba(8, 10, 11, 0.92));
+}
+
+
+/* agent panel floats above the record */
+.hero-console__panel {
+  position: relative;
+  z-index: 20;
+  background: rgba(16, 18, 20, 0.92);
+  backdrop-filter: blur(12px) saturate(1.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 20px 52px rgba(0, 0, 0, 0.58);
+}
+
+
+/* live signals — resting states, visible with motion off */
+.live-dot { position: relative; display: inline-flex; }
+
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0;
+}
+
+
+.working-dots { display: inline-flex; align-items: center; gap: 3px; }
+
+.working-dots i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.32;
+  display: block;
+}
+
+
+.row-live { position: relative; overflow: hidden; }
+
+.row-live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+}
+@media (prefers-reduced-motion: no-preference){
+  .live-dot::after { animation: botsign-ping 2.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+  .working-dots i { animation: botsign-dot 1.25s ease-in-out infinite; }
+
+  .working-dots i:nth-child(2) { animation-delay: 150ms; }
+
+  .working-dots i:nth-child(3) { animation-delay: 300ms; }
+
+  .row-live::after { animation: botsign-sweep 3.6s ease-in-out infinite; }
+
+  @keyframes botsign-dot {
+    0%, 100% { opacity: 0.28; }
+    50%      { opacity: 1; }
+  }
+}
+
+
+.hero-console__beam {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 2px; /* ring thickness */
+  opacity: 0;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    transparent 232deg,
+    rgba(130, 175, 255, 0.16) 276deg,
+    rgba(178, 212, 255, 0.50) 328deg,
+    rgba(228, 240, 255, 0.78) 351deg,
+    rgba(178, 212, 255, 0.50) 356deg,
+    transparent 360deg
+  );
+  /* keep only the border ring: full box minus the content box */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+
+/* On the outer glass frame: let the frame show its own edge and lay the
+   beam exactly over its 1px border. The console inside keeps its own
+   rounded clipping, so nothing else spills. */
+.hero-shell--beam {
+  overflow: visible;
+}
+
+
+.hero-shell__beam {
+  inset: -1px;
+  border-radius: 13px;
+  padding: 1.5px;
+}
+@media (prefers-reduced-motion: no-preference){
+  .hero-console__beam {
+    /* two laps, starting once the console has revealed, then done */
+    animation:
+      botsign-edge-beam 2600ms linear 700ms 2 both,
+      botsign-edge-fade 5200ms ease-out 700ms 1 both;
+  }
+
+
+  @keyframes botsign-edge-beam {
+    to { --beam-angle: 360deg; }
+  }
+}
+
+
+/* ── Hero console: mobile tilt ────────────────────────────────────────────
+   Below md the console has no room to read as a full application, so it is
+   angled slightly instead — an object on a surface rather than a panel
+   squeezed to fit. Desktop keeps it flat and square-on.
+
+   This sits on its own element because .reveal and .breathe both animate
+   transform; sharing either would clobber the tilt. The hero section already
+   clips overflow, so the angled corners cannot widen the page. */
+
+@media (max-width: 767px) {
+  .hero-console-tilt {
+    transform: perspective(1100px) rotateY(10deg) rotateX(3.5deg) scale(0.97);
+    transform-origin: 42% 50%;
+  }
+}
+
+
+.sysacc__intro.reveal,
+.sysacc__intro {
+  margin: 0;
+}
+
+
+@keyframes sysacc-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+
+.sysacc__link .arrow {
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+.sysacc__link:hover .arrow {
+  transform: translateX(3px);
+}
+
+
+/* ── Console run sequence ─────────────────────────────────────────────────
+   The agent panel used to sit frozen on "Working …", which is the one moment
+   in the run that says least. It now plays the whole thing once — assembled,
+   waiting on a named person, approved, delivered — and rests on the outcome.
+
+   Deliberately not a loop: the hero is the one region always on screen, so a
+   repeating sequence there would undo the off-screen pausing and nag besides.
+   It is also plain CSS. A timeline library would buy nothing for five
+   crossfades on fixed offsets. */
+.console-seq {
+  position: relative;
+  min-height: 17px;
+}
+
+
+.console-seq__step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  white-space: nowrap;
+  /* the resting state, and what shows when motion is reduced */
+  opacity: 0;
+}
+
+
+.console-seq__step:last-child {
+  opacity: 1;
+}
+
+
+.console-seq__pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+@media (prefers-reduced-motion: no-preference){
+  /* Gated on in-view, not page load. The panel sits ~925px down, which is
+     below the fold on a 900px laptop, a 768px laptop and every phone; started
+     on load, the run was finished before most readers ever reached it. */
+  .console-seq.in-view .console-seq__step {
+    animation: console-seq-step 1900ms ease both;
+  }
+
+
+  .console-seq.in-view .console-seq__step:nth-child(1) {
+    animation-delay: 300ms;
+  }
+
+  .console-seq.in-view .console-seq__step:nth-child(2) {
+    animation-delay: 1900ms;
+  }
+
+  .console-seq.in-view .console-seq__step:nth-child(3) {
+    animation-delay: 3500ms;
+  }
+
+  .console-seq.in-view .console-seq__step:nth-child(4) {
+    animation-delay: 5100ms;
+  }
+
+  .console-seq.in-view .console-seq__step:nth-child(5) {
+    animation: console-seq-final 900ms ease both;
+    animation-delay: 6700ms;
+  }
+
+
+  /* The status light follows the run. :has() reaches back up to the header
+     from the panel; where it is unsupported the dot simply stays as it was. */
+  .hero-console:has(.console-seq.in-view) .live-dot {
+    animation: console-seq-settle 900ms ease both;
+    animation-delay: 6700ms;
+  }
+
+
+  @keyframes console-seq-step {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    14%,
+    80% {
+      opacity: 1;
+      transform: none;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+
+  @keyframes console-seq-final {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+
+  @keyframes console-seq-settle {
+    to {
+      color: var(--color-pulse-green);
+    }
+  }
+}
+
+
+/* The hero console's border beam waits for the hand-off: held while the film
+   plays, it starts its two laps fresh once the logo has landed in the nav. */
+html[data-intro] .hero-console__beam {
+  animation: none;
+}
