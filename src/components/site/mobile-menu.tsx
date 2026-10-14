@@ -2,18 +2,14 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { nav } from "@/content/site";
 import { whatsappHref } from "@/lib/contact";
 import { WhatsAppIcon } from "./icons";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
   const wa = whatsappHref();
-
-  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -39,6 +35,7 @@ export function MobileMenu() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setOpen(false)}
                 className="border-t border-line py-4 font-serif text-[28px] leading-tight no-underline first:border-t-0"
               >
                 {item.label}
