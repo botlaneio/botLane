@@ -276,14 +276,14 @@ export default function SystemsPage() {
                 </tr>
                 <tr>
                   <td className="p-4 pl-6 font-mono text-xs text-muted font-medium">Standalone Retainer</td>
-                  <td className="p-4 font-mono font-medium text-ink">$490 / month</td>
-                  <td className="p-4 font-mono font-medium text-ink">$490 / month</td>
-                  <td className="p-4 pr-6 font-mono font-medium text-ink">$490 / month</td>
+                  <td className="p-4 font-mono font-medium text-ink">$600 / month</td>
+                  <td className="p-4 font-mono font-medium text-ink">$600 / month</td>
+                  <td className="p-4 pr-6 font-mono font-medium text-ink">$600 / month</td>
                 </tr>
                 <tr>
                   <td className="p-4 pl-6 font-mono text-xs text-lane font-semibold">Full Suite Bundle</td>
                   <td colSpan={3} className="p-4 pr-6 text-center font-mono font-bold text-lane bg-lane/[0.03]">
-                    All 3 Systems included for $1,190 / month (Save $280/mo)
+                    All 3 Systems included for $1,500 / month (Save $300/mo)
                   </td>
                 </tr>
               </tbody>

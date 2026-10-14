@@ -95,17 +95,17 @@ const STATS = [
 
 function Step({ num, title, children, text }: { num: string; title: string; children: React.ReactNode; text: string }) {
   return (
-    <li className="flex gap-5 rounded-[20px] border border-line bg-white p-5 shadow-[0_4px_24px_rgba(20,20,40,0.04)] sm:p-6">
+    <li className="flex gap-3.5 rounded-[20px] border border-line bg-white p-4 shadow-[0_4px_24px_rgba(20,20,40,0.04)] sm:gap-5 sm:p-6">
       <div className="flex flex-col items-center">
-        <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-surface font-semibold text-ink">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-sm font-semibold text-ink sm:size-11 sm:text-base">
           {num}
         </span>
         <span aria-hidden className="mt-3 w-px flex-1 border-l border-dashed border-line" />
       </div>
       <div className="min-w-0 flex-1">
-        <h2 className="mt-2 text-lg font-semibold tracking-[-0.01em] text-ink">{title}</h2>
-        <div className="mt-4">{children}</div>
-        <p className="mt-4 max-w-[340px] text-[15px] leading-relaxed text-muted">{text}</p>
+        <h2 className="mt-2 text-base font-semibold sm:text-lg tracking-[-0.01em] text-ink">{title}</h2>
+        <div className="mt-3 sm:mt-4">{children}</div>
+        <p className="mt-3 max-w-[340px] text-sm leading-relaxed text-muted sm:mt-4 sm:text-[15px]">{text}</p>
       </div>
     </li>
   );
@@ -260,19 +260,19 @@ export function HowItWorksHero() {
               title="Your data comes in"
               text="We connect to your existing tools (Google Ads, CRM, inbox, drive, etc.)."
             >
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {TOOLS.map((tool) => (
                   <span
                     key={tool.name}
                     title={tool.name}
-                    className="flex size-12 items-center justify-center rounded-[12px] border border-line bg-white"
+                    className="flex size-9 items-center justify-center rounded-[10px] border border-line bg-white sm:size-12 sm:rounded-[12px] [&>svg]:size-5 sm:[&>svg]:size-6"
                   >
                     {tool.logo}
                     <span className="sr-only">{tool.name}</span>
                   </span>
                 ))}
-                <span className="flex size-12 items-center justify-center rounded-[12px] border border-line bg-white text-muted">
-                  <Plus className="size-5" />
+                <span className="flex size-9 items-center justify-center rounded-[10px] border border-line bg-white text-muted sm:size-12 sm:rounded-[12px]">
+                  <Plus className="size-4 sm:size-5" />
                   <span className="sr-only">and more</span>
                 </span>
               </div>
@@ -283,15 +283,15 @@ export function HowItWorksHero() {
               title="Agent Lane does the work"
               text="Your three AI lanes analyse, draft and prepare outputs."
             >
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {LANES.map((lane) => {
                   const Icon = lane.icon;
                   return (
-                    <span key={lane.num} className="flex items-center gap-2.5 rounded-[12px] border border-line bg-white py-1.5 pr-3 pl-1.5">
-                      <span className={`flex size-9 items-center justify-center rounded-[10px] ${lane.tone}`}>
+                    <span key={lane.num} className="flex items-center gap-2 rounded-[12px] border border-line bg-white py-1.5 pr-2.5 pl-1.5 sm:gap-2.5 sm:pr-3">
+                      <span className={`flex size-8 items-center justify-center rounded-[10px] sm:size-9 ${lane.tone}`}>
                         <Icon className="size-4" />
                       </span>
-                      <span className="text-[12px] leading-tight text-muted">
+                      <span className="text-[11px] sm:text-[12px] leading-tight text-muted">
                         {lane.short[0]}
                         <br />
                         {lane.short[1]}
@@ -307,20 +307,20 @@ export function HowItWorksHero() {
               title="You approve and it’s delivered"
               text="Review, approve in one click, and the work is pushed to your channels."
             >
-              <div className="flex items-center gap-4 text-faint">
-                <span className="flex size-12 items-center justify-center rounded-[12px] border border-line bg-white text-ink">
+              <div className="flex items-center gap-3 text-faint sm:gap-4">
+                <span className="flex size-10 items-center justify-center rounded-[12px] sm:size-12 border border-line bg-white text-ink">
                   <FileCheck2 className="size-5" />
                   <span className="sr-only">Review</span>
                 </span>
                 <ArrowRight className="size-4" />
-                <span className="flex size-12 items-center justify-center rounded-[12px] bg-lane/10">
+                <span className="flex size-10 items-center justify-center rounded-[12px] sm:size-12 bg-lane/10">
                   <span className="flex size-6 items-center justify-center rounded-full bg-lane text-white">
                     <Check className="size-3.5" strokeWidth={3} />
                   </span>
                   <span className="sr-only">Approve</span>
                 </span>
                 <ArrowRight className="size-4" />
-                <span className="flex size-12 items-center justify-center rounded-[12px] border border-line bg-white text-ink">
+                <span className="flex size-10 items-center justify-center rounded-[12px] sm:size-12 border border-line bg-white text-ink">
                   <Send className="size-5" />
                   <span className="sr-only">Deliver</span>
                 </span>
@@ -334,12 +334,12 @@ export function HowItWorksHero() {
           <div className="hidden xl:block">
             <Workspace />
           </div>
-          <dl className="grid grid-cols-2 gap-y-6 sm:grid-cols-4 xl:mt-20">
+          <dl className="grid grid-cols-4 xl:mt-20">
             {STATS.map((stat) => (
-              <div key={stat.label} className="border-l border-line pl-5">
+              <div key={stat.label} className="border-l border-line pl-2.5 sm:pl-5">
                 <dt className="sr-only">{stat.label}</dt>
-                <dd className="text-[34px] font-bold leading-none tracking-[-0.03em] text-ink">{stat.value}</dd>
-                <dd className="mt-2 text-sm text-muted">{stat.label}</dd>
+                <dd className="text-[22px] font-bold leading-none sm:text-[34px] tracking-[-0.03em] text-ink">{stat.value}</dd>
+                <dd className="mt-1.5 text-[11px] leading-tight text-muted sm:mt-2 sm:text-sm">{stat.label}</dd>
               </div>
             ))}
           </dl>
