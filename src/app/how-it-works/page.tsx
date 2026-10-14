@@ -38,19 +38,19 @@ export default function HowItWorksPage() {
         <HowItWorksHero />
 
         {/* What Lane does and doesn't do */}
-        <section className="mx-auto max-w-[1200px] border-t border-line px-6 py-24">
+        <section className="mx-auto max-w-[75rem] border-t border-line px-6 py-24">
           <div className="max-w-2xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Clear limits
             </div>
-            <h2 className="mt-2 text-[clamp(28px,3.4vw,44px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+            <h2 className="mt-2 text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
               What Lane does, and what it never does.
             </h2>
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div className="rounded-[22px] border border-line bg-white p-7 shadow-[0_4px_24px_rgba(20,20,40,0.04)]">
-              <div className="font-mono text-[11px] font-semibold uppercase tracking-wider text-ok">
+            <div className="rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)]">
+              <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-ok">
                 Lane does
               </div>
               <ul className="mt-5 space-y-3.5">
@@ -63,8 +63,8 @@ export default function HowItWorksPage() {
               </ul>
             </div>
 
-            <div className="rounded-[22px] border border-line bg-surface/50 p-7">
-              <div className="font-mono text-[11px] font-semibold uppercase tracking-wider text-lane">
+            <div className="rounded-[1.375rem] border border-line bg-surface/50 p-7">
+              <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane">
                 Lane never
               </div>
               <ul className="mt-5 space-y-3.5">

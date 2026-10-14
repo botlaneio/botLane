@@ -46,8 +46,8 @@ export function HeroConsole() {
   const connectors = ["gmail", "drive", "hubspot", "quickbooks"] as const;
 
   return (
-    <div className="hero-console relative z-[1] overflow-hidden rounded-[10px]">
-      <div className="grid min-h-[420px] md:grid-cols-[186px_1fr]">
+    <div className="hero-console relative z-[1] overflow-hidden rounded-[0.625rem]">
+      <div className="grid min-h-[26.25rem] md:grid-cols-[11.625rem_1fr]">
         {/* ---------------- Workspace rail ---------------- */}
         <aside
           className="hero-console__rail hidden flex-col p-2.5 md:flex"
@@ -65,7 +65,7 @@ export function HeroConsole() {
             {nav.map(({ Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[13px] text-fog"
+                className="flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[0.8125rem] text-fog"
               >
                 <Icon size={14} strokeWidth={1.5} className="shrink-0 text-ash" />
                 <span className="truncate">{label}</span>
@@ -73,14 +73,14 @@ export function HeroConsole() {
             ))}
           </div>
 
-          <p className="mt-4 mb-1 px-1.5 text-[11px] text-ash" style={{ fontWeight: 510 }}>
+          <p className="mt-4 mb-1 px-1.5 text-[0.6875rem] text-ash" style={{ fontWeight: 510 }}>
             Workspace
           </p>
           <div className="space-y-px">
             {workspace.map(({ Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[13px] text-fog"
+                className="flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[0.8125rem] text-fog"
               >
                 <Icon size={14} strokeWidth={1.5} className="shrink-0 text-ash" />
                 <span className="truncate">{label}</span>
@@ -88,14 +88,14 @@ export function HeroConsole() {
             ))}
           </div>
 
-          <p className="mt-4 mb-1 px-1.5 text-[11px] text-ash" style={{ fontWeight: 510 }}>
+          <p className="mt-4 mb-1 px-1.5 text-[0.6875rem] text-ash" style={{ fontWeight: 510 }}>
             Favorites
           </p>
           <div className="space-y-px">
             {favorites.map((f) => (
               <div
                 key={f.label}
-                className={`flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[13px] ${
+                className={`flex items-center gap-2.5 rounded-md px-1.5 py-1.5 text-[0.8125rem] ${
                   f.active ? "row-live bg-white/[0.055] text-paper" : "text-fog"
                 }`}
               >
@@ -120,8 +120,8 @@ export function HeroConsole() {
             <span className="live-dot shrink-0" style={{ color: "var(--color-ember)" }}>
               <Circle size={12} strokeWidth={2} />
             </span>
-            <span className="mono shrink-0 text-[12px] text-fog">OPS&#8209;1842</span>
-            <span className="truncate text-[13px] text-mist">Weekly client report</span>
+            <span className="mono shrink-0 text-[0.75rem] text-fog">OPS&#8209;1842</span>
+            <span className="truncate text-[0.8125rem] text-mist">Weekly client report</span>
             <Star
               size={12}
               strokeWidth={1.5}
@@ -129,7 +129,7 @@ export function HeroConsole() {
               style={{ color: "var(--color-amber)", fill: "var(--color-amber)" }}
             />
             <Ellipsis size={14} strokeWidth={1.5} className="shrink-0 text-ash" />
-            <span className="mono ml-auto hidden shrink-0 items-center gap-1.5 text-[11px] text-ash sm:flex">
+            <span className="mono ml-auto hidden shrink-0 items-center gap-1.5 text-[0.6875rem] text-ash sm:flex">
               <span>1 / 84</span>
               <ArrowUp size={12} strokeWidth={1.5} />
               <ArrowDown size={12} strokeWidth={1.5} />
@@ -144,15 +144,15 @@ export function HeroConsole() {
 
           <div className="px-4 pt-1 pb-5 md:px-6">
             <h3
-              className="mb-2 text-[21px] tracking-[-0.014em] text-paper"
+              className="mb-2 text-[1.3125rem] tracking-[-0.014em] text-paper"
               style={{ fontWeight: 590, lineHeight: 1.25 }}
             >
               Weekly client report
             </h3>
-            <p className="mb-4 max-w-[54ch] text-[13.5px] leading-[1.6] text-mist">
+            <p className="mb-4 max-w-[54ch] text-[0.8438rem] leading-[1.6] text-mist">
               Draft and route the summary once{" "}
               <code
-                className="mono rounded-[4px] px-1.5 py-0.5 text-[12px] text-fog"
+                className="mono rounded-[0.25rem] px-1.5 py-0.5 text-[0.75rem] text-fog"
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid var(--glass-divider)",
@@ -170,7 +170,7 @@ export function HeroConsole() {
                 return (
                   <span
                     key={key}
-                    className="flex items-center gap-1.5 rounded-[5px] py-1 pr-2 pl-1.5 text-[11.5px] text-fog"
+                    className="flex items-center gap-1.5 rounded-[0.3125rem] py-1 pr-2 pl-1.5 text-[0.7188rem] text-fog"
                     style={{ border: "1px solid var(--glass-divider)" }}
                   >
                     <svg
@@ -190,14 +190,14 @@ export function HeroConsole() {
             </div>
 
             <p
-              className="mb-3 text-[15px] text-paper"
+              className="mb-3 text-[0.9375rem] text-paper"
               style={{ fontWeight: 560, letterSpacing: "-0.008em" }}
             >
               Activity
             </p>
 
             <div className="mb-4 space-y-2">
-              <div className="flex items-start gap-2 text-[12.5px] leading-[1.5] text-ash">
+              <div className="flex items-start gap-2 text-[0.7812rem] leading-[1.5] text-ash">
                 <span className="mt-0.5 size-4 shrink-0 rounded-full bg-white/[0.12]" />
                 <span>
                   <span className="text-fog">botLane</span> created the run via{" "}
@@ -205,8 +205,8 @@ export function HeroConsole() {
                   <span className="text-fog">A. Chen</span> · 2min ago
                 </span>
               </div>
-              <div className="flex items-start gap-2 text-[12.5px] leading-[1.5] text-ash">
-                <span className="mt-0.5 size-4 shrink-0 rounded-[4px] bg-white/[0.08]" />
+              <div className="flex items-start gap-2 text-[0.7812rem] leading-[1.5] text-ash">
+                <span className="mt-0.5 size-4 shrink-0 rounded-[0.25rem] bg-white/[0.08]" />
                 <span>
                   <span className="text-fog">Triage</span> added the labels{" "}
                   <span className="text-fog">Reporting</span> and{" "}
@@ -220,20 +220,20 @@ export function HeroConsole() {
               style={{ border: "1px solid var(--glass-divider)" }}
             >
               <div>
-                <p className="mb-1 flex items-center gap-2 text-[12.5px] text-ash">
+                <p className="mb-1 flex items-center gap-2 text-[0.7812rem] text-ash">
                   <span className="size-4 shrink-0 rounded-full bg-white/[0.12]" />
                   <span className="text-mist">a.chen</span> · 4 min ago
                 </p>
-                <p className="pl-6 text-[13px] leading-[1.55] text-mist">
+                <p className="pl-6 text-[0.8125rem] leading-[1.55] text-mist">
                   The summary lands after the client call, so we look a week behind…
                 </p>
               </div>
               <div style={{ borderTop: "1px solid var(--glass-divider)" }} className="pt-3">
-                <p className="mb-1 flex items-center gap-2 text-[12.5px] text-ash">
+                <p className="mb-1 flex items-center gap-2 text-[0.7812rem] text-ash">
                   <span className="size-4 shrink-0 rounded-full bg-white/[0.08]" />
                   <span className="text-mist">j.rivera</span> · just now
                 </p>
-                <p className="pl-6 text-[13px] leading-[1.55] text-mist">
+                <p className="pl-6 text-[0.8125rem] leading-[1.55] text-mist">
                   <span style={{ color: "var(--color-signal-teal)" }}>@botLane</span> can
                   you take this one?
                 </p>
@@ -244,8 +244,8 @@ export function HeroConsole() {
           <span className="hero-console__scrim hidden min-[1160px]:block" aria-hidden="true" />
 
           {/* ---------------- Agent panel ---------------- */}
-          <div className="px-4 pb-5 min-[1160px]:absolute min-[1160px]:right-5 min-[1160px]:bottom-5 min-[1160px]:w-[292px] min-[1160px]:px-0 min-[1160px]:pb-0">
-            <p className="mb-2 hidden text-[12px] text-ash min-[1160px]:block">Approvals</p>
+          <div className="px-4 pb-5 min-[1160px]:absolute min-[1160px]:right-5 min-[1160px]:bottom-5 min-[1160px]:w-[18.25rem] min-[1160px]:px-0 min-[1160px]:pb-0">
+            <p className="mb-2 hidden text-[0.75rem] text-ash min-[1160px]:block">Approvals</p>
             <div
               className="hero-console__panel rounded-lg p-3"
               style={{ border: "1px solid var(--glass-divider)" }}
@@ -263,14 +263,14 @@ export function HeroConsole() {
 
               <div className="mb-2 flex justify-end">
                 <p
-                  className="max-w-[92%] rounded-lg px-3 py-2 text-[12.5px] leading-[1.5] text-mist"
+                  className="max-w-[92%] rounded-lg px-3 py-2 text-[0.7812rem] leading-[1.5] text-mist"
                   style={{ background: "rgba(255,255,255,0.055)" }}
                 >
                   Draft the summary and route it to A. Chen for approval
                 </p>
               </div>
 
-              <p className="mb-2 flex items-center justify-end gap-1.5 text-[11.5px] text-ash">
+              <p className="mb-2 flex items-center justify-end gap-1.5 text-[0.7188rem] text-ash">
                 <Circle size={10} strokeWidth={2} className="shrink-0" />
                 <span className="mono">SYS&#8209;01</span> added to context
               </p>
@@ -278,7 +278,7 @@ export function HeroConsole() {
               {/* The run, playing out once: the product's actual promise —
                   botLane prepares, a named person decides, then it ships.
                   Finite, so it never joins the looping set. */}
-              <InView className="console-seq mono text-[12px]" aria-hidden="true">
+              <InView className="console-seq mono text-[0.75rem]" aria-hidden="true">
                 <p className="console-seq__step text-ash">
                   Working
                   <span className="working-dots">

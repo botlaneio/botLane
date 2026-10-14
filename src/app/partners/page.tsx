@@ -76,7 +76,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
 
   if (isSuccess) {
     return (
-      <div className="rounded-[22px] border border-emerald-500/20 bg-emerald-500/5 p-8 text-center" suppressHydrationWarning>
+      <div className="rounded-[1.375rem] border border-emerald-500/20 bg-emerald-500/5 p-8 text-center" suppressHydrationWarning>
         <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
           <CheckCircle2 size={24} />
         </div>
@@ -106,7 +106,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
           value={partnerType}
           onChange={(e) => setPartnerType(e.target.value)}
           suppressHydrationWarning
-          className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
+          className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
         >
           <option value="Agency / Fractional CMO">Agency / Fractional CMO (Referral & Reseller)</option>
           <option value="RevOps & IT Consultant">RevOps & IT Consultant (Systems Integrator)</option>
@@ -128,7 +128,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
             onChange={(e) => setName(e.target.value)}
             suppressHydrationWarning
             autoComplete="off"
-            className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+            className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
           />
         </div>
         <div suppressHydrationWarning>
@@ -143,7 +143,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
             onChange={(e) => setEmail(e.target.value)}
             suppressHydrationWarning
             autoComplete="off"
-            className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+            className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
           />
         </div>
       </div>
@@ -161,7 +161,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
             onChange={(e) => setCompany(e.target.value)}
             suppressHydrationWarning
             autoComplete="off"
-            className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+            className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
           />
         </div>
         <div suppressHydrationWarning>
@@ -172,7 +172,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
             value={clientCount}
             onChange={(e) => setClientCount(e.target.value)}
             suppressHydrationWarning
-            className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
+            className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
           >
             <option value="5-15 clients">5 – 15 clients</option>
             <option value="16-35 clients">16 – 35 clients</option>
@@ -191,7 +191,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
       <button
         type="submit"
         disabled={isSending}
-        className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black disabled:opacity-60"
+        className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black disabled:opacity-60"
       >
         <span>{isSending ? "Sending…" : "Apply for Partner Programme"}</span>
         <ArrowRight size={13} />
@@ -208,13 +208,13 @@ export default function PartnersPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <Handshake size={14} />
             <span>BotLane Partner Programme</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,68px)] font-bold leading-[1] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1] tracking-[-0.04em] text-ink">
             Scale your clients&apos; operations. <br />
             Earn 20% recurring revenue share.
           </h1>
@@ -226,17 +226,17 @@ export default function PartnersPage() {
         </section>
 
         {/* Benefits Grid */}
-        <section className="mx-auto max-w-[1200px] px-6 pb-20">
+        <section className="mx-auto max-w-[75rem] px-6 pb-20">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {PARTNER_BENEFITS.map((b) => {
               const Icon = b.icon;
               return (
                 <div
                   key={b.title}
-                  className="rounded-[20px] border border-line bg-white p-6 shadow-sm flex flex-col justify-between"
+                  className="rounded-[1.25rem] border border-line bg-white p-6 shadow-sm flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex size-10 items-center justify-center rounded-[10px] bg-surface text-ink">
+                    <div className="flex size-10 items-center justify-center rounded-[0.625rem] bg-surface text-ink">
                       <Icon size={19} />
                     </div>
                     <h3 className="mt-4 text-base font-semibold text-ink">{b.title}</h3>
@@ -249,8 +249,8 @@ export default function PartnersPage() {
         </section>
 
         {/* Partner Application & Details */}
-        <section className="mx-auto max-w-[1100px] px-6 py-16 border-t border-line">
-          <div className="rounded-[28px] border border-line bg-white p-8 sm:p-12 shadow-[0_16px_50px_rgba(20,20,40,0.05)]">
+        <section className="mx-auto max-w-[68.75rem] px-6 py-16 border-t border-line">
+          <div className="rounded-[1.75rem] border border-line bg-white p-8 sm:p-12 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.05)]">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-6 space-y-4">
                 <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
@@ -280,7 +280,7 @@ export default function PartnersPage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-6 rounded-[20px] border border-line bg-surface/40 p-6 sm:p-8">
+              <div className="lg:col-span-6 rounded-[1.25rem] border border-line bg-surface/40 p-6 sm:p-8">
                 <div className="font-mono text-xs font-semibold uppercase tracking-wider text-muted mb-4">
                   Register Your Agency
                 </div>
@@ -291,7 +291,7 @@ export default function PartnersPage() {
         </section>
 
         {/* Partner FAQ */}
-        <section className="mx-auto max-w-[960px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-ink">
               Partner Programme FAQ
@@ -315,7 +315,7 @@ export default function PartnersPage() {
             ].map((faq, idx) => (
               <div
                 key={faq.q}
-                className="rounded-[14px] border border-line bg-white p-5 cursor-pointer"
+                className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
               >
                 <div className="flex items-center justify-between">

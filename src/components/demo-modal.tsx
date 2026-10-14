@@ -73,13 +73,13 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="demo-title"
-            className="relative w-full max-w-[500px] overflow-hidden rounded-[24px] border border-line bg-white p-7 shadow-[0_24px_50px_rgba(20,20,40,0.14)]"
+            className="relative w-full max-w-[31.25rem] overflow-hidden rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_1.5rem_3.125rem_rgba(20,20,40,0.14)]"
           >
             {/* Close Button */}
             <button
               onClick={onClose}
               aria-label="Close dialog"
-              className="absolute top-5 right-5 flex size-8 items-center justify-center rounded-[8px] text-muted transition-colors hover:bg-surface hover:text-ink"
+              className="absolute top-5 right-5 flex size-8 items-center justify-center rounded-[0.5rem] text-muted transition-colors hover:bg-surface hover:text-ink"
             >
               <X size={18} />
             </button>
@@ -106,7 +106,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="mt-6 inline-flex h-11 items-center justify-center rounded-[8px] bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-black"
+                  className="mt-6 inline-flex h-11 items-center justify-center rounded-[0.5rem] bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-black"
                 >
                   Done
                 </button>
@@ -123,7 +123,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 <h2 id="demo-title" className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-ink">
                   Book a 15-minute demo
                 </h2>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-muted">
+                <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
                   See how Lane handles the busywork while keeping you in complete control of every approval.
                 </p>
 
@@ -167,7 +167,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                           key={s}
                           type="button"
                           onClick={() => setSystem(s)}
-                          className={`rounded-[8px] border px-2.5 py-2 text-left text-xs transition-colors ${
+                          className={`rounded-[0.5rem] border px-2.5 py-2 text-left text-xs transition-colors ${
                             system === s
                               ? "border-lane bg-red-50/60 font-medium text-lane-ink"
                               : "border-line bg-white text-muted hover:border-muted/50 hover:text-ink"
@@ -189,7 +189,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                           key={slot}
                           type="button"
                           onClick={() => setTimeSlot(slot)}
-                          className={`flex items-center justify-between rounded-[8px] border px-3 py-2 text-xs transition-colors ${
+                          className={`flex items-center justify-between rounded-[0.5rem] border px-3 py-2 text-xs transition-colors ${
                             timeSlot === slot
                               ? "border-ink bg-ink text-white"
                               : "border-line bg-surface/30 text-muted hover:border-muted/50 hover:text-ink"
@@ -208,7 +208,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   <button
                     type="submit"
                     disabled={isSubmitting || !email}
-                    className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-lane-strong text-sm font-medium text-white transition-all hover:bg-lane-ink disabled:opacity-50"
+                    className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-lane-strong text-sm font-medium text-white transition-all hover:bg-lane-ink disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       "Scheduling..."

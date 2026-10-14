@@ -101,11 +101,11 @@ export default function PricingPage() {
     <>
       <SiteHeader />
       <main className="min-h-screen">
-        <section className="mx-auto max-w-[1200px] px-6 pt-8 sm:pt-16">
-          <div className="inline-flex rounded-[8px] bg-surface px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.14em] text-ink-2">
+        <section className="mx-auto max-w-[75rem] px-6 pt-8 sm:pt-16">
+          <div className="inline-flex rounded-[0.5rem] bg-surface px-3 py-1.5 font-mono text-[0.75rem] uppercase tracking-[0.14em] text-ink-2">
             Pricing
           </div>
-          <h1 className="mt-5 text-[clamp(44px,6vw,80px)] font-bold leading-[0.95] tracking-[-0.05em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.75rem,6vw,5rem)] font-bold leading-[0.95] tracking-[-0.05em] text-ink">
             Simple, transparent pricing.
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-muted sm:text-2xl">
@@ -114,64 +114,64 @@ export default function PricingPage() {
         </section>
 
         {/* Tiers */}
-        <section className="mx-auto grid max-w-[1200px] gap-5 px-6 pt-10 sm:pt-12 lg:grid-cols-3">
+        <section className="mx-auto grid max-w-[75rem] gap-5 px-6 pt-10 sm:pt-12 lg:grid-cols-3">
           {TIERS.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-[22px] border bg-white p-6 sm:p-8 ${
+              className={`relative flex flex-col rounded-[1.375rem] border bg-white p-6 sm:p-8 ${
                 tier.featured
-                  ? "order-first border-ink/80 lg:order-none shadow-[0_30px_60px_-30px_rgba(20,20,40,0.35)]"
-                  : "border-line shadow-[0_4px_24px_rgba(20,20,40,0.04)]"
+                  ? "order-first border-ink/80 lg:order-none shadow-[0_1.875rem_3.75rem_-1.875rem_rgba(20,20,40,0.35)]"
+                  : "border-line shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)]"
               }`}
             >
               {tier.featured && (
-                <span className="absolute -top-3 left-8 rounded-full bg-lane px-3 py-1 text-[11px] font-medium text-white">
+                <span className="absolute -top-3 left-8 rounded-full bg-lane px-3 py-1 text-[0.6875rem] font-medium text-white">
                   All three lanes
                 </span>
               )}
               <h2 className="text-xl font-semibold tracking-[-0.02em] text-ink">{tier.name}</h2>
               <div className="mt-1 text-base text-muted">Starting at</div>
               <div className="mt-2 flex items-baseline gap-2">
-                <span className="text-[44px] font-bold sm:text-5xl tracking-[-0.04em] text-ink">{tier.price}</span>
+                <span className="text-[2.75rem] font-bold sm:text-5xl tracking-[-0.04em] text-ink">{tier.price}</span>
                 <span className="text-xl text-muted">/ month</span>
               </div>
               <ul className="mt-6 flex-1 space-y-3 border-t border-line pt-6">
                 {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-[15px] leading-snug text-ink-2">
-                    <Check className="mt-0.5 size-[18px] shrink-0 text-lane" strokeWidth={2.5} />
+                  <li key={feature} className="flex items-start gap-3 text-[0.9375rem] leading-snug text-ink-2">
+                    <Check className="mt-0.5 size-[1.125rem] shrink-0 text-lane" strokeWidth={2.5} />
                     {feature}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/company/contact"
-                className={`group mt-8 flex h-13 items-center justify-center gap-2 rounded-[12px] text-base font-medium transition ${
+                className={`group mt-8 flex h-13 items-center justify-center gap-2 rounded-[0.75rem] text-base font-medium transition ${
                   tier.featured
                     ? "bg-ink text-white hover:bg-black"
                     : "border border-line bg-white text-ink hover:bg-surface"
                 }`}
               >
                 Contact us
-                <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="size-[1.125rem] transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
           ))}
         </section>
 
         {/* What's included */}
-        <section className="mx-auto max-w-[1200px] px-6 pt-5 pb-24">
-          <div className="rounded-[22px] border border-line bg-white p-5 shadow-[0_4px_24px_rgba(20,20,40,0.04)] sm:p-8">
+        <section className="mx-auto max-w-[75rem] px-6 pt-5 pb-24">
+          <div className="rounded-[1.375rem] border border-line bg-white p-5 shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)] sm:p-8">
             <h2 className="text-xl font-semibold tracking-[-0.02em] text-ink">What&rsquo;s included</h2>
             <ul className="mt-4 grid gap-x-10 md:grid-cols-2">
               {INCLUDED.map((item) => (
                 <li key={item.title} className="border-b border-line last:border-b-0 md:[&:nth-last-child(2)]:border-b-0">
                   <Link href={item.href} className="group flex items-center gap-4 py-3.5 sm:gap-5 sm:py-4">
-                    <span className={`flex size-11 shrink-0 items-center justify-center rounded-[12px] sm:size-14 sm:rounded-[14px] ${item.tone}`}>
+                    <span className={`flex size-11 shrink-0 items-center justify-center rounded-[0.75rem] sm:size-14 sm:rounded-[0.875rem] ${item.tone}`}>
                       {item.icon}
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[15px] font-medium text-ink sm:text-base">{item.title}</span>
-                      <span className="block text-[13px] leading-snug text-muted sm:text-sm">{item.text}</span>
+                      <span className="block text-[0.9375rem] font-medium text-ink sm:text-base">{item.title}</span>
+                      <span className="block text-[0.8125rem] leading-snug text-muted sm:text-sm">{item.text}</span>
                     </span>
                     <ChevronRight className="size-5 text-muted transition-transform group-hover:translate-x-0.5" />
                   </Link>

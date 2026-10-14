@@ -5,7 +5,7 @@
    clips only sideways (clip, unlike hidden, keeps position: sticky working). */
 .bl-stage { position: relative; height: 640vh; min-height: 4800px; overflow-x: clip; }
 .bl-sticky {
-  position: sticky; top: 64px; height: calc(100vh - 64px); height: calc(100svh - 64px); min-height: 560px;
+  position: sticky; top: 4rem; height: calc(100vh - 4rem); height: calc(100svh - 4rem); min-height: 560px;
   display: flex; flex-direction: column;
   background: linear-gradient(#ffffff, #f3f4f7 70%, #ffffff);
 }

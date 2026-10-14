@@ -78,13 +78,13 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
     <div className="min-h-screen bg-[#fafafc] text-ink selection:bg-lane-soft selection:text-lane-ink flex flex-col justify-between">
       {/* Top Header */}
       <header className="border-b border-line/70 bg-white/80 backdrop-blur-md sticky top-0 z-20">
-        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
+        <div className="mx-auto flex h-16 max-w-[75rem] items-center justify-between px-6">
           <Link
             href="/"
             aria-label="Back to BotLane homepage"
             className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
           >
-            <Wordmark className="text-[19px] text-ink" />
+            <Wordmark className="text-[1.1875rem] text-ink" />
           </Link>
 
           <Link
@@ -99,11 +99,11 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
 
       {/* Main Content Split View */}
       <main className="flex-1 py-10 px-6 sm:px-8">
-        <div className="mx-auto max-w-[1100px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="mx-auto max-w-[68.75rem] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Form Card */}
-          <div className="lg:col-span-6 max-w-[480px] w-full mx-auto">
+          <div className="lg:col-span-6 max-w-[30rem] w-full mx-auto">
             {isSuccess ? (
-              <div className="rounded-[24px] border border-line bg-white p-8 sm:p-10 shadow-[0_20px_50px_rgba(20,20,40,0.06)] text-center animate-in fade-in zoom-in-95 duration-200">
+              <div className="rounded-[1.5rem] border border-line bg-white p-8 sm:p-10 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)] text-center animate-in fade-in zoom-in-95 duration-200">
                 <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-ok/10 text-ok">
                   <Check size={28} strokeWidth={2.5} />
                 </div>
@@ -129,7 +129,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 <div className="mt-8 flex flex-col gap-3">
                   <Link
                     href="/"
-                    className="inline-flex h-11 w-full items-center justify-center rounded-[8px] bg-ink text-sm font-medium text-white transition-colors hover:bg-black"
+                    className="inline-flex h-11 w-full items-center justify-center rounded-[0.5rem] bg-ink text-sm font-medium text-white transition-colors hover:bg-black"
                   >
                     Go to Approval Dashboard
                   </Link>
@@ -143,13 +143,13 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 </div>
               </div>
             ) : (
-              <div className="rounded-[24px] border border-line bg-white p-8 sm:p-10 shadow-[0_20px_50px_rgba(20,20,40,0.06)]">
+              <div className="rounded-[1.5rem] border border-line bg-white p-8 sm:p-10 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)]">
                 {/* Tabs */}
                 <div className="flex rounded-xl bg-surface p-1 border border-line/60 mb-7">
                   <button
                     type="button"
                     onClick={() => setMode("signin")}
-                    className={`flex-1 rounded-[8px] py-2 text-xs font-semibold transition-all ${
+                    className={`flex-1 rounded-[0.5rem] py-2 text-xs font-semibold transition-all ${
                       mode === "signin"
                         ? "bg-white text-ink shadow-sm"
                         : "text-muted hover:text-ink"
@@ -160,7 +160,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="button"
                     onClick={() => setMode("signup")}
-                    className={`flex-1 rounded-[8px] py-2 text-xs font-semibold transition-all ${
+                    className={`flex-1 rounded-[0.5rem] py-2 text-xs font-semibold transition-all ${
                       mode === "signup"
                         ? "bg-white text-ink shadow-sm"
                         : "text-muted hover:text-ink"
@@ -172,7 +172,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
 
                 {/* Header text */}
                 <div className="mb-6">
-                  <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.1em] text-lane">
+                  <div className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-lane">
                     <LaneMarkCycle size={18} />
                     <span>{mode === "signin" ? "Secure Login" : "New Workforce Onboarding"}</span>
                   </div>
@@ -193,7 +193,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="button"
                     onClick={() => handleOAuth("Google")}
-                    className="inline-flex h-10 items-center justify-center gap-2.5 rounded-[8px] border border-line bg-white px-3 text-xs font-medium text-ink transition-colors hover:bg-surface hover:border-line-2 cursor-pointer shadow-xs"
+                    className="inline-flex h-10 items-center justify-center gap-2.5 rounded-[0.5rem] border border-line bg-white px-3 text-xs font-medium text-ink transition-colors hover:bg-surface hover:border-line-2 cursor-pointer shadow-xs"
                     aria-label="Continue with Google"
                   >
                     <svg
@@ -224,7 +224,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="button"
                     onClick={() => handleOAuth("GitHub")}
-                    className="inline-flex h-10 items-center justify-center gap-2.5 rounded-[8px] border border-line bg-white px-3 text-xs font-medium text-ink transition-colors hover:bg-surface hover:border-line-2 cursor-pointer shadow-xs"
+                    className="inline-flex h-10 items-center justify-center gap-2.5 rounded-[0.5rem] border border-line bg-white px-3 text-xs font-medium text-ink transition-colors hover:bg-surface hover:border-line-2 cursor-pointer shadow-xs"
                     aria-label="Continue with GitHub"
                   >
                     <svg
@@ -246,7 +246,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-line" />
                   </div>
-                  <span className="relative bg-white px-3 text-[11px] uppercase tracking-wider text-faint">
+                  <span className="relative bg-white px-3 text-[0.6875rem] uppercase tracking-wider text-faint">
                     Or continue with email
                   </span>
                 </div>
@@ -337,7 +337,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                         <button
                           type="button"
                           onClick={() => setForgotPasswordOpen(true)}
-                          className="text-[11px] font-medium text-lane hover:underline"
+                          className="text-[0.6875rem] font-medium text-lane hover:underline"
                         >
                           Forgot password?
                         </button>
@@ -381,7 +381,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                               key={sys.id}
                               type="button"
                               onClick={() => setSelectedSystem(sys.id)}
-                              className={`flex items-center gap-2 rounded-[8px] border p-2 text-left text-xs transition-colors ${
+                              className={`flex items-center gap-2 rounded-[0.5rem] border p-2 text-left text-xs transition-colors ${
                                 isSelected
                                   ? "border-lane bg-red-50/70 font-medium text-lane-ink"
                                   : "border-line bg-surface/30 text-muted hover:border-muted/50 hover:text-ink"
@@ -413,7 +413,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="mt-2 flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-[8px] bg-ink px-4 text-sm font-medium text-white transition-all hover:bg-black active:scale-[0.99] disabled:opacity-50"
+                    className="mt-2 flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] bg-ink px-4 text-sm font-medium text-white transition-all hover:bg-black active:scale-[0.99] disabled:opacity-50"
                   >
                     {isLoading ? (
                       <span className="inline-block size-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -459,16 +459,16 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
           {/* Right Column: High-craft interactive product showcase */}
           <div className="lg:col-span-6 space-y-6 lg:pl-6">
             {/* The Live Interactive Approval Preview Card */}
-            <div className="rounded-[24px] border border-line bg-white p-7 shadow-[0_16px_40px_rgba(20,20,40,0.06)] relative overflow-hidden">
+            <div className="rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_1rem_2.5rem_rgba(20,20,40,0.06)] relative overflow-hidden">
               <div className="flex items-center justify-between border-b border-line pb-4">
                 <div className="flex items-center gap-2.5">
                   <LaneMarkCycle size={24} />
                   <div>
                     <div className="text-xs font-semibold text-ink">Lane Approval Desk</div>
-                    <div className="text-[11px] text-muted">Human-in-the-loop safeguards</div>
+                    <div className="text-[0.6875rem] text-muted">Human-in-the-loop safeguards</div>
                   </div>
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-lane bg-[#fdeceb] px-2.5 py-1 rounded-full font-medium">
+                <span className="font-mono text-[0.625rem] uppercase tracking-wider text-lane bg-[#fdeceb] px-2.5 py-1 rounded-full font-medium">
                   Live simulator
                 </span>
               </div>
@@ -476,8 +476,8 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
               <div className="mt-5 space-y-4">
                 <div className="rounded-xl border border-line bg-surface/50 p-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] text-muted">RUN-1843</span>
-                    <span className="text-[11px] font-medium text-muted">2 min ago</span>
+                    <span className="font-mono text-[0.6875rem] text-muted">RUN-1843</span>
+                    <span className="text-[0.6875rem] font-medium text-muted">2 min ago</span>
                   </div>
                   <div className="mt-1.5 text-sm font-semibold text-ink">
                     Reply to Zuheb & prepare discovery briefing
@@ -503,7 +503,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                       <button
                         type="button"
                         onClick={() => setDemoApproved(true)}
-                        className="inline-flex items-center gap-1.5 rounded-[8px] bg-lane-strong px-3 py-1.5 text-xs font-medium text-white hover:bg-lane-ink transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 rounded-[0.5rem] bg-lane-strong px-3 py-1.5 text-xs font-medium text-white hover:bg-lane-ink transition-colors cursor-pointer"
                       >
                         <Check size={13} />
                         <span>Tap to Approve</span>
@@ -515,22 +515,22 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="rounded-xl border border-line bg-surface/40 p-3">
                     <div className="text-base font-semibold text-ink">0</div>
-                    <div className="text-[10px] text-muted uppercase tracking-wider mt-0.5">Surprise Sends</div>
+                    <div className="text-[0.625rem] text-muted uppercase tracking-wider mt-0.5">Surprise Sends</div>
                   </div>
                   <div className="rounded-xl border border-line bg-surface/40 p-3">
                     <div className="text-base font-semibold text-ink">100%</div>
-                    <div className="text-[10px] text-muted uppercase tracking-wider mt-0.5">Human Approved</div>
+                    <div className="text-[0.625rem] text-muted uppercase tracking-wider mt-0.5">Human Approved</div>
                   </div>
                   <div className="rounded-xl border border-line bg-surface/40 p-3">
                     <div className="text-base font-semibold text-ink">15 hrs</div>
-                    <div className="text-[10px] text-muted uppercase tracking-wider mt-0.5">Saved / Week</div>
+                    <div className="text-[0.625rem] text-muted uppercase tracking-wider mt-0.5">Saved / Week</div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Testimonial Quote */}
-            <div className="rounded-[20px] border border-line/70 bg-surface/50 p-6">
+            <div className="rounded-[1.25rem] border border-line/70 bg-surface/50 p-6">
               <p className="text-sm italic leading-relaxed text-ink-2">
                 &ldquo;Lane took away all the repetitive friction of Monday reports and Friday invoicing. Our account directors love that they remain the decision-makers, but don&apos;t have to do the manual data assembly.&rdquo;
               </p>
@@ -540,7 +540,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 </div>
                 <div>
                   <div className="text-xs font-semibold text-ink">Zuheb & Co.</div>
-                  <div className="text-[11px] text-muted">Creative Agency Partner</div>
+                  <div className="text-[0.6875rem] text-muted">Creative Agency Partner</div>
                 </div>
               </div>
             </div>
@@ -558,7 +558,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
               setForgotEmailSent(false);
             }}
           />
-          <div className="relative w-full max-w-[420px] rounded-[22px] border border-line bg-white p-7 shadow-2xl">
+          <div className="relative w-full max-w-[26.25rem] rounded-[1.375rem] border border-line bg-white p-7 shadow-2xl">
             {forgotEmailSent ? (
               <div className="text-center py-4">
                 <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-ok/10 text-ok">
@@ -574,7 +574,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                     setForgotPasswordOpen(false);
                     setForgotEmailSent(false);
                   }}
-                  className="mt-6 inline-flex h-10 items-center justify-center rounded-[8px] bg-ink px-5 text-xs font-medium text-white hover:bg-black"
+                  className="mt-6 inline-flex h-10 items-center justify-center rounded-[0.5rem] bg-ink px-5 text-xs font-medium text-white hover:bg-black"
                 >
                   Return to sign in
                 </button>
@@ -598,13 +598,13 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="button"
                     onClick={() => setForgotPasswordOpen(false)}
-                    className="h-10 px-4 rounded-[8px] text-xs font-medium text-muted hover:bg-surface hover:text-ink"
+                    className="h-10 px-4 rounded-[0.5rem] text-xs font-medium text-muted hover:bg-surface hover:text-ink"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="h-10 px-5 rounded-[8px] bg-ink text-xs font-medium text-white hover:bg-black"
+                    className="h-10 px-5 rounded-[0.5rem] bg-ink text-xs font-medium text-white hover:bg-black"
                   >
                     Send reset link
                   </button>
@@ -617,7 +617,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
 
       {/* Footer */}
       <footer className="border-t border-line/60 bg-white/60 py-6 px-6 text-center text-xs text-muted">
-        <div className="mx-auto max-w-[1200px] flex flex-wrap items-center justify-between gap-4">
+        <div className="mx-auto max-w-[75rem] flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-ink">
             <LaneMark size={16} />
             <span className="font-semibold text-xs">botlane</span>

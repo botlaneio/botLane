@@ -7,9 +7,9 @@ import { submitContactMessage, type ContactFormState } from "./actions";
 import { CONTACT_INTERESTS } from "./interests";
 
 const boxClass =
-  "block rounded-[14px] border border-line bg-white px-4 pt-3 pb-2.5 transition focus-within:border-ink/30 focus-within:ring-4 focus-within:ring-ink/[0.04]";
+  "block rounded-[0.875rem] border border-line bg-white px-4 pt-3 pb-2.5 transition focus-within:border-ink/30 focus-within:ring-4 focus-within:ring-ink/[0.04]";
 const labelClass = "text-sm font-medium text-ink";
-const inputClass = "mt-1 block w-full bg-transparent text-[15px] text-ink placeholder:text-faint outline-none";
+const inputClass = "mt-1 block w-full bg-transparent text-[0.9375rem] text-ink placeholder:text-faint outline-none";
 
 function FieldError({ text }: { text?: string }) {
   return text ? <p className="mt-1.5 px-1 text-xs text-lane">{text}</p> : null;
@@ -64,7 +64,7 @@ export function ContactForm() {
               <option key={option}>{option}</option>
             ))}
           </select>
-          <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-[18px] -translate-y-1/2 text-ink" />
+          <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-[1.125rem] -translate-y-1/2 text-ink" />
         </label>
         <FieldError text={errors.interest} />
       </div>
@@ -87,10 +87,10 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending || state.status === "ok"}
-        className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-[12px] bg-ink text-base font-medium text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)] transition hover:bg-black disabled:opacity-70"
+        className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-ink text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-black disabled:opacity-70"
       >
         {pending ? "Sending…" : "Send message"}
-        {!pending && <ArrowRight className="size-[18px] transition-transform group-hover:translate-x-0.5" />}
+        {!pending && <ArrowRight className="size-[1.125rem] transition-transform group-hover:translate-x-0.5" />}
       </button>
 
       <p className="flex items-center justify-center gap-2 pt-2 text-sm text-muted">

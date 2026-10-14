@@ -11,16 +11,16 @@ export default function NotFound() {
     <>
       <SiteHeader />
       <main className="min-h-screen bg-bg flex flex-col justify-center py-20 px-6">
-        <div className="mx-auto max-w-[640px] text-center">
-          <div className="mx-auto flex size-14 items-center justify-center rounded-[14px] border border-line bg-white shadow-sm">
+        <div className="mx-auto max-w-[40rem] text-center">
+          <div className="mx-auto flex size-14 items-center justify-center rounded-[0.875rem] border border-line bg-white shadow-sm">
             <LaneMarkCycle size={32} />
           </div>
 
-          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <span>HTTP 404 · Signal Disconnected</span>
           </div>
 
-          <h1 className="mt-4 text-[clamp(36px,5vw,60px)] font-bold tracking-tight text-ink leading-tight">
+          <h1 className="mt-4 text-[clamp(2.25rem,5vw,3.75rem)] font-bold tracking-tight text-ink leading-tight">
             Lost in the lane.
           </h1>
 
@@ -31,7 +31,7 @@ export default function NotFound() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-black"
             >
               <ArrowLeft size={13} />
               <span>Return to BotLane Home</span>
@@ -46,38 +46,38 @@ export default function NotFound() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
               <Link
                 href="/systems"
-                className="group rounded-[14px] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
+                className="group rounded-[0.875rem] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] text-lane font-semibold">01 / 02 / 03</span>
+                  <span className="font-mono text-[0.6875rem] text-lane font-semibold">01 / 02 / 03</span>
                   <ArrowRight size={12} className="text-muted transition-transform group-hover:translate-x-1" />
                 </div>
                 <div className="mt-2 text-xs font-semibold text-ink">Three Systems</div>
-                <div className="text-[11px] text-muted">Compare all engines</div>
+                <div className="text-[0.6875rem] text-muted">Compare all engines</div>
               </Link>
 
               <Link
                 href="/pricing"
-                className="group rounded-[14px] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
+                className="group rounded-[0.875rem] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] text-lane font-semibold">$600+</span>
+                  <span className="font-mono text-[0.6875rem] text-lane font-semibold">$600+</span>
                   <ArrowRight size={12} className="text-muted transition-transform group-hover:translate-x-1" />
                 </div>
                 <div className="mt-2 text-xs font-semibold text-ink">Pricing Retainer</div>
-                <div className="text-[11px] text-muted">Zero per-seat markup</div>
+                <div className="text-[0.6875rem] text-muted">Zero per-seat markup</div>
               </Link>
 
               <Link
                 href="/demo"
-                className="group rounded-[14px] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
+                className="group rounded-[0.875rem] border border-line bg-white p-4 transition hover:border-lane/30 hover:shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] text-lane font-semibold">20 MINS</span>
+                  <span className="font-mono text-[0.6875rem] text-lane font-semibold">20 MINS</span>
                   <ArrowRight size={12} className="text-muted transition-transform group-hover:translate-x-1" />
                 </div>
                 <div className="mt-2 text-xs font-semibold text-ink">Book a Demo</div>
-                <div className="text-[11px] text-muted">Live test run</div>
+                <div className="text-[0.6875rem] text-muted">Live test run</div>
               </Link>
             </div>
           </div>

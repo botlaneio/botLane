@@ -61,7 +61,7 @@ export default function InvoiceFollowUpPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Breadcrumb */}
-        <div className="mx-auto max-w-[1200px] px-6 pt-10">
+        <div className="mx-auto max-w-[75rem] px-6 pt-10">
           <div className="flex items-center gap-2 text-xs font-mono text-muted">
             <Link href="/systems" className="hover:text-lane transition">
               Systems
@@ -72,13 +72,13 @@ export default function InvoiceFollowUpPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <RotateCw size={13} />
             <span>System 03 · The Loop</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,68px)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
             Collect every dollar. <br />
             Without the awkward money chats.
           </h1>
@@ -91,7 +91,7 @@ export default function InvoiceFollowUpPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book an Invoicing Demo</span>
@@ -99,7 +99,7 @@ export default function InvoiceFollowUpPage() {
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
+              className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
               <span>$600/mo Standalone Retainer</span>
             </Link>
@@ -125,7 +125,7 @@ export default function InvoiceFollowUpPage() {
         </section>
 
         {/* How It Works (The Loop Pipeline) */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Loop Lifecycle
@@ -161,7 +161,7 @@ export default function InvoiceFollowUpPage() {
                 desc: "The second payment lands, the loop dissolves within 60 seconds. An audit note posts to your Slack ledger.",
               },
             ].map((col) => (
-              <div key={col.step} className="rounded-[18px] border border-line bg-white p-6 shadow-sm">
+              <div key={col.step} className="rounded-[1.125rem] border border-line bg-white p-6 shadow-sm">
                 <div className="font-mono text-2xl font-bold text-ink">{col.step}</div>
                 <h3 className="mt-4 text-base font-semibold text-ink">{col.title}</h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted">{col.desc}</p>
@@ -171,7 +171,7 @@ export default function InvoiceFollowUpPage() {
         </section>
 
         {/* Tools It Connects */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
           <div className="text-center max-w-2xl mx-auto">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Financial Integrations
@@ -190,8 +190,8 @@ export default function InvoiceFollowUpPage() {
             ].map((tool) => {
               const Icon = tool.icon;
               return (
-                <div key={tool.name} className="rounded-[16px] border border-line bg-white p-5 text-center shadow-sm">
-                  <div className="mx-auto flex size-12 items-center justify-center rounded-[12px] bg-surface p-2.5">
+                <div key={tool.name} className="rounded-[1rem] border border-line bg-white p-5 text-center shadow-sm">
+                  <div className="mx-auto flex size-12 items-center justify-center rounded-[0.75rem] bg-surface p-2.5">
                     <Icon size={26} />
                   </div>
                   <div className="mt-4 text-sm font-semibold text-ink">{tool.name}</div>
@@ -203,7 +203,7 @@ export default function InvoiceFollowUpPage() {
         </section>
 
         {/* Interactive Approval & Output Workspace */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Aging Ledger & Approval Desk
@@ -216,10 +216,10 @@ export default function InvoiceFollowUpPage() {
             </p>
           </div>
 
-          <div className="mt-10 rounded-[24px] border border-line bg-white p-6 sm:p-8 shadow-[0_16px_50px_rgba(20,20,40,0.06)]">
+          <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-6 sm:p-8 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
               <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-[8px] bg-emerald-500/10 text-emerald-600">
+                <span className="flex size-9 items-center justify-center rounded-[0.5rem] bg-emerald-500/10 text-emerald-600">
                   <Receipt size={18} />
                 </span>
                 <div>
@@ -236,7 +236,7 @@ export default function InvoiceFollowUpPage() {
                 <button
                   type="button"
                   onClick={() => setApproved(!approved)}
-                  className={`inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-xs font-semibold transition ${
+                  className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
                     approved
                       ? "bg-emerald-600 text-white shadow-sm"
                       : "bg-ink text-white hover:bg-black"
@@ -259,7 +259,7 @@ export default function InvoiceFollowUpPage() {
                   <button
                     type="button"
                     onClick={() => setApproved(false)}
-                    className="flex size-8 items-center justify-center rounded-[8px] border border-line text-muted hover:text-ink"
+                    className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line text-muted hover:text-ink"
                     title="Reset simulation"
                   >
                     <RotateCcw size={14} />
@@ -276,7 +276,7 @@ export default function InvoiceFollowUpPage() {
                     key={s.stage}
                     type="button"
                     onClick={() => setActiveStage(idx)}
-                    className={`rounded-[8px] px-3 py-1.5 text-xs font-medium transition ${
+                    className={`rounded-[0.5rem] px-3 py-1.5 text-xs font-medium transition ${
                       activeStage === idx
                         ? "bg-ink text-white"
                         : "text-muted hover:text-ink hover:bg-surface"
@@ -287,7 +287,7 @@ export default function InvoiceFollowUpPage() {
                 ))}
               </div>
 
-              <div className="mt-5 rounded-[16px] border border-line/80 bg-surface/40 p-5">
+              <div className="mt-5 rounded-[1rem] border border-line/80 bg-surface/40 p-5">
                 <div className="flex items-center justify-between text-xs font-mono text-muted border-b border-line/50 pb-2">
                   <span>Tone: {REMINDER_STAGES[activeStage].tone}</span>
                   <span className="text-emerald-700 font-semibold">1-Click Stripe Link Ready</span>
@@ -295,7 +295,7 @@ export default function InvoiceFollowUpPage() {
                 <p className="mt-4 text-sm leading-relaxed text-ink font-serif italic">
                   &ldquo;{REMINDER_STAGES[activeStage].body}&rdquo;
                 </p>
-                <div className="mt-5 pt-3 border-t border-line/50 flex flex-wrap items-center justify-between gap-2 text-[11px] text-muted">
+                <div className="mt-5 pt-3 border-t border-line/50 flex flex-wrap items-center justify-between gap-2 text-[0.6875rem] text-muted">
                   <span className="flex items-center gap-1.5">
                     <CreditCard size={13} className="text-emerald-600" />
                     <span>Includes direct Stripe checkout & ACH remittance details</span>
@@ -308,7 +308,7 @@ export default function InvoiceFollowUpPage() {
         </section>
 
         {/* Invoicing FAQ */}
-        <section className="mx-auto max-w-[960px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-ink">
               Invoice Follow-Up FAQ
@@ -332,7 +332,7 @@ export default function InvoiceFollowUpPage() {
             ].map((faq, idx) => (
               <div
                 key={faq.q}
-                className="rounded-[14px] border border-line bg-white p-5 cursor-pointer"
+                className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
                 <div className="flex items-center justify-between">
@@ -351,8 +351,8 @@ export default function InvoiceFollowUpPage() {
         </section>
 
         {/* CTA Banner */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16">
-          <div className="rounded-[24px] border border-line bg-ink p-8 text-center text-white sm:p-14">
+        <section className="mx-auto max-w-[75rem] px-6 py-16">
+          <div className="rounded-[1.5rem] border border-line bg-ink p-8 text-center text-white sm:p-14">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Accelerate your agency&apos;s cashflow today.
             </h2>
@@ -362,14 +362,14 @@ export default function InvoiceFollowUpPage() {
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
-                className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
+                className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
                 <span>Book an Invoicing Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
-                className="inline-flex h-11 items-center rounded-[8px] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
+                className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
                 <span>Compare Pricing Tiers</span>
               </Link>

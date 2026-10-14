@@ -38,6 +38,19 @@ html {
   color: var(--bl-ink);
 }
 
+/* Phones get the whole site 20% smaller. Sizes are all in rem, so the root font scales everything. */
+@media (width < 40rem) {
+  html {
+    font-size: 80%;
+  }
+  /* iOS zooms in on any form field under 16px, so fields keep 16px. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
