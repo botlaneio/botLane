@@ -10,7 +10,7 @@ import "./halftone-mark.css";
  * - `state`: "rest" (default), "active" (a purple arc sweeps around the
  *   sphere) or "thinking" (the dots pulse outward from the centre until
  *   the state changes).
- * - `tone`: "color" (blue to coral, the default), "dark" or "light".
+ * - `tone`: "color" (near-black to violet, the default), "dark" or "light".
  * - `detail`: "hd" (full detail) or "small" (fewer, bigger dots for 48px and
  *   below). "auto" picks from `size`.
  */
@@ -36,7 +36,7 @@ export interface HalftoneMarkProps {
 type Dot = { x: number; y: number; r: number; fill: string; sx: number; sy: number; delay: number; ring: number };
 
 const STOPS: Record<Tone, [number, string][]> = {
-  color: [[0, "#1822c9"], [0.4, "#5a2cb8"], [0.7, "#b5306c"], [1, "#f2444f"]],
+  color: [[0, "#121214"], [0.55, "#2a1d5c"], [1, "#6d3cf0"]],
   dark: [[0, "#0e0e10"], [0.5, "#1c1c20"], [1, "#36363c"]],
   light: [[0, "#f4f4f6"], [0.5, "#d6d6dc"], [1, "#a9a9b2"]],
 };
