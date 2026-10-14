@@ -28,6 +28,7 @@
   --color-ink-2: var(--bl-ink-2);
   --color-btn: var(--bl-btn);
   --color-btn-hover: var(--bl-btn-hover);
+  --color-ink-soft: var(--bl-btn);
   --color-muted: var(--bl-muted);
   --color-faint: var(--bl-faint);
   --color-line: var(--bl-line);

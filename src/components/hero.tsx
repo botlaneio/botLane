@@ -239,7 +239,7 @@ export function Hero() {
 
         <motion.h1
           variants={rise}
-          className="mt-6 text-[clamp(3rem,6.4vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-ink"
+          className="mt-6 text-[clamp(3rem,6.4vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-ink-soft"
         >
           Meet your
           <br />
