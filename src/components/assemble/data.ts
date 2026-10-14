@@ -88,5 +88,5 @@ export const REPORT_BARS = [
   [64, "#e4e5ea"],
   [58, "#e4e5ea"],
   [76, "#1d1d1f"],
-  [92, "#e0312b"],
+  [92, "#5a2cb8"],
 ] as const;

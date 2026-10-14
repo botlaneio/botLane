@@ -15,7 +15,7 @@ export default function ContactSentPage() {
       <SiteHeader />
       <main className="flex min-h-[calc(100vh-5rem)] items-center justify-center px-6 py-24">
         <div className="text-center">
-          <span className="mx-auto flex size-28 sm:size-36 items-center justify-center rounded-full bg-lane/[0.07] shadow-[0_0_3.75rem_rgba(224,49,43,0.12)]">
+          <span className="mx-auto flex size-28 sm:size-36 items-center justify-center rounded-full bg-lane/[0.07] shadow-[0_0_3.75rem_rgba(90,44,184,0.12)]">
             <Check className="size-12 text-lane sm:size-16" strokeWidth={3} />
           </span>
           <h1 className="mt-8 text-[clamp(2.5rem,5vw,4rem)] sm:mt-10 font-bold leading-none tracking-[-0.045em] text-ink">

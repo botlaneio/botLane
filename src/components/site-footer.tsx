@@ -65,7 +65,7 @@ export function SiteFooter() {
         {/* Links */}
         <div className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-12">
           <div className="sm:col-span-2 lg:col-span-6">
-            <Link href="/" aria-label="BotLane home" className="inline-flex items-center gap-2.5 text-white">
+            <Link href="/" aria-label="BotLane home" className="inline-flex items-center gap-1.5 text-white">
               <BrandMark className="size-8" />
               <Wordmark className="text-xl" />
             </Link>

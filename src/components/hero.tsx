@@ -344,7 +344,7 @@ export function Hero() {
                       aria-label={sys.tab}
                       className={`flex size-9 items-center justify-center rounded-[0.625rem] border transition ${
                         isActive
-                          ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
+                          ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
                           : "border-line bg-white text-muted hover:text-ink"
                       }`}
                     >
@@ -370,7 +370,7 @@ export function Hero() {
                         onClick={() => pick(sys.id)}
                         className={`inline-flex items-center gap-2 rounded-[0.625rem] border px-3 py-1.5 text-xs font-medium transition ${
                           isActive
-                            ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
+                            ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
                             : "border-line bg-white text-muted hover:text-ink"
                         }`}
                       >

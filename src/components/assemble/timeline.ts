@@ -453,7 +453,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
   /* ---- captions + system label ---- */
   const capOut = (i: number, at: number) => add(caps[i], { opacity: 0, translateY: -12, duration: 60 }, at);
   const capIn = (i: number, at: number) => add(caps[i], { opacity: [0, 1], translateY: [12, 0], duration: 60 }, at);
-  const sysOn = (k: number, at: number) => add(sysLabels[k], { opacity: 1, color: "#e0312b", duration: 60 }, at);
+  const sysOn = (k: number, at: number) => add(sysLabels[k], { opacity: 1, color: "#5a2cb8", duration: 60 }, at);
   const sysOff = (k: number, at: number) => add(sysLabels[k], { opacity: 0.35, color: "#6e6e73", duration: 60 }, at);
   capOut(0, 280); capIn(1, 340);
   capOut(1, T1); capIn(2, T1 + 60);
