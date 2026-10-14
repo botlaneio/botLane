@@ -37,7 +37,7 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
           <div className="mt-7">{form}</div>
         </div>
         {/* A soft panel that runs the full height, so tall screens have no blank band. */}
-        <div className="relative hidden overflow-hidden rounded-[28px] border border-line/70 bg-gradient-to-br from-surface to-white lg:flex lg:items-center lg:px-12 lg:py-16">
+        <div className="relative hidden rounded-[28px] border border-line/70 bg-gradient-to-br from-surface to-white lg:flex lg:items-center lg:justify-center lg:px-12 lg:py-16">
           {aside}
         </div>
       </main>
