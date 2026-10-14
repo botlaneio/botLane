@@ -11,6 +11,7 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@base-ui/react": "^1.9.0",
     "animejs": "^4.5.0",
     "lucide-react": "^1.55.0",
     "motion": "^14.1.0",
