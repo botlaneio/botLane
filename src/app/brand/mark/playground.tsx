@@ -44,7 +44,7 @@ export function MarkPlayground() {
         </div>
 
         <div className="flex items-center justify-center py-6">
-          <HalftoneMark key={run} size={420} tone={mono ? (dark ? "light" : "dark") : "color"} intro state={state} pace={pace} title="Botlane" />
+          <HalftoneMark key={run} size={420} tone={mono ? (dark ? "light" : "dark") : "tile"} intro state={state} pace={pace} title="Botlane" />
         </div>
 
         <label className="flex items-center gap-4 text-sm">
@@ -63,7 +63,7 @@ export function MarkPlayground() {
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-current/10 pt-8">
           {[128, 64, 48, 32, 24, 16].map((s) => (
             <div key={`${s}-${run}`} className="flex flex-col items-center gap-2">
-              <HalftoneMark size={s} tone={mono ? (dark ? "light" : "dark") : "color"} intro state={state} pace={pace} />
+              <HalftoneMark size={s} tone={mono ? (dark ? "light" : "dark") : "tile"} intro state={state} pace={pace} />
               <span className="font-mono text-xs opacity-60">{s}px</span>
             </div>
           ))}

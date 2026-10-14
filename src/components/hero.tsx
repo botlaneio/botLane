@@ -233,7 +233,7 @@ export function Hero() {
           variants={rise}
           className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink shadow-2xs"
         >
-          <HalftoneMark size={20} intro introDelay={0.2} className="-my-0.5 -ml-1 -mr-0.5" />
+          <HalftoneMark size={18} detail="small" intro introDelay={0.2} className="-ml-1" />
           <span>Agent Lane</span>
         </motion.div>
 
