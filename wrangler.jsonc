@@ -4,6 +4,11 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-13",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Cloudflare's deploy step runs `npx wrangler deploy`, which runs this first: it copies the
+  // prerendered pages into the static assets so the Worker serves them without re-rendering.
+  "build": {
+    "command": "npx opennextjs-cloudflare populateCache local"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

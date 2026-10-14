@@ -25,6 +25,8 @@ Built with [OpenNext](https://opennext.js.org/cloudflare). Workers Builds settin
 
 `npm run preview` runs the Worker locally; `npm run deploy` builds and deploys from your machine.
 
+Pages are prerendered at build time and served from static assets (`open-next.config.ts`), so the Worker doesn't re-render them on each request. `wrangler deploy` and `wrangler versions upload` copy them into the assets first, via the `build` step in `wrangler.jsonc`.
+
 Next.js is pinned to 16.3.8 and `cacheComponents` is off: Next 16.4 and Cache Components both break the Worker on OpenNext 1.20.10. Check the OpenNext release notes before upgrading.
 
 ## Where things live
