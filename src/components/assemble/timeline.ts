@@ -69,13 +69,16 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     const mobile = w < 760;
     const close = mobile ? Math.min(1, w / 470, h / 640) : whole;
     view = { w, h, whole, close, mobile };
-    trioScale.style.transform = `translate(-50%, -50%) scale(${whole})`;
+    trioScale.style.transform = `translate(-50%, -50%) translateY(${lift(whole)}px) scale(${whole})`;
     camera(t);
   };
+  // On tall screens (a tablet held upright) the scaled board is much shorter than
+  // the space it sits in. Lift it toward the heading instead of floating it mid-screen.
+  const lift = (scale: number) => -Math.max(0, (view.h - VH * scale) / 2 - 48);
   const camera = (time: number) => {
     const { w, whole, close, mobile } = view;
     if (!mobile) {
-      scaler.style.transform = `translate(-50%, -50%) translate(${(620 - VCX) * whole}px, ${(300 - VCY) * whole}px) scale(${whole})`;
+      scaler.style.transform = `translate(-50%, -50%) translate(${(620 - VCX) * whole}px, ${(300 - VCY) * whole + lift(whole)}px) scale(${whole})`;
       return;
     }
     const [fx, m] = shotAt(time);
@@ -85,7 +88,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     const lo = -30 + half;
     const hi = 1270 - half;
     const x = lo < hi ? Math.min(hi, Math.max(lo, 620 + (fx - 620) * m)) : VCX;
-    scaler.style.transform = `translate(-50%, -50%) translate(${-(x - 620) * s}px, ${(300 - VCY) * s}px) scale(${s})`;
+    scaler.style.transform = `translate(-50%, -50%) translate(${-(x - 620) * s}px, ${(300 - VCY) * s + lift(s)}px) scale(${s})`;
   };
   const ro = new ResizeObserver(fit);
   ro.observe(fitEl);
