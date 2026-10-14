@@ -28,7 +28,7 @@ export default function ContactSentPage() {
           </p>
           <Link
             href="/"
-            className="group mt-10 inline-flex h-14 items-center gap-3 rounded-[0.75rem] bg-ink px-16 text-base font-medium text-white transition hover:bg-black"
+            className="group mt-10 inline-flex h-14 items-center gap-3 rounded-[0.75rem] bg-btn px-16 text-base font-medium text-white transition hover:bg-btn-hover"
           >
             Back to home
             <ArrowRight className="size-[1.125rem] transition-transform group-hover:translate-x-0.5" />

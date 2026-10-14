@@ -110,7 +110,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
               className={`mt-8 flex h-11 w-full items-center justify-center rounded-[0.5rem] text-sm font-medium transition-all ${
                 tier.highlight
                   ? "bg-lane-gradient text-white hover:brightness-90 shadow-[0_0.25rem_0.875rem_rgba(90,44,184,0.2)]"
-                  : "bg-ink text-white hover:bg-black"
+                  : "bg-btn text-white hover:bg-btn-hover"
               }`}
             >
               {tier.cta}

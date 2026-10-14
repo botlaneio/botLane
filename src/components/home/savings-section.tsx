@@ -203,7 +203,7 @@ export function SavingsSection() {
             </div>
             <Link
               href="/pricing"
-              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-btn px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <span>Explore Retainer Details</span>
               <ArrowRight size={13} />

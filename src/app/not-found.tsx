@@ -31,7 +31,7 @@ export default function NotFound() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex items-center gap-2 rounded-[0.5rem] bg-btn px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <ArrowLeft size={13} />
               <span>Return to BotLane Home</span>

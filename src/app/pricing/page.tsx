@@ -147,7 +147,7 @@ export default function PricingPage() {
                 href="/company/contact"
                 className={`group mt-8 flex h-13 items-center justify-center gap-2 rounded-[0.75rem] text-base font-medium transition ${
                   tier.featured
-                    ? "bg-ink text-white hover:bg-black"
+                    ? "bg-btn text-white hover:bg-btn-hover"
                     : "border border-line bg-white text-ink hover:bg-surface"
                 }`}
               >

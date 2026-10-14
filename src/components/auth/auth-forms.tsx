@@ -140,7 +140,7 @@ const cardClass =
   "rounded-[1.375rem] border border-line bg-white p-6 shadow-[0_1.25rem_3.125rem_-1.5rem_rgba(20,20,40,0.16)] sm:p-7";
 
 const submitClass =
-  "group flex h-11 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-ink text-sm font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-black active:scale-[0.99]";
+  "group flex h-11 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-btn text-sm font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-btn-hover active:scale-[0.99]";
 
 export function SignInForm() {
   const [notice, setNotice] = useState(false);

@@ -107,7 +107,7 @@ export default function SystemsPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book a Systems Walkthrough</span>
@@ -207,7 +207,7 @@ export default function SystemsPage() {
                   <div className="mt-8 border-t border-line pt-5">
                     <Link
                       href={sys.href}
-                      className="group flex w-full items-center justify-center gap-2 rounded-[0.625rem] bg-surface py-3 text-xs font-semibold text-ink transition hover:bg-ink hover:text-white"
+                      className="group flex w-full items-center justify-center gap-2 rounded-[0.625rem] bg-surface py-3 text-xs font-semibold text-ink transition hover:bg-btn hover:text-white"
                     >
                       <span>Deep Dive: {sys.title}</span>
                       <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
@@ -337,7 +337,7 @@ export default function SystemsPage() {
               </span>
               <Link
                 href="/demo"
-                className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-black"
+                className="inline-flex items-center gap-2 rounded-[0.5rem] bg-btn px-5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-btn-hover"
               >
                 <span>Book a Demo Call</span>
                 <ArrowRight size={13} />
