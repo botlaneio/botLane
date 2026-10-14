@@ -13,11 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BotLane",
+  title: "botLane",
   description:
     "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
   openGraph: {
-    title: "BotLane",
+    title: "botLane",
     description:
       "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
   },

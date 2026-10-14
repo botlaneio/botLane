@@ -51,7 +51,7 @@ const FAQS: FaqItem[] = [
     category: "Safety & Approvals",
     question: "What is your 30-day risk-free guarantee?",
     answer:
-      "If you deploy Lane for your agency and do not feel it saved your team at least 15 hours in your first month or dramatically smoothed your client delivery, simply email us within 30 days for a prompt, 100% refund. No questions asked.",
+      "If Lane isn't working for your agency, email us within 30 days of your first payment and we'll refund it in full. No questions asked.",
   },
 ];
 

@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
-import { LaneMark } from "../lane-mark";
 import { HalftoneMark } from "../halftone-mark";
 import {
   APPROVALS,
@@ -82,13 +81,13 @@ function Slot({ x, y, w, h, z, children }: { x: number; y: number; w: number; h:
 const stack: CSSProperties = { position: "absolute", left: 0, top: 0 };
 const hidden: CSSProperties = { ...stack, opacity: 0 };
 
-/** The logo's blue-to-coral gradient for SVG strokes and fills, spread across x1..x2. */
+/** The accent gradient (graphite, ember, violet) for SVG strokes and fills, spread across x1..x2. */
 function LaneGradient({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
     <defs>
       <linearGradient id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={0} x2={x2} y2={0}>
         <stop offset="0" stopColor="#121214" />
-        <stop offset="0.55" stopColor="#2a1d5c" />
+        <stop offset="0.48" stopColor="#b8402c" />
         <stop offset="1" stopColor="#6d3cf0" />
       </linearGradient>
     </defs>
@@ -209,7 +208,7 @@ export function AssembleScene() {
                 <div className="bl-card-back" aria-hidden="true">
                   <span data-lane-luster="" className="bl-card-back-luster" />
                   <div className="bl-card-back-mark">
-                    <LaneMark size={14} />
+                    <HalftoneMark size={14} detail="small" className="![height:14px] ![width:14px]" />
                     <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
                   </div>
                 </div>
@@ -245,7 +244,7 @@ export function AssembleScene() {
                 <div className="bl-card-back" aria-hidden="true">
                   <span data-you-luster="" className="bl-card-back-luster" />
                   <div className="bl-card-back-mark">
-                    <LaneMark size={14} />
+                    <HalftoneMark size={14} detail="small" className="![height:14px] ![width:14px]" />
                     <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
                   </div>
                 </div>
@@ -493,7 +492,7 @@ function Finale() {
               <rect x={8} y={8} width={8} height={8} rx={2} /><rect x={8} y={28} width={8} height={8} rx={2} />
               <rect x={8} y={52} width={8} height={8} rx={2} /><rect x={8} y={72} width={8} height={8} rx={2} />
             </g>
-            <rect x={112} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={134} cy={44} r={4} fill="#ff453a" />
+            <rect x={112} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={134} cy={44} r={4} fill="#c9bdf5" />
             <path d="M148 44 H 180" stroke="url(#bl-grad-trio-0)" strokeWidth={3} /><circle cx={180} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-0)" strokeWidth={2} />
             <path d="M187 44 H 204" stroke="#cfd0d7" strokeWidth={2} />
             <rect x={204} y={18} width={44} height={52} rx={7} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
@@ -509,7 +508,7 @@ function Finale() {
             <LaneGradient id="bl-grad-trio-1" x1={0} x2={260} />
             <circle cx={16} cy={44} r={9} fill="url(#bl-grad-trio-1)" />
             <path d="M25 44 H 56" stroke="#cfd0d7" strokeWidth={2} />
-            <rect x={56} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={78} cy={44} r={4} fill="#ff453a" />
+            <rect x={56} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={78} cy={44} r={4} fill="#c9bdf5" />
             <path d="M92 44 H 116" stroke="url(#bl-grad-trio-1)" strokeWidth={3} /><circle cx={116} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-1)" strokeWidth={2} />
             <path d="M123 44 H 224" stroke="#cfd0d7" strokeWidth={2} />
             <g fill="#1a7f37"><circle cx={146} cy={44} r={5} /><circle cx={172} cy={44} r={5} /><circle cx={198} cy={44} r={5} /></g>
@@ -523,7 +522,7 @@ function Finale() {
             <LaneGradient id="bl-grad-trio-2" x1={0} x2={260} />
             <rect x={6} y={32} width={24} height={24} rx={5} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
             <path d="M30 44 H 52" stroke="#cfd0d7" strokeWidth={2} />
-            <rect x={52} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={74} cy={44} r={4} fill="#ff453a" />
+            <rect x={52} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={74} cy={44} r={4} fill="#c9bdf5" />
             <path d="M88 44 H 110" stroke="url(#bl-grad-trio-2)" strokeWidth={3} /><circle cx={110} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-2)" strokeWidth={2} />
             <path d="M117 44 H 150" stroke="#cfd0d7" strokeWidth={2} />
             <circle cx={186} cy={44} r={36} stroke="#cfd0d7" strokeWidth={2} />

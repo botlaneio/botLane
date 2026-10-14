@@ -26,17 +26,17 @@ const GUARDRAILS = [
     icon: Lock,
     title: "Zero training on your data",
     description:
-      "Your client numbers, financial records, and email archives are processed ephemerally in isolated secure memory and never fed into public LLM training sets.",
-    stat: "SOC2 ready",
-    statLabel: "Isolated data tenancy",
+      "Your client numbers, financial records, and emails are used only to prepare your work. They are never used to train AI models.",
+    stat: "Never",
+    statLabel: "Used to train AI",
   },
   {
     icon: AlertTriangle,
     title: "Instant kill-switch & pause",
     description:
-      "Need to step away or pause an invoice sequence while renegotiating a contract? One click halts all outgoing cadence immediately.",
-    stat: "< 1s",
-    statLabel: "Cadence halt latency",
+      "Need to step away or pause an invoice sequence while renegotiating a contract? One click halts all outgoing cadence.",
+    stat: "1 click",
+    statLabel: "Pause everything",
   },
 ];
 

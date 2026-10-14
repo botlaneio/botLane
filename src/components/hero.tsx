@@ -462,7 +462,7 @@ export function Hero() {
                         <span className="text-xs font-semibold text-ink">Data intake</span>
                         <span
                           className={`size-1.5 rounded-full transition-colors ${
-                            syncedCount >= active.intake.length ? "bg-ok" : "bg-amber-400"
+                            syncedCount >= active.intake.length ? "bg-ok" : "bg-lane"
                           }`}
                         />
                       </div>
