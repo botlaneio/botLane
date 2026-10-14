@@ -18,6 +18,10 @@ type SelectProps = {
   disabled?: boolean;
   required?: boolean;
   className?: string;
+  /** Put on the trigger so an outside <label htmlFor> points at it. */
+  id?: string;
+  /** Overrides for the trigger, to match the field style of the form it sits in. */
+  triggerClassName?: string;
 };
 
 export function Select({
@@ -31,6 +35,8 @@ export function Select({
   disabled,
   required,
   className,
+  id,
+  triggerClassName,
 }: SelectProps) {
   return (
     <div className={cn("flex flex-col items-start gap-1.5", className)}>
@@ -44,7 +50,13 @@ export function Select({
         required={required}
       >
         {label && <BaseSelect.Label className="text-[0.8125rem] font-medium text-ink-2">{label}</BaseSelect.Label>}
-        <BaseSelect.Trigger className="flex h-10 w-full min-w-[12rem] select-none items-center justify-between gap-3 rounded-xl border border-line bg-white pr-2.5 pl-3.5 text-[0.875rem] text-ink transition-[border-color,box-shadow] hover:border-[#d9d9de] data-disabled:opacity-50 data-popup-open:border-lane/50 data-popup-open:shadow-[0_0_0_3px_var(--bl-red-tint)]">
+        <BaseSelect.Trigger
+          id={id}
+          className={cn(
+            "flex h-10 w-full min-w-[12rem] select-none items-center justify-between gap-3 rounded-xl border border-line bg-white pr-2.5 pl-3.5 text-[0.875rem] text-ink transition-[border-color,box-shadow] hover:border-[#d9d9de] data-disabled:opacity-50 data-popup-open:border-lane/50 data-popup-open:shadow-[0_0_0_3px_var(--bl-red-tint)]",
+            triggerClassName,
+          )}
+        >
           <BaseSelect.Value className="truncate data-placeholder:text-faint" placeholder={placeholder} />
           <BaseSelect.Icon className="text-faint">
             <ChevronsUpDown className="size-4" aria-hidden />

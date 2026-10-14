@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Select } from "@/components/ui/select";
 import { LaneMarkCycle } from "@/components/lane-mark-cycle";
 
 const AVAILABLE_DAYS = [
@@ -192,19 +193,21 @@ export default function DemoPage() {
                   {/* Timezone Selector */}
                   <div className="mt-6 border-t border-line/60 pt-4">
                     <label htmlFor="tz-select" className="text-xs text-muted">Timezone</label>
-                    <select
+                    <Select
                       id="tz-select"
                       value={timezone}
-                      onChange={(e) => setTimezone(e.target.value)}
-                      className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-surface/50 px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
-                    >
-                      <option value="America/New_York (EST)">America/New York (EST / UTC-4)</option>
-                      <option value="America/Chicago (CST)">America/Chicago (CST / UTC-5)</option>
-                      <option value="America/Los_Angeles (PST)">America/Los Angeles (PST / UTC-7)</option>
-                      <option value="Europe/London (GMT)">Europe/London (GMT / UTC+1)</option>
-                      <option value="Asia/Dubai (GST)">Asia/Dubai (GST / UTC+4)</option>
-                      <option value="Asia/Singapore (SGT)">Asia/Singapore (SGT / UTC+8)</option>
-                    </select>
+                      onValueChange={(v) => v && setTimezone(v)}
+                      className="mt-1.5 items-stretch!"
+                      triggerClassName="h-9! min-w-0! rounded-[0.5rem]! bg-surface/50! px-3! text-xs!"
+                      options={[
+                        { value: "America/New_York (EST)", label: "America/New York (EST / UTC-4)" },
+                        { value: "America/Chicago (CST)", label: "America/Chicago (CST / UTC-5)" },
+                        { value: "America/Los_Angeles (PST)", label: "America/Los Angeles (PST / UTC-7)" },
+                        { value: "Europe/London (GMT)", label: "Europe/London (GMT / UTC+1)" },
+                        { value: "Asia/Dubai (GST)", label: "Asia/Dubai (GST / UTC+4)" },
+                        { value: "Asia/Singapore (SGT)", label: "Asia/Singapore (SGT / UTC+8)" },
+                      ]}
+                    />
                   </div>
 
                   {/* Walkthrough Agenda */}
@@ -270,31 +273,37 @@ export default function DemoPage() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-medium text-ink">Active Client Roster Size</label>
-                      <select
+                      <label htmlFor="demo-clients" className="text-xs font-medium text-ink">Active Client Roster Size</label>
+                      <Select
+                        id="demo-clients"
                         value={clients}
-                        onChange={(e) => setClients(e.target.value)}
-                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
-                      >
-                        <option value="1-9 clients">1 – 9 clients (Boutique)</option>
-                        <option value="10-25 clients">10 – 25 clients (Mid-Market)</option>
-                        <option value="26-50 clients">26 – 50 clients (Growing Enterprise)</option>
-                        <option value="50+ clients">50+ clients (Large Agency Roster)</option>
-                      </select>
+                        onValueChange={(v) => v && setClients(v)}
+                        className="mt-1.5 items-stretch!"
+                        triggerClassName="h-10! min-w-0! rounded-[0.5rem]! px-3! text-xs!"
+                        options={[
+                          { value: "1-9 clients", label: "1 – 9 clients (Boutique)" },
+                          { value: "10-25 clients", label: "10 – 25 clients (Mid-Market)" },
+                          { value: "26-50 clients", label: "26 – 50 clients (Growing Enterprise)" },
+                          { value: "50+ clients", label: "50+ clients (Large Agency Roster)" },
+                        ]}
+                      />
                     </div>
 
                     <div>
-                      <label className="text-xs font-medium text-ink">Primary System of Interest</label>
-                      <select
+                      <label htmlFor="demo-interest" className="text-xs font-medium text-ink">Primary System of Interest</label>
+                      <Select
+                        id="demo-interest"
                         value={primaryInterest}
-                        onChange={(e) => setPrimaryInterest(e.target.value)}
-                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
-                      >
-                        <option value="Full Suite (All 3 Systems)">Full Suite (All 3 Systems)</option>
-                        <option value="System 01: Client Reporting">System 01: Client Reporting</option>
-                        <option value="System 02: Lead Follow-Up">System 02: Lead Follow-Up</option>
-                        <option value="System 03: Invoice Follow-Up">System 03: Invoice Follow-Up</option>
-                      </select>
+                        onValueChange={(v) => v && setPrimaryInterest(v)}
+                        className="mt-1.5 items-stretch!"
+                        triggerClassName="h-10! min-w-0! rounded-[0.5rem]! px-3! text-xs!"
+                        options={[
+                          { value: "Full Suite (All 3 Systems)", label: "Full Suite (All 3 Systems)" },
+                          { value: "System 01: Client Reporting", label: "System 01: Client Reporting" },
+                          { value: "System 02: Lead Follow-Up", label: "System 02: Lead Follow-Up" },
+                          { value: "System 03: Invoice Follow-Up", label: "System 03: Invoice Follow-Up" },
+                        ]}
+                      />
                     </div>
 
                     <button

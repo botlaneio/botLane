@@ -2,7 +2,8 @@
 
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ChevronDown, Lock } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
+import { Select } from "@/components/ui/select";
 import { submitContactMessage, type ContactFormState } from "./actions";
 import { CONTACT_INTERESTS } from "./interests";
 
@@ -57,15 +58,17 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className={`${boxClass} relative`}>
-          <span className={labelClass}>What are you interested in?</span>
-          <select name="interest" defaultValue={CONTACT_INTERESTS[0]} className={`${inputClass} cursor-pointer appearance-none pr-8`}>
-            {CONTACT_INTERESTS.map((option) => (
-              <option key={option}>{option}</option>
-            ))}
-          </select>
-          <ChevronDown className="pointer-events-none absolute top-1/2 right-4 size-[1.125rem] -translate-y-1/2 text-ink" />
-        </label>
+        <div className={boxClass}>
+          <label htmlFor="contact-interest" className={labelClass}>What are you interested in?</label>
+          <Select
+            id="contact-interest"
+            name="interest"
+            defaultValue={CONTACT_INTERESTS[0]}
+            options={CONTACT_INTERESTS.map((option) => ({ label: option, value: option }))}
+            className="items-stretch!"
+            triggerClassName="mt-1! h-auto! min-w-0! cursor-pointer! rounded-none! border-0! bg-transparent! px-0! pr-0! pl-0! text-[0.9375rem]! hover:border-0! data-popup-open:shadow-none!"
+          />
+        </div>
         <FieldError text={errors.interest} />
       </div>
 

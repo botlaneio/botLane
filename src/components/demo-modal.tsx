@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, Check, Calendar, Clock, ArrowRight } from "lucide-react";
 import { LaneMarkCycle } from "./lane-mark-cycle";
 
@@ -50,48 +50,27 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-ink/40 backdrop-blur-sm"
-            aria-hidden="true"
-          />
-
-          {/* Modal Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 8 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="demo-title"
-            className="relative w-full max-w-[31.25rem] overflow-hidden rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_1.5rem_3.125rem_rgba(20,20,40,0.14)]"
+    // Base UI dialog: focus trap, Escape and outside-click to close, scroll lock.
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+          <DialogContent
+            hideClose
+            className="block! max-h-[calc(100dvh-2rem)]! w-[31.25rem]! overflow-y-auto! rounded-[1.5rem]! p-7! shadow-[0_1.5rem_3.125rem_rgba(20,20,40,0.14)]!"
           >
-            {/* Close Button */}
-            <button
-              onClick={onClose}
+            <DialogClose
               aria-label="Close dialog"
               className="absolute top-5 right-5 flex size-8 items-center justify-center rounded-[0.5rem] text-muted transition-colors hover:bg-surface hover:text-ink"
             >
               <X size={18} />
-            </button>
+            </DialogClose>
 
             {submitted ? (
               <div className="py-6 text-center">
                 <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-ok/10 text-ok">
                   <Check size={28} strokeWidth={2.5} />
                 </div>
-                <h3 className="text-2xl font-semibold tracking-[-0.03em] text-ink">
+                <DialogTitle className="pr-0! text-2xl! font-semibold! tracking-[-0.03em]! text-ink!">
                   Demo confirmed
-                </h3>
+                </DialogTitle>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   We reserved your 15-minute walkthrough for{" "}
                   <span className="font-semibold text-ink">{timeSlot}</span>. An invitation has been sent to{" "}
@@ -120,9 +99,9 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   </span>
                 </div>
 
-                <h2 id="demo-title" className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-ink">
+                <DialogTitle className="mt-3! text-2xl! font-semibold! tracking-[-0.03em]! text-ink!">
                   Book a 15-minute demo
-                </h2>
+                </DialogTitle>
                 <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
                   See how Lane handles the busywork while keeping you in complete control of every approval.
                 </p>
@@ -222,9 +201,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 </form>
               </div>
             )}
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+          </DialogContent>
+    </Dialog>
   );
 }

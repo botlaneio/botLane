@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Tabs, TabsList, TabsTab } from "@/components/ui/tabs";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -145,30 +146,16 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
             ) : (
               <div className="rounded-[1.5rem] border border-line bg-white p-8 sm:p-10 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)]">
                 {/* Tabs */}
-                <div className="flex rounded-xl bg-surface p-1 border border-line/60 mb-7">
-                  <button
-                    type="button"
-                    onClick={() => setMode("signin")}
-                    className={`flex-1 rounded-[0.5rem] py-2 text-xs font-semibold transition-all ${
-                      mode === "signin"
-                        ? "bg-white text-ink shadow-sm"
-                        : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setMode("signup")}
-                    className={`flex-1 rounded-[0.5rem] py-2 text-xs font-semibold transition-all ${
-                      mode === "signup"
-                        ? "bg-white text-ink shadow-sm"
-                        : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    Create Account
-                  </button>
-                </div>
+                <Tabs value={mode} onValueChange={(v) => setMode(v as "signin" | "signup")} className="mb-7">
+                  <TabsList className="flex! w-full!">
+                    <TabsTab value="signin" className="flex-1! text-xs! font-semibold!">
+                      Sign In
+                    </TabsTab>
+                    <TabsTab value="signup" className="flex-1! text-xs! font-semibold!">
+                      Create Account
+                    </TabsTab>
+                  </TabsList>
+                </Tabs>
 
                 {/* Header text */}
                 <div className="mb-6">
