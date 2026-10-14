@@ -191,7 +191,7 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
       <button
         type="submit"
         disabled={isSending}
-        className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black disabled:opacity-60"
+        className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-btn text-xs font-semibold text-white shadow-sm transition hover:bg-btn-hover disabled:opacity-60"
       >
         <span>{isSending ? "Sending…" : "Apply for Partner Programme"}</span>
         <ArrowRight size={13} />

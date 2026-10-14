@@ -94,7 +94,7 @@ export default function LeadFollowUpPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book a Lead Cadence Demo</span>
@@ -242,7 +242,7 @@ export default function LeadFollowUpPage() {
                   className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
                     approved
                       ? "bg-emerald-600 text-white shadow-sm"
-                      : "bg-ink text-white hover:bg-black"
+                      : "bg-btn text-white hover:bg-btn-hover"
                   }`}
                 >
                   {approved ? (
@@ -281,7 +281,7 @@ export default function LeadFollowUpPage() {
                     onClick={() => setActiveStepTab(idx)}
                     className={`rounded-[0.5rem] px-3 py-1.5 text-xs font-medium transition ${
                       activeStepTab === idx
-                        ? "bg-ink text-white"
+                        ? "bg-btn text-white"
                         : "text-muted hover:text-ink hover:bg-surface"
                     }`}
                   >

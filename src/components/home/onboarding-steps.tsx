@@ -100,7 +100,7 @@ export function OnboardingSteps() {
       <div className="mt-12 text-center">
         <Link
           href="/demo"
-          className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-black"
+          className="inline-flex items-center gap-2 rounded-[0.5rem] bg-btn px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-btn-hover"
         >
           <span>Schedule an Onboarding Walkthrough (20 mins)</span>
           <ArrowRight size={14} />

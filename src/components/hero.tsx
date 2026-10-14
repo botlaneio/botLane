@@ -16,7 +16,7 @@ import {
   Receipt,
   ShieldCheck,
 } from "lucide-react";
-import { LaneMarkCycle } from "./lane-mark-cycle";
+import { HalftoneMark } from "./halftone-mark";
 import {
   GoogleAdsLogo,
   MetaAdsLogo,
@@ -233,7 +233,7 @@ export function Hero() {
           variants={rise}
           className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink shadow-2xs"
         >
-          <LaneMarkCycle size={15} />
+          <HalftoneMark size={20} intro introDelay={0.2} className="-my-0.5 -ml-1 -mr-0.5" />
           <span>Agent Lane</span>
         </motion.div>
 
@@ -258,7 +258,7 @@ export function Hero() {
         <motion.div variants={rise} className="mt-8 flex flex-wrap items-center gap-3.5">
           <Link
             href="/demo"
-            className="group inline-flex h-[3.25rem] min-w-[12.5rem] items-center justify-center gap-2.5 rounded-xl bg-ink px-7 text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.5rem_rgba(0,0,0,0.45)] transition hover:bg-black active:scale-[0.98]"
+            className="group inline-flex h-[3.25rem] min-w-[12.5rem] items-center justify-center gap-2.5 rounded-xl bg-btn px-7 text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.5rem_rgba(0,0,0,0.45)] transition hover:bg-btn-hover active:scale-[0.98]"
           >
             <span>Book a demo</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -502,8 +502,8 @@ export function Hero() {
                         <button
                           type="button"
                           onClick={approve}
-                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-ink text-xs font-medium text-white shadow-sm transition hover:bg-black active:scale-[0.98] ${
-                            cursorPressed && inIntro && introRunning ? "scale-[0.97] bg-black" : ""
+                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-btn text-xs font-medium text-white shadow-sm transition hover:bg-btn-hover active:scale-[0.98] ${
+                            cursorPressed && inIntro && introRunning ? "scale-[0.97] bg-ink" : ""
                           }`}
                         >
                           <Check className="size-3.5" />

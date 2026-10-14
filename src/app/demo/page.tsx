@@ -121,7 +121,7 @@ export default function DemoPage() {
                   </button>
                   <Link
                     href="/systems"
-                    className="inline-flex items-center gap-1.5 rounded-[0.5rem] bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-black"
+                    className="inline-flex items-center gap-1.5 rounded-[0.5rem] bg-btn px-4 py-2 text-xs font-semibold text-white hover:bg-btn-hover"
                   >
                     <span>Explore Systems while you wait</span>
                     <ArrowRight size={13} />
@@ -179,7 +179,7 @@ export default function DemoPage() {
                           onClick={() => setSelectedTime(slot)}
                           className={`rounded-[0.625rem] py-2.5 px-3 text-xs font-mono font-medium transition border ${
                             selectedTime === slot
-                              ? "border-ink bg-ink text-white"
+                              ? "border-btn bg-btn text-white"
                               : "border-line bg-white text-ink hover:bg-surface"
                           }`}
                         >
@@ -299,7 +299,7 @@ export default function DemoPage() {
 
                     <button
                       type="submit"
-                      className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black"
+                      className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-btn text-xs font-semibold text-white shadow-sm transition hover:bg-btn-hover"
                     >
                       <Sparkles size={14} className="text-lane" />
                       <span>Confirm Demo for {selectedTime}</span>

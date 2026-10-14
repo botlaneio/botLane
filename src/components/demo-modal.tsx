@@ -106,7 +106,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="mt-6 inline-flex h-11 items-center justify-center rounded-[0.5rem] bg-ink px-6 text-sm font-medium text-white transition-colors hover:bg-black"
+                  className="mt-6 inline-flex h-11 items-center justify-center rounded-[0.5rem] bg-btn px-6 text-sm font-medium text-white transition-colors hover:bg-btn-hover"
                 >
                   Done
                 </button>
@@ -191,7 +191,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
                           onClick={() => setTimeSlot(slot)}
                           className={`flex items-center justify-between rounded-[0.5rem] border px-3 py-2 text-xs transition-colors ${
                             timeSlot === slot
-                              ? "border-ink bg-ink text-white"
+                              ? "border-btn bg-btn text-white"
                               : "border-line bg-surface/30 text-muted hover:border-muted/50 hover:text-ink"
                           }`}
                         >

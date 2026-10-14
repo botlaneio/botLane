@@ -289,7 +289,7 @@ export function SiteHeader() {
             {cta && (
               <Link
                 href={cta.href}
-                className="group relative inline-flex h-9 items-center gap-1.5 rounded-[0.5rem] bg-ink px-4 text-[0.8125rem] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_0.25rem_0.75rem_rgba(0,0,0,0.08)] transition-all hover:bg-black active:scale-[0.98] whitespace-nowrap shrink-0"
+                className="group relative inline-flex h-9 items-center gap-1.5 rounded-[0.5rem] bg-btn px-4 text-[0.8125rem] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_0.25rem_0.75rem_rgba(0,0,0,0.08)] transition-all hover:bg-btn-hover active:scale-[0.98] whitespace-nowrap shrink-0"
               >
                 <span>{cta.label}</span>
                 <ArrowRight
@@ -398,7 +398,7 @@ export function SiteHeader() {
                 <Link
                   href={cta.href}
                   onClick={handleLinkClick}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-ink text-sm font-medium text-white transition-all hover:bg-black shadow-sm"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-btn text-sm font-medium text-white transition-all hover:bg-btn-hover shadow-sm"
                 >
                   <span>{cta.label}</span>
                   <ArrowRight size={14} />

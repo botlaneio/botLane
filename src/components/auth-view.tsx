@@ -129,7 +129,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 <div className="mt-8 flex flex-col gap-3">
                   <Link
                     href="/"
-                    className="inline-flex h-11 w-full items-center justify-center rounded-[0.5rem] bg-ink text-sm font-medium text-white transition-colors hover:bg-black"
+                    className="inline-flex h-11 w-full items-center justify-center rounded-[0.5rem] bg-btn text-sm font-medium text-white transition-colors hover:bg-btn-hover"
                   >
                     Go to Approval Dashboard
                   </Link>
@@ -413,7 +413,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="mt-2 flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] bg-ink px-4 text-sm font-medium text-white transition-all hover:bg-black active:scale-[0.99] disabled:opacity-50"
+                    className="mt-2 flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] bg-btn px-4 text-sm font-medium text-white transition-all hover:bg-btn-hover active:scale-[0.99] disabled:opacity-50"
                   >
                     {isLoading ? (
                       <span className="inline-block size-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -574,7 +574,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                     setForgotPasswordOpen(false);
                     setForgotEmailSent(false);
                   }}
-                  className="mt-6 inline-flex h-10 items-center justify-center rounded-[0.5rem] bg-ink px-5 text-xs font-medium text-white hover:bg-black"
+                  className="mt-6 inline-flex h-10 items-center justify-center rounded-[0.5rem] bg-btn px-5 text-xs font-medium text-white hover:bg-btn-hover"
                 >
                   Return to sign in
                 </button>
@@ -604,7 +604,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                   </button>
                   <button
                     type="submit"
-                    className="h-10 px-5 rounded-[0.5rem] bg-ink text-xs font-medium text-white hover:bg-black"
+                    className="h-10 px-5 rounded-[0.5rem] bg-btn text-xs font-medium text-white hover:bg-btn-hover"
                   >
                     Send reset link
                   </button>

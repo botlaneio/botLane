@@ -87,7 +87,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending || state.status === "ok"}
-        className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-ink text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-black disabled:opacity-70"
+        className="group mt-2 flex h-14 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-btn text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-btn-hover disabled:opacity-70"
       >
         {pending ? "Sending…" : "Send message"}
         {!pending && <ArrowRight className="size-[1.125rem] transition-transform group-hover:translate-x-0.5" />}

@@ -6,6 +6,9 @@
   --bl-bg: #ffffff;
   --bl-ink: #1d1d1f;
   --bl-ink-2: #3a3a3c;
+  /* Buttons sit a touch lighter than text: very dark grey, not pitch black. */
+  --bl-btn: #2c2c30;
+  --bl-btn-hover: #3a3a3f;
   --bl-muted: #6e6e73;
   --bl-faint: #8e8e93;
   --bl-line: #ececef;
@@ -23,6 +26,8 @@
   --color-bg: var(--bl-bg);
   --color-ink: var(--bl-ink);
   --color-ink-2: var(--bl-ink-2);
+  --color-btn: var(--bl-btn);
+  --color-btn-hover: var(--bl-btn-hover);
   --color-muted: var(--bl-muted);
   --color-faint: var(--bl-faint);
   --color-line: var(--bl-line);
