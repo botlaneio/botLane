@@ -144,7 +144,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="BotLane home"
-            className="group flex items-center gap-1.5 transition-opacity hover:opacity-90 shrink-0"
+            className="group flex items-center gap-0.5 transition-opacity hover:opacity-90 shrink-0"
           >
             <BrandMark className="size-7" />
             <Wordmark className="text-[1.1875rem] text-ink" />
