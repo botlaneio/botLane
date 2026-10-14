@@ -67,7 +67,7 @@ export function SiteFooter() {
           <div className="sm:col-span-2 lg:col-span-6">
             <Link href="/" aria-label="BotLane home" className="inline-flex items-center gap-0.5 text-white">
               {/* Pulses continuously in the footer. */}
-              <HalftoneMark size={36} detail="small" state="thinking" pace={1.3} className="-m-0.5" />
+              <HalftoneMark size={30} detail="small" state="thinking" pace={1.3} className="mr-1.5" />
               <Wordmark className="text-xl" />
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/60">

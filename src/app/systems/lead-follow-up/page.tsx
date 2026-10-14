@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Tabs, TabsList, TabsTab, TabsPanel } from "@/components/ui/tabs";
 import {
   HubSpotLogo,
   TypeformLogo,
@@ -272,25 +273,16 @@ export default function LeadFollowUpPage() {
             </div>
 
             {/* Interactive Cadence Inspector Tabs */}
-            <div className="mt-6">
-              <div className="flex items-center gap-2 border-b border-line pb-2">
+            <Tabs value={activeStepTab} onValueChange={(v) => setActiveStepTab(v as number)} className="mt-6">
+              <TabsList className="max-w-full! overflow-x-auto!">
                 {CADENCE_STEPS.map((step, idx) => (
-                  <button
-                    key={step.timing}
-                    type="button"
-                    onClick={() => setActiveStepTab(idx)}
-                    className={`rounded-[0.5rem] px-3 py-1.5 text-xs font-medium transition ${
-                      activeStepTab === idx
-                        ? "bg-btn text-white"
-                        : "text-muted hover:text-ink hover:bg-surface"
-                    }`}
-                  >
+                  <TabsTab key={step.timing} value={idx} className="text-xs!">
                     {step.timing} ({idx === 0 ? "Initial" : `Follow-up #${idx}`})
-                  </button>
+                  </TabsTab>
                 ))}
-              </div>
+              </TabsList>
 
-              <div className="mt-5 rounded-[1rem] border border-line/80 bg-surface/40 p-5">
+              <TabsPanel value={activeStepTab} className="mt-5! rounded-[1rem]! border! border-line/80! bg-surface/40! p-5!">
                 <div className="flex items-center justify-between text-xs font-mono text-muted border-b border-line/50 pb-2">
                   <span>Subject: {CADENCE_STEPS[activeStepTab].subject}</span>
                   <span className="text-emerald-700 font-semibold">{CADENCE_STEPS[activeStepTab].status}</span>
@@ -302,8 +294,8 @@ export default function LeadFollowUpPage() {
                   <span>Sent via your agency domain: hello@youragency.com</span>
                   <span className="text-lane font-mono">Auto-pause if prospect books discovery call</span>
                 </div>
-              </div>
-            </div>
+              </TabsPanel>
+            </Tabs>
           </div>
         </section>
 

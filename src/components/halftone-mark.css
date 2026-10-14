@@ -19,6 +19,23 @@
     cubic-bezier(0.22, 0.9, 0.3, 1) both;
 }
 
+/* The tile fades in under the gathering dots. */
+.hm-intro .hm-tile {
+  animation: hm-tile-in calc(0.6s * var(--hm-pace)) var(--hm-intro-delay) ease-out both;
+}
+
+@keyframes hm-tile-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+.hm-tile {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 @keyframes hm-gather {
   0% {
     opacity: 0;

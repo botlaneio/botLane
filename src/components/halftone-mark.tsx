@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useId, type CSSProperties } from "react";
 import "./halftone-mark.css";
 
 /**
@@ -10,12 +10,14 @@ import "./halftone-mark.css";
  * - `state`: "rest" (default), "active" (a purple arc sweeps around the
  *   sphere) or "thinking" (the dots pulse outward from the centre until
  *   the state changes).
- * - `tone`: "color" (near-black to violet, the default), "dark" or "light".
+ * - `tone`: "tile" (the logo: white-to-lilac dots inside a graphite tile with a
+ *   violet glow, the default), "color" (near-black to violet dots, no tile),
+ *   "dark" or "light".
  * - `detail`: "hd" (full detail) or "small" (fewer, bigger dots for 48px and
  *   below). "auto" picks from `size`.
  */
 
-type Tone = "color" | "dark" | "light";
+type Tone = "tile" | "color" | "dark" | "light";
 type Detail = "auto" | "hd" | "small";
 export type HalftoneMarkState = "rest" | "active" | "thinking";
 
@@ -36,6 +38,7 @@ export interface HalftoneMarkProps {
 type Dot = { x: number; y: number; r: number; fill: string; sx: number; sy: number; delay: number; ring: number };
 
 const STOPS: Record<Tone, [number, string][]> = {
+  tile: [[0, "#8b74d9"], [0.42, "#c9bdf5"], [0.9, "#ffffff"]],
   color: [[0, "#121214"], [0.55, "#2a1d5c"], [1, "#6d3cf0"]],
   dark: [[0, "#0e0e10"], [0.5, "#1c1c20"], [1, "#36363c"]],
   light: [[0, "#f4f4f6"], [0.5, "#d6d6dc"], [1, "#a9a9b2"]],
@@ -49,6 +52,8 @@ const GRID: Record<"hd" | "small", { sp: number; rmax: number }> = {
 const CX = 100;
 const CY = 100;
 const R = 58;
+/** The sphere's scale inside the tile, about its centre. */
+const TILE_SCALE = 0.84;
 /** Upper-right quarter circle around the sphere, from 12 o'clock to 3 o'clock. */
 const ARC = "M101 35A67 67 0 0 1 168 102";
 
@@ -133,7 +138,7 @@ function buildDots(tone: Tone, detail: "hd" | "small"): Dot[] {
 
 export function HalftoneMark({
   size = 40,
-  tone = "color",
+  tone = "tile",
   detail = "auto",
   state = "rest",
   intro = false,
@@ -145,6 +150,8 @@ export function HalftoneMark({
   const level = detail === "auto" ? (size <= 48 ? "small" : "hd") : detail;
   const dots = buildDots(tone, level);
   const arcWidth = level === "small" ? 4 : 0.9;
+  const tile = tone === "tile";
+  const glowId = `hm-glow-${useId().replace(/:/g, "")}`;
 
   const rootStyle = {
     // rem, so the mark follows the site's 80% phone scale.
@@ -165,6 +172,18 @@ export function HalftoneMark({
       className={`hm ${intro ? "hm-intro" : ""} ${className ?? ""}`}
       style={rootStyle}
     >
+      {tile && (
+        <>
+          <defs>
+            <radialGradient id={glowId} cx="0.7" cy="0.3" r="0.9">
+              <stop offset="0" stopColor="#2a1d5c" />
+              <stop offset="1" stopColor="#0d0d10" />
+            </radialGradient>
+          </defs>
+          <rect className="hm-tile" x="20" y="20" width="160" height="160" rx="41" fill={`url(#${glowId})`} />
+        </>
+      )}
+      <g transform={tile ? `translate(${CX} ${CY}) scale(${TILE_SCALE}) translate(${-CX} ${-CY})` : undefined}>
       {dots.map((d, i) => (
         // The cell carries the thinking pulse and the dot carries the intro,
         // so switching state never replays the intro.
@@ -198,6 +217,7 @@ export function HalftoneMark({
         strokeWidth={arcWidth}
         strokeLinecap="round"
       />
+      </g>
     </svg>
   );
 }

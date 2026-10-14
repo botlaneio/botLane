@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { Select } from "@/components/ui/select";
+
+const FORM_SELECT = "h-9! min-w-0! rounded-[0.5rem]! px-3! text-xs!";
 
 const PARTNER_BENEFITS = [
   {
@@ -100,19 +103,20 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
     <form onSubmit={handleSubmit} className="space-y-4" suppressHydrationWarning autoComplete="off">
       <div suppressHydrationWarning>
         <label htmlFor="partner-track" className="text-xs font-medium text-ink">Partner Track</label>
-        <select
+        <Select
           id="partner-track"
           name="partner-track"
           value={partnerType}
-          onChange={(e) => setPartnerType(e.target.value)}
-          suppressHydrationWarning
-          className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
-        >
-          <option value="Agency / Fractional CMO">Agency / Fractional CMO (Referral & Reseller)</option>
-          <option value="RevOps & IT Consultant">RevOps & IT Consultant (Systems Integrator)</option>
-          <option value="Accounting / CPA Firm">Accounting / CPA Firm (Invoice Follow-Up Reseller)</option>
-          <option value="Venture / Incubator">Venture / Incubator (Portfolio Advantage)</option>
-        </select>
+          onValueChange={(v) => v && setPartnerType(v)}
+          className="mt-1.5 items-stretch!"
+          triggerClassName={FORM_SELECT}
+          options={[
+            { value: "Agency / Fractional CMO", label: "Agency / Fractional CMO (Referral & Reseller)" },
+            { value: "RevOps & IT Consultant", label: "RevOps & IT Consultant (Systems Integrator)" },
+            { value: "Accounting / CPA Firm", label: "Accounting / CPA Firm (Invoice Follow-Up Reseller)" },
+            { value: "Venture / Incubator", label: "Venture / Incubator (Portfolio Advantage)" },
+          ]}
+        />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -166,19 +170,20 @@ export function PartnerApplicationForm({ onSubmitted }: { onSubmitted?: () => vo
         </div>
         <div suppressHydrationWarning>
           <label htmlFor="partner-clients" className="text-xs font-medium text-ink">Active Client Roster Size</label>
-          <select
+          <Select
             id="partner-clients"
             name="partner-clients"
             value={clientCount}
-            onChange={(e) => setClientCount(e.target.value)}
-            suppressHydrationWarning
-            className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
-          >
-            <option value="5-15 clients">5 – 15 clients</option>
-            <option value="16-35 clients">16 – 35 clients</option>
-            <option value="36-70 clients">36 – 70 clients</option>
-            <option value="70+ clients">70+ clients</option>
-          </select>
+            onValueChange={(v) => v && setClientCount(v)}
+            className="mt-1.5 items-stretch!"
+            triggerClassName={FORM_SELECT}
+            options={[
+              { value: "5-15 clients", label: "5 – 15 clients" },
+              { value: "16-35 clients", label: "16 – 35 clients" },
+              { value: "36-70 clients", label: "36 – 70 clients" },
+              { value: "70+ clients", label: "70+ clients" },
+            ]}
+          />
         </div>
       </div>
 

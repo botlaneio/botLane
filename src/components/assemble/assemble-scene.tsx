@@ -215,7 +215,7 @@ export function AssembleScene() {
                 </div>
                 <div className="flex items-center justify-between">
                   {/* The botLane mark, its dots pulsing while Lane works. Sized in px like the rest of the board. */}
-                  <HalftoneMark size={50} detail="small" state="thinking" pace={1.3} className="-m-[3px] ![height:50px] ![width:50px]" />
+                  <HalftoneMark size={44} detail="small" state="thinking" pace={1.3} className="![height:44px] ![width:44px]" />
                   <span className="relative h-6 w-[74px]">
                     <span data-lpw="" className="bl-pill bl-pill-red absolute top-0 right-0">Working</span>
                     <span data-lpr="" className="bl-pill absolute top-0 right-0" style={{ opacity: 0 }}>Ready</span>
