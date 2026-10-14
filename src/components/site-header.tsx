@@ -147,8 +147,8 @@ export function SiteHeader() {
             className="group flex items-center gap-0.5 transition-opacity hover:opacity-90 shrink-0"
           >
             {/* Gathers in once on load, then rests. */}
-            <HalftoneMark size={32} detail="small" intro introDelay={0.15} className="-m-0.5" />
-            <Wordmark className="text-[1.1875rem] text-ink-soft" />
+            <HalftoneMark size={37} detail="small" intro introDelay={0.15} className="-my-1 -ml-1 -mr-[0.1875rem]" />
+            <Wordmark className="text-[1.3125rem] text-ink-soft" />
           </Link>
 
           {/* Zone 2: Navigation Links with Mega Menu */}
