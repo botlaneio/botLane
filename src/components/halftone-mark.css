@@ -1,0 +1,77 @@
+/* Botlane halftone mark. Timings scale with --hm-pace (1 = designed speed). */
+
+.hm {
+  display: block;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.hm-dot,
+.hm-cell {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Intro: dots fly in from a loose cloud and lock into the sphere, once. */
+.hm-intro .hm-dot {
+  animation: hm-gather calc(0.9s * var(--hm-pace))
+    calc(var(--hm-intro-delay) + var(--d) * 1s * var(--hm-pace))
+    cubic-bezier(0.22, 0.9, 0.3, 1) both;
+}
+
+@keyframes hm-gather {
+  0% {
+    opacity: 0;
+    transform: translate(var(--sx), var(--sy)) scale(0.4);
+  }
+  25% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Active: the purple arc sweeps in around the sphere. */
+.hm-arc {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset calc(0.8s * var(--hm-pace)) cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.2s ease;
+}
+
+.hm[data-state="active"] .hm-arc {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* Thinking: the dots pulse outward from the centre while work is running. */
+.hm[data-state="thinking"] .hm-cell {
+  animation: hm-pulse calc(1.4s * var(--hm-pace)) calc(var(--ring) * 0.6s * var(--hm-pace))
+    ease-in-out infinite;
+}
+
+@keyframes hm-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.45);
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-intro .hm-dot,
+  .hm[data-state="thinking"] .hm-cell {
+    animation: none;
+  }
+  .hm-arc {
+    transition: none;
+  }
+}
