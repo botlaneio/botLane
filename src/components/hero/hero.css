@@ -1,0 +1,374 @@
+/* Home hero, frame 01 of the mockup. Centred serif headline, four product cards around it joined by
+   dotted connectors, tools row underneath. On desktop the hero pins and, as you scroll, the cards
+   converge into one BotLane window (hero-stage.tsx). Everywhere else the assembled window shows statically. */
+.hero {
+  position: relative;
+  background:
+    radial-gradient(55% 45% at 50% 38%, rgba(251, 225, 209, 0.35), transparent 70%),
+    linear-gradient(to bottom, #f8f6f3, #fbfaf8 70%, #fff);
+}
+.hero .grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
+.hero-pin {
+  position: relative;
+}
+.hero-copy {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  padding: clamp(140px, 22vw, 190px) var(--gutter) 40px;
+}
+.hero-copy h1 {
+  font-size: clamp(48px, 3.6vw + 22px, 84px);
+  line-height: 1.02;
+}
+.hero-sub {
+  font-size: clamp(18px, 0.5vw + 16px, 22px);
+  color: var(--ink);
+  opacity: 0.82;
+}
+.hero-copy .pair {
+  margin-top: 8px;
+  justify-content: center;
+}
+.tools-row {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px var(--gutter) 40px;
+}
+.tools-row p {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+.tools-row ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px 34px;
+  font-size: 15px;
+}
+.tools-row li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tools-row li.more {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+.hero .links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+.hero .links path {
+  fill: none;
+  stroke: #d8b9a6;
+  stroke-width: 1.2;
+  stroke-dasharray: 3 5;
+  vector-effect: non-scaling-stroke;
+}
+.hero .node {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px #e3c9b9;
+  display: none;
+  z-index: 2;
+}
+.hero .node::after {
+  content: "";
+  position: absolute;
+  inset: 3.5px;
+  border-radius: 50%;
+  background: var(--terra);
+}
+.stage-wrap {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 48px;
+}
+.stage {
+  position: relative;
+  width: 1200px;
+  height: 900px;
+  transform-origin: top left;
+}
+
+/* animated mode (desktop, motion allowed): pinned for a long scroll */
+.hero.anim {
+  height: 300vh;
+}
+.anim .hero-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.anim .hero-copy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding-top: clamp(120px, 19vh, 190px);
+  pointer-events: none;
+}
+.anim .hero-copy > * {
+  pointer-events: auto;
+}
+.anim .tools-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(16px, 4vh, 40px);
+  padding-bottom: 0;
+}
+.anim .links,
+.anim .node {
+  display: block;
+}
+.anim .stage-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  padding: 0;
+  z-index: 3;
+}
+.anim .stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+/* static mode (phones, tablets, reduced motion, before JS): assembled window scaled to fit */
+.hero:not(.anim) .stage-wrap {
+  height: var(--sh, 0px);
+  min-height: 200px;
+}
+.hero:not(.anim) .stage {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform-origin: top center;
+  /* before JS runs, a CSS-only scale keeps the window inside the screen */
+  transform: translateX(-50%) scale(var(--s, 0.3));
+}
+.hero:not(.anim) .sendbtn .sent {
+  opacity: 1;
+}
+.hero:not(.anim) .wait {
+  visibility: hidden;
+}
+
+/* the window the cards assemble into */
+.win {
+  position: absolute;
+  left: 100px;
+  top: 110px;
+  width: 1000px;
+  height: 700px;
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow:
+    0 0 0 1px rgba(4, 23, 43, 0.06),
+    0 30px 60px -20px rgba(0, 0, 0, 0.18);
+}
+.win-bar {
+  height: 58px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 20px;
+}
+.win-bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mist);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.win-bar span {
+  margin-inline: auto;
+  font-size: 13px;
+  color: var(--subtle);
+  background: var(--mist);
+  border-radius: 8px;
+  padding: 6px 60px;
+}
+.win-side {
+  position: absolute;
+  left: 0;
+  top: 58px;
+  bottom: 0;
+  width: 180px;
+  border-right: 1px solid var(--line);
+  padding: 22px 14px;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.win-side b {
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  font-size: 17px;
+  padding: 0 10px 14px;
+}
+.win-side span {
+  padding: 7px 10px;
+  border-radius: 10px;
+}
+.win-side span.on {
+  background: var(--mist);
+  color: var(--ink);
+}
+
+/* cards sit at their FINAL slot; GSAP animates them FROM scattered positions */
+.hc {
+  position: absolute;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: var(--flat);
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  will-change: transform;
+}
+.hc .pc-h {
+  font-size: 14.5px;
+  margin-bottom: 12px;
+}
+.hc .li {
+  padding: 8px 0;
+}
+.hc-lead {
+  left: 300px;
+  top: 190px;
+  width: 370px;
+  height: 250px;
+}
+.hc-report {
+  left: 690px;
+  top: 190px;
+  width: 390px;
+  height: 250px;
+}
+.hc-draft {
+  left: 300px;
+  top: 460px;
+  width: 370px;
+  height: 330px;
+}
+.hc-invoice {
+  left: 690px;
+  top: 460px;
+  width: 390px;
+  height: 330px;
+}
+.rep-k {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.hc-report svg {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+}
+.field {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.field span {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: var(--ink);
+}
+.mail {
+  font-size: 13px;
+  display: grid;
+  gap: 8px;
+}
+.mail p {
+  color: var(--muted);
+}
+.mail-foot {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--subtle);
+}
+.mail-foot .wait {
+  margin-right: auto;
+  color: var(--terra);
+}
+.sendbtn {
+  position: relative;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 12.5px;
+  overflow: hidden;
+}
+.sendbtn .sent {
+  position: absolute;
+  inset: 0;
+  background: var(--ok);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  font-style: normal;
+}
+@media (max-width: 640px) {
+  .tools-row ul {
+    gap: 10px 20px;
+    font-size: 14px;
+  }
+}

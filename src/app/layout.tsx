@@ -1,36 +1,39 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Newsreader } from "next/font/google";
+import { siteUrl, tagline } from "@/content/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = Geist({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
+const serif = Newsreader({
+  variable: "--font-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const description =
+  "BotLane designs, runs and maintains AI workflows inside the tools you already use. Lane prepares the work. Nothing goes out until you approve it.";
 
 export const metadata: Metadata = {
-  title: "BotLane",
-  description:
-    "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
-  openGraph: {
-    title: "BotLane",
-    description:
-      "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
-  },
+  metadataBase: new URL(siteUrl),
+  title: { default: `BotLane · ${tagline}`, template: "%s · BotLane" },
+  description,
+  openGraph: { title: "BotLane", description, siteName: "BotLane", type: "website" },
+  icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/favicon.ico" }] },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <body className="min-h-full bg-bg text-ink">{children}</body>
+    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
+      <body>
+        <a className="skip" href="#main">
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
