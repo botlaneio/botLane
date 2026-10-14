@@ -6,7 +6,7 @@ import { ArrowRight, Building2, Eye, EyeOff, Info, Lock, Mail, User } from "luci
 
 function GoogleIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden>
+    <svg viewBox="0 0 24 24" className="size-[1.125rem]" aria-hidden>
       <path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8z" />
       <path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z" />
       <path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.3V7.1H2.1a11 11 0 0 0 0 9.9l3.7-2.8z" />
@@ -17,7 +17,7 @@ function GoogleIcon() {
 
 function MicrosoftIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden>
+    <svg viewBox="0 0 24 24" className="size-[1.125rem]" aria-hidden>
       <path fill="#F25022" d="M2 2h9.5v9.5H2z" />
       <path fill="#7FBA00" d="M12.5 2H22v9.5h-9.5z" />
       <path fill="#00A4EF" d="M2 12.5h9.5V22H2z" />
@@ -39,7 +39,7 @@ function Field({
     <label className="block">
       <span className="text-sm font-medium text-ink">{label}</span>
       <span className="relative mt-1.5 block">
-        <Icon className="pointer-events-none absolute top-1/2 left-3.5 size-[18px] -translate-y-1/2 text-muted" />
+        <Icon className="pointer-events-none absolute top-1/2 left-3.5 size-[1.125rem] -translate-y-1/2 text-muted" />
         {children}
       </span>
     </label>
@@ -47,7 +47,7 @@ function Field({
 }
 
 const inputClass =
-  "h-11 w-full rounded-[10px] border border-line bg-white pr-11 pl-11 text-sm text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
+  "h-11 w-full rounded-[0.625rem] border border-line bg-white pr-11 pl-11 text-sm text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
 
 function PasswordInput({ placeholder, autoComplete }: { placeholder: string; autoComplete: string }) {
   const [shown, setShown] = useState(false);
@@ -68,7 +68,7 @@ function PasswordInput({ placeholder, autoComplete }: { placeholder: string; aut
         aria-label={shown ? "Hide password" : "Show password"}
         className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-muted transition hover:text-ink"
       >
-        {shown ? <EyeOff className="size-[18px]" /> : <Eye className="size-[18px]" />}
+        {shown ? <EyeOff className="size-[1.125rem]" /> : <Eye className="size-[1.125rem]" />}
       </button>
     </>
   );
@@ -77,7 +77,7 @@ function PasswordInput({ placeholder, autoComplete }: { placeholder: string; aut
 /** Accounts aren't open yet, so every way in ends here instead of pretending to sign the visitor in. */
 function NotOpenYet() {
   return (
-    <div role="status" className="mt-5 flex items-start gap-3 rounded-[12px] border border-line bg-surface/70 p-4 text-sm">
+    <div role="status" className="mt-5 flex items-start gap-3 rounded-[0.75rem] border border-line bg-surface/70 p-4 text-sm">
       <Info className="mt-0.5 size-4 shrink-0 text-lane" />
       <div className="text-ink-2">
         Client workspaces aren&apos;t open for self sign-up yet. We set yours up with you during onboarding.{" "}
@@ -102,7 +102,7 @@ function SocialButtons({ onClick }: { onClick: () => void }) {
           type="button"
           onClick={onClick}
           aria-label="Continue with Google"
-          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
+          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[0.625rem] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
         >
           <GoogleIcon />
           Google
@@ -111,7 +111,7 @@ function SocialButtons({ onClick }: { onClick: () => void }) {
           type="button"
           onClick={onClick}
           aria-label="Continue with Microsoft"
-          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[10px] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
+          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[0.625rem] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
         >
           <MicrosoftIcon />
           Microsoft
@@ -129,7 +129,7 @@ function Checkbox({ name, required, defaultChecked, children }: { name: string; 
         name={name}
         required={required}
         defaultChecked={defaultChecked}
-        className="size-[18px] shrink-0 cursor-pointer rounded-[5px] accent-lane"
+        className="size-[1.125rem] shrink-0 cursor-pointer rounded-[0.3125rem] accent-lane"
       />
       <span>{children}</span>
     </label>
@@ -137,10 +137,10 @@ function Checkbox({ name, required, defaultChecked, children }: { name: string; 
 }
 
 const cardClass =
-  "rounded-[22px] border border-line bg-white p-6 shadow-[0_20px_50px_-24px_rgba(20,20,40,0.16)] sm:p-7";
+  "rounded-[1.375rem] border border-line bg-white p-6 shadow-[0_1.25rem_3.125rem_-1.5rem_rgba(20,20,40,0.16)] sm:p-7";
 
 const submitClass =
-  "group flex h-11 w-full items-center justify-center gap-2 rounded-[10px] bg-ink text-sm font-medium text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.5)] transition hover:bg-black active:scale-[0.99]";
+  "group flex h-11 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-ink text-sm font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-black active:scale-[0.99]";
 
 export function SignInForm() {
   const [notice, setNotice] = useState(false);

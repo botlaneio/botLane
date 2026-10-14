@@ -42,12 +42,12 @@ const TIERS = [
 
 export function Pricing({ onOpenDemo }: PricingProps) {
   return (
-    <section id="pricing" className="mx-auto max-w-[1200px] scroll-mt-20 px-6 pt-16 pb-28">
+    <section id="pricing" className="mx-auto max-w-[75rem] scroll-mt-20 px-6 pt-16 pb-28">
       <div className="mx-auto max-w-2xl text-center">
         <div className="font-mono text-xs uppercase tracking-[0.08em] text-lane">
           Straightforward Investment
         </div>
-        <h2 className="mt-3 text-[clamp(32px,4vw,52px)] font-semibold tracking-[-0.04em] text-ink">
+        <h2 className="mt-3 text-[clamp(2rem,4vw,3.25rem)] font-semibold tracking-[-0.04em] text-ink">
           One flat monthly fee. No hourly billing.
         </h2>
         <p className="mt-3 text-base text-muted">
@@ -59,14 +59,14 @@ export function Pricing({ onOpenDemo }: PricingProps) {
         {TIERS.map((tier) => (
           <div
             key={tier.name}
-            className={`relative flex flex-col justify-between rounded-[22px] border p-8 transition-all ${
+            className={`relative flex flex-col justify-between rounded-[1.375rem] border p-8 transition-all ${
               tier.highlight
-                ? "border-lane/40 bg-white shadow-[0_16px_40px_rgba(224,49,43,0.06)]"
+                ? "border-lane/40 bg-white shadow-[0_1rem_2.5rem_rgba(224,49,43,0.06)]"
                 : "border-line bg-surface/30"
             }`}
           >
             {tier.badge && (
-              <span className="absolute -top-3 right-8 rounded-full bg-lane px-3 py-0.5 font-mono text-[11px] font-semibold tracking-wide text-white uppercase">
+              <span className="absolute -top-3 right-8 rounded-full bg-lane px-3 py-0.5 font-mono text-[0.6875rem] font-semibold tracking-wide text-white uppercase">
                 {tier.badge}
               </span>
             )}
@@ -84,7 +84,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
 
               <div className="my-6 h-px w-full bg-line" />
 
-              <ul className="space-y-3 text-[13px] text-ink-2">
+              <ul className="space-y-3 text-[0.8125rem] text-ink-2">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5">
                     <span className="mt-0.5 flex size-4 flex-none items-center justify-center rounded-full bg-ok/10 text-ok">
@@ -99,9 +99,9 @@ export function Pricing({ onOpenDemo }: PricingProps) {
             <button
               type="button"
               onClick={onOpenDemo}
-              className={`mt-8 flex h-11 w-full items-center justify-center rounded-[8px] text-sm font-medium transition-all ${
+              className={`mt-8 flex h-11 w-full items-center justify-center rounded-[0.5rem] text-sm font-medium transition-all ${
                 tier.highlight
-                  ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_4px_14px_rgba(224,49,43,0.2)]"
+                  ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_0.25rem_0.875rem_rgba(224,49,43,0.2)]"
                   : "bg-ink text-white hover:bg-black"
               }`}
             >

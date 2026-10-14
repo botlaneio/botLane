@@ -64,7 +64,7 @@ export default function LeadFollowUpPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Breadcrumb */}
-        <div className="mx-auto max-w-[1200px] px-6 pt-10">
+        <div className="mx-auto max-w-[75rem] px-6 pt-10">
           <div className="flex items-center gap-2 text-xs font-mono text-muted">
             <Link href="/systems" className="hover:text-lane transition">
               Systems
@@ -75,13 +75,13 @@ export default function LeadFollowUpPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <GitCommit size={13} />
             <span>System 02 · The Line</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,68px)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
             Never lose another lead <br />
             to a slow reply.
           </h1>
@@ -94,7 +94,7 @@ export default function LeadFollowUpPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book a Lead Cadence Demo</span>
@@ -102,7 +102,7 @@ export default function LeadFollowUpPage() {
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
+              className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
               <span>$600/mo Standalone Retainer</span>
             </Link>
@@ -128,7 +128,7 @@ export default function LeadFollowUpPage() {
         </section>
 
         {/* How It Works (The Line Pipeline) */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Linear Architecture
@@ -164,7 +164,7 @@ export default function LeadFollowUpPage() {
                 desc: "If no booking after 48 hrs, sends a value-packed follow-up. Pauses permanently the millisecond they reply or book.",
               },
             ].map((col) => (
-              <div key={col.step} className="rounded-[18px] border border-line bg-white p-6 shadow-sm">
+              <div key={col.step} className="rounded-[1.125rem] border border-line bg-white p-6 shadow-sm">
                 <div className="font-mono text-2xl font-bold text-ink">{col.step}</div>
                 <h3 className="mt-4 text-base font-semibold text-ink">{col.title}</h3>
                 <p className="mt-2 text-xs leading-relaxed text-muted">{col.desc}</p>
@@ -174,7 +174,7 @@ export default function LeadFollowUpPage() {
         </section>
 
         {/* Tools It Connects */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
           <div className="text-center max-w-2xl mx-auto">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Supported Integrations
@@ -193,8 +193,8 @@ export default function LeadFollowUpPage() {
             ].map((tool) => {
               const Icon = tool.icon;
               return (
-                <div key={tool.name} className="rounded-[16px] border border-line bg-white p-5 text-center shadow-sm">
-                  <div className="mx-auto flex size-12 items-center justify-center rounded-[12px] bg-surface p-2.5">
+                <div key={tool.name} className="rounded-[1rem] border border-line bg-white p-5 text-center shadow-sm">
+                  <div className="mx-auto flex size-12 items-center justify-center rounded-[0.75rem] bg-surface p-2.5">
                     <Icon size={26} />
                   </div>
                   <div className="mt-4 text-sm font-semibold text-ink">{tool.name}</div>
@@ -206,7 +206,7 @@ export default function LeadFollowUpPage() {
         </section>
 
         {/* Interactive Approval & Output Workspace */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Approval Desk Experience
@@ -219,10 +219,10 @@ export default function LeadFollowUpPage() {
             </p>
           </div>
 
-          <div className="mt-10 rounded-[24px] border border-line bg-white p-6 sm:p-8 shadow-[0_16px_50px_rgba(20,20,40,0.06)]">
+          <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-6 sm:p-8 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
               <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-[8px] bg-lane/10 text-lane">
+                <span className="flex size-9 items-center justify-center rounded-[0.5rem] bg-lane/10 text-lane">
                   <Mail size={18} />
                 </span>
                 <div>
@@ -239,7 +239,7 @@ export default function LeadFollowUpPage() {
                 <button
                   type="button"
                   onClick={() => setApproved(!approved)}
-                  className={`inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-xs font-semibold transition ${
+                  className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
                     approved
                       ? "bg-emerald-600 text-white shadow-sm"
                       : "bg-ink text-white hover:bg-black"
@@ -262,7 +262,7 @@ export default function LeadFollowUpPage() {
                   <button
                     type="button"
                     onClick={() => setApproved(false)}
-                    className="flex size-8 items-center justify-center rounded-[8px] border border-line text-muted hover:text-ink"
+                    className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line text-muted hover:text-ink"
                     title="Reset simulation"
                   >
                     <RotateCcw size={14} />
@@ -279,7 +279,7 @@ export default function LeadFollowUpPage() {
                     key={step.timing}
                     type="button"
                     onClick={() => setActiveStepTab(idx)}
-                    className={`rounded-[8px] px-3 py-1.5 text-xs font-medium transition ${
+                    className={`rounded-[0.5rem] px-3 py-1.5 text-xs font-medium transition ${
                       activeStepTab === idx
                         ? "bg-ink text-white"
                         : "text-muted hover:text-ink hover:bg-surface"
@@ -290,7 +290,7 @@ export default function LeadFollowUpPage() {
                 ))}
               </div>
 
-              <div className="mt-5 rounded-[16px] border border-line/80 bg-surface/40 p-5">
+              <div className="mt-5 rounded-[1rem] border border-line/80 bg-surface/40 p-5">
                 <div className="flex items-center justify-between text-xs font-mono text-muted border-b border-line/50 pb-2">
                   <span>Subject: {CADENCE_STEPS[activeStepTab].subject}</span>
                   <span className="text-emerald-700 font-semibold">{CADENCE_STEPS[activeStepTab].status}</span>
@@ -298,7 +298,7 @@ export default function LeadFollowUpPage() {
                 <p className="mt-4 text-sm leading-relaxed text-ink font-serif italic">
                   &ldquo;{CADENCE_STEPS[activeStepTab].snippet}&rdquo;
                 </p>
-                <div className="mt-5 pt-3 border-t border-line/50 flex items-center justify-between text-[11px] text-muted">
+                <div className="mt-5 pt-3 border-t border-line/50 flex items-center justify-between text-[0.6875rem] text-muted">
                   <span>Sent via your agency domain: hello@youragency.com</span>
                   <span className="text-lane font-mono">Auto-pause if prospect books discovery call</span>
                 </div>
@@ -308,7 +308,7 @@ export default function LeadFollowUpPage() {
         </section>
 
         {/* Lead FAQ */}
-        <section className="mx-auto max-w-[960px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-ink">
               Lead Follow-Up FAQ
@@ -332,7 +332,7 @@ export default function LeadFollowUpPage() {
             ].map((faq, idx) => (
               <div
                 key={faq.q}
-                className="rounded-[14px] border border-line bg-white p-5 cursor-pointer"
+                className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
                 <div className="flex items-center justify-between">
@@ -351,8 +351,8 @@ export default function LeadFollowUpPage() {
         </section>
 
         {/* CTA Banner */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16">
-          <div className="rounded-[24px] border border-line bg-ink p-8 text-center text-white sm:p-14">
+        <section className="mx-auto max-w-[75rem] px-6 py-16">
+          <div className="rounded-[1.5rem] border border-line bg-ink p-8 text-center text-white sm:p-14">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Turn your inbound leads into booked meetings.
             </h2>
@@ -362,14 +362,14 @@ export default function LeadFollowUpPage() {
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
-                className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
+                className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
                 <span>Book a Lead Cadence Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
-                className="inline-flex h-11 items-center rounded-[8px] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
+                className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
                 <span>View Retainer Options</span>
               </Link>

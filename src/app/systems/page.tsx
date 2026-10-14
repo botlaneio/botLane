@@ -88,13 +88,13 @@ export default function SystemsPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <LaneMarkCycle size={14} />
             <span>Systems Comparison & Blueprint</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,68px)] font-bold leading-[1] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1] tracking-[-0.04em] text-ink">
             Three autonomous engines. <br className="hidden sm:inline" />
             Compared side-by-side.
           </h1>
@@ -107,14 +107,14 @@ export default function SystemsPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book a Systems Walkthrough</span>
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
+              className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
               <span>View Retainer Pricing</span>
             </Link>
@@ -122,21 +122,21 @@ export default function SystemsPage() {
         </section>
 
         {/* Detailed 3 Systems Cards */}
-        <section className="mx-auto max-w-[1200px] px-6 pb-20">
+        <section className="mx-auto max-w-[75rem] px-6 pb-20">
           <div className="grid gap-8 lg:grid-cols-3">
             {SYSTEMS_MATRIX.map((sys) => {
               const Icon = sys.icon;
               return (
                 <div
                   key={sys.id}
-                  className="flex flex-col justify-between rounded-[24px] border border-line bg-white p-7 shadow-[0_12px_36px_rgba(20,20,40,0.04)] transition hover:border-lane/30 hover:shadow-[0_20px_50px_rgba(20,20,40,0.08)]"
+                  className="flex flex-col justify-between rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_0.75rem_2.25rem_rgba(20,20,40,0.04)] transition hover:border-lane/30 hover:shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.08)]"
                 >
                   <div>
                     <div className="flex items-center justify-between border-b border-line pb-4">
                       <div className="font-mono text-xs font-semibold tracking-wider text-lane">
                         {sys.num} · {sys.shape}
                       </div>
-                      <span className="flex size-9 items-center justify-center rounded-[10px] bg-surface text-ink">
+                      <span className="flex size-9 items-center justify-center rounded-[0.625rem] bg-surface text-ink">
                         <Icon size={18} />
                       </span>
                     </div>
@@ -150,7 +150,7 @@ export default function SystemsPage() {
 
                     <div className="mt-6 space-y-4 border-t border-line/60 pt-5 text-xs">
                       <div>
-                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[10px]">
+                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[0.625rem]">
                           Trigger & Cadence
                         </div>
                         <div className="mt-1 text-ink-2 leading-snug">
@@ -159,14 +159,14 @@ export default function SystemsPage() {
                       </div>
 
                       <div>
-                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[10px]">
+                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[0.625rem]">
                           Connected Sources
                         </div>
                         <div className="mt-1.5 flex flex-wrap gap-1.5">
                           {sys.inputs.map((tool) => (
                             <span
                               key={tool}
-                              className="rounded-[6px] bg-surface px-2 py-0.5 font-mono text-[10px] text-ink"
+                              className="rounded-[0.375rem] bg-surface px-2 py-0.5 font-mono text-[0.625rem] text-ink"
                             >
                               {tool}
                             </span>
@@ -175,7 +175,7 @@ export default function SystemsPage() {
                       </div>
 
                       <div>
-                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[10px]">
+                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[0.625rem]">
                           Prepared Deliverable
                         </div>
                         <div className="mt-1 text-ink-2 leading-snug">
@@ -184,7 +184,7 @@ export default function SystemsPage() {
                       </div>
 
                       <div>
-                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[10px]">
+                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[0.625rem]">
                           Human Approval Step
                         </div>
                         <div className="mt-1 flex items-center gap-1.5 text-emerald-700 font-medium">
@@ -194,7 +194,7 @@ export default function SystemsPage() {
                       </div>
 
                       <div>
-                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[10px]">
+                        <div className="font-mono font-semibold uppercase tracking-wider text-muted text-[0.625rem]">
                           Agency Impact
                         </div>
                         <div className="mt-1 font-mono font-medium text-lane">
@@ -207,7 +207,7 @@ export default function SystemsPage() {
                   <div className="mt-8 border-t border-line pt-5">
                     <Link
                       href={sys.href}
-                      className="group flex w-full items-center justify-center gap-2 rounded-[10px] bg-surface py-3 text-xs font-semibold text-ink transition hover:bg-ink hover:text-white"
+                      className="group flex w-full items-center justify-center gap-2 rounded-[0.625rem] bg-surface py-3 text-xs font-semibold text-ink transition hover:bg-ink hover:text-white"
                     >
                       <span>Deep Dive: {sys.title}</span>
                       <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
@@ -220,7 +220,7 @@ export default function SystemsPage() {
         </section>
 
         {/* Full Side-by-Side Comparison Matrix Table */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Technical Matrix
@@ -233,7 +233,7 @@ export default function SystemsPage() {
             </p>
           </div>
 
-          <div className="mt-10 overflow-x-auto rounded-[20px] border border-line bg-white shadow-sm">
+          <div className="mt-10 overflow-x-auto rounded-[1.25rem] border border-line bg-white shadow-sm">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
                 <tr className="border-b border-line bg-surface/60 font-mono text-xs text-muted">
@@ -292,8 +292,8 @@ export default function SystemsPage() {
         </section>
 
         {/* Cross-System Coordination Architecture */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20">
-          <div className="rounded-[28px] border border-line bg-white p-8 sm:p-12 shadow-[0_8px_30px_rgba(20,20,40,0.04)]">
+        <section className="mx-auto max-w-[75rem] px-6 py-20">
+          <div className="rounded-[1.75rem] border border-line bg-white p-8 sm:p-12 shadow-[0_0.5rem_1.875rem_rgba(20,20,40,0.04)]">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-lane">
                 <ShieldCheck size={14} />
@@ -309,21 +309,21 @@ export default function SystemsPage() {
             </div>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-3">
-              <div className="rounded-[16px] border border-line/70 bg-surface/50 p-5">
+              <div className="rounded-[1rem] border border-line/70 bg-surface/50 p-5">
                 <div className="font-mono text-xs font-semibold text-ink">01 · Shared Tone Model</div>
                 <p className="mt-2 text-xs leading-relaxed text-muted">
                   Lane writes with the exact same vocabulary in client reports as in lead outreach and reminder emails.
                 </p>
               </div>
 
-              <div className="rounded-[16px] border border-line/70 bg-surface/50 p-5">
+              <div className="rounded-[1rem] border border-line/70 bg-surface/50 p-5">
                 <div className="font-mono text-xs font-semibold text-ink">02 · Central Approval Desk</div>
                 <p className="mt-2 text-xs leading-relaxed text-muted">
                   Review reports, new lead drafts, and pending invoices in one unified 60-second morning queue.
                 </p>
               </div>
 
-              <div className="rounded-[16px] border border-line/70 bg-surface/50 p-5">
+              <div className="rounded-[1rem] border border-line/70 bg-surface/50 p-5">
                 <div className="font-mono text-xs font-semibold text-ink">03 · Cross-Signal Protection</div>
                 <p className="mt-2 text-xs leading-relaxed text-muted">
                   If a client has an overdue invoice in Loop, Lane can flag their weekly report with an internal note.
@@ -337,7 +337,7 @@ export default function SystemsPage() {
               </span>
               <Link
                 href="/demo"
-                className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-black"
+                className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-black"
               >
                 <span>Book a Demo Call</span>
                 <ArrowRight size={13} />

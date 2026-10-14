@@ -17,11 +17,11 @@ interface AuthShellProps {
 export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtitle, form, aside }: AuthShellProps) {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-white to-surface/70">
-      <header className="mx-auto flex w-full max-w-[1200px] items-center justify-between px-6 py-5">
+      <header className="mx-auto flex w-full max-w-[75rem] items-center justify-between px-6 py-5">
         <Link href="/" aria-label="BotLane home" className="text-ink">
-          <Wordmark className="text-[22px]" />
+          <Wordmark className="text-[1.375rem]" />
         </Link>
-        <div className="text-[13px] text-muted">
+        <div className="text-[0.8125rem] text-muted">
           <span className="hidden sm:inline">{switchPrompt} </span>
           <Link href={switchHref} className="inline-flex items-center gap-1 font-medium text-lane hover:underline">
             {switchLabel}
@@ -30,14 +30,14 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-[1200px] flex-1 content-start gap-12 px-6 pt-6 pb-20 landscape:content-center lg:content-stretch lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:gap-16 lg:pt-8 lg:pb-10 xl:gap-20">
+      <main className="mx-auto grid w-full max-w-[75rem] flex-1 content-start gap-12 px-6 pt-6 pb-20 landscape:content-center lg:content-stretch lg:grid-cols-[minmax(0,27.5rem)_minmax(0,1fr)] lg:gap-16 lg:pt-8 lg:pb-10 xl:gap-20">
         <div className="self-start landscape:self-center">
-          <h1 className="text-[clamp(34px,4vw,48px)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">{title}</h1>
-          <p className="mt-3 max-w-[420px] text-base leading-[1.5] text-muted">{subtitle}</p>
+          <h1 className="text-[clamp(2.125rem,4vw,3rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">{title}</h1>
+          <p className="mt-3 max-w-[26.25rem] text-base leading-[1.5] text-muted">{subtitle}</p>
           <div className="mt-7">{form}</div>
         </div>
         {/* A soft panel that runs the full height, so tall screens have no blank band. */}
-        <div className="relative hidden rounded-[28px] border border-line/70 bg-gradient-to-br from-surface to-white lg:flex lg:items-center lg:justify-center lg:px-12 lg:py-16">
+        <div className="relative hidden rounded-[1.75rem] border border-line/70 bg-gradient-to-br from-surface to-white lg:flex lg:items-center lg:justify-center lg:px-12 lg:py-16">
           {aside}
         </div>
       </main>

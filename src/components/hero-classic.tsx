@@ -74,7 +74,7 @@ export function HeroClassic({ onOpenDemo }: HeroProps) {
 
   return (
     <>
-      <section className="mx-auto flex max-w-[1200px] flex-col items-center px-6 pt-20 pb-10 text-center">
+      <section className="mx-auto flex max-w-[75rem] flex-col items-center px-6 pt-20 pb-10 text-center">
         <motion.div
           variants={entranceContainer}
           initial="hidden"
@@ -91,13 +91,13 @@ export function HeroClassic({ onOpenDemo }: HeroProps) {
           </motion.div>
           <motion.h1
             variants={headlineVariants}
-            className="max-w-[900px] text-[clamp(48px,7.4vw,104px)] leading-[0.96] font-semibold tracking-[-0.05em] text-balance"
+            className="max-w-[56.25rem] text-[clamp(3rem,7.4vw,6.5rem)] leading-[0.96] font-semibold tracking-[-0.05em] text-balance"
           >
             Meet your newest hire.
           </motion.h1>
           <motion.p
             variants={subtextVariants}
-            className="mt-6 max-w-[640px] text-xl leading-[1.45] tracking-[-0.01em] text-muted text-balance"
+            className="mt-6 max-w-[40rem] text-xl leading-[1.45] tracking-[-0.01em] text-muted text-balance"
           >
             Agent Lane takes recurring operational traffic off your plate: client reporting, lead
             follow-up, and invoice follow-up. You just approve.
@@ -109,7 +109,7 @@ export function HeroClassic({ onOpenDemo }: HeroProps) {
             <button
               type="button"
               onClick={handleBookDemo}
-              className="flex h-12 cursor-pointer items-center justify-center rounded-[8px] bg-lane-strong px-6 text-base font-medium text-white shadow-sm transition-all hover:bg-lane-ink active:scale-[0.98]"
+              className="flex h-12 cursor-pointer items-center justify-center rounded-[0.5rem] bg-lane-strong px-6 text-base font-medium text-white shadow-sm transition-all hover:bg-lane-ink active:scale-[0.98]"
             >
               Book a demo
             </button>
@@ -120,7 +120,7 @@ export function HeroClassic({ onOpenDemo }: HeroProps) {
           <motion.div
             variants={actionsVariants}
             aria-hidden="true"
-            className="mt-10 font-mono text-[11px] uppercase tracking-[0.12em] text-faint"
+            className="mt-10 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-faint"
           >
             Scroll ↓
           </motion.div>

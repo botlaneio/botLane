@@ -62,13 +62,13 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faq" className="relative mx-auto max-w-[960px] px-6 py-24 sm:py-32">
+    <section id="faq" className="relative mx-auto max-w-[60rem] px-6 py-24 sm:py-32">
       <div className="text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Clear Answers</span>
         </div>
-        <h2 className="mt-4 text-[clamp(32px,4.2vw,52px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+        <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           Frequently asked questions.
         </h2>
         <p className="mt-3 text-base text-muted">
@@ -82,9 +82,9 @@ export function FaqSection() {
           return (
             <div
               key={faq.question}
-              className={`overflow-hidden rounded-[16px] border transition-all duration-200 ${
+              className={`overflow-hidden rounded-[1rem] border transition-all duration-200 ${
                 isOpen
-                  ? "border-lane/30 bg-white shadow-[0_8px_24px_rgba(20,20,40,0.04)]"
+                  ? "border-lane/30 bg-white shadow-[0_0.5rem_1.5rem_rgba(20,20,40,0.04)]"
                   : "border-line bg-white/70 hover:border-line hover:bg-white"
               }`}
             >

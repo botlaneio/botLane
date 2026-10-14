@@ -32,16 +32,16 @@ const PRINCIPLES = [
 
 export function About() {
   return (
-    <section id="about" className="mx-auto max-w-[1200px] scroll-mt-24 px-6 pt-24 pb-20">
+    <section id="about" className="mx-auto max-w-[75rem] scroll-mt-24 px-6 pt-24 pb-20">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
         {/* Left Column: Mission & Manifesto */}
         <div className="lg:col-span-5">
           <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-lane">
-            <span className="size-[7px] rounded-full bg-lane" />
+            <span className="size-[0.4375rem] rounded-full bg-lane" />
             <span>About BotLane</span>
           </div>
 
-          <h2 className="mt-4 text-[clamp(32px,4vw,52px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+          <h2 className="mt-4 text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
             Not a chatbot. <br />
             An AI coworker who prepares the work.
           </h2>
@@ -73,7 +73,7 @@ export function About() {
             return (
               <div
                 key={item.title}
-                className="rounded-[20px] border border-line bg-surface/40 p-6 transition-all hover:bg-white hover:shadow-[0_12px_32px_rgba(20,20,40,0.05)]"
+                className="rounded-[1.25rem] border border-line bg-surface/40 p-6 transition-all hover:bg-white hover:shadow-[0_0.75rem_2rem_rgba(20,20,40,0.05)]"
               >
                 <div className="flex size-10 items-center justify-center rounded-xl bg-white shadow-sm border border-line/60 text-ink">
                   <Icon size={20} className="text-lane" />
@@ -81,7 +81,7 @@ export function About() {
                 <h3 className="mt-4 text-base font-semibold text-ink tracking-tight">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-muted">
+                <p className="mt-2 text-[0.8125rem] leading-relaxed text-muted">
                   {item.description}
                 </p>
               </div>

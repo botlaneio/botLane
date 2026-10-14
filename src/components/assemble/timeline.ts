@@ -492,11 +492,12 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     demoAnim?.pause();
     demoAnim = null;
   };
-  const NAV_OFFSET = 64;
+  // The header is 4rem tall: 64px, or 51.2px on phones where the root font is 80%.
+  const navOffset = () => 4 * (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16);
   const scrollRange = () => stage.offsetHeight - window.innerHeight;
   const scrollT = () => {
     const total = scrollRange();
-    return total > 0 ? ((-stage.getBoundingClientRect().top + NAV_OFFSET) / total) * TOTAL : 0;
+    return total > 0 ? ((-stage.getBoundingClientRect().top + navOffset()) / total) * TOTAL : 0;
   };
 
   // Scroll sets a target; the story eases toward it each frame, so wheel steps glide
@@ -559,7 +560,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     demoOn = false;
     userTouched = true;
     if (range > 0 && window.scrollY > 0) {
-      const top = stage.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
+      const top = stage.getBoundingClientRect().top + window.scrollY - navOffset();
       window.scrollTo({ top: top + (goal / TOTAL) * range, behavior: "smooth" });
     } else {
       glideTo(goal, 1100);
@@ -604,7 +605,7 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     // scattered start as soon as the visitor scrolled.
     timers.push(
       setTimeout(() => {
-        const atTop = stage.getBoundingClientRect().top <= NAV_OFFSET;
+        const atTop = stage.getBoundingClientRect().top <= navOffset();
         if (alive && !userTouched && t === 0 && atTop && window.scrollY === 0) void demo();
       }, 2200),
     );

@@ -226,12 +226,12 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative mx-auto grid max-w-[1200px] items-center gap-14 px-6 pt-14 pb-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10 lg:pt-20 lg:pb-24">
+    <section className="relative mx-auto grid max-w-[75rem] items-center gap-14 px-6 pt-14 pb-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10 lg:pt-20 lg:pb-24">
       {/* Left: copy */}
       <motion.div variants={stagger} initial="hidden" animate="visible">
         <motion.div
           variants={rise}
-          className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-ink shadow-2xs"
+          className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink shadow-2xs"
         >
           <LaneMarkCycle size={15} />
           <span>Agent Lane</span>
@@ -239,7 +239,7 @@ export function Hero() {
 
         <motion.h1
           variants={rise}
-          className="mt-6 text-[clamp(48px,6.4vw,84px)] font-semibold leading-[0.95] tracking-[-0.055em] text-ink"
+          className="mt-6 text-[clamp(3rem,6.4vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-ink"
         >
           Meet your
           <br />
@@ -248,7 +248,7 @@ export function Hero() {
 
         <motion.p
           variants={rise}
-          className="mt-6 max-w-[480px] text-lg leading-[1.5] tracking-[-0.015em] text-muted sm:text-xl"
+          className="mt-6 max-w-[30rem] text-lg leading-[1.5] tracking-[-0.015em] text-muted sm:text-xl"
         >
           Agent Lane takes recurring operational traffic off your plate—drafting client reports,
           nudging leads, and collecting receivables. Three dedicated lanes;{" "}
@@ -258,14 +258,14 @@ export function Hero() {
         <motion.div variants={rise} className="mt-8 flex flex-wrap items-center gap-3.5">
           <Link
             href="/demo"
-            className="group inline-flex h-[52px] min-w-[200px] items-center justify-center gap-2.5 rounded-xl bg-ink px-7 text-base font-medium text-white shadow-[0_8px_20px_-8px_rgba(0,0,0,0.45)] transition hover:bg-black active:scale-[0.98]"
+            className="group inline-flex h-[3.25rem] min-w-[12.5rem] items-center justify-center gap-2.5 rounded-xl bg-ink px-7 text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.5rem_rgba(0,0,0,0.45)] transition hover:bg-black active:scale-[0.98]"
           >
             <span>Book a demo</span>
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
             href="/how-it-works"
-            className="inline-flex h-[52px] items-center justify-center gap-2.5 rounded-xl border border-line bg-white px-6 text-base font-medium text-ink shadow-2xs transition hover:bg-surface active:scale-[0.98]"
+            className="inline-flex h-[3.25rem] items-center justify-center gap-2.5 rounded-xl border border-line bg-white px-6 text-base font-medium text-ink shadow-2xs transition hover:bg-surface active:scale-[0.98]"
           >
             <Play className="h-3.5 w-3.5 fill-ink" />
             <span>See how it works</span>
@@ -274,18 +274,18 @@ export function Hero() {
 
         <motion.div
           variants={rise}
-          className="mt-9 grid max-w-[520px] grid-cols-3 gap-4 text-[13px] leading-snug text-muted sm:text-sm"
+          className="mt-9 grid max-w-[32.5rem] grid-cols-3 gap-4 text-[0.8125rem] leading-snug text-muted sm:text-sm"
         >
           <div className="flex items-start gap-2.5">
             <span className="mt-1.5 size-2 shrink-0 rounded-full bg-lane" />
             <span>Zero manual spreadsheets</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <ShieldCheck className="mt-0.5 size-[18px] shrink-0 text-ok" />
+            <ShieldCheck className="mt-0.5 size-[1.125rem] shrink-0 text-ok" />
             <span>100% human approval gated</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <Clock className="mt-0.5 size-[18px] shrink-0 text-muted" />
+            <Clock className="mt-0.5 size-[1.125rem] shrink-0 text-muted" />
             <span>Average SLA &lt; 1 second</span>
           </div>
         </motion.div>
@@ -296,21 +296,21 @@ export function Hero() {
         initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.95, delay: 0.25, ease: EASING }}
-        className="relative lg:[perspective:1800px]"
+        className="relative lg:[perspective:112.5rem]"
       >
         <div className="relative lg:[transform:rotateY(-7deg)_rotateX(3deg)] lg:[transform-style:preserve-3d]">
           {/* Ghost windows behind */}
           <div
             aria-hidden
-            className="absolute inset-0 -translate-x-6 translate-y-5 rounded-[22px] border border-line/70 bg-white/60 shadow-[0_20px_50px_-20px_rgba(20,20,40,0.12)]"
+            className="absolute inset-0 -translate-x-6 translate-y-5 rounded-[1.375rem] border border-line/70 bg-white/60 shadow-[0_1.25rem_3.125rem_-1.25rem_rgba(20,20,40,0.12)]"
           />
           <div
             aria-hidden
-            className="absolute inset-0 -translate-x-3 translate-y-2.5 rounded-[22px] border border-line/80 bg-white/80"
+            className="absolute inset-0 -translate-x-3 translate-y-2.5 rounded-[1.375rem] border border-line/80 bg-white/80"
           />
 
           {/* Main window */}
-          <div className="relative overflow-hidden rounded-[22px] border border-line bg-white shadow-[0_40px_80px_-30px_rgba(20,20,40,0.22)]">
+          <div className="relative overflow-hidden rounded-[1.375rem] border border-line bg-white shadow-[0_2.5rem_5rem_-1.875rem_rgba(20,20,40,0.22)]">
             {/* Chrome */}
             <div className="flex items-center justify-between border-b border-line bg-surface/60 px-5 py-3.5">
               <div className="flex items-center gap-4">
@@ -319,9 +319,9 @@ export function Hero() {
                   <span className="size-2.5 rounded-full bg-neutral-300" />
                   <span className="size-2.5 rounded-full bg-neutral-300" />
                 </div>
-                <span className="text-[13px] text-muted">workspace.lane.ai</span>
+                <span className="text-[0.8125rem] text-muted">workspace.lane.ai</span>
               </div>
-              <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted">
+              <span className="flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-wider text-muted">
                 <span className="size-2 rounded-full bg-emerald-500" />
                 <span>Auto-preview</span>
               </span>
@@ -330,7 +330,7 @@ export function Hero() {
             <div className="flex">
               {/* Icon rail */}
               <div className="hidden flex-col items-center gap-3 border-r border-line px-3 py-5 sm:flex">
-                <span className="flex size-9 items-center justify-center rounded-[10px] text-faint">
+                <span className="flex size-9 items-center justify-center rounded-[0.625rem] text-faint">
                   <Bell className="size-4" />
                 </span>
                 {SYSTEMS.map((sys) => {
@@ -342,9 +342,9 @@ export function Hero() {
                       type="button"
                       onClick={() => pick(sys.id)}
                       aria-label={sys.tab}
-                      className={`flex size-9 items-center justify-center rounded-[10px] border transition ${
+                      className={`flex size-9 items-center justify-center rounded-[0.625rem] border transition ${
                         isActive
-                          ? "border-lane bg-lane text-white shadow-[0_6px_14px_-6px_rgba(224,49,43,0.7)]"
+                          ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
                           : "border-line bg-white text-muted hover:text-ink"
                       }`}
                     >
@@ -352,7 +352,7 @@ export function Hero() {
                     </button>
                   );
                 })}
-                <span className="flex size-9 items-center justify-center rounded-[10px] border border-line bg-white text-faint">
+                <span className="flex size-9 items-center justify-center rounded-[0.625rem] border border-line bg-white text-faint">
                   <LayoutGrid className="size-4" />
                 </span>
               </div>
@@ -368,9 +368,9 @@ export function Hero() {
                         key={sys.id}
                         type="button"
                         onClick={() => pick(sys.id)}
-                        className={`inline-flex items-center gap-2 rounded-[10px] border px-3 py-1.5 text-xs font-medium transition ${
+                        className={`inline-flex items-center gap-2 rounded-[0.625rem] border px-3 py-1.5 text-xs font-medium transition ${
                           isActive
-                            ? "border-lane bg-lane text-white shadow-[0_6px_14px_-6px_rgba(224,49,43,0.7)]"
+                            ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
                             : "border-line bg-white text-muted hover:text-ink"
                         }`}
                       >
@@ -384,9 +384,9 @@ export function Hero() {
                   })}
                 </div>
 
-                <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_200px]">
+                <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_12.5rem]">
                   {/* Draft card */}
-                  <div className="rounded-[16px] border border-line bg-white p-4 shadow-2xs">
+                  <div className="rounded-[1rem] border border-line bg-white p-4 shadow-2xs">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={active.id}
@@ -397,15 +397,15 @@ export function Hero() {
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-start gap-3">
-                            <span className="mt-0.5 shrink-0 rounded-md bg-surface px-2 py-1 font-mono text-[10px] text-ink">
+                            <span className="mt-0.5 shrink-0 rounded-md bg-surface px-2 py-1 font-mono text-[0.625rem] text-ink">
                               System {active.index}
                             </span>
                             <div>
                               <div className="text-sm font-semibold text-ink">{active.title}</div>
-                              <div className="text-[11px] text-muted">{active.meta}</div>
+                              <div className="text-[0.6875rem] text-muted">{active.meta}</div>
                             </div>
                           </div>
-                          <span className="flex shrink-0 items-center gap-1.5 font-mono text-[10px] text-ok">
+                          <span className="flex shrink-0 items-center gap-1.5 font-mono text-[0.625rem] text-ok">
                             <span className="size-1.5 rounded-full bg-ok" />
                             {approved ? "SENT" : "LIVE"}
                           </span>
@@ -415,14 +415,14 @@ export function Hero() {
                           {active.kpis.map((kpi) => (
                             <div
                               key={kpi.label}
-                              className="rounded-[12px] border border-line bg-white px-2 py-3 text-center"
+                              className="rounded-[0.75rem] border border-line bg-white px-2 py-3 text-center"
                             >
                               <div className="text-base font-semibold tracking-tight text-ink tabular-nums sm:text-lg">
                                 {countUp(kpi.value, countProgress)}
                               </div>
-                              <div className="text-[10px] text-muted sm:text-[11px]">{kpi.label}</div>
+                              <div className="text-[0.625rem] text-muted sm:text-[0.6875rem]">{kpi.label}</div>
                               <div
-                                className={`mt-1 text-[10px] font-medium transition-opacity duration-300 sm:text-[11px] ${
+                                className={`mt-1 text-[0.625rem] font-medium transition-opacity duration-300 sm:text-[0.6875rem] ${
                                   kpi.tone === "ok" ? "text-ok" : "text-ink-2"
                                 } ${countProgress < 1 ? "opacity-0" : "opacity-100"}`}
                               >
@@ -436,7 +436,7 @@ export function Hero() {
                           {active.lines.map((line, i) => (
                             <li key={line} className="relative flex items-start gap-2">
                               <span
-                                className={`mt-[7px] size-1 shrink-0 rounded-full bg-lane transition-opacity ${
+                                className={`mt-[0.4375rem] size-1 shrink-0 rounded-full bg-lane transition-opacity ${
                                   lines[i].length ? "opacity-100" : "opacity-0"
                                 }`}
                               />
@@ -457,7 +457,7 @@ export function Hero() {
 
                   {/* Intake + approve */}
                   <div className="flex flex-col gap-3">
-                    <div className="flex-1 rounded-[16px] border border-line bg-surface/50 p-3">
+                    <div className="flex-1 rounded-[1rem] border border-line bg-surface/50 p-3">
                       <div className="flex items-center justify-between px-1">
                         <span className="text-xs font-semibold text-ink">Data intake</span>
                         <span
@@ -472,14 +472,14 @@ export function Hero() {
                           return (
                             <div
                               key={feed.name}
-                              className={`flex items-center gap-2.5 rounded-[10px] border border-line bg-white p-2 transition-all duration-300 ${
+                              className={`flex items-center gap-2.5 rounded-[0.625rem] border border-line bg-white p-2 transition-all duration-300 ${
                                 synced ? "opacity-100" : "translate-y-1 opacity-40"
                               }`}
                             >
                               <span className="flex size-7 shrink-0 items-center justify-center">{feed.logo}</span>
                               <div className="min-w-0 flex-1">
-                                <div className="truncate text-[11px] font-medium text-ink">{feed.name}</div>
-                                <div className="truncate text-[10px] text-muted">{feed.detail}</div>
+                                <div className="truncate text-[0.6875rem] font-medium text-ink">{feed.name}</div>
+                                <div className="truncate text-[0.625rem] text-muted">{feed.detail}</div>
                               </div>
                               <Check
                                 className={`size-3 shrink-0 text-ok transition-all duration-300 ${
@@ -494,7 +494,7 @@ export function Hero() {
 
                     <div className="relative">
                       {approved ? (
-                        <div className="flex h-11 items-center justify-center gap-2 rounded-[12px] border border-emerald-200 bg-emerald-50 text-xs font-medium text-emerald-800">
+                        <div className="flex h-11 items-center justify-center gap-2 rounded-[0.75rem] border border-emerald-200 bg-emerald-50 text-xs font-medium text-emerald-800">
                           <CheckCircle2 className="size-4 text-emerald-600" />
                           <span>Approved & sent</span>
                         </div>
@@ -502,7 +502,7 @@ export function Hero() {
                         <button
                           type="button"
                           onClick={approve}
-                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[12px] bg-ink text-xs font-medium text-white shadow-sm transition hover:bg-black active:scale-[0.98] ${
+                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-ink text-xs font-medium text-white shadow-sm transition hover:bg-black active:scale-[0.98] ${
                             cursorPressed && inIntro && introRunning ? "scale-[0.97] bg-black" : ""
                           }`}
                         >
@@ -519,7 +519,7 @@ export function Hero() {
                           width="18"
                           height="22"
                           viewBox="0 0 18 22"
-                          className="pointer-events-none absolute left-1/2 top-1/2 drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)]"
+                          className="pointer-events-none absolute left-1/2 top-1/2 drop-shadow-[0_2px_0.1875rem_rgba(0,0,0,0.25)]"
                           initial={{ x: 90, y: 80, opacity: 0 }}
                           animate={{
                             x: 4,

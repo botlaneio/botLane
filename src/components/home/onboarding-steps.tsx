@@ -36,13 +36,13 @@ const STEPS = [
 
 export function OnboardingSteps() {
   return (
-    <section className="relative mx-auto max-w-[1200px] px-6 py-24 sm:py-32 border-t border-line">
+    <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32 border-t border-line">
       <div className="mx-auto max-w-3xl text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Frictionless Onboarding</span>
         </div>
-        <h2 className="mt-4 text-[clamp(32px,4.2vw,56px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+        <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           How getting started works. <br />
           No 6-week enterprise deployment.
         </h2>
@@ -62,19 +62,19 @@ export function OnboardingSteps() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative flex flex-col justify-between rounded-[22px] border border-line bg-white p-7 shadow-[0_4px_24px_rgba(20,20,40,0.04)]"
+              className="relative flex flex-col justify-between rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)]"
             >
               <div>
                 <div className="flex items-center justify-between border-b border-line pb-4">
                   <span className="font-mono text-2xl font-bold tracking-tight text-ink">
                     {s.step}
                   </span>
-                  <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-lane">
+                  <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane">
                     {s.phase}
                   </span>
                 </div>
 
-                <div className="mt-6 flex size-10 items-center justify-center rounded-[10px] bg-surface text-ink">
+                <div className="mt-6 flex size-10 items-center justify-center rounded-[0.625rem] bg-surface text-ink">
                   <Icon size={20} />
                 </div>
 
@@ -86,7 +86,7 @@ export function OnboardingSteps() {
                 </p>
               </div>
 
-              <div className="mt-8 rounded-[10px] bg-surface/70 px-3 py-2 text-[11px] font-mono text-ink-2">
+              <div className="mt-8 rounded-[0.625rem] bg-surface/70 px-3 py-2 text-[0.6875rem] font-mono text-ink-2">
                 {s.detail}
               </div>
             </motion.div>
@@ -97,7 +97,7 @@ export function OnboardingSteps() {
       <div className="mt-12 text-center">
         <Link
           href="/demo"
-          className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-black"
+          className="inline-flex items-center gap-2 rounded-[0.5rem] bg-ink px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-black"
         >
           <span>Schedule an Onboarding Walkthrough (20 mins)</span>
           <ArrowRight size={14} />

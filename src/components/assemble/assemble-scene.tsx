@@ -110,7 +110,7 @@ export function AssembleScene() {
   return (
     <div className="bl-sticky">
       {/* which system + caption */}
-      <div className="mx-auto w-full max-w-[1200px] flex-none px-4 pt-6 md:px-6 md:pt-8">
+      <div className="mx-auto w-full max-w-[75rem] flex-none px-4 pt-6 md:px-6 md:pt-8">
         <div className={`bl-sysrow ${mono} flex gap-5 text-xs uppercase tracking-[0.06em]`}>
           {SYSTEM_LABELS.map((label, k) => (
             <span key={label} data-sys={k} style={{ opacity: 0.35 }}>{label}</span>
@@ -119,8 +119,8 @@ export function AssembleScene() {
         <div className="relative mt-3 h-36 md:h-24">
           {CAPTIONS.map((c, i) => (
             <div key={c.title} data-cap={i} className="absolute inset-x-0 top-0" style={i ? { opacity: 0 } : undefined}>
-              <div className="text-[clamp(28px,3.4vw,44px)] font-semibold tracking-[-0.035em]">{c.title}</div>
-              <div className="mt-1.5 text-[15px] leading-snug text-muted md:text-[17px]">{c.sub}</div>
+              <div className="text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold tracking-[-0.035em]">{c.title}</div>
+              <div className="mt-1.5 text-[0.9375rem] leading-snug text-muted md:text-[1.0625rem]">{c.sub}</div>
             </div>
           ))}
         </div>

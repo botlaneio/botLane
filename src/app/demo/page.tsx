@@ -54,13 +54,13 @@ export default function DemoPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-16 pb-14 text-center sm:pt-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-16 pb-14 text-center sm:pt-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <LaneMarkCycle size={14} />
             <span>20-Minute Operational Walkthrough</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,64px)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
             See Lane run on your agency&apos;s numbers.
           </h1>
 
@@ -71,8 +71,8 @@ export default function DemoPage() {
         </section>
 
         {/* Interactive Booking Container */}
-        <section className="mx-auto max-w-[1100px] px-6 pb-24">
-          <div className="overflow-hidden rounded-[28px] border border-line bg-white shadow-[0_20px_60px_rgba(20,20,40,0.06)]">
+        <section className="mx-auto max-w-[68.75rem] px-6 pb-24">
+          <div className="overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-[0_1.25rem_3.75rem_rgba(20,20,40,0.06)]">
             {isBooked ? (
               /* Success / Confirmation State */
               <div className="p-8 text-center sm:p-16">
@@ -89,7 +89,7 @@ export default function DemoPage() {
                   <strong className="text-ink">{AVAILABLE_DAYS[selectedDay].full} at {selectedTime}</strong> ({timezone}).
                 </p>
 
-                <div className="mx-auto mt-8 max-w-md rounded-[18px] border border-line bg-surface/60 p-5 text-left text-xs space-y-2.5">
+                <div className="mx-auto mt-8 max-w-md rounded-[1.125rem] border border-line bg-surface/60 p-5 text-left text-xs space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-muted">Host:</span>
                     <span className="font-semibold text-ink">Alex Vance (Head of Solutions)</span>
@@ -115,13 +115,13 @@ export default function DemoPage() {
                   <button
                     type="button"
                     onClick={() => setIsBooked(false)}
-                    className="rounded-[8px] border border-line bg-white px-4 py-2 text-xs font-semibold text-ink hover:bg-surface"
+                    className="rounded-[0.5rem] border border-line bg-white px-4 py-2 text-xs font-semibold text-ink hover:bg-surface"
                   >
                     Reschedule or change time
                   </button>
                   <Link
                     href="/systems"
-                    className="inline-flex items-center gap-1.5 rounded-[8px] bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-black"
+                    className="inline-flex items-center gap-1.5 rounded-[0.5rem] bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-black"
                   >
                     <span>Explore Systems while you wait</span>
                     <ArrowRight size={13} />
@@ -153,13 +153,13 @@ export default function DemoPage() {
                           key={d.date}
                           type="button"
                           onClick={() => setSelectedDay(idx)}
-                          className={`flex flex-col items-center rounded-[12px] p-2.5 text-center transition border ${
+                          className={`flex flex-col items-center rounded-[0.75rem] p-2.5 text-center transition border ${
                             selectedDay === idx
                               ? "border-lane bg-lane/5 text-lane font-semibold shadow-sm"
                               : "border-line bg-surface/50 text-muted hover:border-line hover:text-ink hover:bg-white"
                           }`}
                         >
-                          <span className="font-mono text-[11px] uppercase">{d.day}</span>
+                          <span className="font-mono text-[0.6875rem] uppercase">{d.day}</span>
                           <span className="mt-1 font-mono text-sm font-bold text-ink">{d.date.split(" ")[1]}</span>
                         </button>
                       ))}
@@ -177,7 +177,7 @@ export default function DemoPage() {
                           key={slot}
                           type="button"
                           onClick={() => setSelectedTime(slot)}
-                          className={`rounded-[10px] py-2.5 px-3 text-xs font-mono font-medium transition border ${
+                          className={`rounded-[0.625rem] py-2.5 px-3 text-xs font-mono font-medium transition border ${
                             selectedTime === slot
                               ? "border-ink bg-ink text-white"
                               : "border-line bg-white text-ink hover:bg-surface"
@@ -196,7 +196,7 @@ export default function DemoPage() {
                       id="tz-select"
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
-                      className="mt-1.5 w-full rounded-[8px] border border-line bg-surface/50 px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
+                      className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-surface/50 px-3 py-2 text-xs text-ink focus:outline-none focus:border-lane"
                     >
                       <option value="America/New_York (EST)">America/New York (EST / UTC-4)</option>
                       <option value="America/Chicago (CST)">America/Chicago (CST / UTC-5)</option>
@@ -208,8 +208,8 @@ export default function DemoPage() {
                   </div>
 
                   {/* Walkthrough Agenda */}
-                  <div className="mt-8 rounded-[16px] bg-surface/60 p-4.5 border border-line/60 text-xs text-muted space-y-2">
-                    <div className="font-semibold text-ink text-[11px] uppercase font-mono">
+                  <div className="mt-8 rounded-[1rem] bg-surface/60 p-4.5 border border-line/60 text-xs text-muted space-y-2">
+                    <div className="font-semibold text-ink text-[0.6875rem] uppercase font-mono">
                       What happens on this call:
                     </div>
                     <div className="flex items-start gap-2">
@@ -242,7 +242,7 @@ export default function DemoPage() {
                         placeholder="Alex Morgan"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
                       />
                     </div>
 
@@ -254,7 +254,7 @@ export default function DemoPage() {
                         placeholder="alex@acmemarketing.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
                       />
                     </div>
 
@@ -265,7 +265,7 @@ export default function DemoPage() {
                         placeholder="Acme Growth Agency"
                         value={agency}
                         onChange={(e) => setAgency(e.target.value)}
-                        className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
+                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3.5 py-2.5 text-xs text-ink placeholder:text-muted/60 focus:outline-none focus:border-lane"
                       />
                     </div>
 
@@ -274,7 +274,7 @@ export default function DemoPage() {
                       <select
                         value={clients}
                         onChange={(e) => setClients(e.target.value)}
-                        className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
+                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
                       >
                         <option value="1-9 clients">1 – 9 clients (Boutique)</option>
                         <option value="10-25 clients">10 – 25 clients (Mid-Market)</option>
@@ -288,7 +288,7 @@ export default function DemoPage() {
                       <select
                         value={primaryInterest}
                         onChange={(e) => setPrimaryInterest(e.target.value)}
-                        className="mt-1.5 w-full rounded-[8px] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
+                        className="mt-1.5 w-full rounded-[0.5rem] border border-line bg-white px-3 py-2.5 text-xs text-ink focus:outline-none focus:border-lane"
                       >
                         <option value="Full Suite (All 3 Systems)">Full Suite (All 3 Systems)</option>
                         <option value="System 01: Client Reporting">System 01: Client Reporting</option>
@@ -299,14 +299,14 @@ export default function DemoPage() {
 
                     <button
                       type="submit"
-                      className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-[8px] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black"
+                      className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-ink text-xs font-semibold text-white shadow-sm transition hover:bg-black"
                     >
                       <Sparkles size={14} className="text-lane" />
                       <span>Confirm Demo for {selectedTime}</span>
                     </button>
                   </form>
 
-                  <div className="mt-6 border-t border-line/60 pt-4 flex items-center gap-2 text-[11px] text-muted">
+                  <div className="mt-6 border-t border-line/60 pt-4 flex items-center gap-2 text-[0.6875rem] text-muted">
                     <ShieldCheck size={14} className="text-emerald-600 shrink-0" />
                     <span>Zero spam. No high-pressure sales pitch. Just honest software.</span>
                   </div>

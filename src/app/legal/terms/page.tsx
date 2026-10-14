@@ -8,7 +8,7 @@ export default function TermsOfServicePage() {
     <>
       <SiteHeader />
       <main className="min-h-screen bg-bg">
-        <div className="mx-auto max-w-[860px] px-6 py-16 sm:py-24">
+        <div className="mx-auto max-w-[53.75rem] px-6 py-16 sm:py-24">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-ink transition mb-8"
@@ -17,12 +17,12 @@ export default function TermsOfServicePage() {
             <span>Back to BotLane home</span>
           </Link>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <FileText size={12} />
             <span>Legal Documentation</span>
           </div>
 
-          <h1 className="mt-4 text-[clamp(32px,4.5vw,52px)] font-bold tracking-tight text-ink">
+          <h1 className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-bold tracking-tight text-ink">
             Terms of Service
           </h1>
 
@@ -30,7 +30,7 @@ export default function TermsOfServicePage() {
             Effective Date: October 13, 2026 · Version 2.4
           </div>
 
-          <div className="mt-8 rounded-[16px] border border-line bg-white p-4.5 text-xs text-ink-2 shadow-sm">
+          <div className="mt-8 rounded-[1rem] border border-line bg-white p-4.5 text-xs text-ink-2 shadow-sm">
             <strong className="text-ink">Operational Governance Notice:</strong> BotLane provides software that assists in the
             preparation, calculation, and drafting of business communications. By using the Service, you acknowledge that you or
             an authorized member of your team retains ultimate editorial discretion over all client reports, lead replies, and payment
@@ -131,7 +131,7 @@ export default function TermsOfServicePage() {
               <p className="mt-2 text-muted">
                 Questions about these Terms may be directed to:
               </p>
-              <div className="mt-3 rounded-[12px] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
+              <div className="mt-3 rounded-[0.75rem] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
                 BotLane LLC · Legal Department<br />
                 Email: legal@botlane.io<br />
                 Address: 548 Market St, Suite 89201, San Francisco, CA 94104

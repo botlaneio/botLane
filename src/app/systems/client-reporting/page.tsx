@@ -39,7 +39,7 @@ export default function ClientReportingPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Top Breadcrumb */}
-        <div className="mx-auto max-w-[1200px] px-6 pt-10">
+        <div className="mx-auto max-w-[75rem] px-6 pt-10">
           <div className="flex items-center gap-2 text-xs font-mono text-muted">
             <Link href="/systems" className="hover:text-lane transition">
               Systems
@@ -50,13 +50,13 @@ export default function ClientReportingPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+        <section className="relative mx-auto max-w-[75rem] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <Layers size={13} />
             <span>System 01 · The Funnel</span>
           </div>
 
-          <h1 className="mt-5 text-[clamp(36px,5vw,68px)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
+          <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
             Client reporting, solved. <br />
             Ten ad channels in. One report out.
           </h1>
@@ -69,7 +69,7 @@ export default function ClientReportingPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
-              className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
+              className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-ink px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-black"
             >
               <Sparkles size={15} className="text-lane" />
               <span>Book a Live Reporting Demo</span>
@@ -77,7 +77,7 @@ export default function ClientReportingPage() {
             </Link>
             <Link
               href="/pricing"
-              className="inline-flex h-11 items-center rounded-[8px] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
+              className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
               <span>$600/mo Standalone Retainer</span>
             </Link>
@@ -103,13 +103,13 @@ export default function ClientReportingPage() {
         </section>
 
         {/* 3D Workflow Hero: Assemble Scene */}
-        <section className="relative mx-auto max-w-[1200px] px-6 pb-20">
+        <section className="relative mx-auto max-w-[75rem] px-6 pb-20">
           <div className="mb-4 text-center">
             <span className="font-mono text-xs uppercase tracking-wider text-muted">
               Interactive 3D Assembly · Funnel Architecture
             </span>
           </div>
-          <div className="overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_16px_50px_rgba(20,20,40,0.06)]">
+          <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
             <AssembleController>
               <AssembleScene />
             </AssembleController>
@@ -117,7 +117,7 @@ export default function ClientReportingPage() {
         </section>
 
         {/* How It Works (Step-by-Step Pipeline) */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               The Funnel Pipeline
@@ -155,7 +155,7 @@ export default function ClientReportingPage() {
             ].map((col) => (
               <div
                 key={col.step}
-                className="rounded-[18px] border border-line bg-white p-6 shadow-sm"
+                className="rounded-[1.125rem] border border-line bg-white p-6 shadow-sm"
               >
                 <div className="font-mono text-2xl font-bold text-ink">{col.step}</div>
                 <h3 className="mt-4 text-base font-semibold text-ink">{col.title}</h3>
@@ -166,7 +166,7 @@ export default function ClientReportingPage() {
         </section>
 
         {/* Tools It Connects */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
           <div className="text-center max-w-2xl mx-auto">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Supported Sources
@@ -187,9 +187,9 @@ export default function ClientReportingPage() {
               return (
                 <div
                   key={tool.name}
-                  className="rounded-[16px] border border-line bg-white p-5 text-center shadow-sm"
+                  className="rounded-[1rem] border border-line bg-white p-5 text-center shadow-sm"
                 >
-                  <div className="mx-auto flex size-12 items-center justify-center rounded-[12px] bg-surface p-2.5">
+                  <div className="mx-auto flex size-12 items-center justify-center rounded-[0.75rem] bg-surface p-2.5">
                     <Icon size={26} />
                   </div>
                   <div className="mt-4 text-sm font-semibold text-ink">{tool.name}</div>
@@ -201,7 +201,7 @@ export default function ClientReportingPage() {
         </section>
 
         {/* What You Approve & Example Output (Interactive Component) */}
-        <section className="mx-auto max-w-[1200px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
           <div className="max-w-xl">
             <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
               Human-in-the-Loop Artifact
@@ -215,10 +215,10 @@ export default function ClientReportingPage() {
           </div>
 
           {/* Interactive Workspace Preview */}
-          <div className="mt-10 rounded-[24px] border border-line bg-white p-6 sm:p-8 shadow-[0_16px_50px_rgba(20,20,40,0.06)]">
+          <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-6 sm:p-8 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
               <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-[8px] bg-lane/10 text-lane">
+                <span className="flex size-9 items-center justify-center rounded-[0.5rem] bg-lane/10 text-lane">
                   <BarChart3 size={18} />
                 </span>
                 <div>
@@ -235,7 +235,7 @@ export default function ClientReportingPage() {
                 <button
                   type="button"
                   onClick={() => setApproved(!approved)}
-                  className={`inline-flex items-center gap-2 rounded-[8px] px-4 py-2 text-xs font-semibold transition ${
+                  className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
                     approved
                       ? "bg-emerald-600 text-white shadow-sm"
                       : "bg-ink text-white hover:bg-black"
@@ -258,7 +258,7 @@ export default function ClientReportingPage() {
                   <button
                     type="button"
                     onClick={() => setApproved(false)}
-                    className="flex size-8 items-center justify-center rounded-[8px] border border-line text-muted hover:text-ink"
+                    className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line text-muted hover:text-ink"
                     title="Reset simulation"
                   >
                     <RotateCcw size={14} />
@@ -272,26 +272,26 @@ export default function ClientReportingPage() {
               <div className="lg:col-span-8 space-y-6">
                 {/* 3 Metric Cards */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-[14px] border border-line/70 bg-surface/60 p-4">
-                    <div className="font-mono text-[10px] uppercase text-muted">Total Ad Spend</div>
+                  <div className="rounded-[0.875rem] border border-line/70 bg-surface/60 p-4">
+                    <div className="font-mono text-[0.625rem] uppercase text-muted">Total Ad Spend</div>
                     <div className="mt-1.5 font-mono text-xl font-bold text-ink">$8,420</div>
-                    <div className="mt-1 text-[11px] text-emerald-600 font-medium">-4.2% pacing vs target</div>
+                    <div className="mt-1 text-[0.6875rem] text-emerald-600 font-medium">-4.2% pacing vs target</div>
                   </div>
-                  <div className="rounded-[14px] border border-line/70 bg-surface/60 p-4">
-                    <div className="font-mono text-[10px] uppercase text-muted">Blended Leads</div>
+                  <div className="rounded-[0.875rem] border border-line/70 bg-surface/60 p-4">
+                    <div className="font-mono text-[0.625rem] uppercase text-muted">Blended Leads</div>
                     <div className="mt-1.5 font-mono text-xl font-bold text-ink">142</div>
-                    <div className="mt-1 text-[11px] text-emerald-600 font-medium">+18.3% WoW</div>
+                    <div className="mt-1 text-[0.6875rem] text-emerald-600 font-medium">+18.3% WoW</div>
                   </div>
-                  <div className="rounded-[14px] border border-line/70 bg-surface/60 p-4">
-                    <div className="font-mono text-[10px] uppercase text-muted">Effective CPA</div>
+                  <div className="rounded-[0.875rem] border border-line/70 bg-surface/60 p-4">
+                    <div className="font-mono text-[0.625rem] uppercase text-muted">Effective CPA</div>
                     <div className="mt-1.5 font-mono text-xl font-bold text-emerald-600">$59.29</div>
-                    <div className="mt-1 text-[11px] text-muted font-medium">Target: $65.00</div>
+                    <div className="mt-1 text-[0.6875rem] text-muted font-medium">Target: $65.00</div>
                   </div>
                 </div>
 
                 {/* Narrative Summary Generated by Lane */}
-                <div className="rounded-[16px] border border-line/80 bg-white p-5">
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-muted font-semibold">
+                <div className="rounded-[1rem] border border-line/80 bg-white p-5">
+                  <div className="font-mono text-[0.6875rem] uppercase tracking-wider text-muted font-semibold">
                     Lane Executive Commentary
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-ink-2">
@@ -301,15 +301,15 @@ export default function ClientReportingPage() {
                   </p>
                   <div className="mt-4 border-t border-line/50 pt-3 flex items-center justify-between text-xs text-muted">
                     <span>Cites: Google Ads API, Meta Marketing API, GA4</span>
-                    <span className="font-mono text-[10px] text-emerald-600 font-medium">Confidence: 99.4%</span>
+                    <span className="font-mono text-[0.625rem] text-emerald-600 font-medium">Confidence: 99.4%</span>
                   </div>
                 </div>
               </div>
 
               {/* Right Side: Delivery Details */}
-              <div className="lg:col-span-4 rounded-[16px] border border-line/70 bg-surface/50 p-5 flex flex-col justify-between">
+              <div className="lg:col-span-4 rounded-[1rem] border border-line/70 bg-surface/50 p-5 flex flex-col justify-between">
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-muted font-semibold">
+                  <div className="font-mono text-[0.6875rem] uppercase tracking-wider text-muted font-semibold">
                     Delivery Payload
                   </div>
                   <div className="mt-3 space-y-2.5 text-xs">
@@ -332,7 +332,7 @@ export default function ClientReportingPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 rounded-[10px] bg-white p-3 border border-line text-[11px] text-muted">
+                <div className="mt-6 rounded-[0.625rem] bg-white p-3 border border-line text-[0.6875rem] text-muted">
                   <ShieldCheck size={14} className="text-emerald-600 inline mr-1.5" />
                   No deliverable is ever dispatched until this specific approval button is clicked.
                 </div>
@@ -342,7 +342,7 @@ export default function ClientReportingPage() {
         </section>
 
         {/* Reporting FAQ */}
-        <section className="mx-auto max-w-[960px] px-6 py-20 border-t border-line">
+        <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-ink">
               Client Reporting FAQ
@@ -366,7 +366,7 @@ export default function ClientReportingPage() {
             ].map((faq, idx) => (
               <div
                 key={faq.q}
-                className="rounded-[14px] border border-line bg-white p-5 cursor-pointer"
+                className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
                 <div className="flex items-center justify-between">
@@ -385,8 +385,8 @@ export default function ClientReportingPage() {
         </section>
 
         {/* CTA Banner */}
-        <section className="mx-auto max-w-[1200px] px-6 py-16">
-          <div className="rounded-[24px] border border-line bg-ink p-8 text-center text-white sm:p-14">
+        <section className="mx-auto max-w-[75rem] px-6 py-16">
+          <div className="rounded-[1.5rem] border border-line bg-ink p-8 text-center text-white sm:p-14">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Automate your client reporting this Friday.
             </h2>
@@ -396,14 +396,14 @@ export default function ClientReportingPage() {
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
-                className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
+                className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
                 <span>Schedule a 20-min Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
-                className="inline-flex h-11 items-center rounded-[8px] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
+                className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
                 <span>View All Pricing Tiers</span>
               </Link>

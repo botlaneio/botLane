@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type Transition } from "motion/react";
 import { Bell, FileText, LayoutGrid, Mail, BarChart3, UserPlus, Send, CheckCheck } from "lucide-react";
 
 const windowClass =
-  "relative overflow-hidden rounded-[22px] border border-line bg-white shadow-[0_40px_80px_-30px_rgba(20,20,40,0.25)]";
+  "relative overflow-hidden rounded-[1.375rem] border border-line bg-white shadow-[0_2.5rem_5rem_-1.875rem_rgba(20,20,40,0.25)]";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -33,7 +33,7 @@ function Ghosts({ delay }: { delay: number }) {
         <motion.div
           key={i}
           aria-hidden
-          className={`absolute inset-0 rounded-[22px] border ${g.className}`}
+          className={`absolute inset-0 rounded-[1.375rem] border ${g.className}`}
           initial={reduce ? false : { x: 0, y: 0, opacity: 0 }}
           animate={{ x: g.x, y: g.y, opacity: 1 }}
           transition={{ duration: 0.8, delay: delay + i * 0.08, ease: EASE }}
@@ -51,7 +51,7 @@ function Rail({ active }: { active: number }) {
       {icons.map((Icon, i) => (
         <span
           key={i}
-          className={`flex size-9 items-center justify-center rounded-[10px] border ${
+          className={`flex size-9 items-center justify-center rounded-[0.625rem] border ${
             i === active ? "border-lane bg-lane text-white" : "border-line bg-white text-muted"
           }`}
         >
@@ -66,7 +66,7 @@ function Rail({ active }: { active: number }) {
 export function SignInIllustration() {
   const enter = useEntrance();
   return (
-    <div aria-hidden className="pointer-events-none w-full max-w-[540px] select-none py-8 [perspective:1600px]">
+    <div aria-hidden className="pointer-events-none w-full max-w-[33.75rem] select-none py-8 [perspective:100rem]">
       <motion.div {...enter({ opacity: 0, y: 40 }, 0.1, 0.9)}>
         <div className="relative [transform:rotateY(-14deg)_rotateX(6deg)_rotateZ(-4deg)] [transform-style:preserve-3d]">
           <Ghosts delay={0.6} />
@@ -77,21 +77,21 @@ export function SignInIllustration() {
                 <span className="size-2.5 rounded-full bg-neutral-300" />
                 <span className="size-2.5 rounded-full bg-neutral-300" />
               </div>
-              <span className="text-[13px] text-muted">workspace.lane.ai</span>
+              <span className="text-[0.8125rem] text-muted">workspace.lane.ai</span>
             </div>
             <div className="flex">
               <Rail active={0} />
               <div className="min-w-0 flex-1 p-5">
                 <motion.span
                   {...enter({ opacity: 0, x: -12 }, 0.5)}
-                  className="inline-flex items-center gap-2 rounded-[10px] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_6px_14px_-6px_rgba(224,49,43,0.7)]"
+                  className="inline-flex items-center gap-2 rounded-[0.625rem] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
                 >
                   <FileText className="size-3.5" />
                   Lane 01 · Reporting
                 </motion.span>
-                <motion.div {...enter({ opacity: 0, y: 12 }, 0.6)} className="mt-4 rounded-[16px] border border-line p-4">
+                <motion.div {...enter({ opacity: 0, y: 12 }, 0.6)} className="mt-4 rounded-[1rem] border border-line p-4">
                   <div className="text-sm font-semibold text-ink">Weekly Executive Synthesis</div>
-                  <div className="text-[11px] text-muted">Generated for Board & Client Leadership</div>
+                  <div className="text-[0.6875rem] text-muted">Generated for Board & Client Leadership</div>
                   <div className="mt-4 grid grid-cols-3 gap-2">
                     {[
                       ["4.21x", "ROAS", "+0.6x"],
@@ -101,11 +101,11 @@ export function SignInIllustration() {
                       <motion.div
                         key={label}
                         {...enter({ opacity: 0, y: 10, scale: 0.96 }, 0.8 + i * 0.1, 0.5)}
-                        className="rounded-[12px] border border-line px-2 py-3 text-center"
+                        className="rounded-[0.75rem] border border-line px-2 py-3 text-center"
                       >
                         <div className="text-lg font-semibold tracking-tight text-ink">{value}</div>
-                        <div className="text-[11px] text-muted">{label}</div>
-                        <div className="mt-1 text-[11px] font-medium text-ok">{delta}</div>
+                        <div className="text-[0.6875rem] text-muted">{label}</div>
+                        <div className="mt-1 text-[0.6875rem] font-medium text-ok">{delta}</div>
                       </motion.div>
                     ))}
                   </div>
@@ -116,7 +116,7 @@ export function SignInIllustration() {
                       "All assets reconciled and ready for sign-off.",
                     ].map((line, i) => (
                       <motion.li key={line} {...enter({ opacity: 0, x: -8 }, 1.1 + i * 0.1, 0.5)} className="flex items-start gap-2">
-                        <span className="mt-[7px] size-1 shrink-0 rounded-full bg-lane" />
+                        <span className="mt-[0.4375rem] size-1 shrink-0 rounded-full bg-lane" />
                         {line}
                       </motion.li>
                     ))}
@@ -165,26 +165,26 @@ const ACTIVITY = [
 export function SignUpIllustration() {
   const enter = useEntrance();
   return (
-    <div className="w-full max-w-[460px] select-none">
+    <div className="w-full max-w-[28.75rem] select-none">
       <ul className="space-y-6">
         {LANES.map((lane, i) => {
           const Icon = lane.icon;
           return (
             <motion.li key={lane.num} {...enter({ opacity: 0, x: -16 }, 0.1 + i * 0.12, 0.6)} className="flex items-start gap-5">
-              <span className={`flex size-12 shrink-0 items-center justify-center rounded-[14px] ${lane.tone}`}>
+              <span className={`flex size-12 shrink-0 items-center justify-center rounded-[0.875rem] ${lane.tone}`}>
                 <Icon className="size-5" />
               </span>
               <div>
                 <div className="text-xs text-muted">Lane {lane.num}</div>
                 <div className="text-base font-semibold tracking-[-0.01em] text-ink">{lane.title}</div>
-                <div className="mt-1 text-[13px] leading-snug text-muted">{lane.text}</div>
+                <div className="mt-1 text-[0.8125rem] leading-snug text-muted">{lane.text}</div>
               </div>
             </motion.li>
           );
         })}
       </ul>
 
-      <div aria-hidden className="pointer-events-none mt-12 pr-6 pb-8 pl-8 [perspective:1400px]">
+      <div aria-hidden className="pointer-events-none mt-12 pr-6 pb-8 pl-8 [perspective:87.5rem]">
         <motion.div {...enter({ opacity: 0, y: 40 }, 0.5, 0.9)}>
           <div className="relative [transform:rotateY(-14deg)_rotateX(6deg)_rotateZ(4deg)] [transform-style:preserve-3d]">
             <Ghosts delay={1} />
@@ -200,15 +200,15 @@ export function SignUpIllustration() {
                         <motion.div
                           key={row.title}
                           {...enter({ opacity: 0, y: 10 }, 0.9 + i * 0.12, 0.5)}
-                          className="flex items-center gap-3 rounded-[12px] border border-line p-3"
+                          className="flex items-center gap-3 rounded-[0.75rem] border border-line p-3"
                         >
                           <span className="flex size-8 items-center justify-center rounded-full bg-surface text-ink">
                             <Icon className="size-4" />
                           </span>
                           <div>
                             <div className="text-xs font-medium text-ink">{row.title}</div>
-                            <div className="text-[10px] text-muted">{row.who}</div>
-                            <div className="text-[10px] text-faint">{row.when}</div>
+                            <div className="text-[0.625rem] text-muted">{row.who}</div>
+                            <div className="text-[0.625rem] text-faint">{row.when}</div>
                           </div>
                         </motion.div>
                       );

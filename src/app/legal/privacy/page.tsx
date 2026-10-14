@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
     <>
       <SiteHeader />
       <main className="min-h-screen bg-bg">
-        <div className="mx-auto max-w-[860px] px-6 py-16 sm:py-24">
+        <div className="mx-auto max-w-[53.75rem] px-6 py-16 sm:py-24">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-ink transition mb-8"
@@ -19,12 +19,12 @@ export default function PrivacyPolicyPage() {
             <span>Back to BotLane home</span>
           </Link>
 
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <Lock size={12} />
             <span>Legal Documentation</span>
           </div>
 
-          <h1 className="mt-4 text-[clamp(32px,4.5vw,52px)] font-bold tracking-tight text-ink">
+          <h1 className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-bold tracking-tight text-ink">
             Privacy Policy
           </h1>
 
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
             Effective Date: October 13, 2026 · Version 2.4
           </div>
 
-          <div className="mt-8 rounded-[16px] border border-emerald-500/20 bg-emerald-500/5 p-4.5 flex items-start gap-3 text-xs text-ink-2">
+          <div className="mt-8 rounded-[1rem] border border-emerald-500/20 bg-emerald-500/5 p-4.5 flex items-start gap-3 text-xs text-ink-2">
             <ShieldCheck size={18} className="text-emerald-600 shrink-0 mt-0.5" />
             <div>
               <strong className="text-ink">Zero LLM Training Commitment:</strong> BotLane LLC does not use your agency&apos;s
@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
               <p className="mt-2 text-muted">
                 For questions regarding this policy or to submit a data erasure request, contact our Data Protection Officer:
               </p>
-              <div className="mt-3 rounded-[12px] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
+              <div className="mt-3 rounded-[0.75rem] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
                 BotLane LLC · Data Privacy Officer<br />
                 Email: privacy@botlane.io<br />
                 Address: 548 Market St, Suite 89201, San Francisco, CA 94104

@@ -99,14 +99,14 @@ const TOOLS: ToolItem[] = [
 
 export function ToolsSection() {
   return (
-    <section className="relative mx-auto max-w-[1200px] px-6 py-20 sm:py-28 border-t border-line">
+    <section className="relative mx-auto max-w-[75rem] px-6 py-20 sm:py-28 border-t border-line">
       <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-lane">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <span className="size-1.5 rounded-full bg-lane" />
             <span>Integrations Architecture</span>
           </div>
-          <h2 className="mt-3 text-[clamp(30px,4vw,50px)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+          <h2 className="mt-3 text-[clamp(1.875rem,4vw,3.125rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
             Works natively with your existing stack.
           </h2>
           <p className="mt-3 text-base text-muted sm:text-lg">
@@ -117,7 +117,7 @@ export function ToolsSection() {
 
         <Link
           href="/systems"
-          className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-4 py-2.5 text-xs font-semibold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition hover:border-lane/40 hover:text-lane"
+          className="inline-flex items-center gap-1.5 rounded-[0.5rem] border border-line bg-white px-4 py-2.5 text-xs font-semibold text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition hover:border-lane/40 hover:text-lane"
         >
           <span>See all 3 systems mapped</span>
           <ArrowRight size={13} />
@@ -134,14 +134,14 @@ export function ToolsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="group flex flex-col justify-between rounded-[16px] border border-line bg-white p-4.5 transition-all duration-200 hover:-translate-y-1 hover:border-lane/30 hover:shadow-[0_10px_24px_rgba(20,20,40,0.06)]"
+              className="group flex flex-col justify-between rounded-[1rem] border border-line bg-white p-4.5 transition-all duration-200 hover:-translate-y-1 hover:border-lane/30 hover:shadow-[0_0.625rem_1.5rem_rgba(20,20,40,0.06)]"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <div className="flex size-10 items-center justify-center rounded-[10px] border border-line/60 bg-surface/40 p-2 transition-transform duration-200 group-hover:scale-105">
+                  <div className="flex size-10 items-center justify-center rounded-[0.625rem] border border-line/60 bg-surface/40 p-2 transition-transform duration-200 group-hover:scale-105">
                     <Icon size={24} />
                   </div>
-                  <span className="inline-flex items-center gap-1 font-mono text-[10px] font-medium text-emerald-600">
+                  <span className="inline-flex items-center gap-1 font-mono text-[0.625rem] font-medium text-emerald-600">
                     <CheckCircle2 size={11} />
                     <span>Live</span>
                   </span>
@@ -150,12 +150,12 @@ export function ToolsSection() {
                 <div className="mt-4 font-medium text-ink tracking-tight text-sm">
                   {t.name}
                 </div>
-                <div className="mt-0.5 text-[11px] text-muted">
+                <div className="mt-0.5 text-[0.6875rem] text-muted">
                   {t.category}
                 </div>
               </div>
 
-              <div className="mt-4 border-t border-line/50 pt-2 flex items-center justify-between text-[10px] font-mono text-muted">
+              <div className="mt-4 border-t border-line/50 pt-2 flex items-center justify-between text-[0.625rem] font-mono text-muted">
                 <span className="truncate">{t.system}</span>
               </div>
             </motion.div>
@@ -163,7 +163,7 @@ export function ToolsSection() {
         })}
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-6 rounded-[14px] bg-surface/60 py-3.5 px-6 border border-line/60 text-xs text-muted">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-6 rounded-[0.875rem] bg-surface/60 py-3.5 px-6 border border-line/60 text-xs text-muted">
         <span className="font-medium text-ink">Zero custom code required.</span>
         <span>•</span>
         <span>15-minute standard onboarding</span>
