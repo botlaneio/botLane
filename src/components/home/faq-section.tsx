@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { FadeUp } from "@/components/motion/fade-up";
 
 interface FaqItem {
   question: string;
@@ -63,7 +64,7 @@ export function FaqSection() {
 
   return (
     <section id="faq" className="relative mx-auto max-w-[60rem] px-6 py-24 sm:py-32">
-      <div className="text-center">
+      <FadeUp className="text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Clear Answers</span>
@@ -74,9 +75,9 @@ export function FaqSection() {
         <p className="mt-3 text-base text-muted">
           Everything you need to know about permissions, data safety, and daily operations with Lane.
         </p>
-      </div>
+      </FadeUp>
 
-      <div className="mt-14 space-y-3.5">
+      <FadeUp delay={0.1} className="mt-14 space-y-3.5">
         {FAQS.map((faq, idx) => {
           const isOpen = openIndex === idx;
           return (
@@ -114,7 +115,7 @@ export function FaqSection() {
             </div>
           );
         })}
-      </div>
+      </FadeUp>
     </section>
   );
 }

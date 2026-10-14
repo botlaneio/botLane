@@ -1,5 +1,7 @@
 "use client";
 
+import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
 import { Check } from "lucide-react";
 
 interface PricingProps {
@@ -41,9 +43,10 @@ const TIERS = [
 ];
 
 export function Pricing({ onOpenDemo }: PricingProps) {
+  const reduce = useReducedMotion();
   return (
     <section id="pricing" className="mx-auto max-w-[75rem] scroll-mt-20 px-6 pt-16 pb-28">
-      <div className="mx-auto max-w-2xl text-center">
+      <FadeUp className="mx-auto max-w-2xl text-center">
         <div className="font-mono text-xs uppercase tracking-[0.08em] text-lane">
           Straightforward Investment
         </div>
@@ -53,13 +56,18 @@ export function Pricing({ onOpenDemo }: PricingProps) {
         <p className="mt-3 text-base text-muted">
           Lane replaces dozens of scattered hours each week with a clean 30-second approval tap.
         </p>
-      </div>
+      </FadeUp>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:max-w-4xl lg:mx-auto">
-        {TIERS.map((tier) => (
-          <div
+        {TIERS.map((tier, idx) => (
+          <motion.div
             key={tier.name}
-            className={`relative flex flex-col justify-between rounded-[1.375rem] border p-8 transition-all ${
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+            whileHover={{ y: -4, transition: { duration: 0.25, ease: EASE_OUT } }}
+            transition={{ duration: 0.7, delay: idx * 0.1, ease: EASE_OUT }}
+            className={`relative flex flex-col justify-between rounded-[1.375rem] border p-8 transition-[border-color,box-shadow] duration-300 hover:shadow-[0_1.25rem_2.75rem_rgba(20,20,40,0.08)] ${
               tier.highlight
                 ? "border-lane/40 bg-white shadow-[0_1rem_2.5rem_rgba(224,49,43,0.06)]"
                 : "border-line bg-surface/30"
@@ -107,7 +115,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
             >
               {tier.cta}
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

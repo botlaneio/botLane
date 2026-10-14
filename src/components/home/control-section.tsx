@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
 import { ShieldCheck, Eye, Lock, AlertTriangle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -40,9 +41,10 @@ const GUARDRAILS = [
 ];
 
 export function ControlSection() {
+  const reduce = useReducedMotion();
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-3xl text-center">
+      <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Sovereignty & Governance</span>
@@ -55,7 +57,7 @@ export function ControlSection() {
           Most automated tools make agencies nervous because they operate in the dark.
           Lane was engineered from day one with strict human-in-the-loop bilateral boundaries.
         </p>
-      </div>
+      </FadeUp>
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {GUARDRAILS.map((item, idx) => {
@@ -63,11 +65,12 @@ export function ControlSection() {
           return (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 16 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative flex flex-col justify-between rounded-[1.25rem] border border-line bg-white p-6 shadow-[0_0.25rem_1.25rem_rgba(20,20,40,0.03)] transition-all duration-200 hover:-translate-y-1 hover:border-lane/25 hover:shadow-[0_1rem_2.25rem_rgba(20,20,40,0.08)]"
+              viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+              whileHover={{ y: -4, transition: { duration: 0.25, ease: EASE_OUT } }}
+              transition={{ duration: 0.7, delay: idx * 0.08, ease: EASE_OUT }}
+              className="group relative flex flex-col justify-between rounded-[1.25rem] border border-line bg-white p-6 shadow-[0_0.25rem_1.25rem_rgba(20,20,40,0.03)] transition-[border-color,box-shadow] duration-300 hover:border-lane/25 hover:shadow-[0_1rem_2.25rem_rgba(20,20,40,0.08)]"
             >
               <div>
                 <div className="flex size-10 items-center justify-center rounded-[0.625rem] border border-line bg-surface text-ink transition-colors group-hover:border-lane/30 group-hover:bg-lane/5 group-hover:text-lane">

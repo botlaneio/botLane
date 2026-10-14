@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
 import { Link2, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -35,9 +36,10 @@ const STEPS = [
 ];
 
 export function OnboardingSteps() {
+  const reduce = useReducedMotion();
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32 border-t border-line">
-      <div className="mx-auto max-w-3xl text-center">
+      <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Frictionless Onboarding</span>
@@ -50,7 +52,7 @@ export function OnboardingSteps() {
           We onboard your agency in an afternoon. By Friday, your client reports and pending invoices
           are prepared automatically.
         </p>
-      </div>
+      </FadeUp>
 
       <div className="mt-16 grid gap-8 md:grid-cols-3">
         {STEPS.map((s, idx) => {
@@ -58,11 +60,12 @@ export function OnboardingSteps() {
           return (
             <motion.div
               key={s.step}
-              initial={{ opacity: 0, y: 16 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="relative flex flex-col justify-between rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)]"
+              viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+              whileHover={{ y: -4, transition: { duration: 0.25, ease: EASE_OUT } }}
+              transition={{ duration: 0.7, delay: idx * 0.1, ease: EASE_OUT }}
+              className="group relative flex flex-col justify-between rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.25rem_1.5rem_rgba(20,20,40,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-lane/25 hover:shadow-[0_1rem_2.25rem_rgba(20,20,40,0.08)]"
             >
               <div>
                 <div className="flex items-center justify-between border-b border-line pb-4">
@@ -74,7 +77,7 @@ export function OnboardingSteps() {
                   </span>
                 </div>
 
-                <div className="mt-6 flex size-10 items-center justify-center rounded-[0.625rem] bg-surface text-ink">
+                <div className="mt-6 flex size-10 items-center justify-center rounded-[0.625rem] bg-surface text-ink transition-colors duration-300 group-hover:bg-lane/10 group-hover:text-lane">
                   <Icon size={20} />
                 </div>
 
