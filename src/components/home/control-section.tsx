@@ -46,8 +46,8 @@ export function ControlSection() {
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
       <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-          <span className="size-1.5 rounded-full bg-lane" />
-          <span>Sovereignty & Governance</span>
+          <span className="size-1.5 rounded-full bg-lane-gradient" />
+          <span className="text-lane-gradient">Sovereignty & Governance</span>
         </div>
         <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           You stay in total control. <br />
@@ -117,7 +117,7 @@ export function ControlSection() {
             href="/legal/privacy"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-lane hover:underline"
           >
-            <span>Read security & privacy architecture</span>
+            <span className="text-lane-gradient">Read security & privacy architecture</span>
             <ArrowRight size={13} />
           </Link>
         </div>

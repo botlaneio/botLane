@@ -19,7 +19,7 @@ export function FinalCta() {
             <LaneMarkCycle size={16} />
             <span className="font-semibold text-ink">Hire Lane today</span>
             <span>·</span>
-            <span className="text-lane font-mono font-medium">Reclaim your agency&apos;s Fridays</span>
+            <span className="text-lane-gradient font-mono font-medium">Reclaim your agency&apos;s Fridays</span>
           </div>
 
           <h2 className="mt-6 text-[clamp(2.5rem,5.2vw,4.5rem)] font-bold leading-[0.98] tracking-[-0.045em] text-ink">

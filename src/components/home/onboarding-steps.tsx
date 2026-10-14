@@ -41,7 +41,7 @@ export function OnboardingSteps() {
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32 border-t border-line">
       <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-          <span className="size-1.5 rounded-full bg-lane" />
+          <span className="size-1.5 rounded-full bg-lane-gradient" />
           <span>Frictionless Onboarding</span>
         </div>
         <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
@@ -72,7 +72,7 @@ export function OnboardingSteps() {
                   <span className="font-mono text-2xl font-bold tracking-tight text-ink">
                     {s.step}
                   </span>
-                  <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane">
+                  <span className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane-gradient">
                     {s.phase}
                   </span>
                 </div>

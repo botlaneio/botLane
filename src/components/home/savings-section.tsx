@@ -25,8 +25,8 @@ export function SavingsSection() {
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
       <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-          <span className="size-1.5 rounded-full bg-lane" />
-          <span>Agency Return on Investment</span>
+          <span className="size-1.5 rounded-full bg-lane-gradient" />
+          <span className="text-lane-gradient">Agency Return on Investment</span>
         </div>
         <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           What Lane saves you. <br />
@@ -57,7 +57,7 @@ export function SavingsSection() {
                 <label htmlFor="client-slider" className="text-sm font-medium text-ink">
                   Active Retainer Clients
                 </label>
-                <span className="font-mono text-base font-semibold text-lane">
+                <span className="font-mono text-base font-semibold text-lane-gradient">
                   {clientCount} clients
                 </span>
               </div>
@@ -188,8 +188,8 @@ export function SavingsSection() {
                 <div className="text-[0.6875rem] text-muted mt-1">+ 2 months training, benefits, turnover risk</div>
               </div>
               <div className="rounded-[0.75rem] bg-lane/5 p-3.5 border border-lane/20">
-                <div className="text-xs font-medium text-lane">BotLane Full Suite</div>
-                <div className="mt-1 font-mono text-lg font-bold text-lane">$1,500 / mo</div>
+                <div className="text-xs font-medium text-lane"><span className="text-lane-gradient">BotLane Full Suite</span></div>
+                <div className="mt-1 font-mono text-lg font-bold text-lane"><span className="text-lane-gradient">$1,500 / mo</span></div>
                 <div className="text-[0.6875rem] text-muted mt-1">Live in 15 mins, zero payroll tax, 100% precision</div>
               </div>
             </div>

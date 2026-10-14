@@ -277,7 +277,7 @@ export function Hero() {
           className="mt-9 grid max-w-[32.5rem] grid-cols-3 gap-4 text-[0.8125rem] leading-snug text-muted sm:text-sm"
         >
           <div className="flex items-start gap-2.5">
-            <span className="mt-1.5 size-2 shrink-0 rounded-full bg-lane" />
+            <span className="mt-1.5 size-2 shrink-0 rounded-full bg-lane-gradient" />
             <span>Zero manual spreadsheets</span>
           </div>
           <div className="flex items-start gap-2.5">
@@ -344,7 +344,7 @@ export function Hero() {
                       aria-label={sys.tab}
                       className={`flex size-9 items-center justify-center rounded-[0.625rem] border transition ${
                         isActive
-                          ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
+                          ? "border-transparent bg-lane-gradient text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
                           : "border-line bg-white text-muted hover:text-ink"
                       }`}
                     >
@@ -370,7 +370,7 @@ export function Hero() {
                         onClick={() => pick(sys.id)}
                         className={`inline-flex items-center gap-2 rounded-[0.625rem] border px-3 py-1.5 text-xs font-medium transition ${
                           isActive
-                            ? "border-lane bg-lane text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
+                            ? "border-transparent bg-lane-gradient text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
                             : "border-line bg-white text-muted hover:text-ink"
                         }`}
                       >
@@ -436,7 +436,7 @@ export function Hero() {
                           {active.lines.map((line, i) => (
                             <li key={line} className="relative flex items-start gap-2">
                               <span
-                                className={`mt-[0.4375rem] size-1 shrink-0 rounded-full bg-lane transition-opacity ${
+                                className={`mt-[0.4375rem] size-1 shrink-0 rounded-full bg-lane-gradient transition-opacity ${
                                   lines[i].length ? "opacity-100" : "opacity-0"
                                 }`}
                               />

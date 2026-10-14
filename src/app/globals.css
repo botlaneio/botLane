@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-/* BotLane tokens — Apple-quiet: white, near-black, one accent taken from the logo's violet. */
+/* BotLane tokens — Apple-quiet: white, near-black, one accent taken from the logo:
+   its blue-to-coral gradient, with the violet midpoint as the solid fallback. */
 :root {
   --bl-bg: #ffffff;
   --bl-ink: #1d1d1f;
@@ -13,6 +14,7 @@
   --bl-red-strong: #4c23a0;
   --bl-red-ink: #3c1a80;
   --bl-red-tint: #efeafb;
+  --bl-gradient: linear-gradient(110deg, #1822c9 0%, #5a2cb8 40%, #b5306c 70%, #f2444f 100%);
   --bl-green: #1a7f37;
   --bl-green-tint: #e8f5ec;
 }
@@ -31,6 +33,32 @@
   --color-ok: var(--bl-green);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* The logo gradient as a fill, as text, and as a border on an empty overlay. */
+@utility bg-lane-gradient {
+  background-color: var(--bl-red);
+  background-image: var(--bl-gradient);
+  background-origin: border-box;
+}
+
+@utility text-lane-gradient {
+  color: var(--bl-red);
+  background-image: var(--bl-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-decoration-color: var(--bl-red);
+}
+
+@utility border-lane-gradient {
+  border-color: transparent;
+  background: var(--bl-gradient) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0);
 }
 
 html {

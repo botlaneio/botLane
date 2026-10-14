@@ -48,7 +48,7 @@ export function ThreeSystems() {
       <FadeUp className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div>
           <div className="font-mono text-xs font-semibold tracking-[0.08em] text-lane uppercase">
-            THREE SYSTEMS ARCHITECTURE
+            <span className="text-lane-gradient">THREE SYSTEMS ARCHITECTURE</span>
           </div>
           <h2 className="mt-3 max-w-[47.5rem] text-[clamp(2.125rem,4.4vw,3.75rem)] leading-[1.05] font-semibold tracking-[-0.045em] text-ink">
             Client reporting, lead follow-up, and invoice follow-up.
@@ -87,7 +87,7 @@ export function ThreeSystems() {
                 <div>
                   <div className="flex items-center justify-between border-b border-line/60 pb-4">
                     <div className="font-mono text-xs font-semibold tracking-[0.06em] text-lane">
-                      {s.num} · {s.shape}
+                      <span className="text-lane-gradient">{s.num} · {s.shape}</span>
                     </div>
                     <span className="flex size-8 items-center justify-center rounded-[0.5rem] bg-surface text-ink transition-colors group-hover:bg-lane/10 group-hover:text-lane">
                       <Icon size={16} />
