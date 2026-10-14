@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Wordmark } from "../wordmark";
+import { SiteFooter } from "../site-footer";
 
 interface AuthShellProps {
   switchPrompt: string;
@@ -41,17 +42,7 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
         </div>
       </main>
 
-      <footer className="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-4 border-t border-line/70 px-6 py-6 text-xs text-muted">
-        <div className="flex items-center gap-5">
-          <Wordmark className="text-lg text-ink" />
-          <span>© {new Date().getFullYear()} BotLane. All rights reserved.</span>
-        </div>
-        <nav className="flex items-center gap-6">
-          <Link href="/legal/terms" className="hover:text-ink">Terms</Link>
-          <Link href="/legal/privacy" className="hover:text-ink">Privacy</Link>
-          <Link href="/company/contact" className="hover:text-ink">Contact</Link>
-        </nav>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
