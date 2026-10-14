@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import { LaneMark } from "../lane-mark";
+import { HalftoneMark } from "../halftone-mark";
 import {
   APPROVALS,
   CAPTIONS,
@@ -214,11 +215,8 @@ export function AssembleScene() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-ink shadow-[0_6px_14px_rgba(20,20,40,0.18)]">
-                    <span className="flex h-[11px] w-[30px] items-center justify-center overflow-hidden rounded-md bg-ink-2">
-                      <span data-eye="" className="bl-eye" />
-                    </span>
-                  </span>
+                  {/* The botLane mark, its dots pulsing while Lane works. Sized in px like the rest of the board. */}
+                  <HalftoneMark size={50} detail="small" state="thinking" pace={1.3} className="-m-[3px] ![height:50px] ![width:50px]" />
                   <span className="relative h-6 w-[74px]">
                     <span data-lpw="" className="bl-pill bl-pill-red absolute top-0 right-0">Working</span>
                     <span data-lpr="" className="bl-pill absolute top-0 right-0" style={{ opacity: 0 }}>Ready</span>

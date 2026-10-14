@@ -167,9 +167,6 @@
   height: 40px; border: 1px solid #e0e0e4; border-radius: 8px; background: #fff; color: #1d1d1f;
   font-size: 14px; font-weight: 500; cursor: pointer;
 }
-.bl-eye {
-  width: 7px; height: 7px; border-radius: 50%; background: #ff453a; box-shadow: 0 0 6px 1px rgba(255, 69, 58, 0.8);
-}
 .bl-traveller { position: absolute; opacity: 0; }
 
 @media (max-width: 760px) {

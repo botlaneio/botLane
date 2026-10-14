@@ -592,13 +592,11 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     }
   };
 
-  let eyeAnim: JSAnimation | null = null;
   if (reduce) {
     setT(TOTAL);
   } else {
     setT(scrollT());
     target = t;
-    eyeAnim = A.animate(qa("[data-eye]"), { translateX: [-9, 9], duration: 1100, alternate: true, loop: true, ease: "inOutSine" });
     window.addEventListener("scroll", onScroll, { passive: true });
     // Only auto-play when the stage fills the screen untouched (it's the first thing seen).
     // Below the hero, scrolling drives it: an auto-played board would snap back to the
@@ -618,7 +616,6 @@ export function mountAssemble(root: HTMLElement, A: Anime): () => void {
     stopFollow();
     timers.forEach(clearTimeout);
     ro.disconnect();
-    eyeAnim?.revert();
     tl.revert();
     window.removeEventListener("scroll", onScroll);
     scrub.removeEventListener("input", onScrub);
