@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
 import Link from "next/link";
 import { ArrowRight, Layers, GitCommit, RotateCw } from "lucide-react";
 
@@ -41,9 +42,10 @@ const SYSTEMS = [
 ];
 
 export function ThreeSystems() {
+  const reduce = useReducedMotion();
   return (
     <section id="systems" className="mx-auto max-w-[75rem] scroll-mt-24 px-6 pt-24 pb-32">
-      <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <FadeUp className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div>
           <div className="font-mono text-xs font-semibold tracking-[0.08em] text-lane uppercase">
             THREE SYSTEMS ARCHITECTURE
@@ -64,20 +66,23 @@ export function ThreeSystems() {
           <span>Compare all 3 systems</span>
           <ArrowRight size={13} />
         </Link>
-      </div>
+      </FadeUp>
 
       <div className="mt-14 grid gap-6 md:grid-cols-3">
-        {SYSTEMS.map((s) => {
+        {SYSTEMS.map((s, idx) => {
           const Icon = s.icon;
           return (
             <motion.div
               key={s.id}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
+              initial={reduce ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+              whileHover={{ y: -5, transition: { duration: 0.25, ease: EASE_OUT } }}
+              transition={{ duration: 0.7, delay: idx * 0.1, ease: EASE_OUT }}
             >
               <Link
                 href={s.href}
-                className="group flex h-full flex-col justify-between rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.75rem_2rem_rgba(20,20,40,0.04)] transition-all duration-200 hover:border-lane/30 hover:shadow-[0_1.25rem_2.8125rem_rgba(20,20,40,0.08)]"
+                className="group flex h-full flex-col justify-between rounded-[1.375rem] border border-line bg-white p-7 shadow-[0_0.75rem_2rem_rgba(20,20,40,0.04)] transition-[border-color,box-shadow] duration-300 hover:border-lane/30 hover:shadow-[0_1.25rem_2.8125rem_rgba(20,20,40,0.08)]"
               >
                 <div>
                   <div className="flex items-center justify-between border-b border-line/60 pb-4">

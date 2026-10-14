@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
 import {
   GoogleAdsLogo,
   GoogleAnalyticsLogo,
@@ -98,9 +99,10 @@ const TOOLS: ToolItem[] = [
 ];
 
 export function ToolsSection() {
+  const reduce = useReducedMotion();
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-20 sm:py-28 border-t border-line">
-      <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <FadeUp className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <span className="size-1.5 rounded-full bg-lane" />
@@ -122,7 +124,7 @@ export function ToolsSection() {
           <span>See all 3 systems mapped</span>
           <ArrowRight size={13} />
         </Link>
-      </div>
+      </FadeUp>
 
       <div className="mt-12 grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-5">
         {TOOLS.map((t, idx) => {
@@ -130,15 +132,16 @@ export function ToolsSection() {
           return (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 12 }}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="group flex flex-col justify-between rounded-[1rem] border border-line bg-white p-4.5 transition-all duration-200 hover:-translate-y-1 hover:border-lane/30 hover:shadow-[0_0.625rem_1.5rem_rgba(20,20,40,0.06)]"
+              viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+              whileHover={{ y: -4, transition: { duration: 0.25, ease: EASE_OUT } }}
+              transition={{ duration: 0.6, delay: idx * 0.05, ease: EASE_OUT }}
+              className="group flex flex-col justify-between rounded-[1rem] border border-line bg-white p-4.5 transition-[border-color,box-shadow] duration-300 hover:border-lane/30 hover:shadow-[0_0.625rem_1.5rem_rgba(20,20,40,0.06)]"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <div className="flex size-10 items-center justify-center rounded-[0.625rem] border border-line/60 bg-surface/40 p-2 transition-transform duration-200 group-hover:scale-105">
+                  <div className="flex size-10 items-center justify-center rounded-[0.625rem] border border-line/60 bg-surface/40 p-2 transition-transform duration-200 group-hover:scale-110">
                     <Icon size={24} />
                   </div>
                   <span className="inline-flex items-center gap-1 font-mono text-[0.625rem] font-medium text-emerald-600">

@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
 import { LaneMarkCycle } from "@/components/lane-mark-cycle";
+import { FadeUp } from "@/components/motion/fade-up";
 
 export function FinalCta() {
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
-      <div className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-b from-white to-surface p-8 text-center shadow-[0_1.5rem_4.375rem_rgba(20,20,40,0.08)] sm:p-16 md:p-20">
+      <FadeUp className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-b from-white to-surface p-8 text-center shadow-[0_1.5rem_4.375rem_rgba(20,20,40,0.08)] sm:p-16 md:p-20">
         {/* Subtle lane background decoration */}
         <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 opacity-20">
           <div className="size-[31.25rem] rounded-full bg-radial from-lane/30 via-transparent to-transparent blur-3xl" />
@@ -62,7 +63,7 @@ export function FinalCta() {
             <span>30-day money-back guarantee</span>
           </div>
         </div>
-      </div>
+      </FadeUp>
     </section>
   );
 }

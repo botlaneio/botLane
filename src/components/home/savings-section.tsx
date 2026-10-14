@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock, DollarSign, TrendingUp, CheckCircle2 } from "lucide-react";
+import { FadeUp } from "@/components/motion/fade-up";
 
 export function SavingsSection() {
   const [clientCount, setClientCount] = useState<number>(15);
@@ -22,7 +23,7 @@ export function SavingsSection() {
 
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-3xl text-center">
+      <FadeUp className="mx-auto max-w-3xl text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
           <span className="size-1.5 rounded-full bg-lane" />
           <span>Agency Return on Investment</span>
@@ -35,11 +36,11 @@ export function SavingsSection() {
           Junior account managers spend 40% of their week formatting CSVs and copying email drafts.
           See the direct business impact when Lane handles preparation.
         </p>
-      </div>
+      </FadeUp>
 
       <div className="mt-14 grid gap-8 lg:grid-cols-12 lg:items-center">
         {/* Left: Interactive Controls */}
-        <div className="rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_0.5rem_1.875rem_rgba(20,20,40,0.04)] lg:col-span-5">
+        <FadeUp className="rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_0.5rem_1.875rem_rgba(20,20,40,0.04)] lg:col-span-5">
           <div className="flex items-center justify-between border-b border-line pb-4">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted">
               Configure Your Agency
@@ -135,13 +136,13 @@ export function SavingsSection() {
               </span>
             </div>
           </div>
-        </div>
+        </FadeUp>
 
         {/* Right: Big Impact Dossier */}
-        <div className="rounded-[1.5rem] border border-lane/20 bg-gradient-to-br from-white via-surface to-lane/[0.03] p-8 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)] lg:col-span-7">
+        <FadeUp delay={0.12} className="rounded-[1.5rem] border border-lane/20 bg-gradient-to-br from-white via-surface to-lane/[0.03] p-8 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)] lg:col-span-7">
           <div className="grid gap-6 sm:grid-cols-2">
             {/* Metric 1 */}
-            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm">
+            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-lane/25 hover:shadow-[0_0.75rem_1.75rem_rgba(20,20,40,0.07)]">
               <div className="flex items-center gap-2 text-xs font-mono text-muted uppercase">
                 <Clock size={14} className="text-lane" />
                 <span>Labor Reclaimed</span>
@@ -158,7 +159,7 @@ export function SavingsSection() {
             </div>
 
             {/* Metric 2 */}
-            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm">
+            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-lane/25 hover:shadow-[0_0.75rem_1.75rem_rgba(20,20,40,0.07)]">
               <div className="flex items-center gap-2 text-xs font-mono text-muted uppercase">
                 <TrendingUp size={14} className="text-emerald-600" />
                 <span>Monthly Billable Value</span>
@@ -208,7 +209,7 @@ export function SavingsSection() {
               <ArrowRight size={13} />
             </Link>
           </div>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
