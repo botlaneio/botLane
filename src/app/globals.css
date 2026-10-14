@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* BotLane tokens — Apple-quiet: white, near-black, one accent taken from the logo:
-   its blue-to-coral gradient, with the violet midpoint as the solid fallback. */
+   its near-black-to-violet gradient, with the violet end as the solid fallback. */
 :root {
   --bl-bg: #ffffff;
   --bl-ink: #1d1d1f;
@@ -13,11 +13,11 @@
   --bl-faint: #8e8e93;
   --bl-line: #ececef;
   --bl-surface: #f5f5f7;
-  --bl-red: #5a2cb8;
-  --bl-red-strong: #4c23a0;
-  --bl-red-ink: #3c1a80;
-  --bl-red-tint: #efeafb;
-  --bl-gradient: linear-gradient(110deg, #1822c9 0%, #5a2cb8 40%, #b5306c 70%, #f2444f 100%);
+  --bl-red: #6d3cf0;
+  --bl-red-strong: #5a2ed0;
+  --bl-red-ink: #3f1fa0;
+  --bl-red-tint: #efeafd;
+  --bl-gradient: linear-gradient(110deg, #121214 0%, #2a1d5c 55%, #6d3cf0 100%);
   --bl-green: #1a7f37;
   --bl-green-tint: #e8f5ec;
 }

@@ -87,10 +87,9 @@ function LaneGradient({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
     <defs>
       <linearGradient id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={0} x2={x2} y2={0}>
-        <stop offset="0" stopColor="#1822c9" />
-        <stop offset="0.4" stopColor="#5a2cb8" />
-        <stop offset="0.7" stopColor="#b5306c" />
-        <stop offset="1" stopColor="#f2444f" />
+        <stop offset="0" stopColor="#121214" />
+        <stop offset="0.55" stopColor="#2a1d5c" />
+        <stop offset="1" stopColor="#6d3cf0" />
       </linearGradient>
     </defs>
   );
@@ -393,7 +392,7 @@ export function AssembleScene() {
                     </div>
                   </div>
                 </div>
-                <div className={`${mono} self-start rounded-full bg-[#efeafb] px-2.5 py-1 text-[11px] tracking-[0.06em] uppercase`}><span className="text-lane-gradient">New lead</span></div>
+                <div className={`${mono} self-start rounded-full bg-[#efeafd] px-2.5 py-1 text-[11px] tracking-[0.06em] uppercase`}><span className="text-lane-gradient">New lead</span></div>
               </div>
             </Slot>
             {TOUCHES.map((t, i) => (

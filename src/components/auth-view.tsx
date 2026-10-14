@@ -468,7 +468,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                     <div className="text-[0.6875rem] text-muted">Human-in-the-loop safeguards</div>
                   </div>
                 </div>
-                <span className="font-mono text-[0.625rem] uppercase tracking-wider text-lane bg-[#efeafb] px-2.5 py-1 rounded-full font-medium">
+                <span className="font-mono text-[0.625rem] uppercase tracking-wider text-lane bg-[#efeafd] px-2.5 py-1 rounded-full font-medium">
                   Live simulator
                 </span>
               </div>
