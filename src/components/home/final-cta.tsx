@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
-import { LaneMarkCycle } from "@/components/lane-mark-cycle";
+import { HalftoneMark } from "@/components/halftone-mark";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export function FinalCta() {
@@ -16,7 +16,7 @@ export function FinalCta() {
 
         <div className="relative z-10 mx-auto max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1 text-xs text-muted shadow-sm">
-            <LaneMarkCycle size={16} />
+            <HalftoneMark size={16} detail="small" />
             <span className="font-semibold text-ink">Hire Lane today</span>
             <span>·</span>
             <span className="text-lane-gradient font-mono font-medium">Reclaim your agency&apos;s Fridays</span>

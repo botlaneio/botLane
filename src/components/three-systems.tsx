@@ -15,7 +15,7 @@ const SYSTEMS = [
     body: "Lane pulls your Google Ads, Meta, and CRM numbers into one weekly client-ready report. You approve it with 1 click, and it delivers on time.",
     highlight: "Multi-channel synthesis",
     icon: Layers,
-    stats: "3.5 hrs / client / mo saved",
+    stats: "Approved by you before it sends",
   },
   {
     id: "lead-follow-up",
@@ -23,10 +23,10 @@ const SYSTEMS = [
     shape: "LINE",
     href: "/systems/lead-follow-up",
     title: "Lead follow-up",
-    body: "Replies to inbound form leads in 180 seconds in your exact authentic voice, followed by calibrated nudges until the discovery meeting is booked.",
-    highlight: "Sub-3-min response time",
+    body: "Replies to inbound form leads within minutes, in your voice, followed by calibrated nudges until the discovery meeting is booked.",
+    highlight: "Fast first reply",
     icon: GitCommit,
-    stats: "+34% meeting booking rate",
+    stats: "Stops when they reply or book",
   },
   {
     id: "invoice-follow-up",
@@ -37,7 +37,7 @@ const SYSTEMS = [
     body: "Sends polite, graduated payment reminders that halt the instant funds clear in Stripe or QuickBooks. Zero awkward conversations with clients.",
     highlight: "Autonomous aging recovery",
     icon: RotateCw,
-    stats: "18 days faster AR collection",
+    stats: "Stops when the invoice is paid",
   },
 ];
 

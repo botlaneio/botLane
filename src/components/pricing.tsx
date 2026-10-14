@@ -2,47 +2,59 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { EASE_OUT, FadeUp } from "@/components/motion/fade-up";
+import Link from "next/link";
 import { Check } from "lucide-react";
-
-interface PricingProps {
-  onOpenDemo?: () => void;
-}
 
 const TIERS = [
   {
-    name: "Single System",
-    description: "Ideal if you want Lane to master one specific workflow first.",
+    name: "One Lane",
+    description: "Start with the workflow that costs you the most time.",
     price: "$600",
     period: "/month",
     features: [
-      "Choose Client reporting, Lead follow-up, or Invoices",
-      "Unlimited automated runs",
-      "1-click review & approval interface",
-      "Native integrations with your tools",
-      "Dedicated onboarding Slack / Teams channel",
+      "Choose Client reporting, Lead follow-up, or Invoice follow-up",
+      "Integration with your existing tools",
+      "Managed operation & monitoring",
+      "Human approval on every output",
+      "Email support",
     ],
     highlight: false,
-    cta: "Start with 1 system",
+    cta: "Start with one lane",
   },
   {
-    name: "Full Suite",
-    description: "All three core engines working in tandem for your business.",
+    name: "Two Lanes",
+    description: "Pair any two lanes and run them side by side.",
+    price: "$1,100",
+    period: "/month",
+    features: [
+      "Choose any two lanes",
+      "Integration with your existing tools",
+      "Managed operation & monitoring",
+      "Human approval on every output",
+      "Email support",
+    ],
+    highlight: false,
+    cta: "Start with two lanes",
+  },
+  {
+    name: "Agent Lane",
+    description: "All three lanes working together for your agency.",
     price: "$1,500",
     period: "/month",
     features: [
-      "All 3 systems: Funnel, Line, and Loop",
-      "Unified approval dashboard & notifications",
-      "Custom brand voice & tone alignment",
-      "Audit trail of every signal and send",
-      "Priority 24/7 dedicated support",
+      "Client reporting, Lead follow-up and Invoice follow-up",
+      "Integration with your existing tools",
+      "Managed operation & monitoring",
+      "Human approval on every output",
+      "Priority support",
     ],
     highlight: true,
-    badge: "Most popular",
-    cta: "Deploy Lane full suite",
+    badge: "All three lanes",
+    cta: "Get Agent Lane",
   },
 ];
 
-export function Pricing({ onOpenDemo }: PricingProps) {
+export function Pricing() {
   const reduce = useReducedMotion();
   return (
     <section id="pricing" className="mx-auto max-w-[75rem] scroll-mt-20 px-6 pt-16 pb-28">
@@ -54,11 +66,11 @@ export function Pricing({ onOpenDemo }: PricingProps) {
           One flat monthly fee. No hourly billing.
         </h2>
         <p className="mt-3 text-base text-muted">
-          Lane replaces dozens of scattered hours each week with a clean 30-second approval tap.
+          Start with one lane or run all three. Every price is a flat monthly retainer.
         </p>
       </FadeUp>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:max-w-4xl lg:mx-auto">
+      <div className="mt-12 grid gap-6 md:grid-cols-3">
         {TIERS.map((tier, idx) => (
           <motion.div
             key={tier.name}
@@ -104,9 +116,8 @@ export function Pricing({ onOpenDemo }: PricingProps) {
               </ul>
             </div>
 
-            <button
-              type="button"
-              onClick={onOpenDemo}
+            <Link
+              href="/pricing"
               className={`mt-8 flex h-11 w-full items-center justify-center rounded-[0.5rem] text-sm font-medium transition-all ${
                 tier.highlight
                   ? "bg-lane-gradient text-white hover:brightness-90 shadow-[0_0.25rem_0.875rem_rgba(90,44,184,0.2)]"
@@ -114,7 +125,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
               }`}
             >
               {tier.cta}
-            </button>
+            </Link>
           </motion.div>
         ))}
       </div>

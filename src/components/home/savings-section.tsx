@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Clock, DollarSign, TrendingUp, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Clock, TrendingUp, CheckCircle2 } from "lucide-react";
 import { FadeUp } from "@/components/motion/fade-up";
 
 export function SavingsSection() {
@@ -17,10 +17,6 @@ export function SavingsSection() {
   const totalHoursSaved = reportingHours + opsHours;
   const billableValueSaved = totalHoursSaved * hourlyRate;
 
-  // AR cashflow acceleration estimate (avg agency retainer $4,500/client)
-  const monthlyRetainerRevenue = clientCount * 4500;
-  const expeditedCashflow = Math.round(monthlyRetainerRevenue * 0.18);
-
   return (
     <section className="relative mx-auto max-w-[75rem] px-6 py-24 sm:py-32">
       <FadeUp className="mx-auto max-w-3xl text-center">
@@ -30,11 +26,11 @@ export function SavingsSection() {
         </div>
         <h2 className="mt-4 text-[clamp(2rem,4.2vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
           What Lane saves you. <br />
-          In unbilled hours and uncollected revenue.
+          In hours your team gets back.
         </h2>
         <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
-          Junior account managers spend 40% of their week formatting CSVs and copying email drafts.
-          See the direct business impact when Lane handles preparation.
+          Move the sliders to estimate the prep time Lane takes off your team.
+          The numbers are an estimate based on your inputs, not a guarantee.
         </p>
       </FadeUp>
 
@@ -46,7 +42,7 @@ export function SavingsSection() {
               Configure Your Agency
             </span>
             <span className="rounded-full bg-surface px-2.5 py-0.5 font-mono text-[0.6875rem] text-ink">
-              Live Simulator
+              Estimate
             </span>
           </div>
 
@@ -100,7 +96,7 @@ export function SavingsSection() {
               />
               <div className="mt-1 flex justify-between font-mono text-[0.625rem] text-muted">
                 <span>$90/hr</span>
-                <span>$175/hr (Industry Avg)</span>
+                <span>$175/hr</span>
                 <span>$300/hr</span>
               </div>
             </div>
@@ -125,37 +121,6 @@ export function SavingsSection() {
               <span className="font-mono font-medium text-ink">
                 ~{opsHours} hrs / mo
               </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <DollarSign size={13} className="text-ok" />
-                <span>Overdue AR accelerated into bank:</span>
-              </span>
-              <span className="font-mono font-medium text-emerald-600">
-                +${expeditedCashflow.toLocaleString()} / mo
-              </span>
-            </div>
-          </div>
-        </FadeUp>
-
-        {/* Right: Big Impact Dossier */}
-        <FadeUp delay={0.12} className="rounded-[1.5rem] border border-lane/20 bg-gradient-to-br from-white via-surface to-lane/[0.03] p-8 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)] lg:col-span-7">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {/* Metric 1 */}
-            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-lane/25 hover:shadow-[0_0.75rem_1.75rem_rgba(20,20,40,0.07)]">
-              <div className="flex items-center gap-2 text-xs font-mono text-muted uppercase">
-                <Clock size={14} className="text-lane" />
-                <span>Labor Reclaimed</span>
-              </div>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className="text-[clamp(2.25rem,3.8vw,3.25rem)] font-bold tracking-tight text-ink">
-                  {totalHoursSaved}
-                </span>
-                <span className="font-mono text-sm text-muted">hrs / month</span>
-              </div>
-              <div className="mt-2 text-xs text-muted">
-                Equal to <strong>{(totalHoursSaved / 4).toFixed(1)} hours every single week</strong> previously spent on copy-pasting numbers.
-              </div>
             </div>
 
             {/* Metric 2 */}
@@ -184,13 +149,13 @@ export function SavingsSection() {
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div className="rounded-[0.75rem] bg-surface/80 p-3.5 border border-line/60">
                 <div className="text-xs font-medium text-muted">Hiring an Ops Coordinator</div>
-                <div className="mt-1 font-mono text-lg font-bold text-ink">$85,000 / yr</div>
-                <div className="text-[0.6875rem] text-muted mt-1">+ 2 months training, benefits, turnover risk</div>
+                <div className="mt-1 font-mono text-lg font-bold text-ink">Full-time salary</div>
+                <div className="text-[0.6875rem] text-muted mt-1">+ benefits, training and ramp-up time</div>
               </div>
               <div className="rounded-[0.75rem] bg-lane/5 p-3.5 border border-lane/20">
-                <div className="text-xs font-medium text-lane"><span className="text-lane-gradient">BotLane Full Suite</span></div>
+                <div className="text-xs font-medium text-lane"><span className="text-lane-gradient">Agent Lane</span></div>
                 <div className="mt-1 font-mono text-lg font-bold text-lane"><span className="text-lane-gradient">$1,500 / mo</span></div>
-                <div className="text-[0.6875rem] text-muted mt-1">Live in 15 mins, zero payroll tax, 100% precision</div>
+                <div className="text-[0.6875rem] text-muted mt-1">All three lanes, every send approved by you</div>
               </div>
             </div>
           </div>
@@ -199,7 +164,7 @@ export function SavingsSection() {
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs text-muted">
               <CheckCircle2 size={14} className="text-emerald-600" />
-              <span>30-day no-risk trial on all retainers</span>
+              <span>30-day money-back guarantee</span>
             </div>
             <Link
               href="/pricing"
