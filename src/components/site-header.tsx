@@ -13,6 +13,7 @@ import {
   Sliders,
   CheckCircle2,
 } from "lucide-react";
+import { BrandMark } from "./brand-mark";
 import { Wordmark } from "./wordmark";
 import { accountCta, useAccountState } from "@/lib/account-state";
 import { DemoModal } from "./demo-modal";
@@ -145,6 +146,7 @@ export function SiteHeader() {
             aria-label="BotLane home"
             className="group flex items-center gap-2.5 transition-opacity hover:opacity-90 shrink-0"
           >
+            <BrandMark className="size-7" />
             <Wordmark className="text-[1.1875rem] text-ink" />
           </Link>
 
