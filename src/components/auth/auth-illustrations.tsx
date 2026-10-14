@@ -1,14 +1,44 @@
+"use client";
+
+import { motion, useReducedMotion, type Transition } from "motion/react";
 import { Bell, FileText, LayoutGrid, Mail, BarChart3, UserPlus, Send, CheckCheck } from "lucide-react";
 
 const windowClass =
   "relative overflow-hidden rounded-[22px] border border-line bg-white shadow-[0_40px_80px_-30px_rgba(20,20,40,0.25)]";
 
-function Ghosts() {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Plays once on load; with reduced motion everything starts in place. */
+function useEntrance() {
+  const reduce = useReducedMotion();
+  return (from: Record<string, number>, delay: number, duration = 0.7) => ({
+    initial: reduce ? false : from,
+    animate: { opacity: 1, x: 0, y: 0, scale: 1 },
+    transition: { duration, delay, ease: EASE } satisfies Transition,
+  });
+}
+
+const GHOSTS = [
+  { x: -24, y: 24, className: "border-line/60 bg-white/50" },
+  { x: -12, y: 12, className: "border-line/70 bg-white/70" },
+  { x: 12, y: -12, className: "border-line/60 bg-white/60" },
+];
+
+/** The stacked copies behind a window fan out once the window has landed. */
+function Ghosts({ delay }: { delay: number }) {
+  const reduce = useReducedMotion();
   return (
     <>
-      <div aria-hidden className="absolute inset-0 -translate-x-8 translate-y-8 rounded-[22px] border border-line/60 bg-white/50" />
-      <div aria-hidden className="absolute inset-0 -translate-x-4 translate-y-4 rounded-[22px] border border-line/70 bg-white/70" />
-      <div aria-hidden className="absolute inset-0 translate-x-4 -translate-y-4 rounded-[22px] border border-line/60 bg-white/60" />
+      {GHOSTS.map((g, i) => (
+        <motion.div
+          key={i}
+          aria-hidden
+          className={`absolute inset-0 rounded-[22px] border ${g.className}`}
+          initial={reduce ? false : { x: 0, y: 0, opacity: 0 }}
+          animate={{ x: g.x, y: g.y, opacity: 1 }}
+          transition={{ duration: 0.8, delay: delay + i * 0.08, ease: EASE }}
+        />
+      ))}
     </>
   );
 }
@@ -32,61 +62,71 @@ function Rail({ active }: { active: number }) {
   );
 }
 
-/** Sign-in illustration: the hero's workspace window, tilted and stacked, running off the right edge. */
+/** Sign-in illustration: the hero's workspace window, tilted and stacked, sized to stay inside its panel. */
 export function SignInIllustration() {
+  const enter = useEntrance();
   return (
-    <div aria-hidden className="pointer-events-none select-none [perspective:1600px]">
-      <div className="relative w-[640px] origin-left [transform:rotateY(-22deg)_rotateX(8deg)_rotateZ(-7deg)] [transform-style:preserve-3d]">
-        <Ghosts />
-        <div className={windowClass}>
-          <div className="flex items-center gap-4 border-b border-line bg-surface/60 px-5 py-3.5">
-            <div className="flex gap-1.5">
-              <span className="size-2.5 rounded-full bg-neutral-300" />
-              <span className="size-2.5 rounded-full bg-neutral-300" />
-              <span className="size-2.5 rounded-full bg-neutral-300" />
+    <div aria-hidden className="pointer-events-none w-full max-w-[540px] select-none py-8 [perspective:1600px]">
+      <motion.div {...enter({ opacity: 0, y: 40 }, 0.1, 0.9)}>
+        <div className="relative [transform:rotateY(-14deg)_rotateX(6deg)_rotateZ(-4deg)] [transform-style:preserve-3d]">
+          <Ghosts delay={0.6} />
+          <div className={windowClass}>
+            <div className="flex items-center gap-4 border-b border-line bg-surface/60 px-5 py-3.5">
+              <div className="flex gap-1.5">
+                <span className="size-2.5 rounded-full bg-neutral-300" />
+                <span className="size-2.5 rounded-full bg-neutral-300" />
+                <span className="size-2.5 rounded-full bg-neutral-300" />
+              </div>
+              <span className="text-[13px] text-muted">workspace.lane.ai</span>
             </div>
-            <span className="text-[13px] text-muted">workspace.lane.ai</span>
-          </div>
-          <div className="flex">
-            <Rail active={0} />
-            <div className="flex-1 p-5">
-              <span className="inline-flex items-center gap-2 rounded-[10px] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_6px_14px_-6px_rgba(224,49,43,0.7)]">
-                <FileText className="size-3.5" />
-                Lane 01 · Reporting
-              </span>
-              <div className="mt-4 rounded-[16px] border border-line p-4">
-                <div className="text-sm font-semibold text-ink">Weekly Executive Synthesis</div>
-                <div className="text-[11px] text-muted">Generated for Board & Client Leadership</div>
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  {[
-                    ["4.21x", "ROAS", "+0.6x"],
-                    ["$5,570", "Total spend", "On budget"],
-                    ["$42.10", "CAC", "-14.2%"],
-                  ].map(([value, label, delta]) => (
-                    <div key={label} className="rounded-[12px] border border-line px-2 py-3 text-center">
-                      <div className="text-lg font-semibold tracking-tight text-ink">{value}</div>
-                      <div className="text-[11px] text-muted">{label}</div>
-                      <div className="mt-1 text-[11px] font-medium text-ok">{delta}</div>
-                    </div>
-                  ))}
-                </div>
-                <ul className="mt-4 space-y-1.5 text-xs text-ink-2">
-                  {[
-                    "Retargeting efficiency scaled sharply after creative refresh.",
-                    "Search brand defense maintained 91% impression share.",
-                    "All assets reconciled and ready for sign-off.",
-                  ].map((line) => (
-                    <li key={line} className="flex items-start gap-2">
-                      <span className="mt-[7px] size-1 shrink-0 rounded-full bg-lane" />
-                      {line}
-                    </li>
-                  ))}
-                </ul>
+            <div className="flex">
+              <Rail active={0} />
+              <div className="min-w-0 flex-1 p-5">
+                <motion.span
+                  {...enter({ opacity: 0, x: -12 }, 0.5)}
+                  className="inline-flex items-center gap-2 rounded-[10px] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_6px_14px_-6px_rgba(224,49,43,0.7)]"
+                >
+                  <FileText className="size-3.5" />
+                  Lane 01 · Reporting
+                </motion.span>
+                <motion.div {...enter({ opacity: 0, y: 12 }, 0.6)} className="mt-4 rounded-[16px] border border-line p-4">
+                  <div className="text-sm font-semibold text-ink">Weekly Executive Synthesis</div>
+                  <div className="text-[11px] text-muted">Generated for Board & Client Leadership</div>
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {[
+                      ["4.21x", "ROAS", "+0.6x"],
+                      ["$5,570", "Total spend", "On budget"],
+                      ["$42.10", "CAC", "-14.2%"],
+                    ].map(([value, label, delta], i) => (
+                      <motion.div
+                        key={label}
+                        {...enter({ opacity: 0, y: 10, scale: 0.96 }, 0.8 + i * 0.1, 0.5)}
+                        className="rounded-[12px] border border-line px-2 py-3 text-center"
+                      >
+                        <div className="text-lg font-semibold tracking-tight text-ink">{value}</div>
+                        <div className="text-[11px] text-muted">{label}</div>
+                        <div className="mt-1 text-[11px] font-medium text-ok">{delta}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <ul className="mt-4 space-y-1.5 text-xs text-ink-2">
+                    {[
+                      "Retargeting efficiency scaled sharply after creative refresh.",
+                      "Search brand defense maintained 91% impression share.",
+                      "All assets reconciled and ready for sign-off.",
+                    ].map((line, i) => (
+                      <motion.li key={line} {...enter({ opacity: 0, x: -8 }, 1.1 + i * 0.1, 0.5)} className="flex items-start gap-2">
+                        <span className="mt-[7px] size-1 shrink-0 rounded-full bg-lane" />
+                        {line}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -121,15 +161,16 @@ const ACTIVITY = [
   { icon: CheckCheck, title: "Qualified and routed", who: "Orbit Retail", when: "28 min ago" },
 ];
 
-/** Sign-up illustration: the three lanes, then a tilted Lead Intake card below them. */
+/** Sign-up illustration: the three lanes, then a tilted Lead Intake card that stays inside its panel. */
 export function SignUpIllustration() {
+  const enter = useEntrance();
   return (
-    <div className="select-none">
-      <ul className="max-w-[420px] space-y-6">
-        {LANES.map((lane) => {
+    <div className="w-full max-w-[460px] select-none">
+      <ul className="space-y-6">
+        {LANES.map((lane, i) => {
           const Icon = lane.icon;
           return (
-            <li key={lane.num} className="flex items-start gap-5">
+            <motion.li key={lane.num} {...enter({ opacity: 0, x: -16 }, 0.1 + i * 0.12, 0.6)} className="flex items-start gap-5">
               <span className={`flex size-12 shrink-0 items-center justify-center rounded-[14px] ${lane.tone}`}>
                 <Icon className="size-5" />
               </span>
@@ -138,40 +179,46 @@ export function SignUpIllustration() {
                 <div className="text-base font-semibold tracking-[-0.01em] text-ink">{lane.title}</div>
                 <div className="mt-1 text-[13px] leading-snug text-muted">{lane.text}</div>
               </div>
-            </li>
+            </motion.li>
           );
         })}
       </ul>
 
-      <div aria-hidden className="pointer-events-none mt-12 ml-10 [perspective:1400px]">
-        <div className="relative w-[440px] origin-left [transform:rotateY(-24deg)_rotateX(10deg)_rotateZ(7deg)] [transform-style:preserve-3d]">
-          <Ghosts />
-          <div className={windowClass}>
-            <div className="flex">
-              <Rail active={1} />
-              <div className="flex-1 p-4">
-                <div className="text-sm font-semibold text-ink">Lane 02 · Lead Intake</div>
-                <div className="mt-3 space-y-2">
-                  {ACTIVITY.map((row) => {
-                    const Icon = row.icon;
-                    return (
-                      <div key={row.title} className="flex items-center gap-3 rounded-[12px] border border-line p-3">
-                        <span className="flex size-8 items-center justify-center rounded-full bg-surface text-ink">
-                          <Icon className="size-4" />
-                        </span>
-                        <div>
-                          <div className="text-xs font-medium text-ink">{row.title}</div>
-                          <div className="text-[10px] text-muted">{row.who}</div>
-                          <div className="text-[10px] text-faint">{row.when}</div>
-                        </div>
-                      </div>
-                    );
-                  })}
+      <div aria-hidden className="pointer-events-none mt-12 pr-6 pb-8 pl-8 [perspective:1400px]">
+        <motion.div {...enter({ opacity: 0, y: 40 }, 0.5, 0.9)}>
+          <div className="relative [transform:rotateY(-14deg)_rotateX(6deg)_rotateZ(4deg)] [transform-style:preserve-3d]">
+            <Ghosts delay={1} />
+            <div className={windowClass}>
+              <div className="flex">
+                <Rail active={1} />
+                <div className="min-w-0 flex-1 p-4">
+                  <div className="text-sm font-semibold text-ink">Lane 02 · Lead Intake</div>
+                  <div className="mt-3 space-y-2">
+                    {ACTIVITY.map((row, i) => {
+                      const Icon = row.icon;
+                      return (
+                        <motion.div
+                          key={row.title}
+                          {...enter({ opacity: 0, y: 10 }, 0.9 + i * 0.12, 0.5)}
+                          className="flex items-center gap-3 rounded-[12px] border border-line p-3"
+                        >
+                          <span className="flex size-8 items-center justify-center rounded-full bg-surface text-ink">
+                            <Icon className="size-4" />
+                          </span>
+                          <div>
+                            <div className="text-xs font-medium text-ink">{row.title}</div>
+                            <div className="text-[10px] text-muted">{row.who}</div>
+                            <div className="text-[10px] text-faint">{row.when}</div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
