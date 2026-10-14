@@ -192,7 +192,7 @@ export function SiteHeader() {
                   <div className="w-[46.25rem] overflow-hidden rounded-[1.5rem] border border-line bg-white/95 p-6 shadow-[0_1.5rem_3.75rem_rgba(20,20,40,0.14)] backdrop-blur-xl">
                     <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
                       <div className="flex items-center gap-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-                        <span>The Three Workforce Systems</span>
+                        <span className="text-lane-gradient">The Three Workforce Systems</span>
                       </div>
                       <span className="text-[0.6875rem] font-medium text-muted">
                         Automated work · Human approval
@@ -214,7 +214,7 @@ export function SiteHeader() {
                                 <span className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line bg-white text-ink transition-colors group-hover:border-lane/30 group-hover:text-lane">
                                   <Icon size={16} />
                                 </span>
-                                <span className="font-mono text-[0.625rem] tracking-wider text-lane uppercase">
+                                <span className="font-mono text-[0.625rem] tracking-wider text-lane-gradient uppercase">
                                   {item.num} · {item.shape}
                                 </span>
                               </div>
@@ -253,7 +253,7 @@ export function SiteHeader() {
                         onClick={handleLinkClick}
                         className="flex items-center gap-1 text-xs font-medium text-lane hover:underline whitespace-nowrap"
                       >
-                        <span>Explore details</span>
+                        <span className="text-lane-gradient">Explore details</span>
                         <ArrowRight size={12} />
                       </Link>
                     </div>
@@ -389,7 +389,7 @@ export function SiteHeader() {
                 onClick={handleLinkClick}
                 className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-lane transition-colors hover:bg-surface"
               >
-                Book a 20-min Demo
+                <span className="text-lane-gradient">Book a 20-min Demo</span>
               </Link>
             </nav>
 

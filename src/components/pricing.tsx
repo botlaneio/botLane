@@ -48,7 +48,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
     <section id="pricing" className="mx-auto max-w-[75rem] scroll-mt-20 px-6 pt-16 pb-28">
       <FadeUp className="mx-auto max-w-2xl text-center">
         <div className="font-mono text-xs uppercase tracking-[0.08em] text-lane">
-          Straightforward Investment
+          <span className="text-lane-gradient">Straightforward Investment</span>
         </div>
         <h2 className="mt-3 text-[clamp(2rem,4vw,3.25rem)] font-semibold tracking-[-0.04em] text-ink">
           One flat monthly fee. No hourly billing.
@@ -74,7 +74,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
             }`}
           >
             {tier.badge && (
-              <span className="absolute -top-3 right-8 rounded-full bg-lane px-3 py-0.5 font-mono text-[0.6875rem] font-semibold tracking-wide text-white uppercase">
+              <span className="absolute -top-3 right-8 rounded-full bg-lane-gradient px-3 py-0.5 font-mono text-[0.6875rem] font-semibold tracking-wide text-white uppercase">
                 {tier.badge}
               </span>
             )}
@@ -109,7 +109,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
               onClick={onOpenDemo}
               className={`mt-8 flex h-11 w-full items-center justify-center rounded-[0.5rem] text-sm font-medium transition-all ${
                 tier.highlight
-                  ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_0.25rem_0.875rem_rgba(90,44,184,0.2)]"
+                  ? "bg-lane-gradient text-white hover:brightness-90 shadow-[0_0.25rem_0.875rem_rgba(90,44,184,0.2)]"
                   : "bg-ink text-white hover:bg-black"
               }`}
             >

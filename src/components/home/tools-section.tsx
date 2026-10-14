@@ -105,7 +105,7 @@ export function ToolsSection() {
       <FadeUp className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-            <span className="size-1.5 rounded-full bg-lane" />
+            <span className="size-1.5 rounded-full bg-lane-gradient" />
             <span>Integrations Architecture</span>
           </div>
           <h2 className="mt-3 text-[clamp(1.875rem,4vw,3.125rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">

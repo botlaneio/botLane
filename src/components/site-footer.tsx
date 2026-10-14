@@ -42,13 +42,13 @@ export function SiteFooter() {
             <p className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white">
               Lane prepares.
               <br />
-              <span className="text-lane">You approve.</span>
+              <span className="text-lane-gradient">You approve.</span>
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/demo"
-              className="group inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-lane px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-lane-strong"
+              className="group inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-lane-gradient px-5 text-sm font-semibold text-white shadow-sm transition hover:brightness-90"
             >
               <span>Book a demo</span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -90,7 +90,7 @@ export function SiteFooter() {
                       <span>{link.label}</span>
                       {"tag" in link && link.tag && (
                         <span className="rounded-full bg-lane/15 px-1.5 py-px font-mono text-[0.625rem] text-lane ring-1 ring-lane/30 group-hover:ring-lane/60">
-                          {link.tag}
+                          <span className="text-lane-gradient">{link.tag}</span>
                         </span>
                       )}
                     </Link>
