@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import { HalftoneMark } from "./halftone-mark";
 import { Wordmark } from "./wordmark";
@@ -34,7 +35,10 @@ const COLUMNS = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden bg-[#0b0d17] text-white">
+    <footer
+      className="relative overflow-hidden bg-[#0b0d17] text-white"
+      style={{ "--bl-gradient": "var(--bl-gradient-on-dark)" } as CSSProperties}
+    >
       <div className="mx-auto max-w-[75rem] px-6">
         {/* Closing line + demo */}
         <div className="flex flex-col gap-6 border-b border-white/10 py-14 sm:flex-row sm:items-end sm:justify-between">

@@ -81,13 +81,13 @@ function Slot({ x, y, w, h, z, children }: { x: number; y: number; w: number; h:
 const stack: CSSProperties = { position: "absolute", left: 0, top: 0 };
 const hidden: CSSProperties = { ...stack, opacity: 0 };
 
-/** The logo's blue-to-coral gradient for SVG strokes and fills, spread across x1..x2. */
+/** The accent gradient (graphite, ember, violet) for SVG strokes and fills, spread across x1..x2. */
 function LaneGradient({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
     <defs>
       <linearGradient id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={0} x2={x2} y2={0}>
         <stop offset="0" stopColor="#121214" />
-        <stop offset="0.55" stopColor="#2a1d5c" />
+        <stop offset="0.48" stopColor="#b8402c" />
         <stop offset="1" stopColor="#6d3cf0" />
       </linearGradient>
     </defs>
