@@ -159,7 +159,7 @@ export function AssembleScene() {
                 <path data-path="e2" d="M860 290 L 984 290" />
                 <path data-path="loop" d="M984 290 A 96 96 0 1 1 1176 290 A 96 96 0 1 1 984 290" />
               </g>
-              <g fill="none" stroke="#e0312b" strokeWidth={3} strokeLinecap="round">
+              <g fill="none" stroke="#5a2cb8" strokeWidth={3} strokeLinecap="round">
                 <path data-path="c0" d="M572 290 L 640 290" />
                 <path data-path="c1" d="M572 290 L 640 290" />
                 <path data-path="c2" d="M572 290 L 640 290" />
@@ -179,7 +179,7 @@ export function AssembleScene() {
               <SvgOpenNode cx={1176} cy={290} tag={{ "data-n2": "1" }} />
               <SvgOpenNode cx={1080} cy={386} tag={{ "data-n2": "2" }} />
               <SvgCheckNode cx={1080} cy={194} fill="#1d1d1f" tag={{ "data-n2d": "0" }} />
-              <SvgCheckNode cx={1176} cy={290} fill="#e0312b" tag={{ "data-n2d": "1" }} />
+              <SvgCheckNode cx={1176} cy={290} fill="#5a2cb8" tag={{ "data-n2d": "1" }} />
               <g data-n2l="" className={mono} fontSize={11} letterSpacing="0.06em" fill="#6e6e73">
                 <text x={1080} y={174} textAnchor="middle">DAY 7</text>
                 <text x={1194} y={276}>DAY 14</text>
@@ -238,7 +238,7 @@ export function AssembleScene() {
                   </div>
                 </div>
                 <div data-ring="" aria-hidden="true" className="pointer-events-none absolute -inset-[3px] rounded-[22px] border-2 border-lane"
-                  style={{ boxShadow: "0 0 0 6px rgba(224,49,43,0.10)", opacity: 0 }} />
+                  style={{ boxShadow: "0 0 0 6px rgba(90,44,184,0.10)", opacity: 0 }} />
                 <div className="absolute inset-x-[18px] top-[18px] flex items-center gap-3">
                   <div className="relative size-11 flex-none overflow-hidden rounded-full border border-[#dcdce3] shadow-[0_2px_8px_rgba(20,20,40,0.08)]">
                     <Image
@@ -362,7 +362,7 @@ export function AssembleScene() {
             <Slot x={24} y={236} w={240} h={108} z={32}>
               <div data-lead="" className="bl-card bl-fill flex flex-col gap-2.5 rounded-[18px] p-4">
                 <div className="flex items-center gap-3">
-                  <div className="relative size-10 flex-none overflow-hidden rounded-full border border-[#f5c6c4] shadow-[0_2px_6px_rgba(224,49,43,0.12)]">
+                  <div className="relative size-10 flex-none overflow-hidden rounded-full border border-[#d6c9f2] shadow-[0_2px_6px_rgba(90,44,184,0.12)]">
                     <Image
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80"
                       alt="Zuheb"
@@ -380,7 +380,7 @@ export function AssembleScene() {
                     </div>
                   </div>
                 </div>
-                <div className={`${mono} self-start rounded-full bg-[#fdeceb] px-2.5 py-1 text-[11px] tracking-[0.06em] text-lane-ink uppercase`}>New lead</div>
+                <div className={`${mono} self-start rounded-full bg-[#efeafb] px-2.5 py-1 text-[11px] tracking-[0.06em] text-lane-ink uppercase`}>New lead</div>
               </div>
             </Slot>
             {TOUCHES.map((t, i) => (
@@ -441,9 +441,9 @@ export function AssembleScene() {
             <div aria-hidden="true" className="pointer-events-none bl-abs" style={{ left: 0, top: 0, width: 1240, height: 600, transform: "translateZ(60px)" }}>
               {[0, 1, 2, 3].map((i) => (
                 <div key={i} data-dot="" className="bl-traveller size-2.5 rounded-[3px]"
-                  style={{ left: -5, top: -5, background: i === 3 ? "#e0312b" : "#1d1d1f" }} />
+                  style={{ left: -5, top: -5, background: i === 3 ? "#5a2cb8" : "#1d1d1f" }} />
               ))}
-              <div data-av="" className="bl-traveller flex size-7 items-center justify-center rounded-full bg-lane text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(224,49,43,0.35)]"
+              <div data-av="" className="bl-traveller flex size-7 items-center justify-center rounded-full bg-lane text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(90,44,184,0.35)]"
                 style={{ left: -14, top: -14 }}>SC</div>
               <div data-coin="" className="bl-traveller flex size-7 items-center justify-center rounded-full border-2 border-ink bg-white text-sm font-semibold text-ink shadow-[0_4px_10px_rgba(20,20,40,0.18)]"
                 style={{ left: -14, top: -14 }}>$</div>
@@ -481,22 +481,22 @@ function Finale() {
               <rect x={8} y={52} width={8} height={8} rx={2} /><rect x={8} y={72} width={8} height={8} rx={2} />
             </g>
             <rect x={112} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={134} cy={44} r={4} fill="#ff453a" />
-            <path d="M148 44 H 180" stroke="#e0312b" strokeWidth={3} /><circle cx={180} cy={44} r={7} fill="#fff" stroke="#e0312b" strokeWidth={2} />
+            <path d="M148 44 H 180" stroke="#5a2cb8" strokeWidth={3} /><circle cx={180} cy={44} r={7} fill="#fff" stroke="#5a2cb8" strokeWidth={2} />
             <path d="M187 44 H 204" stroke="#cfd0d7" strokeWidth={2} />
             <rect x={204} y={18} width={44} height={52} rx={7} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
             <g fill="#1d1d1f">
               <rect x={213} y={48} width={6} height={12} rx={1} /><rect x={223} y={40} width={6} height={20} rx={1} />
-              <rect x={233} y={30} width={6} height={30} rx={1} fill="#e0312b" />
+              <rect x={233} y={30} width={6} height={30} rx={1} fill="#5a2cb8" />
             </g>
           </svg>
           <FinaleText num="01 · FUNNEL" title="Client reporting" body="Many sources in. One report out." />
         </div>
         <div data-tc="" className={card} style={{ opacity: 0 }}>
           <svg width="100%" height={88} viewBox="0 0 260 88" fill="none" strokeLinecap="round" aria-hidden="true">
-            <circle cx={16} cy={44} r={9} fill="#e0312b" />
+            <circle cx={16} cy={44} r={9} fill="#5a2cb8" />
             <path d="M25 44 H 56" stroke="#cfd0d7" strokeWidth={2} />
             <rect x={56} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={78} cy={44} r={4} fill="#ff453a" />
-            <path d="M92 44 H 116" stroke="#e0312b" strokeWidth={3} /><circle cx={116} cy={44} r={7} fill="#fff" stroke="#e0312b" strokeWidth={2} />
+            <path d="M92 44 H 116" stroke="#5a2cb8" strokeWidth={3} /><circle cx={116} cy={44} r={7} fill="#fff" stroke="#5a2cb8" strokeWidth={2} />
             <path d="M123 44 H 224" stroke="#cfd0d7" strokeWidth={2} />
             <g fill="#1a7f37"><circle cx={146} cy={44} r={5} /><circle cx={172} cy={44} r={5} /><circle cx={198} cy={44} r={5} /></g>
             <rect x={224} y={28} width={30} height={32} rx={6} fill="#fff" stroke="#1a7f37" strokeWidth={2} />
@@ -509,11 +509,11 @@ function Finale() {
             <rect x={6} y={32} width={24} height={24} rx={5} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
             <path d="M30 44 H 52" stroke="#cfd0d7" strokeWidth={2} />
             <rect x={52} y={32} width={36} height={24} rx={7} fill="#1d1d1f" /><circle cx={74} cy={44} r={4} fill="#ff453a" />
-            <path d="M88 44 H 110" stroke="#e0312b" strokeWidth={3} /><circle cx={110} cy={44} r={7} fill="#fff" stroke="#e0312b" strokeWidth={2} />
+            <path d="M88 44 H 110" stroke="#5a2cb8" strokeWidth={3} /><circle cx={110} cy={44} r={7} fill="#fff" stroke="#5a2cb8" strokeWidth={2} />
             <path d="M117 44 H 150" stroke="#cfd0d7" strokeWidth={2} />
             <circle cx={186} cy={44} r={36} stroke="#cfd0d7" strokeWidth={2} />
-            <path d="M150 44 A 36 36 0 0 1 222 44" stroke="#e0312b" strokeWidth={3} />
-            <circle cx={186} cy={8} r={5} fill="#1d1d1f" /><circle cx={222} cy={44} r={5} fill="#e0312b" />
+            <path d="M150 44 A 36 36 0 0 1 222 44" stroke="#5a2cb8" strokeWidth={3} />
+            <circle cx={186} cy={8} r={5} fill="#1d1d1f" /><circle cx={222} cy={44} r={5} fill="#5a2cb8" />
             <text x={186} y={50} textAnchor="middle" fontSize={18} fontWeight={600} fill="#1a7f37">$</text>
           </svg>
           <FinaleText num="03 · LOOP" title="Invoice follow-up" body="Reminders loop until it’s paid." />

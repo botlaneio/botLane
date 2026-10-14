@@ -11,6 +11,7 @@ export function MarkPlayground() {
   const [state, setState] = useState<HalftoneMarkState>("rest");
   const [pace, setPace] = useState(1);
   const [dark, setDark] = useState(false);
+  const [mono, setMono] = useState(false);
 
   const button = (on: boolean) =>
     `h-10 rounded-[0.625rem] border px-4 text-sm font-medium transition ${
@@ -33,6 +34,9 @@ export function MarkPlayground() {
                 {s[0].toUpperCase() + s.slice(1)}
               </button>
             ))}
+            <button type="button" className={button(mono)} onClick={() => setMono((m) => !m)}>
+              Mono
+            </button>
             <button type="button" className={button(dark)} onClick={() => setDark((d) => !d)}>
               Dark
             </button>
@@ -40,7 +44,7 @@ export function MarkPlayground() {
         </div>
 
         <div className="flex items-center justify-center py-6">
-          <HalftoneMark key={run} size={420} tone={dark ? "light" : "dark"} intro state={state} pace={pace} title="Botlane" />
+          <HalftoneMark key={run} size={420} tone={mono ? (dark ? "light" : "dark") : "color"} intro state={state} pace={pace} title="Botlane" />
         </div>
 
         <label className="flex items-center gap-4 text-sm">
@@ -59,7 +63,7 @@ export function MarkPlayground() {
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-current/10 pt-8">
           {[128, 64, 48, 32, 24, 16].map((s) => (
             <div key={`${s}-${run}`} className="flex flex-col items-center gap-2">
-              <HalftoneMark size={s} tone={dark ? "light" : "dark"} intro state={state} pace={pace} />
+              <HalftoneMark size={s} tone={mono ? (dark ? "light" : "dark") : "color"} intro state={state} pace={pace} />
               <span className="font-mono text-xs opacity-60">{s}px</span>
             </div>
           ))}

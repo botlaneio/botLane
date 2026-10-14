@@ -87,7 +87,7 @@
 }
 .bl-chip:hover {
   transform: translateY(-3px) translateZ(12px);
-  box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(224, 49, 43, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
+  box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(90, 44, 184, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
 }
 .bl-chip:hover .bl-border-beam {
   opacity: 1 !important;

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* BotLane tokens — Apple-quiet: white, near-black, one Lane red. */
+/* BotLane tokens — Apple-quiet: white, near-black, one accent taken from the logo's violet. */
 :root {
   --bl-bg: #ffffff;
   --bl-ink: #1d1d1f;
@@ -9,10 +9,10 @@
   --bl-faint: #8e8e93;
   --bl-line: #ececef;
   --bl-surface: #f5f5f7;
-  --bl-red: #e0312b;
-  --bl-red-strong: #d1291f;
-  --bl-red-ink: #b3261e;
-  --bl-red-tint: #fdeceb;
+  --bl-red: #5a2cb8;
+  --bl-red-strong: #4c23a0;
+  --bl-red-ink: #3c1a80;
+  --bl-red-tint: #efeafb;
   --bl-green: #1a7f37;
   --bl-green-tint: #e8f5ec;
 }

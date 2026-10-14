@@ -83,7 +83,7 @@ export default function AboutPage() {
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_110%,rgba(224,49,43,0.28),transparent_70%),radial-gradient(50%_70%_at_10%_120%,rgba(59,130,246,0.25),transparent_70%)]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_85%_110%,rgba(90,44,184,0.28),transparent_70%),radial-gradient(50%_70%_at_10%_120%,rgba(59,130,246,0.25),transparent_70%)]"
             />
 
             <div className="relative grid items-center gap-4 sm:gap-8 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-16">

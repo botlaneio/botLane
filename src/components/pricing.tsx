@@ -69,7 +69,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
             transition={{ duration: 0.7, delay: idx * 0.1, ease: EASE_OUT }}
             className={`relative flex flex-col justify-between rounded-[1.375rem] border p-8 transition-[border-color,box-shadow] duration-300 hover:shadow-[0_1.25rem_2.75rem_rgba(20,20,40,0.08)] ${
               tier.highlight
-                ? "border-lane/40 bg-white shadow-[0_1rem_2.5rem_rgba(224,49,43,0.06)]"
+                ? "border-lane/40 bg-white shadow-[0_1rem_2.5rem_rgba(90,44,184,0.06)]"
                 : "border-line bg-surface/30"
             }`}
           >
@@ -109,7 +109,7 @@ export function Pricing({ onOpenDemo }: PricingProps) {
               onClick={onOpenDemo}
               className={`mt-8 flex h-11 w-full items-center justify-center rounded-[0.5rem] text-sm font-medium transition-all ${
                 tier.highlight
-                  ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_0.25rem_0.875rem_rgba(224,49,43,0.2)]"
+                  ? "bg-lane-strong text-white hover:bg-lane-ink shadow-[0_0.25rem_0.875rem_rgba(90,44,184,0.2)]"
                   : "bg-ink text-white hover:bg-black"
               }`}
             >

@@ -10,11 +10,12 @@ import "./halftone-mark.css";
  * - `state`: "rest" (default), "active" (a purple arc sweeps around the
  *   sphere) or "thinking" (the dots pulse outward from the centre until
  *   the state changes).
- * - `detail`: "hd" (517 dots) or "small" (fewer, bigger dots for 48px and
+ * - `tone`: "color" (blue to coral, the default), "dark" or "light".
+ * - `detail`: "hd" (full detail) or "small" (fewer, bigger dots for 48px and
  *   below). "auto" picks from `size`.
  */
 
-type Tone = "dark" | "light";
+type Tone = "color" | "dark" | "light";
 type Detail = "auto" | "hd" | "small";
 export type HalftoneMarkState = "rest" | "active" | "thinking";
 
@@ -35,13 +36,14 @@ export interface HalftoneMarkProps {
 type Dot = { x: number; y: number; r: number; fill: string; sx: number; sy: number; delay: number; ring: number };
 
 const STOPS: Record<Tone, [number, string][]> = {
-  dark: [[0, "#121214"], [0.5, "#1f1f23"], [1, "#3a3a40"]],
+  color: [[0, "#1822c9"], [0.4, "#5a2cb8"], [0.7, "#b5306c"], [1, "#f2444f"]],
+  dark: [[0, "#0e0e10"], [0.5, "#1c1c20"], [1, "#36363c"]],
   light: [[0, "#f4f4f6"], [0.5, "#d6d6dc"], [1, "#a9a9b2"]],
 };
 
 const GRID: Record<"hd" | "small", { sp: number; rmax: number }> = {
-  hd: { sp: 4.4, rmax: 2.25 },
-  small: { sp: 8, rmax: 5.2 },
+  hd: { sp: 3.5, rmax: 1.95 },
+  small: { sp: 7, rmax: 4.3 },
 };
 
 const CX = 100;
@@ -101,15 +103,15 @@ function buildDots(tone: Tone, detail: "hd" | "small"): Dot[] {
       const x = CX + (u - v) / Math.SQRT2;
       const y = CY + (u + v) / Math.SQRT2;
       const d = Math.hypot(x - CX, y - CY) / R;
-      if (d > 1.02) continue;
+      if (d > 1.01) continue;
 
-      const edge = d < 0.55 ? 1 : Math.max(0, 1 - ((d - 0.55) / 0.47) ** 1.6);
+      const edge = d < 0.66 ? 1 : Math.max(0, 1 - ((d - 0.66) / 0.35) ** 1.9);
       const dc = Math.hypot(x - (CX - 6), y - (CY + 8)) / R;
-      const dip = 1 - 0.42 * Math.exp(-((dc / 0.3) ** 2));
+      const dip = 1 - 0.22 * Math.exp(-((dc / 0.3) ** 2));
       const r = rmax * edge * dip;
-      if (r < 0.32 * scale) continue;
+      if (r < 0.3 * scale) continue;
 
-      const t = ((x - CX - (y - CY)) / (2 * R)) * 1.05 + 0.5;
+      const t = ((x - CX - (y - CY)) / (2 * R)) * 1.08 + 0.5;
       const ang = rand() * Math.PI * 2;
       const far = 40 + rand() * 60;
       dots.push({
@@ -131,7 +133,7 @@ function buildDots(tone: Tone, detail: "hd" | "small"): Dot[] {
 
 export function HalftoneMark({
   size = 40,
-  tone = "dark",
+  tone = "color",
   detail = "auto",
   state = "rest",
   intro = false,
