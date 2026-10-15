@@ -29,8 +29,15 @@ export type BotLaneLogoProps = {
   size?: keyof typeof SIZES | number;
   /** "symbol" (default), "full" (symbol + botLane wordmark) or "wordmark" (text only). */
   mode?: "symbol" | "full" | "wordmark";
-  /** true or "intro": gathers in once on mount. "pulse": a slow travelling shimmer that loops. */
-  animated?: boolean | "intro" | "pulse";
+  /**
+   * true or "intro": gathers in once on mount. "pulse": a slow travelling shimmer that loops.
+   * "breathe": the dots swell and settle in a slow ripple, with no change in brightness.
+   */
+  animated?: boolean | "intro" | "pulse" | "breathe";
+  /** Draw the dots alone, without the rounded tile behind them. */
+  bare?: boolean;
+  /** Paint every dot this colour instead of the artwork's own (e.g. "#fff" on a dark footer). */
+  tint?: string;
   /** Seconds before the intro starts. */
   delay?: number;
   /** Pulse speed multiplier (higher is slower). */
@@ -76,6 +83,8 @@ export function BotLaneLogo({
   size = "md",
   mode = "symbol",
   animated = false,
+  bare = false,
+  tint,
   delay = 0,
   pace = 1,
   track = false,
@@ -159,7 +168,7 @@ export function BotLaneLogo({
   // switch never replays it.
   const [introSet] = useState<ReadonlySet<LogoVariantId>>(() => new Set(track && !explicit ? mounted : [initial]));
 
-  const motion = animated === "pulse" ? "pulse" : animated ? "intro" : null;
+  const motion = animated === "pulse" || animated === "breathe" ? animated : animated ? "intro" : null;
   const sizePx = typeof size === "number" ? size : SIZES[size];
   const dim = px ? `${sizePx}px` : `${sizePx / 16}rem`;
 
@@ -177,6 +186,8 @@ export function BotLaneLogo({
             uid={uid}
             active={id === active}
             intro={motion === "intro" && introSet.has(id)}
+            bare={bare}
+            tint={tint}
           />
         ))}
       </span>
@@ -197,7 +208,21 @@ export function BotLaneLogo({
   );
 }
 
-function LogoArtwork({ id, uid, active, intro }: { id: LogoVariantId; uid: string; active: boolean; intro: boolean }) {
+function LogoArtwork({
+  id,
+  uid,
+  active,
+  intro,
+  bare,
+  tint,
+}: {
+  id: LogoVariantId;
+  uid: string;
+  active: boolean;
+  intro: boolean;
+  bare: boolean;
+  tint?: string;
+}) {
   const def = LOGO_VARIANTS[id];
   const gid = `bl-${uid}-${id}`;
   const last = Math.max(1, def.bands - 1);
@@ -210,7 +235,7 @@ function LogoArtwork({ id, uid, active, intro }: { id: LogoVariantId; uid: strin
       aria-hidden="true"
       focusable="false"
     >
-      {def.tile.kind === "radial" ? (
+      {bare ? null : def.tile.kind === "radial" ? (
         <>
           <defs>
             <radialGradient id={gid} cx=".7" cy=".3" r=".9">
@@ -235,7 +260,7 @@ function LogoArtwork({ id, uid, active, intro }: { id: LogoVariantId; uid: strin
       )}
       <g className="bl-logo__dots">
         {def.paths.map((p, i) => (
-          <path key={i} d={p.d} fill={p.fill} style={{ "--b": p.band / last } as CSSProperties} />
+          <path key={i} d={p.d} fill={tint ?? p.fill} style={{ "--b": p.band / last } as CSSProperties} />
         ))}
       </g>
     </svg>
