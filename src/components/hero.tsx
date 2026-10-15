@@ -35,23 +35,24 @@ export function Hero() {
             </span>
             <span className="hidden h-5 w-px bg-line sm:block" />
             <span className="rounded-full bg-[var(--bl-red-tint)] px-4 py-1.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-lane-ink">
-              Managed AI operations for agencies
+              Your AI workforce, managed by BotLane
             </span>
           </motion.div>
 
           <motion.h1
             variants={rise}
-            className="mt-7 max-w-[62rem] text-[clamp(2.5rem,5.6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-ink"
+            className="mt-7 text-[clamp(3rem,8.2vw,6.75rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink"
           >
-            Your team runs the campaigns. Lane prepares the reporting<span className="text-lane">.</span>
+            More clients. Less busywork<span className="text-lane">.</span>
           </motion.h1>
 
           <motion.p
             variants={rise}
             className="mt-6 max-w-[50rem] text-lg leading-[1.45] tracking-[-0.015em] text-muted sm:text-[1.375rem]"
           >
-            BotLane connects your tools, assembles review-ready client deliverables and handles recurring follow-up,
-            so your people can focus on client work. <span className="font-medium text-lane">You stay in control.</span>
+            Lane handles client reporting, lead follow-ups, and invoice chasing—so your agency can grow without growing
+            its operational workload.{" "}
+            <span className="font-medium text-lane">You stay in control. We keep things moving.</span>
           </motion.p>
 
           <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
@@ -59,7 +60,7 @@ export function Hero() {
               href="/demo"
               className="group inline-flex h-[3.25rem] min-w-[12.25rem] items-center justify-center gap-2.5 rounded-xl bg-lane px-7 text-base font-medium text-white shadow-[0_0.75rem_1.5rem_-0.75rem_rgba(224,49,43,0.7)] transition hover:bg-lane-strong active:scale-[0.98]"
             >
-              Book a demo
+              Meet Lane
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -76,17 +77,17 @@ export function Hero() {
           >
             <li className="flex items-center gap-2.5">
               <Plug className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Works in the tools you use
-            </li>
-            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
-            <li className="flex items-center gap-2.5">
-              <ShieldCheck className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Every send needs your approval
+              Works with your tools
             </li>
             <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
             <li className="flex items-center gap-2.5">
               <Wrench className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Set up and run by BotLane
+              Managed by us
+            </li>
+            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
+            <li className="flex items-center gap-2.5">
+              <ShieldCheck className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Approved by you
             </li>
           </motion.ul>
         </motion.div>

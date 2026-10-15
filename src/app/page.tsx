@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <SiteHeader />
       <main className="min-h-screen">
-        {/* 1. Hero: "Your team runs the campaigns. Lane prepares the reporting." */}
+        {/* 1. Hero: "More clients. Less busywork." */}
         <Hero />
 
         {/* 2. Scroll board: funnel · line · loop */}
