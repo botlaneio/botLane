@@ -49,7 +49,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "lane-for-client-reporting",
     category: "Client Reporting",
-    title: "Introducing Lane Assist for client reporting",
+    title: "Placeholder Title 1",
     excerpt: "Faster reports, fewer follow-ups, and happier clients.",
     art: "gallery",
   },
