@@ -140,47 +140,79 @@ export function Desk({ layout }: { layout: FlowLayout }) {
 
 export function Cards({ layout }: { layout: FlowLayout }) {
   const { card } = layout;
+  // Phones get taller cards: title on top, then the status and the Approve button on their own row.
+  const roomy = layout.key === "mobile";
   return (
     <>
       {DRAFTS.map(({ icon: Icon, title, sub }, i) => {
         const p = layout.drafts[i];
+        const status = (
+          <div className={`relative ${roomy ? "h-[18px] flex-1 text-[13px]" : "mt-1 h-[15px] text-[11px]"}`}>
+            <span data-s-draft className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap text-faint">
+              <span className="size-1.5 rounded-full bg-[#c7c7cc]" />
+              Drafting…
+            </span>
+            <span data-s-ready className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600 opacity-0">
+              <span className="size-1.5 rounded-full bg-amber-500" />
+              Waiting for your review
+            </span>
+            <span data-s-sent className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600 opacity-0">
+              <Check size={roomy ? 13 : 11} strokeWidth={3} />
+              Sent · approved by you
+            </span>
+          </div>
+        );
+        const approve = (
+          <span
+            data-approve
+            className={`relative flex shrink-0 items-center justify-center rounded-[8px] bg-[#2c2c30] font-semibold text-white opacity-0 ${
+              roomy ? "h-[34px] w-[96px] text-[13px]" : "h-[30px] w-[78px] text-[11.5px]"
+            }`}
+          >
+            <span data-approve-idle>Approve</span>
+            <span data-approve-done className="absolute inset-0 flex items-center justify-center opacity-0">
+              <Check size={roomy ? 17 : 15} strokeWidth={3} />
+            </span>
+          </span>
+        );
         return (
           <div key={title} data-card className="absolute top-0 left-0" style={{ transform: `translate(${p.x}px, ${p.y}px)`, zIndex: 4 }}>
             <div
               data-card-box
-              className="absolute top-0 left-0 flex items-center gap-3 rounded-[16px] border border-line bg-white px-3.5 opacity-0 shadow-[0_10px_28px_-16px_rgba(20,20,40,0.3)]"
+              className={`absolute top-0 left-0 flex rounded-[16px] border border-line bg-white opacity-0 shadow-[0_10px_28px_-16px_rgba(20,20,40,0.3)] ${
+                roomy ? "flex-col justify-center gap-3 px-4" : "items-center gap-3 px-3.5"
+              }`}
               style={{ left: -card.w / 2, top: -card.h / 2, width: card.w, height: card.h }}
             >
-              <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] bg-lane/10 text-lane">
-                <Icon size={16} />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="truncate text-[13px] font-semibold text-ink">{title}</div>
-                <div className="truncate text-[11px] text-muted">{sub}</div>
-                <div className="relative mt-1 h-[15px] text-[11px]">
-                  <span data-s-draft className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap text-faint">
-                    <span className="size-1.5 rounded-full bg-[#c7c7cc]" />
-                    Drafting…
+              {roomy ? (
+                <>
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-[40px] shrink-0 items-center justify-center rounded-[11px] bg-lane/10 text-lane">
+                      <Icon size={19} />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-[16px] font-semibold text-ink">{title}</div>
+                      <div className="truncate text-[13px] text-muted">{sub}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 border-t border-line/70 pt-2.5">
+                    {status}
+                    {approve}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="flex size-[34px] shrink-0 items-center justify-center rounded-[10px] bg-lane/10 text-lane">
+                    <Icon size={16} />
                   </span>
-                  <span data-s-ready className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap font-medium text-amber-600 opacity-0">
-                    <span className="size-1.5 rounded-full bg-amber-500" />
-                    Waiting for your review
-                  </span>
-                  <span data-s-sent className="absolute inset-0 flex items-center gap-1.5 whitespace-nowrap font-medium text-emerald-600 opacity-0">
-                    <Check size={11} strokeWidth={3} />
-                    Sent · approved by you
-                  </span>
-                </div>
-              </div>
-              <span
-                data-approve
-                className="relative flex h-[30px] w-[78px] shrink-0 items-center justify-center rounded-[8px] bg-[#2c2c30] text-[11.5px] font-semibold text-white opacity-0"
-              >
-                <span data-approve-idle>Approve</span>
-                <span data-approve-done className="absolute inset-0 flex items-center justify-center opacity-0">
-                  <Check size={15} strokeWidth={3} />
-                </span>
-              </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-[13px] font-semibold text-ink">{title}</div>
+                    <div className="truncate text-[11px] text-muted">{sub}</div>
+                    {status}
+                  </div>
+                  {approve}
+                </>
+              )}
             </div>
           </div>
         );

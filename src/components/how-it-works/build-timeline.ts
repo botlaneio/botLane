@@ -61,6 +61,8 @@ export function buildStory(root: HTMLElement, l: FlowLayout, A: Anime, still: bo
   tools.forEach((t, i) => set(t, { translateX: l.scatter[i].x, translateY: l.scatter[i].y, rotate: l.scatter[i].rotate }));
   cards.forEach((c, i) => set(c, { translateX: l.drafts[i].x, translateY: l.drafts[i].y }));
   dots.forEach((d, i) => set(d, { translateX: l.sendFrom[i].x - 5, translateY: l.sendFrom[i].y - 5 }));
+  const rect = (r: { x: number; y: number; w: number; h: number }) => ({ left: r.x - r.w / 2, top: r.y - r.h / 2, width: r.w, height: r.h });
+  if (l.deskFrom) set(desk, rect(l.deskFrom));
   set(captions.slice(1), { opacity: 0 });
   set(rails, { scaleX: 0 });
   set([...toolWires, ...laneWires, ...sendWires], { draw: "0 0" });
@@ -119,13 +121,32 @@ export function buildStory(root: HTMLElement, l: FlowLayout, A: Anime, still: bo
   /* ---------- 04 everything waits for you: the drafts move onto the approval desk ---------- */
   add(tools, { opacity: [1, 0], duration: 320, delay: A.stagger(30) }, 5450);
   add([coreGroup, toolWireGroup, laneWireGroup], { opacity: [1, 0], duration: 320 }, 5480);
-  add(desk, { opacity: [0, 1], scale: [0.96, 1], ease: "outCubic", duration: 380 }, 5650);
-  cards.forEach((c, i) => {
-    const a = l.drafts[i];
-    const b = l.slots[i];
-    add(c, { translateX: [a.x, b.x], translateY: [a.y, b.y], ease: "inOutCubic", duration: 600 }, 5700 + i * 90);
-    add($("[data-approve]", c), { opacity: [0, 1], duration: 220 }, 6400 + i * 110);
-  });
+  if (l.deskFrom) {
+    // Phones: the desk appears around the drafts once the tools are gone, then grows up into the
+    // space they left while the drafts rise into their slots, as one movement.
+    const from = rect(l.deskFrom);
+    const to = rect(l.desk);
+    add(desk, { opacity: [0, 1], scale: [0.96, 1], ease: "outCubic", duration: 300 }, 5820);
+    add(
+      desk,
+      { left: [from.left, to.left], top: [from.top, to.top], width: [from.width, to.width], height: [from.height, to.height], ease: "inOutCubic", duration: 700 },
+      6000,
+    );
+    cards.forEach((c, i) => {
+      const a = l.drafts[i];
+      const b = l.slots[i];
+      add(c, { translateX: [a.x, b.x], translateY: [a.y, b.y], ease: "inOutCubic", duration: 700 }, 6000 + i * 60);
+      add($("[data-approve]", c), { opacity: [0, 1], duration: 220 }, 6750 + i * 110);
+    });
+  } else {
+    add(desk, { opacity: [0, 1], scale: [0.96, 1], ease: "outCubic", duration: 380 }, 5650);
+    cards.forEach((c, i) => {
+      const a = l.drafts[i];
+      const b = l.slots[i];
+      add(c, { translateX: [a.x, b.x], translateY: [a.y, b.y], ease: "inOutCubic", duration: 600 }, 5700 + i * 90);
+      add($("[data-approve]", c), { opacity: [0, 1], duration: 220 }, 6400 + i * 110);
+    });
+  }
 
   /* ---------- 05 you approve: each button turns to a tick ---------- */
   cards.forEach((c, i) => {
