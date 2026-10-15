@@ -11,11 +11,11 @@ import {
   GitCommit,
   RotateCw,
   Sliders,
-  CheckCircle2,
 } from "lucide-react";
 import { BotLaneLogo } from "./brand/botlane-logo";
 import { accountCta, useAccountState } from "@/lib/account-state";
 import { DemoModal } from "./demo-modal";
+import { SystemsMegaMenu } from "./nav/systems-mega-menu";
 
 interface SystemItem {
   num: string;
@@ -140,7 +140,7 @@ export function SiteHeader() {
             : "border-b border-transparent bg-transparent shadow-none"
         }`}
       >
-        <div className="mx-auto flex h-[4rem] max-w-[75rem] items-center justify-between px-6">
+        <div className="relative mx-auto flex h-[4rem] max-w-[75rem] items-center justify-between px-6">
           {/* Zone 1: Brand Wordmark */}
           <Link
             href="/"
@@ -162,11 +162,11 @@ export function SiteHeader() {
           {/* Zone 2: Navigation Links with Mega Menu */}
           <nav
             aria-label="Primary navigation"
-            className="hidden items-center gap-1.5 md:flex"
+            className="hidden items-center gap-1.5 self-stretch md:flex"
           >
             {/* Mega Menu Dropdown Trigger */}
             <div
-              className="relative"
+              className="flex h-full items-center"
               onMouseEnter={() => setMegaMenuOpen(true)}
               onMouseLeave={() => setMegaMenuOpen(false)}
             >
@@ -176,9 +176,9 @@ export function SiteHeader() {
                 onClick={() => setMegaMenuOpen(!megaMenuOpen)}
                 aria-expanded={megaMenuOpen}
                 aria-haspopup="true"
-                className={`flex items-center gap-1 rounded-[0.5rem] px-3.5 py-1.5 text-[0.8125rem] font-medium tracking-[-0.01em] transition-all duration-150 ${
+                className={`relative flex items-center gap-1 rounded-[0.5rem] px-3.5 py-1.5 text-[0.8125rem] font-medium tracking-[-0.01em] transition-all duration-150 ${
                   megaMenuOpen
-                    ? "bg-black/[0.05] text-ink"
+                    ? "text-lane"
                     : "text-muted hover:bg-black/[0.04] hover:text-ink"
                 }`}
               >
@@ -186,89 +186,16 @@ export function SiteHeader() {
                 <ChevronDown
                   size={14}
                   className={`transition-transform duration-200 ${
-                    megaMenuOpen ? "rotate-180 text-ink" : "text-muted"
+                    megaMenuOpen ? "rotate-180 text-lane" : "text-muted"
                   }`}
                 />
+                {megaMenuOpen && (
+                  <span aria-hidden className="absolute inset-x-3.5 -bottom-[0.875rem] h-[0.125rem] rounded-full bg-lane" />
+                )}
               </button>
 
               {/* Mega Menu Dropdown Panel */}
-              {megaMenuOpen && (
-                <div
-                  ref={megaMenuRef}
-                  role="menu"
-                  className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5"
-                >
-                  <div className="w-[46.25rem] overflow-hidden rounded-[1.5rem] border border-line bg-white/95 p-6 shadow-[0_1.5rem_3.75rem_rgba(20,20,40,0.14)] backdrop-blur-xl">
-                    <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
-                      <div className="flex items-center gap-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-                        <span className="text-lane-gradient">The Three Workforce Systems</span>
-                      </div>
-                      <span className="text-[0.6875rem] font-medium text-muted">
-                        Automated work · Human approval
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-3.5">
-                      {SYSTEMS.map((item) => {
-                        const Icon = item.icon;
-                        return (
-                          <a
-                            key={item.title}
-                            href={item.href}
-                            onClick={handleLinkClick}
-                            className="group flex flex-col justify-between rounded-[1.125rem] border border-line/70 bg-surface/40 p-4 transition-all duration-150 hover:border-lane/30 hover:bg-white hover:shadow-[0_0.5rem_1.5rem_rgba(20,20,40,0.06)]"
-                          >
-                            <div>
-                              <div className="flex items-center justify-between">
-                                <span className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line bg-white text-ink transition-colors group-hover:border-lane/30 group-hover:text-lane">
-                                  <Icon size={16} />
-                                </span>
-                                <span className="font-mono text-[0.625rem] tracking-wider text-lane-gradient uppercase">
-                                  {item.num} · {item.shape}
-                                </span>
-                              </div>
-
-                              <h4 className="mt-3 text-sm font-semibold tracking-tight text-ink group-hover:text-lane-ink">
-                                {item.title}
-                              </h4>
-                              <p className="mt-1 text-[0.75rem] leading-snug text-muted">
-                                {item.description}
-                              </p>
-                            </div>
-
-                            <div className="mt-3 pt-2 border-t border-line/50 flex items-center justify-between text-[0.6875rem] font-medium text-ink-2">
-                              <span>{item.highlight}</span>
-                              <ArrowRight
-                                size={12}
-                                className="text-muted opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-hover:text-lane"
-                              />
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </div>
-
-                    {/* Bottom Feature Strip */}
-                    <div className="mt-4 flex items-center justify-between rounded-[0.5rem] bg-surface/70 px-4 py-2.5 border border-line/60">
-                      <div className="flex items-center gap-2 text-xs text-ink-2">
-                        <CheckCircle2 size={14} className="text-ok" />
-                        <span>
-                          <strong className="font-semibold text-ink">Zero surprise sends:</strong>{" "}
-                          You review every draft with a 1-click approval desk.
-                        </span>
-                      </div>
-                      <Link
-                        href="/systems"
-                        onClick={handleLinkClick}
-                        className="flex items-center gap-1 text-xs font-medium text-lane hover:underline whitespace-nowrap"
-                      >
-                        <span className="text-lane-gradient">Explore details</span>
-                        <ArrowRight size={12} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {megaMenuOpen && <SystemsMegaMenu ref={megaMenuRef} onNavigate={handleLinkClick} />}
             </div>
 
             <Link
