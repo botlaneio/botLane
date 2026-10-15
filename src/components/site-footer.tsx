@@ -98,7 +98,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-14 lg:grid-cols-4 xl:grid-cols-[minmax(0,1.55fr)_repeat(4,minmax(0,1fr))] xl:gap-x-10">
           <div className="col-span-2 lg:col-span-4 xl:col-span-1 xl:pr-6">
             <Link href="/" aria-label="BotLane home" className="inline-flex text-white">
-              <BotLaneSymbiote size="6rem" color="#FFFFFF" animated intensity={1} />
+              <BotLaneSymbiote size="6rem" color="var(--bl-red)" animated intensity={1} />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
               An AI coworker for agencies. Lane runs client reporting, lead follow-up and invoice
