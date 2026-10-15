@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
-import { HalftoneMark } from "../halftone-mark";
 import {
   APPROVALS,
   CAPTIONS,
@@ -24,6 +23,7 @@ import {
   GoogleDriveLogo,
   PlaidLogo,
 } from "./company-icons";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 // Static markup for the scroll-to-assemble board. It renders on the server;
 // <AssembleController> finds the pieces by their data-* attributes and animates them.
@@ -85,7 +85,9 @@ const hidden: CSSProperties = { ...stack, opacity: 0 };
 function FinaleMark({ x }: { x: number }) {
   return (
     <foreignObject x={x} y={30} width={28} height={28}>
-      <HalftoneMark size={28} detail="small" className="block ![height:28px] ![width:28px]" />
+      <div style={{ lineHeight: 0 }}>
+        <BotLaneLogo size={28} px decorative />
+      </div>
     </foreignObject>
   );
 }
@@ -216,13 +218,13 @@ export function AssembleScene() {
                 <div className="bl-card-back" aria-hidden="true">
                   <span data-lane-luster="" className="bl-card-back-luster" />
                   <div className="bl-card-back-mark">
-                    <HalftoneMark size={14} detail="small" className="![height:14px] ![width:14px]" />
+                    <BotLaneLogo size={14} px decorative />
                     <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   {/* The botLane mark, its dots pulsing while Lane works. Sized in px like the rest of the board. */}
-                  <HalftoneMark size={44} detail="small" state="thinking" pace={1.3} className="![height:44px] ![width:44px]" />
+                  <BotLaneLogo size={44} px animated="pulse" pace={1.3} decorative />
                   <span className="relative h-6 w-[74px]">
                     <span data-lpw="" className="bl-pill bl-pill-red absolute top-0 right-0">Working</span>
                     <span data-lpr="" className="bl-pill absolute top-0 right-0" style={{ opacity: 0 }}>Ready</span>
@@ -252,7 +254,7 @@ export function AssembleScene() {
                 <div className="bl-card-back" aria-hidden="true">
                   <span data-you-luster="" className="bl-card-back-luster" />
                   <div className="bl-card-back-mark">
-                    <HalftoneMark size={14} detail="small" className="![height:14px] ![width:14px]" />
+                    <BotLaneLogo size={14} px decorative />
                     <span className="text-[11px] font-semibold tracking-[0.14em] text-[#1d1d1f] uppercase">Lane</span>
                   </div>
                 </div>

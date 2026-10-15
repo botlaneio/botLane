@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X, Check, Calendar, Clock, ArrowRight } from "lucide-react";
-import { LaneMarkCycle } from "./lane-mark-cycle";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -93,7 +93,7 @@ export function DemoModal({ isOpen, onClose }: DemoModalProps) {
             ) : (
               <div>
                 <div className="flex items-center gap-2.5">
-                  <LaneMarkCycle size={26} />
+                  <BotLaneLogo size={26} decorative />
                   <span className="font-mono text-xs uppercase tracking-[0.1em] text-lane">
                     Live Walkthrough
                   </span>

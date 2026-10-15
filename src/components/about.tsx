@@ -1,7 +1,7 @@
 "use client";
 
 import { ShieldCheck, Eye, Zap, Clock } from "lucide-react";
-import { LaneMarkCycle } from "./lane-mark-cycle";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 const PRINCIPLES = [
   {
@@ -58,7 +58,7 @@ export function About() {
           </p>
 
           <div className="mt-8 flex items-center gap-4 border-t border-line pt-6">
-            <LaneMarkCycle size={36} />
+            <BotLaneLogo size={36} decorative />
             <div>
               <div className="text-sm font-semibold text-ink">Engineered for lean teams</div>
               <div className="text-xs text-muted">Agencies, consultancies & high-touch studios</div>

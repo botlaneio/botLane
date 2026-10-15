@@ -1,0 +1,60 @@
+/* botLane logo: stacked approved artworks that cross-fade between surfaces. */
+.bl-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 0.125rem;
+}
+.bl-logo__symbol {
+  position: relative;
+  display: inline-block;
+  flex: none;
+}
+.bl-logo__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  overflow: visible;
+}
+.bl-logo__svg[data-active="true"] { opacity: 1; }
+.bl-logo[data-ready] .bl-logo__svg { transition: opacity 0.32s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+.bl-logo__tile,
+.bl-logo__dots path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Intro: the tile settles in, then the dot bands fade in from lower-left to upper-right. Plays once. */
+.bl-logo__svg--intro .bl-logo__tile {
+  animation: bl-logo-tile-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) var(--bl-delay, 0s) both;
+}
+.bl-logo__svg--intro .bl-logo__dots path {
+  animation: bl-logo-band-in 0.5s ease-out calc(var(--bl-delay, 0s) + 0.18s + var(--b, 0) * 0.4s) both;
+}
+@keyframes bl-logo-tile-in {
+  from { opacity: 0; transform: scale(0.92); }
+}
+@keyframes bl-logo-band-in {
+  from { opacity: 0; }
+}
+
+/* Pulse: a slow shimmer travelling across the bands. Only the visible artwork animates. */
+.bl-logo--pulse .bl-logo__svg[data-active="true"] .bl-logo__dots path {
+  animation: bl-logo-pulse calc(2.6s * var(--bl-pace, 1)) ease-in-out calc(var(--b, 0) * -1.1s * var(--bl-pace, 1)) infinite;
+}
+@keyframes bl-logo-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-logo .bl-logo__svg,
+  .bl-logo .bl-logo__svg * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -20,9 +20,7 @@ import {
   RotateCw,
   GitCommit,
 } from "lucide-react";
-import { LaneMarkCycle } from "./lane-mark-cycle";
-import { LaneMark } from "./lane-mark";
-import { Wordmark } from "./wordmark";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 interface AuthViewProps {
   initialMode?: "signin" | "signup";
@@ -85,7 +83,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
             aria-label="Back to BotLane homepage"
             className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
           >
-            <Wordmark className="text-[1.1875rem] text-ink" />
+            <BotLaneLogo mode="wordmark" wordmarkClassName="text-[1.1875rem] text-ink" />
           </Link>
 
           <Link
@@ -160,7 +158,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
                 {/* Header text */}
                 <div className="mb-6">
                   <div className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-lane">
-                    <LaneMarkCycle size={18} />
+                    <BotLaneLogo size={18} decorative />
                     <span>{mode === "signin" ? "Secure Login" : "New Workforce Onboarding"}</span>
                   </div>
                   <h1 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink">
@@ -449,7 +447,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
             <div className="rounded-[1.5rem] border border-line bg-white p-7 shadow-[0_1rem_2.5rem_rgba(20,20,40,0.06)] relative overflow-hidden">
               <div className="flex items-center justify-between border-b border-line pb-4">
                 <div className="flex items-center gap-2.5">
-                  <LaneMarkCycle size={24} />
+                  <BotLaneLogo size={24} decorative />
                   <div>
                     <div className="text-xs font-semibold text-ink">Lane Approval Desk</div>
                     <div className="text-[0.6875rem] text-muted">Human-in-the-loop safeguards</div>
@@ -606,8 +604,7 @@ export function AuthView({ initialMode = "signin" }: AuthViewProps) {
       <footer className="border-t border-line/60 bg-white/60 py-6 px-6 text-center text-xs text-muted">
         <div className="mx-auto max-w-[75rem] flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-ink">
-            <LaneMark size={16} />
-            <span className="font-semibold text-xs">botlane</span>
+            <BotLaneLogo size={16} mode="full" symbolClassName="mr-1.5" wordmarkClassName="font-semibold text-xs" />
           </div>
           <div className="flex items-center gap-4 text-xs">
             <span>Privacy Policy</span>
