@@ -291,6 +291,12 @@ export function SiteHeader() {
             >
               About
             </Link>
+            <Link
+              href="/blog"
+              className="rounded-[0.5rem] px-3.5 py-1.5 text-[0.8125rem] font-medium tracking-[-0.01em] text-muted transition-all duration-150 hover:bg-black/[0.04] hover:text-ink whitespace-nowrap shrink-0"
+            >
+              Blog
+            </Link>
           </nav>
 
           {/* Zone 3: Primary Action & Mobile Menu Toggle */}
@@ -391,6 +397,13 @@ export function SiteHeader() {
                 className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
               >
                 About
+              </Link>
+              <Link
+                href="/blog"
+                onClick={handleLinkClick}
+                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
+              >
+                Blog
               </Link>
 
               <Link
