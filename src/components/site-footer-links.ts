@@ -51,7 +51,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Blog / Insights", href: "/blog" },
       { label: "FAQs", href: "/#faq" },
-      { label: "Integrations", href: null, proposedHref: "/integrations" },
+      { label: "Integrations", href: "/integrations" },
       { label: "Release Notes", href: null, proposedHref: "/changelog" },
       { label: "System Status", href: null, proposedHref: "/status" },
     ],
