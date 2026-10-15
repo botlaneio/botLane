@@ -16,9 +16,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { AssembleController } from "@/components/assemble/assemble-controller";
-import { AssembleScene } from "@/components/assemble/assemble-scene";
-import "@/components/assemble/assemble.css";
+import { FunnelScrollStory } from "@/components/systems/funnel-scroll-story";
 import {
   GoogleAdsLogo,
   GoogleAnalyticsLogo,
@@ -102,18 +100,14 @@ export default function ClientReportingPage() {
           </div>
         </section>
 
-        {/* 3D Workflow Hero: Assemble Scene */}
+        {/* Scroll story: the funnel, top to bottom */}
         <section className="relative mx-auto max-w-[75rem] px-6 pb-20">
-          <div className="mb-4 text-center">
+          <div className="mb-2 text-center">
             <span className="font-mono text-xs uppercase tracking-wider text-muted">
-              Interactive 3D Assembly · Funnel Architecture
+              Scroll to follow a report · Funnel Architecture
             </span>
           </div>
-          <div className="overflow-x-clip rounded-[1.5rem] border border-line bg-white shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
-            <AssembleController>
-              <AssembleScene />
-            </AssembleController>
-          </div>
+          <FunnelScrollStory />
         </section>
 
         {/* How It Works (Step-by-Step Pipeline) */}
