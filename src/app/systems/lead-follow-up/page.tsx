@@ -5,60 +5,22 @@ import Link from "next/link";
 import {
   GitCommit,
   ArrowRight,
-  CheckCircle2,
   Clock,
   Sparkles,
   ChevronDown,
-  RotateCcw,
   Zap,
-  Mail,
   UserCheck,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { Tabs, TabsList, TabsTab, TabsPanel } from "@/components/ui/tabs";
-import {
-  HubSpotLogo,
-  TypeformLogo,
-  GoogleCalendarLogo,
-  GmailLogo,
-} from "@/components/assemble/company-icons";
+import { LeadStory } from "@/components/lead-follow-up/lead-story";
 
 export default function LeadFollowUpPage() {
-  const [approved, setApproved] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
-  const [activeStepTab, setActiveStepTab] = useState<number>(0);
 
   const toggleFaq = (idx: number) => {
     setActiveFaq(activeFaq === idx ? null : idx);
   };
-
-  const CADENCE_STEPS = [
-    {
-      timing: "Minute 3",
-      title: "Touch 1: Immediate Tailored Intake Reply",
-      subject: "Re: Partnership inquiry from Acme Corp",
-      snippet:
-        "Hi Marcus, saw your note on scaling paid acquisition for Acme's Q4 launch. Took a quick look at your current meta library—spotted two quick wins on conversion tracking. Do you have 15 mins this Thursday to compare notes?",
-      status: "Dispatched upon approval",
-    },
-    {
-      timing: "Day 2",
-      title: "Touch 2: Contextual Value Nudge",
-      subject: "Quick case study relevant to Acme's checkout flow",
-      snippet:
-        "Hey Marcus, circling back with a 2-page teardown we did for a similar B2B SaaS in your space that dropped CPA by 31%. Grabbing 15 mins with our director here: botlane.io/calendar/marcus",
-      status: "Queued (halts if prospect replies)",
-    },
-    {
-      timing: "Day 5",
-      title: "Touch 3: Clean Polite Check-In",
-      subject: "Closing the loop on Acme's acquisition sprint",
-      snippet:
-        "Hi Marcus, assume timing might be tight for Q4. I'll park our deck for now so I don't clutter your inbox, but feel free to grab time whenever your roadmap clears up.",
-      status: "Final gentle touchpoint",
-    },
-  ];
 
   return (
     <>
@@ -128,175 +90,16 @@ export default function LeadFollowUpPage() {
           </div>
         </section>
 
-        {/* How It Works (The Line Pipeline) */}
-        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
-          <div className="max-w-xl">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Linear Architecture
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              From web form to confirmed calendar invite.
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Most agency leads go cold because replies take 4+ hours. Lane eliminates the gap completely.
-            </p>
-          </div>
+        <LeadStory />
 
-          <div className="mt-12 grid gap-6 md:grid-cols-4">
-            {[
-              {
-                step: "01",
-                title: "Instant Webhook",
-                desc: "Prospect submits form on your website via Typeform, Webflow, or HubSpot. Lane receives payload in real-time.",
-              },
-              {
-                step: "02",
-                title: "Contextual Enrichment",
-                desc: "Lane scrapes the prospect domain, verifies company headcount, and detects tech stack to personalize the angle.",
-              },
-              {
-                step: "03",
-                title: "Drafting in Your Tone",
-                desc: "Drafts a sharp, human reply referencing their exact challenge with your live calendar scheduling link.",
-              },
-              {
-                step: "04",
-                title: "Calibrated Nudges",
-                desc: "If no booking after 48 hrs, sends a value-packed follow-up. Pauses permanently the millisecond they reply or book.",
-              },
-            ].map((col) => (
-              <div key={col.step} className="rounded-[1.125rem] border border-line bg-white p-6 shadow-sm">
-                <div className="font-mono text-2xl font-bold text-ink">{col.step}</div>
-                <h3 className="mt-4 text-base font-semibold text-ink">{col.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted">{col.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Tools It Connects */}
-        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Supported Integrations
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink">
-              Seamless connection to your sales tools.
-            </h2>
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              { name: "Typeform / Forms", icon: TypeformLogo, desc: "Instant form ingestion and qualification logic" },
-              { name: "HubSpot CRM", icon: HubSpotLogo, desc: "Automatic deal creation, pipeline stage progression" },
-              { name: "Google Calendar", icon: GoogleCalendarLogo, desc: "Real-time availability check, auto-reserving slots" },
-              { name: "Gmail / GSuite", icon: GmailLogo, desc: "Sends from your authentic team member email address" },
-            ].map((tool) => {
-              const Icon = tool.icon;
-              return (
-                <div key={tool.name} className="rounded-[1rem] border border-line bg-white p-5 text-center shadow-sm">
-                  <div className="mx-auto flex size-12 items-center justify-center rounded-[0.75rem] bg-surface p-2.5">
-                    <Icon size={26} />
-                  </div>
-                  <div className="mt-4 text-sm font-semibold text-ink">{tool.name}</div>
-                  <div className="mt-1 text-xs text-muted leading-snug">{tool.desc}</div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Interactive Approval & Output Workspace */}
-        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
-          <div className="max-w-xl">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Approval Desk Experience
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              What you approve.
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Lane prepares the response within 90 seconds. You review the prospect background and click Approve.
-            </p>
-          </div>
-
-          <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-6 sm:p-8 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
-              <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-[0.5rem] bg-lane/10 text-lane">
-                  <Mail size={18} />
-                </span>
-                <div>
-                  <div className="text-sm font-semibold text-ink">
-                    Inbound Prospect: Marcus Chen · VP Growth @ Acme SaaS
-                  </div>
-                  <div className="text-xs text-muted">
-                    Source: Website Enterprise Form · Budget: $25k+/mo
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setApproved(!approved)}
-                  className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
-                    approved
-                      ? "bg-emerald-600 text-white shadow-sm"
-                      : "bg-btn text-white hover:bg-btn-hover"
-                  }`}
-                >
-                  {approved ? (
-                    <>
-                      <CheckCircle2 size={14} />
-                      <span>Approved & Dispatched (2m 14s elapsed)</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles size={14} className="text-lane" />
-                      <span>Approve & Send Draft</span>
-                    </>
-                  )}
-                </button>
-
-                {approved && (
-                  <button
-                    type="button"
-                    onClick={() => setApproved(false)}
-                    className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line text-muted hover:text-ink"
-                    title="Reset simulation"
-                  >
-                    <RotateCcw size={14} />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Interactive Cadence Inspector Tabs */}
-            <Tabs value={activeStepTab} onValueChange={(v) => setActiveStepTab(v as number)} className="mt-6">
-              <TabsList className="max-w-full! overflow-x-auto!">
-                {CADENCE_STEPS.map((step, idx) => (
-                  <TabsTab key={step.timing} value={idx} className="text-xs!">
-                    {step.timing} ({idx === 0 ? "Initial" : `Follow-up #${idx}`})
-                  </TabsTab>
-                ))}
-              </TabsList>
-
-              <TabsPanel value={activeStepTab} className="mt-5! rounded-[1rem]! border! border-line/80! bg-surface/40! p-5!">
-                <div className="flex items-center justify-between text-xs font-mono text-muted border-b border-line/50 pb-2">
-                  <span>Subject: {CADENCE_STEPS[activeStepTab].subject}</span>
-                  <span className="text-emerald-700 font-semibold">{CADENCE_STEPS[activeStepTab].status}</span>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-ink font-serif italic">
-                  &ldquo;{CADENCE_STEPS[activeStepTab].snippet}&rdquo;
-                </p>
-                <div className="mt-5 pt-3 border-t border-line/50 flex items-center justify-between text-[0.6875rem] text-muted">
-                  <span>Sent via your agency domain: hello@youragency.com</span>
-                  <span className="text-lane font-mono">Auto-pause if prospect books discovery call</span>
-                </div>
-              </TabsPanel>
-            </Tabs>
-          </div>
+        {/* Closing */}
+        <section className="mx-auto max-w-[75rem] px-6 pt-20 pb-20 text-center sm:pt-28">
+          <h2 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">
+            Every lead, followed up.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+            From form fill to booked call, with every reply approved by you. Built, managed, and overseen by Botlane.
+          </p>
         </section>
 
         {/* Lead FAQ */}
