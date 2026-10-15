@@ -116,9 +116,9 @@ export default function TermsOfServicePage() {
             <section>
               <h2 className="text-lg font-bold text-ink">7. Governing Law & Dispute Resolution</h2>
               <p className="mt-2 text-muted">
-                These Terms shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its
+                These Terms shall be governed by and construed in accordance with the laws of the State of Wyoming, without regard to its
                 conflict of law provisions. Any dispute arising out of or relating to these Terms shall be resolved through confidential,
-                binding arbitration in San Francisco, California.
+                binding arbitration in Sheridan, Wyoming.
               </p>
             </section>
 
@@ -130,7 +130,7 @@ export default function TermsOfServicePage() {
               <div className="mt-3 rounded-[0.75rem] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
                 BotLane LLC · Legal Department<br />
                 Email: legal@botlane.io<br />
-                Address: 548 Market St, Suite 89201, San Francisco, CA 94104
+                Address: 30 N Gould St, Ste R, Sheridan, WY 82801
               </div>
             </section>
           </div>
