@@ -48,7 +48,7 @@ export default function LeadFollowUpPage() {
           </div>
 
           <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
-            Never lose another lead <br />
+            Never lose another lead <br className="hidden sm:block" />
             to a slow reply.
           </h1>
 
@@ -75,17 +75,17 @@ export default function LeadFollowUpPage() {
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 border-y border-line py-5 text-xs text-muted">
+          <div className="mt-12 flex flex-col items-center gap-3 border-y border-line py-5 text-xs text-muted sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
             <div className="flex items-center gap-2">
               <Zap size={15} className="text-lane" />
               <span><strong className="text-ink font-mono">&lt; 180s</strong> average response speed</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <UserCheck size={15} className="text-emerald-600" />
               <span><strong className="text-ink font-mono">+34%</strong> discovery call booking rate</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <Clock size={15} className="text-ink" />
               <span>Halts instantly when prospect books</span>
@@ -143,11 +143,11 @@ export default function LeadFollowUpPage() {
                 className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <span className="font-semibold text-sm text-ink">{faq.q}</span>
                   <ChevronDown
                     size={14}
-                    className={`transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
+                    className={`shrink-0 transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
                   />
                 </div>
                 {activeFaq === idx && (

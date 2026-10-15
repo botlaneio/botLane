@@ -41,7 +41,8 @@ const CAPTIONS = [
   },
 ];
 
-const MOBILE_QUERY = "(max-width: 767px)";
+// Phones, and tablets held upright: the tall layout fills a portrait screen far better than the wide one.
+const MOBILE_QUERY = "(max-width: 767px), (max-width: 1199px) and (orientation: portrait)";
 const REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
 
 function useMedia(query: string) {
@@ -174,7 +175,7 @@ export function ReportingStory() {
     <section
       ref={stageRef}
       aria-label="How Client reporting works"
-      className={still ? "relative" : "relative h-[560vh] md:h-[820vh]"}
+      className={still ? "relative" : mobile ? "relative h-[560vh]" : "relative h-[820vh]"}
     >
       <div
         className={
@@ -185,7 +186,7 @@ export function ReportingStory() {
       >
         {/* Captions: one at a time while scrolling, all listed with reduced motion */}
         <div className="shrink-0">
-          <ol className={still ? "grid gap-6 md:grid-cols-2" : "relative h-[10.5rem] sm:h-[8.5rem] md:h-[7.5rem]"}>
+          <ol className={still ? "grid gap-6 md:grid-cols-2" : "relative h-[11.5rem] sm:h-[8.5rem] md:h-[7.5rem]"}>
             {CAPTIONS.map((c, i) => (
               <li key={c.title} data-caption className={still ? "" : "absolute inset-x-0 top-0"}>
                 <div className="font-mono text-xs font-semibold text-lane">

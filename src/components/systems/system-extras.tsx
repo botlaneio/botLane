@@ -156,7 +156,7 @@ export function SystemPricing({ system }: { system: SystemId }) {
           </div>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           {BUNDLES.map((b) => (
             <Link
               key={b.name}
