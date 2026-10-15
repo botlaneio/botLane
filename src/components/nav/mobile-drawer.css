@@ -1,0 +1,64 @@
+/* Phone menu motion. Rows rise in each time the drawer opens; system cards each time Systems opens. */
+
+/* A red edge that draws down the panel's left side as it opens. */
+.mdr::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--bl-red, #e0312b), rgba(224, 49, 43, 0));
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.mdr[data-open]::before {
+  animation: mdr-edge 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.mdr[data-open] .mdr-rise {
+  animation: mdr-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+[data-systems-open] .mdr-card {
+  animation: mdr-rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.mdr-pulse {
+  animation: mdr-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes mdr-edge {
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes mdr-rise {
+  from {
+    opacity: 0;
+    transform: translateX(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes mdr-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 164, 71, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 0.3rem rgba(34, 164, 71, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mdr[data-open]::before {
+    animation: none;
+    transform: scaleY(1);
+  }
+  .mdr[data-open] .mdr-rise,
+  [data-systems-open] .mdr-card,
+  .mdr-pulse {
+    animation: none;
+  }
+}
