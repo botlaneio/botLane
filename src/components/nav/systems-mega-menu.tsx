@@ -2,7 +2,7 @@
 
 import { useState, type ComponentType, type Ref } from "react";
 import Link from "next/link";
-import { Activity, ArrowRight, Blocks, Box, ChevronRight, FileText, Layers, Mail, RotateCcw, ShieldCheck, UserRound, Zap, ClipboardList } from "lucide-react";
+import { Activity, ArrowRight, Blocks, Box, ChevronRight, FileText, Layers, LayoutDashboard, Mail, RotateCcw, Settings, ShieldCheck, UserRound, Zap, ClipboardList } from "lucide-react";
 import {
   GoogleAdsLogo,
   GoogleAnalyticsLogo,
@@ -187,7 +187,7 @@ export function SystemsMegaMenu({ ref, onNavigate }: { ref?: Ref<HTMLDivElement>
     <div ref={ref} className="smm absolute top-full right-6 left-6 pt-2.5">
       <div className="smm-panel grid grid-cols-[14.5rem_1fr] overflow-hidden rounded-[1.5rem] border border-line bg-white/95 shadow-[0_1.75rem_4rem_rgba(20,20,40,0.14)] backdrop-blur-xl">
         {/* Sidebar */}
-        <div className="border-r border-line bg-[#fbfbfa] p-4">
+        <div className="flex flex-col border-r border-line bg-[#fbfbfa] p-4">
           <div className="px-3 pt-2 pb-3 font-mono text-[0.625rem] font-semibold tracking-[0.16em] text-faint uppercase">Systems</div>
           <ul className="space-y-1">
             {side.map(({ title, href, icon: I, key }, i) => {
@@ -214,6 +214,26 @@ export function SystemsMegaMenu({ ref, onNavigate }: { ref?: Ref<HTMLDivElement>
               );
             })}
           </ul>
+
+          {/* Account shortcuts. There is no live account area yet, so both go through sign-in. */}
+          <div className="smm-rise mt-auto grid grid-cols-2 gap-2 border-t border-line pt-4" style={{ animationDelay: "0.3s" }}>
+            <Link
+              href="/signin"
+              onClick={onNavigate}
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-[0.5rem] bg-btn text-[0.75rem] font-medium text-white transition-colors hover:bg-btn-hover"
+            >
+              <LayoutDashboard size={14} />
+              Dashboard
+            </Link>
+            <Link
+              href="/signin"
+              onClick={onNavigate}
+              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-[0.5rem] border border-line bg-white text-[0.75rem] font-medium text-ink transition-colors hover:border-ink/30"
+            >
+              <Settings size={14} />
+              Settings
+            </Link>
+          </div>
         </div>
 
         {/* Cards */}

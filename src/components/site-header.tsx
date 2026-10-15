@@ -124,6 +124,16 @@ export function SiteHeader() {
     };
   }, [megaMenuOpen]);
 
+  // Keep the page still behind the open drawer.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileMenuOpen]);
+
   const handleLinkClick = () => {
     setMegaMenuOpen(false);
     setMobileMenuOpen(false);
@@ -231,7 +241,7 @@ export function SiteHeader() {
             {cta && (
               <Link
                 href={cta.href}
-                className="group relative inline-flex h-9 items-center gap-1.5 rounded-[0.5rem] bg-btn px-4 text-[0.8125rem] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_0.25rem_0.75rem_rgba(0,0,0,0.08)] transition-all hover:bg-btn-hover active:scale-[0.98] whitespace-nowrap shrink-0"
+                className="group relative hidden h-9 items-center gap-1.5 rounded-[0.5rem] bg-btn md:inline-flex px-4 text-[0.8125rem] font-medium text-white shadow-[0_1px_2px_rgba(0,0,0,0.08),0_0.25rem_0.75rem_rgba(0,0,0,0.08)] transition-all hover:bg-btn-hover active:scale-[0.98] whitespace-nowrap shrink-0"
               >
                 <span>{cta.label}</span>
                 <ArrowRight
@@ -254,109 +264,103 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="border-t border-line bg-white/95 px-6 pt-4 pb-6 shadow-xl backdrop-blur-xl md:hidden">
-            <nav className="flex flex-col space-y-1">
-              {/* Accordion for Systems */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setMobileSystemsOpen(!mobileSystemsOpen)}
-                  className="flex w-full items-center justify-between rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
-                >
-                  <span className="flex items-center gap-2">
-                    <Sliders size={16} />
-                    <span>Systems</span>
-                  </span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-200 ${
-                      mobileSystemsOpen ? "rotate-180 text-ink" : "text-muted"
-                    }`}
-                  />
-                </button>
+      </header>
 
-                {mobileSystemsOpen && (
-                  <div className="my-1.5 ml-4 space-y-1.5 border-l-2 border-line pl-3">
-                    {SYSTEMS.map((item) => (
-                      <a
+      {/* Mobile drawer: slides in from the right over half the screen, with the desktop nav laid out vertically. */}
+      <div className="md:hidden" inert={!mobileMenuOpen}>
+        <div
+          aria-hidden
+          onClick={() => setMobileMenuOpen(false)}
+          className={`fixed inset-0 z-50 bg-ink/25 backdrop-blur-[2px] transition-opacity duration-300 ${
+            mobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        />
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className={`fixed top-0 right-0 bottom-0 z-50 flex w-1/2 min-w-[17rem] max-w-[24rem] flex-col border-l border-line bg-white shadow-[-1rem_0_3rem_rgba(20,20,40,0.12)] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex h-[4rem] shrink-0 items-center justify-end px-4">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+              className="flex size-9 items-center justify-center rounded-[0.5rem] text-ink-2 transition-colors hover:bg-surface"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto px-3 pb-6">
+            <button
+              type="button"
+              onClick={() => setMobileSystemsOpen(!mobileSystemsOpen)}
+              aria-expanded={mobileSystemsOpen}
+              className={`flex w-full items-center justify-between rounded-[0.5rem] px-3 py-2.5 text-[0.9375rem] font-medium transition-colors hover:bg-surface ${
+                mobileSystemsOpen ? "text-lane" : "text-ink-2"
+              }`}
+            >
+              <span>Systems</span>
+              <ChevronDown
+                size={16}
+                className={`transition-transform duration-200 ${mobileSystemsOpen ? "rotate-180" : "text-muted"}`}
+              />
+            </button>
+            <div
+              className={`grid transition-[grid-template-rows] duration-300 ${
+                mobileSystemsOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="my-1 ml-3 space-y-0.5 border-l-2 border-line pl-2">
+                  <Link href="/systems" onClick={handleLinkClick} className="flex items-center gap-2.5 rounded-[0.5rem] px-2.5 py-2 text-[0.875rem] text-ink-2 hover:bg-surface hover:text-ink">
+                    <Sliders size={15} className="shrink-0 text-muted" />
+                    All systems
+                  </Link>
+                  {SYSTEMS.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
                         key={item.title}
                         href={item.href}
                         onClick={handleLinkClick}
-                        className="block rounded-[0.5rem] px-2.5 py-1.5 text-xs text-muted hover:bg-surface hover:text-ink"
+                        className="flex items-start gap-2.5 rounded-[0.5rem] px-2.5 py-2 hover:bg-surface"
                       >
-                        <div className="font-semibold text-ink">{item.title}</div>
-                        <div className="text-[0.6875rem] text-muted">{item.highlight}</div>
-                      </a>
-                    ))}
-                  </div>
-                )}
+                        <Icon size={15} className="mt-0.5 shrink-0 text-lane" />
+                        <span>
+                          <span className="block text-[0.875rem] text-ink">{item.title}</span>
+                          <span className="block text-[0.75rem] text-muted">{item.highlight}</span>
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
+            </div>
 
-              <Link
-                href="/systems"
-                onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
-              >
-                All 3 Systems (Overview)
-              </Link>
+            <Link href="/how-it-works" onClick={handleLinkClick} className="flex items-center rounded-[0.5rem] px-3 py-2.5 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink">How it works</Link>
+            <Link href="/pricing" onClick={handleLinkClick} className="flex items-center rounded-[0.5rem] px-3 py-2.5 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink">Pricing</Link>
+            <Link href="/company/about" onClick={handleLinkClick} className="flex items-center rounded-[0.5rem] px-3 py-2.5 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink">About</Link>
+            <Link href="/blog" onClick={handleLinkClick} className="flex items-center rounded-[0.5rem] px-3 py-2.5 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink">Blog</Link>
+          </nav>
 
+          {cta && (
+            <div className="shrink-0 border-t border-line p-4">
               <Link
-                href="/how-it-works"
+                href={cta.href}
                 onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-btn text-sm font-medium text-white shadow-sm transition-all hover:bg-btn-hover"
               >
-                How it works
+                <span>{cta.label}</span>
+                <ArrowRight size={14} />
               </Link>
-
-              <Link
-                href="/pricing"
-                onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
-              >
-                Pricing Retainer
-              </Link>
-
-              <Link
-                href="/company/about"
-                onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
-              >
-                About
-              </Link>
-              <Link
-                href="/blog"
-                onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-ink-2 transition-colors hover:bg-surface hover:text-ink"
-              >
-                Blog
-              </Link>
-
-              <Link
-                href="/demo"
-                onClick={handleLinkClick}
-                className="rounded-[0.5rem] px-3 py-2.5 text-sm font-medium text-lane transition-colors hover:bg-surface"
-              >
-                <span className="text-lane-gradient">Book a 20-min Demo</span>
-              </Link>
-            </nav>
-
-            {cta && (
-              <div className="mt-4 pt-4 border-t border-line/60">
-                <Link
-                  href={cta.href}
-                  onClick={handleLinkClick}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-[0.5rem] bg-btn text-sm font-medium text-white transition-all hover:bg-btn-hover shadow-sm"
-                >
-                  <span>{cta.label}</span>
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
-            )}
-          </div>
-        )}
-      </header>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Interactive Walkthrough Modal */}
       <DemoModal isOpen={demoOpen} onClose={() => setDemoOpen(false)} />
