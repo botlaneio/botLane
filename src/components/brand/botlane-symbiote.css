@@ -1,0 +1,46 @@
+/* BotLane Symbiote: the living halftone mark used in the footer.
+   Supplied in BotLaneSymbioteReact.zip; motion values kept as delivered. */
+.botlane-symbiote {
+  display: inline-flex;
+  flex: none;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  isolation: isolate;
+}
+.botlane-symbiote svg { width: 100%; height: 100%; overflow: visible; }
+.botlane-symbiote__body { transform-origin: center; transform-box: view-box; }
+.botlane-symbiote__dot {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.botlane-symbiote.is-animated .botlane-symbiote__body {
+  animation: symbiote-breath 5.8s ease-in-out infinite;
+}
+.botlane-symbiote.is-animated .botlane-symbiote__dot {
+  animation: symbiote-cell var(--period) ease-in-out var(--phase) infinite alternate;
+}
+/* Offscreen: hold the current frame instead of animating ~300 dots nobody can see. */
+.botlane-symbiote[data-offscreen] .botlane-symbiote__body,
+.botlane-symbiote[data-offscreen] .botlane-symbiote__dot {
+  animation-play-state: paused;
+}
+/* The overall silhouette expands softly on the inhale and settles on exhale. */
+@keyframes symbiote-breath {
+  0%,100% { transform: scale(0.975) rotate(-0.3deg); }
+  48% { transform: scale(1.025) rotate(0.45deg); }
+  67% { transform: scale(1.01) rotate(0deg); }
+}
+/* Cells move slightly out of phase, making a slow organic travelling ripple. */
+@keyframes symbiote-cell {
+  0% { transform: translate(0,0) scale(0.87); }
+  43% { transform: translate(calc(var(--dx) * var(--sym-intensity)),calc(var(--dy) * var(--sym-intensity))) scale(1.04); }
+  100% { transform: translate(calc(var(--dx) * var(--sym-intensity) * -0.4),calc(var(--dy) * var(--sym-intensity) * -0.4)) scale(0.92); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .botlane-symbiote *, .botlane-symbiote *::before, .botlane-symbiote *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
