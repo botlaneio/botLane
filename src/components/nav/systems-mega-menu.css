@@ -1,0 +1,93 @@
+/* Systems mega menu motion. Everything plays once when the menu mounts (opens);
+   a few quiet loops keep the illustrations alive while it stays open. */
+
+.smm-panel { animation: smm-panel-in 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both; transform-origin: 50% 0; }
+@keyframes smm-panel-in { from { opacity: 0; transform: translateY(-0.375rem) scale(0.985); } }
+
+.smm-rise { animation: smm-rise 0.42s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes smm-rise { from { opacity: 0; transform: translateY(0.5rem); } }
+
+.smm-art { position: relative; height: 8.25rem; margin: 0.5rem -0.25rem 0.75rem; }
+
+/* Strokes that draw on */
+.smm-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: smm-draw 0.9s cubic-bezier(0.45, 0, 0.2, 1) 0.3s forwards; }
+@keyframes smm-draw { to { stroke-dashoffset: 0; } }
+
+/* 01 Funnel: sources stack into one report */
+.smm-funnel { display: flex; align-items: center; justify-content: center; perspective: 40rem; }
+.smm-funnel__stack { position: relative; width: 11rem; height: 6.25rem; transform: rotateY(-16deg) rotateX(10deg) rotateZ(-2deg); transform-style: preserve-3d; }
+.smm-funnel__card, .smm-funnel__ghost {
+  position: absolute; inset: 0; border-radius: 0.75rem; background: #fff;
+  border: 1px solid #ececef; box-shadow: 0 0.75rem 1.75rem rgba(20, 20, 40, 0.08);
+}
+.smm-funnel__ghost { opacity: 0.55; animation: smm-ghost 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.smm-funnel__ghost--1 { transform: translate(-0.5rem, -0.45rem); animation-delay: 0.12s; }
+.smm-funnel__ghost--2 { transform: translate(-1rem, -0.9rem); opacity: 0.3; animation-delay: 0.04s; }
+@keyframes smm-ghost { from { opacity: 0; transform: translate(-2rem, -1.6rem); } }
+.smm-funnel__card { padding: 0.6rem 0.7rem; animation: smm-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s both; }
+.smm-funnel__line { display: block; height: 0.25rem; border-radius: 1rem; background: #f0f0f2; margin-bottom: 0.3rem; }
+.smm-funnel__line--a { width: 45%; }
+.smm-funnel__line--b { width: 28%; }
+.smm-funnel__chart { position: absolute; left: 0.5rem; right: 0.5rem; bottom: 0.45rem; width: calc(100% - 1rem); }
+.smm-funnel__chart path { fill: none; stroke: #e0312b; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.smm-bar { fill: #f2a7a3; transform-box: fill-box; transform-origin: 50% 100%; animation: smm-bar 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.smm-bar:last-child { fill: #e0312b; }
+@keyframes smm-bar { from { transform: scaleY(0); } }
+.smm-card[data-focus] .smm-funnel__stack { transform: rotateY(-8deg) rotateX(6deg) rotateZ(-1deg) translateY(-0.2rem); }
+.smm-funnel__stack { transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* 02 Line: every channel runs into one red point */
+.smm-line__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.smm-line__wire { fill: none; stroke: #dcdce2; stroke-width: 1.2; }
+.smm-line__flow {
+  fill: none; stroke: #e0312b; stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 0.06 0.94; stroke-dashoffset: 1; opacity: 0;
+  animation: smm-flow 2.4s ease-in-out infinite;
+}
+@keyframes smm-flow {
+  0% { stroke-dashoffset: 1.02; opacity: 0; }
+  10% { opacity: 1; }
+  70% { opacity: 1; }
+  80%, 100% { stroke-dashoffset: 0.02; opacity: 0; }
+}
+.smm-line__node {
+  position: absolute; display: flex; width: 2rem; height: 2rem; align-items: center; justify-content: center;
+  border-radius: 999px; background: #fff; color: #1d1d1f; transform: translate(-50%, -50%);
+  box-shadow: 0 0.35rem 1rem rgba(20, 20, 40, 0.1); animation: smm-pop 0.4s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+@keyframes smm-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); } }
+.smm-line__target {
+  position: absolute; width: 0.9rem; height: 0.9rem; border-radius: 999px; background: #e0312b;
+  transform: translate(-50%, -50%); box-shadow: 0 0 0 0.35rem rgba(224, 49, 43, 0.1);
+  animation: smm-pop 0.4s cubic-bezier(0.3, 1.4, 0.5, 1) 0.8s both;
+}
+.smm-line__ring {
+  position: absolute; inset: 0; border-radius: 999px; border: 1px solid rgba(224, 49, 43, 0.45);
+  animation: smm-ring 2.4s ease-out 1.1s infinite;
+}
+.smm-line__ring--late { animation-delay: 2.3s; }
+@keyframes smm-ring { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.2); opacity: 0; } }
+
+/* 03 Loop: the reminder arc comes round, then turns slowly */
+.smm-loop { display: flex; align-items: center; justify-content: center; }
+.smm-loop__svg { width: 8.25rem; height: 8.25rem; overflow: visible; }
+.smm-loop__track { fill: #fbfbfa; stroke: #ececef; stroke-width: 1.2; }
+.smm-loop__arc { fill: none; stroke: #e0312b; stroke-width: 2; stroke-linecap: round; }
+.smm-loop__head { fill: #e0312b; }
+.smm-loop__stop { fill: #fff; stroke: #e0312b; stroke-width: 2; animation: smm-fade 0.3s ease-out 0.8s both; }
+.smm-loop__stop--late { animation-delay: 1.1s; }
+@keyframes smm-fade { from { opacity: 0; } }
+.smm-loop__spin { transform-origin: 70px 70px; animation: smm-spin 14s linear 1.3s infinite; }
+@keyframes smm-spin { to { transform: rotate(360deg); } }
+.smm-card[data-focus] .smm-loop__spin { animation-duration: 6s; }
+.smm-loop__doc {
+  position: absolute; left: 50%; top: 50%; display: flex; width: 3rem; height: 3rem; align-items: center; justify-content: center;
+  border-radius: 999px; background: #fff; color: #1d1d1f; transform: translate(-50%, -50%);
+  box-shadow: 0 0.6rem 1.5rem rgba(20, 20, 40, 0.1); animation: smm-pop 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smm *, .smm { animation: none !important; transition: none !important; }
+  .smm-draw { stroke-dashoffset: 0; }
+  .smm-line__flow, .smm-line__ring { display: none; }
+}
