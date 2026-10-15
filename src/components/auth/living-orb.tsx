@@ -5,14 +5,17 @@ import { useEffect, useRef } from "react";
 /**
  * A perfectly round halftone orb that feels alive: a dense diagonal grid of
  * dots with a crisp circular edge that gently breathes, and a slow ripple
- * travelling through the dot sizes. Colours come only from the approved logo palette and run
- * diagonally from lilac through Lane red to coral, turning slowly. Drawn on a
+ * travelling through the dot sizes. Colours come only from the approved logo
+ * palette and run diagonally across the orb, turning slowly. Drawn on a
  * canvas with no tile or background, paused while off screen, and held still
  * for visitors who prefer reduced motion.
  */
 
-// Palette taken verbatim from the "botLane Red Logo" file.
-const STOPS: [number, string][] = [
+// Palettes taken verbatim from the "botLane Red Logo" file.
+export type OrbStops = readonly (readonly [number, string])[];
+
+/** Sign-in: lilac through Lane red to coral. */
+export const ORB_EMBER: OrbStops = [
   [0, "#907adb"],
   [0.22, "#9a86e0"],
   [0.45, "#be2921"],
@@ -21,30 +24,41 @@ const STOPS: [number, string][] = [
   [1, "#ff8a6b"],
 ];
 
-const RGB = STOPS.map(([p, hex]) => [p, [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))] as const);
+/** Sign-up: deep lilac up to near-white. */
+export const ORB_LILAC: OrbStops = [
+  [0, "#907adb"],
+  [0.3, "#a592e5"],
+  [0.55, "#bfb1f0"],
+  [0.8, "#dbd3f8"],
+  [1, "#f6f4fd"],
+];
 
-function mix(t: number) {
-  const k = Math.min(1, Math.max(0, t));
-  for (let i = 1; i < RGB.length; i++) {
-    const [p1, c1] = RGB[i];
-    const [p0, c0] = RGB[i - 1];
-    if (k <= p1) {
-      const f = (k - p0) / (p1 - p0);
-      return `rgb(${c0.map((v, j) => Math.round(v + (c1[j] - v) * f)).join(",")})`;
+function makeMix(stops: OrbStops) {
+  const rgb = stops.map(([p, hex]) => [p, [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))] as const);
+  return (t: number) => {
+    const k = Math.min(1, Math.max(0, t));
+    for (let i = 1; i < rgb.length; i++) {
+      const [p1, c1] = rgb[i];
+      const [p0, c0] = rgb[i - 1];
+      if (k <= p1) {
+        const f = (k - p0) / (p1 - p0);
+        return `rgb(${c0.map((v, j) => Math.round(v + (c1[j] - v) * f)).join(",")})`;
+      }
     }
-  }
-  return `rgb(${RGB[RGB.length - 1][1].join(",")})`;
+    return `rgb(${rgb[rgb.length - 1][1].join(",")})`;
+  };
 }
 
 const COLS = 52; // grid lines across the orb's diameter
 
-export function LivingOrb({ className }: { className?: string }) {
+export function LivingOrb({ className, stops = ORB_EMBER }: { className?: string; stops?: OrbStops }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
+    const mix = makeMix(stops);
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let size = 0;
@@ -138,7 +152,7 @@ export function LivingOrb({ className }: { className?: string }) {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, []);
+  }, [stops]);
 
   return <canvas ref={canvasRef} className={className} aria-hidden="true" />;
 }
