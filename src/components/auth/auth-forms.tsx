@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Building2, Eye, EyeOff, Info, Lock, Mail, User } from "lucide-react";
+import { ArrowRight, Building2, Eye, EyeOff, Info, KeyRound, Lock, Mail, User } from "lucide-react";
 
 function GoogleIcon() {
   return (
@@ -142,46 +142,112 @@ const cardClass =
 const submitClass =
   "group flex h-11 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-btn text-sm font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-btn-hover active:scale-[0.99]";
 
+function SsoIcon() {
+  return <KeyRound className="size-[1.0625rem]" aria-hidden />;
+}
+
+const plainInputClass =
+  "h-12 w-full rounded-[0.625rem] border border-line bg-white px-3.5 text-[0.9375rem] text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
+
+const providerClass =
+  "flex h-12 w-full items-center justify-center gap-2.5 rounded-[0.625rem] border border-line bg-white text-[0.9375rem] font-medium text-ink transition hover:bg-surface";
+
+/** Sign-in form in the split layout: providers first, then email and password. */
 export function SignInForm() {
   const [notice, setNotice] = useState(false);
+  const [shown, setShown] = useState(false);
 
   return (
-    <div className={cardClass}>
+    <div>
+      <div className="grid grid-cols-2 gap-2.5">
+        <button type="button" onClick={() => setNotice(true)} className={providerClass}>
+          <GoogleIcon />
+          Google
+        </button>
+        <button type="button" onClick={() => setNotice(true)} className={providerClass}>
+          <MicrosoftIcon />
+          Microsoft
+        </button>
+      </div>
+      <button type="button" onClick={() => setNotice(true)} className={`${providerClass} mt-2.5`}>
+        <SsoIcon />
+        Continue with SSO
+      </button>
+
+      <div className="my-7 flex items-center gap-4 text-xs uppercase tracking-[0.12em] text-muted">
+        <span className="h-px flex-1 bg-line" />
+        or
+        <span className="h-px flex-1 bg-line" />
+      </div>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setNotice(true);
         }}
-        className="space-y-4"
       >
-        <Field label="Email address" icon={Mail}>
-          <input name="email" type="email" required autoComplete="email" placeholder="you@acmecorp.com" className={inputClass} />
-        </Field>
-        <Field label="Password" icon={Lock}>
-          <PasswordInput placeholder="Enter your password" autoComplete="current-password" />
-        </Field>
-        <div className="flex items-center justify-between">
+        <label className="block">
+          <span className="text-[0.9375rem] font-medium text-ink">Email</span>
+          <input name="email" type="email" required autoComplete="email" className={`${plainInputClass} mt-2`} />
+        </label>
+        <label className="mt-5 block">
+          <span className="text-[0.9375rem] font-medium text-ink">Password</span>
+          <span className="relative mt-2 block">
+            <input
+              name="password"
+              type={shown ? "text" : "password"}
+              required
+              minLength={8}
+              autoComplete="current-password"
+              className={`${plainInputClass} pr-12`}
+            />
+            <button
+              type="button"
+              onClick={() => setShown(!shown)}
+              aria-label={shown ? "Hide password" : "Show password"}
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-ink-2 transition hover:text-ink"
+            >
+              {shown ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+            </button>
+          </span>
+        </label>
+
+        <div className="mt-6">
           <Checkbox name="remember" defaultChecked>
-            Keep me signed in
+            Keep me signed in on this device
           </Checkbox>
-          <button type="button" onClick={() => setNotice(true)} className="text-sm text-lane underline-offset-2 hover:underline">
-            Forgot password?
-          </button>
         </div>
-        <button type="submit" className={submitClass}>
+
+        <button
+          type="submit"
+          className="mt-6 flex h-12 w-full items-center justify-center rounded-[0.625rem] bg-lane text-[0.9375rem] font-medium text-white shadow-[0_0.75rem_1.5rem_-0.875rem_rgba(224,49,43,0.8)] transition hover:bg-lane-strong active:scale-[0.99]"
+        >
           Sign in
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </button>
       </form>
 
       {notice && <NotOpenYet />}
 
-      <SocialButtons onClick={() => setNotice(true)} />
+      <div className="mt-6 space-y-2 text-center text-[0.9375rem] text-muted">
+        <p>
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="font-medium text-lane hover:underline">
+            Sign up
+          </Link>
+        </p>
+        <p>
+          Forgot your{" "}
+          <button type="button" onClick={() => setNotice(true)} className="font-medium text-lane underline underline-offset-2">
+            password
+          </button>
+          ?
+        </p>
+      </div>
 
-      <p className="mt-5 text-center text-xs leading-relaxed text-muted">
-        By signing in, you agree to our{" "}
-        <Link href="/legal/terms" className="hover:text-ink">Terms of Service</Link> and{" "}
-        <Link href="/legal/privacy" className="hover:text-ink">Privacy Policy</Link>.
+      <p className="mx-auto mt-12 max-w-[19rem] text-center text-[0.8125rem] leading-relaxed text-muted">
+        By continuing, I agree to botLane&apos;s{" "}
+        <Link href="/legal/terms" className="underline underline-offset-2 hover:text-ink">terms</Link> and{" "}
+        <Link href="/legal/privacy" className="underline underline-offset-2 hover:text-ink">privacy policy</Link>.
       </p>
     </div>
   );
