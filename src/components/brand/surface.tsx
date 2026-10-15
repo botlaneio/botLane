@@ -16,14 +16,12 @@ export const SURFACES: readonly Surface[] = ["light", "dark", "accent"];
 
 /**
  * Which approved logo goes on which surface. Change a surface's logo here and
- * every auto-selecting logo on the site follows.
- *  - light:  the #F8F8F6 canvas and white sections → R4 graphite tile, red dots
- *  - dark:   near-black sections like the footer   → R5 light tile, red dots
- *  - accent: red-orange brand sections              → R2 graphite tile, white dots
+ * every auto-selecting logo on the site follows. For now every surface uses
+ * R2, the graphite tile with white dots: the logo is graphite and white only.
  */
 export const SURFACE_LOGO: Record<Surface, LogoVariantId> = {
-  light: "graphite-red",
-  dark: "light-tile",
+  light: "graphite-white",
+  dark: "graphite-white",
   accent: "graphite-white",
 };
 
