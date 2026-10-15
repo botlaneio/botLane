@@ -49,7 +49,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: "Resources",
     links: [
-      { label: "Blog / Insights", href: null, proposedHref: "/blog" },
+      { label: "Blog / Insights", href: "/blog" },
       { label: "FAQs", href: "/#faq" },
       { label: "Integrations", href: null, proposedHref: "/integrations" },
       { label: "Release Notes", href: null, proposedHref: "/changelog" },
