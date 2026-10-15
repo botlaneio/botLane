@@ -7,6 +7,7 @@ import { BlogIndex } from "@/components/blog/blog-index";
 export const metadata: Metadata = {
   title: "Blog | BotLane",
   description: "Practical perspectives on AI operations, agency growth and the systems that keep work moving.",
+  alternates: { canonical: "https://botlane.io/blog" },
 };
 
 export default function BlogPage() {

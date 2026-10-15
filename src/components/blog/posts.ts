@@ -20,6 +20,9 @@ export const BLOG_CATEGORIES = [
 
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
 
+/** The live site's address, for canonical links, the sitemap and structured data. */
+export const SITE_URL = "https://botlane.io";
+
 export type BlogPost = {
   slug: string;
   category: BlogCategory;
@@ -27,53 +30,71 @@ export type BlogPost = {
   excerpt: string;
   art: BlogArtVariant;
   date?: string;
+  /** The same date as YYYY-MM-DD, for search engines. */
+  isoDate?: string;
   href?: string;
 };
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    slug: "human-in-the-loop",
-    category: "Agency Growth",
-    title: "What “human-in-the-loop” really means in AI operations",
-    excerpt:
-      "AI can do the work, but you stay in control. Here’s how we implement real human oversight at BotLane.",
+    slug: "ppc-report-commentary",
+    category: "Client Reporting",
+    title: "How to write PPC report commentary clients actually read",
+    excerpt: "A four-part structure, before-and-after examples and a summary template you can copy.",
     art: "skyline",
     date: "15 Oct 2026",
-    href: "/blog/human-in-the-loop",
+    isoDate: "2026-10-15",
+    href: "/blog/ppc-report-commentary",
   },
   {
-    slug: "operational-bottlenecks",
-    category: "AI Operations",
-    title: "5 operational bottlenecks that slow down growing agencies",
-    excerpt: "And how to remove them with simple, managed automation systems.",
+    slug: "google-ads-meta-ga4-numbers-dont-match",
+    category: "Client Reporting",
+    title: "Why Google Ads, Meta and GA4 never match (and how to explain it to clients)",
+    excerpt: "The usual causes, which number to report, and a note you can send your client.",
     art: "horizon",
     date: "15 Oct 2026",
-    href: "/blog/operational-bottlenecks",
+    isoDate: "2026-10-15",
+    href: "/blog/google-ads-meta-ga4-numbers-dont-match",
   },
   {
-    slug: "lane-for-client-reporting",
-    category: "Client Reporting",
-    title: "Placeholder Title 1",
-    excerpt: "Faster reports, fewer follow-ups, and happier clients.",
+    slug: "chase-overdue-retainer-invoice",
+    category: "Invoice Follow-up",
+    title: "How to chase an overdue retainer invoice without straining the relationship",
+    excerpt: "A reminder schedule, email wording for each step, and who should send it.",
     art: "gallery",
+    date: "15 Oct 2026",
+    isoDate: "2026-10-15",
+    href: "/blog/chase-overdue-retainer-invoice",
   },
   {
-    slug: "spreadsheets-to-automated-reports",
-    category: "Client Reporting",
-    title: "From spreadsheets to automated client reports",
-    excerpt: "What changes when the weekly report is prepared for you, and what stays with your team.",
+    slug: "agency-lead-response-time",
+    category: "Lead Follow-up",
+    title: "How fast should an agency reply to a new enquiry?",
+    excerpt: "Set a response standard your team can keep, and what a good first reply contains.",
     art: "folds",
     date: "15 Oct 2026",
-    href: "/blog/spreadsheets-to-automated-reports",
+    isoDate: "2026-10-15",
+    href: "/blog/agency-lead-response-time",
   },
   {
-    slug: "tools-agencies-use",
-    category: "Tools & Integrations",
-    title: "The tools agencies already use (and how we work with them)",
-    excerpt: "No new tools. Just reliable workflows across your existing stack.",
+    slug: "human-in-the-loop-ai-for-agencies",
+    category: "AI Operations",
+    title: "Human-in-the-loop AI for agencies: what approval should really mean",
+    excerpt: "Why agencies need approval, not monitoring, and the questions to ask any AI vendor.",
     art: "ribbons",
     date: "15 Oct 2026",
-    href: "/blog/tools-agencies-use",
+    isoDate: "2026-10-15",
+    href: "/blog/human-in-the-loop-ai-for-agencies",
+  },
+  {
+    slug: "automated-client-reporting-for-agencies",
+    category: "Client Reporting",
+    title: "Automated client reporting for agencies: what to automate and what to keep",
+    excerpt: "Split the work between automation and your team, and switch off spreadsheets safely.",
+    art: "corridor",
+    date: "15 Oct 2026",
+    isoDate: "2026-10-15",
+    href: "/blog/automated-client-reporting-for-agencies",
   },
   {
     slug: "why-we-built-botlane",
@@ -82,6 +103,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt: "A look at the thinking, decisions, and principles behind BotLane.",
     art: "ember",
     date: "15 Oct 2026",
+    isoDate: "2026-10-15",
     href: "/blog/why-we-built-botlane",
   },
 ];
