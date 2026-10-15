@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, MotionConfig, type Variants } from "motion/react";
 import { ArrowRight, Plug, ShieldCheck, Wrench } from "lucide-react";
-import { AgentDashboard } from "@/components/dashboard/agent-dashboard";
+import { AgentDashboard, AgentDashboardPhone, AgentDashboardTablet } from "@/components/dashboard/agent-dashboard";
 
 const EASING: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -98,9 +98,18 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.45, ease: EASING }}
           className="relative mx-auto mt-14 max-w-[86rem] px-6 pb-20 sm:px-10"
         >
-          <FitWidth>
-            <AgentDashboard />
-          </FitWidth>
+          {/* Desktop gets the full dashboard; tablets and phones get layouts made for them, at full size. */}
+          <div className="hidden xl:block">
+            <FitWidth>
+              <AgentDashboard />
+            </FitWidth>
+          </div>
+          <div className="hidden md:block xl:hidden">
+            <AgentDashboardTablet />
+          </div>
+          <div className="md:hidden">
+            <AgentDashboardPhone />
+          </div>
         </motion.div>
       </section>
     </MotionConfig>
@@ -108,8 +117,8 @@ export function Hero() {
 }
 
 /**
- * Lays the dashboard out at its full desktop width and scales it down to fit
- * narrower screens, so tablets and phones see the same picture, smaller.
+ * Lays the dashboard out at its full desktop width and scales it down slightly to fit
+ * smaller desktop windows. Tablets and phones get their own layouts instead.
  */
 function FitWidth({ children }: { children: React.ReactNode }) {
   const outerRef = useRef<HTMLDivElement>(null);
