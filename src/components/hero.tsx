@@ -23,8 +23,6 @@ export function Hero() {
     <MotionConfig reducedMotion="user">
       {/* Pulled up under the sticky header so the background runs to the top of the page. */}
       <section className="relative -mt-16 overflow-hidden bg-[#f8f8f6] pt-16">
-        <HeroBackdrop />
-
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -145,106 +143,6 @@ function FitWidth({ children }: { children: React.ReactNode }) {
       >
         {children}
       </div>
-    </div>
-  );
-}
-
-/**
- * Soft white architectural backdrop: a lit back wall, a large sweeping curved
- * wall rising behind the dashboard, and a glossy Lane-red sphere riding a thin
- * orbit line on the right. Pure SVG, so it stays crisp and light.
- */
-function HeroBackdrop() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[62rem] sm:h-[66rem]">
-      <svg
-        className="absolute inset-0 size-full"
-        viewBox="0 0 1600 1000"
-        preserveAspectRatio="xMidYMin slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="hero-light" cx="0.28" cy="0.08" r="0.9">
-            <stop offset="0" stopColor="#ffffff" />
-            <stop offset="0.55" stopColor="#f6f6f4" />
-            <stop offset="1" stopColor="#ebebe8" />
-          </radialGradient>
-          <linearGradient id="hero-pillar" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0" />
-            <stop offset="0.5" stopColor="#ffffff" stopOpacity="0.9" />
-            <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="hero-wall" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#ffffff" />
-            <stop offset="0.35" stopColor="#f3f3f1" />
-            <stop offset="1" stopColor="#e4e4e1" />
-          </linearGradient>
-          <linearGradient id="hero-wall-edge" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0.2" />
-            <stop offset="0.5" stopColor="#ffffff" />
-            <stop offset="1" stopColor="#ffffff" stopOpacity="0.2" />
-          </linearGradient>
-          <linearGradient id="hero-orbit" x1="700" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#e0312b" stopOpacity="0" />
-            <stop offset="0.45" stopColor="#e0312b" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#e0312b" stopOpacity="0.8" />
-          </linearGradient>
-          <radialGradient id="hero-sphere" cx="0.36" cy="0.3" r="0.75">
-            <stop offset="0" stopColor="#ff9a8c" />
-            <stop offset="0.28" stopColor="#f2463a" />
-            <stop offset="0.7" stopColor="#d1291f" />
-            <stop offset="1" stopColor="#8f1712" />
-          </radialGradient>
-          <radialGradient id="hero-sphere-shine" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="hero-sphere-glow" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#e0312b" stopOpacity="0.22" />
-            <stop offset="1" stopColor="#e0312b" stopOpacity="0" />
-          </radialGradient>
-          <filter id="hero-soft" x="-10%" y="-10%" width="120%" height="120%">
-            <feGaussianBlur stdDeviation="6" />
-          </filter>
-          <filter id="hero-shadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="22" />
-          </filter>
-        </defs>
-
-        {/* Back wall, lit from the upper left */}
-        <rect width="1600" height="1000" fill="url(#hero-light)" />
-
-        {/* Tall soft pillars of light at the edges */}
-        <rect x="40" y="0" width="150" height="1000" fill="url(#hero-pillar)" opacity="0.7" filter="url(#hero-soft)" />
-        <rect x="1440" y="0" width="120" height="1000" fill="url(#hero-pillar)" opacity="0.6" filter="url(#hero-soft)" />
-
-        {/* Sweeping curved wall: a shadow under it, the wall face, then its lit top edge */}
-        <ellipse cx="800" cy="1420" rx="1180" ry="960" fill="#d9d9d5" opacity="0.5" filter="url(#hero-shadow)" />
-        <ellipse cx="800" cy="1440" rx="1150" ry="960" fill="url(#hero-wall)" />
-        <ellipse cx="800" cy="1440" rx="1150" ry="960" stroke="url(#hero-wall-edge)" strokeWidth="3" />
-        <ellipse cx="800" cy="1500" rx="1020" ry="900" fill="#f1f1ef" opacity="0.55" />
-
-        {/* Orbit and the glossy sphere riding it */}
-        <ellipse
-          cx="1130"
-          cy="560"
-          rx="520"
-          ry="250"
-          transform="rotate(18 1130 560)"
-          stroke="url(#hero-orbit)"
-          strokeWidth="1.6"
-        />
-        <g>
-          <circle cx="1490" cy="408" r="120" fill="url(#hero-sphere-glow)" />
-          <ellipse cx="1496" cy="482" rx="48" ry="10" fill="#7a2a24" opacity="0.18" filter="url(#hero-soft)" />
-          <circle cx="1490" cy="408" r="52" fill="url(#hero-sphere)" />
-          <ellipse cx="1472" cy="388" rx="18" ry="12" fill="url(#hero-sphere-shine)" />
-          <circle cx="1490" cy="408" r="52" stroke="#ffffff" strokeOpacity="0.25" strokeWidth="1" />
-        </g>
-      </svg>
-
-      {/* Fade the backdrop into the page below */}
-      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-[#f8f8f6]" />
     </div>
   );
 }

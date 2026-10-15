@@ -122,6 +122,28 @@ export function SavingsSection() {
                 ~{opsHours} hrs / mo
               </span>
             </div>
+          </div>
+        </FadeUp>
+
+        {/* Right: Big Impact Dossier */}
+        <FadeUp delay={0.12} className="rounded-[1.5rem] border border-lane/20 bg-gradient-to-br from-white via-surface to-lane/[0.03] p-8 shadow-[0_1.25rem_3.125rem_rgba(20,20,40,0.06)] lg:col-span-7">
+          <div className="grid gap-6 sm:grid-cols-2">
+            {/* Metric 1 */}
+            <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-lane/25 hover:shadow-[0_0.75rem_1.75rem_rgba(20,20,40,0.07)]">
+              <div className="flex items-center gap-2 text-xs font-mono text-muted uppercase">
+                <Clock size={14} className="text-lane" />
+                <span>Labor Reclaimed</span>
+              </div>
+              <div className="mt-3 flex items-baseline gap-2">
+                <span className="text-[clamp(2.25rem,3.8vw,3.25rem)] font-bold tracking-tight text-ink">
+                  {totalHoursSaved}
+                </span>
+                <span className="font-mono text-sm text-muted">hrs / month</span>
+              </div>
+              <div className="mt-2 text-xs text-muted">
+                Equal to <strong>{(totalHoursSaved / 4).toFixed(1)} hours every single week</strong> previously spent on copy-pasting numbers.
+              </div>
+            </div>
 
             {/* Metric 2 */}
             <div className="rounded-[1.125rem] border border-line bg-white/90 p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-lane/25 hover:shadow-[0_0.75rem_1.75rem_rgba(20,20,40,0.07)]">
