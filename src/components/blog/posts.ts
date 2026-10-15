@@ -3,9 +3,9 @@ import type { BlogArtVariant } from "./blog-art";
 /**
  * Blog posts shown on /blog, newest first. The first three render as large cards.
  *
- * None of these articles is written yet, so cards show "Coming soon" and don't link.
- * When an article ships, add its `date` (e.g. "12 Oct 2026") and `href` and the card
- * becomes a "Read article" link.
+ * Cards without an `href` show "Coming soon" and don't link. To publish an article,
+ * add its body to articles.ts (same slug), then give the post a `date` (e.g.
+ * "12 Oct 2026") and `href: "/blog/<slug>"`; the card becomes a "Read article" link.
  */
 
 export const BLOG_CATEGORIES = [
@@ -38,6 +38,8 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "AI can do the work, but you stay in control. Here’s how we implement real human oversight at BotLane.",
     art: "skyline",
+    date: "15 Oct 2026",
+    href: "/blog/human-in-the-loop",
   },
   {
     slug: "operational-bottlenecks",
@@ -45,6 +47,8 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 operational bottlenecks that slow down growing agencies",
     excerpt: "And how to remove them with simple, managed automation systems.",
     art: "horizon",
+    date: "15 Oct 2026",
+    href: "/blog/operational-bottlenecks",
   },
   {
     slug: "lane-for-client-reporting",
@@ -55,10 +59,12 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "spreadsheets-to-automated-reports",
-    category: "Invoice Follow-up",
+    category: "Client Reporting",
     title: "From spreadsheets to automated client reports",
-    excerpt: "How agencies are saving hours every week with AI-powered reporting.",
+    excerpt: "What changes when the weekly report is prepared for you, and what stays with your team.",
     art: "folds",
+    date: "15 Oct 2026",
+    href: "/blog/spreadsheets-to-automated-reports",
   },
   {
     slug: "tools-agencies-use",
@@ -66,6 +72,8 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "The tools agencies already use (and how we work with them)",
     excerpt: "No new tools. Just reliable workflows across your existing stack.",
     art: "ribbons",
+    date: "15 Oct 2026",
+    href: "/blog/tools-agencies-use",
   },
   {
     slug: "why-we-built-botlane",
@@ -73,5 +81,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Why we built BotLane",
     excerpt: "A look at the thinking, decisions, and principles behind BotLane.",
     art: "ember",
+    date: "15 Oct 2026",
+    href: "/blog/why-we-built-botlane",
   },
 ];
