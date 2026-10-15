@@ -174,7 +174,7 @@ export function ReportingStory() {
     <section
       ref={stageRef}
       aria-label="How Client reporting works"
-      className={still ? "relative" : "relative h-[600vh] md:h-[880vh]"}
+      className={still ? "relative" : "relative h-[650vh] md:h-[960vh]"}
     >
       <div
         className={

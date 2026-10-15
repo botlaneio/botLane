@@ -1,5 +1,6 @@
 import type { AnimationParams, TargetsParam, Timeline } from "animejs";
 import { CARD_IDS, STAGE_IDS, type StoryLayout } from "./layout";
+import { BOX, LIST } from "./pipeline";
 
 type Anime = typeof import("animejs");
 
@@ -8,8 +9,8 @@ type Anime = typeof import("animejs");
  * stage. Scrolling back plays it in reverse. Scene boundaries are listed in SCENES so the
  * captions and the progress rail stay in step with the visuals.
  */
-/** Scene 02 runs this much longer than the rest were laid out for: the logo, the push-in and the melt. */
-const D = 1500;
+/** Scene 02 runs this much longer than the rest were laid out for: the logo, the push-in, the melt and the checklist. */
+const D = 2600;
 export const END = 10000 + D;
 export const SCENES: [number, number][] = [
   [0, 1200], // 01 the problem
@@ -169,17 +170,32 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
   tl.add(ink, { opacity: [0, 1], duration: 260 }, 3420);
   tl.add(label, { opacity: [0, 1], duration: 180 }, 3700);
   tl.add(goo, { opacity: [1, 0], duration: 100 }, 3740);
-  counters.push({ el: hubCount, start: 3720, duration: 240, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
+  counters.push({ el: hubCount, start: 4240, duration: 460, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
+  // The tile opens into a checklist of the five sources, ticks each one off, and closes again.
+  const list = $("[data-hub-list]");
+  const rows = $$("[data-hub-row]", list);
+  tl.add(list, { opacity: [0, 1], duration: 60 }, 3820);
+  tl.add(list, { scaleX: [BOX / LIST.w, 1], scaleY: [BOX / LIST.h, 1], ease: "inOutCubic", duration: 300 }, 3820);
+  tl.add($("[data-hub-list-head]", list), { opacity: [0, 1], duration: 160 }, 4040);
+  tl.add(rows, { opacity: [0, 1], translateY: [6, 0], duration: 160, delay: A.stagger(40) }, 4060);
+  rows.forEach((row, i) => {
+    const t = 4240 + i * 80;
+    tl.add($("[data-row-pending]", row), { opacity: [1, 0], duration: 80 }, t);
+    tl.add($("[data-row-done]", row), { opacity: [0, 1], scale: [0.4, 1], ease: "outBack", duration: 140 }, t);
+  });
+  tl.add([$("[data-hub-list-head]", list), ...rows], { opacity: [1, 0], duration: 120 }, 4720);
+  tl.add(list, { scaleX: [1, BOX / LIST.w], scaleY: [1, BOX / LIST.h], ease: "inOutCubic", duration: 240 }, 4760);
+  tl.add(list, { opacity: [1, 0], duration: 60 }, 4980);
   // Camera eases back out, and the tile flows back into the logo.
-  tl.add(camera, { scale: [1.32, 1], ease: "inOutSine", duration: 440 }, 3960);
-  tl.add(label, { opacity: [1, 0], duration: 140 }, 4060);
-  tl.add(goo, { opacity: [0, 1], duration: 80 }, 4080);
-  tl.add(goo, { scale: [0.07, 1], ease: "inOutCubic", duration: 380 }, 4090);
-  tl.add(blur, { stdDeviation: [3.2, 0.6], ease: "inOutSine", duration: 340 }, 4140);
-  tl.add(ink, { opacity: [1, 0], duration: 260 }, 4120);
-  tl.add(hubBox, { borderRadius: ["28px", "32.8px"], duration: 260 }, 4120);
-  tl.add(goo, { opacity: [1, 0], duration: 60 }, 4440);
-  tl.add(crisp, { opacity: [0, 1], duration: 60 }, 4440);
+  tl.add(camera, { scale: [1.32, 1], ease: "inOutSine", duration: 440 }, 5000);
+  tl.add(label, { opacity: [1, 0], duration: 140 }, 5160);
+  tl.add(goo, { opacity: [0, 1], duration: 80 }, 5180);
+  tl.add(goo, { scale: [0.07, 1], ease: "inOutCubic", duration: 380 }, 5190);
+  tl.add(blur, { stdDeviation: [3.2, 0.6], ease: "inOutSine", duration: 340 }, 5240);
+  tl.add(ink, { opacity: [1, 0], duration: 260 }, 5220);
+  tl.add(hubBox, { borderRadius: ["28px", "32.8px"], duration: 260 }, 5220);
+  tl.add(goo, { opacity: [1, 0], duration: 60 }, 5540);
+  tl.add(crisp, { opacity: [0, 1], duration: 60 }, 5540);
 
   /* ---------- 03 the processing system: collect → validate → structure → review → deliver ---------- */
   add(hub, { opacity: [1, 0], duration: 240 }, 3180);

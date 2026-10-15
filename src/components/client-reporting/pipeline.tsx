@@ -1,4 +1,4 @@
-import { Lock, UserRound } from "lucide-react";
+import { Check, Lock, UserRound } from "lucide-react";
 import { LOGO_VARIANTS } from "../brand/logo-variants";
 import { STAGE_IDS, type StageId, type StoryLayout } from "./layout";
 
@@ -17,7 +17,10 @@ const STAGES: Record<StageId, { name: string; pending: string; done: string }> =
 const LOGO = LOGO_VARIANTS["graphite-red"];
 /** Where the poured dots end up, in the logo's 22–178 viewBox units (the red dot of the label). */
 export const HUB_DROP = { x: 74.4, y: 87.8 };
-const BOX = 128;
+export const BOX = 128;
+/** The checklist the tile opens into, and the sources it ticks off (same order as the cards). */
+export const LIST = { w: 216, h: 236 };
+const SOURCES = ["Spend spreadsheet", "CRM", "Ad platforms", "Project board", "Client inbox"];
 
 /**
  * Scene 02 hub. It starts as the botLane logo; the cards pour into it, the dots melt into one
@@ -72,6 +75,31 @@ export function Hub({ layout }: { layout: StoryLayout }) {
             <span data-hub-count>0</span>/5 sources
           </span>
         </div>
+      </div>
+      {/* The Lane tile opens into a checklist of what it took in, then closes back to the tile. */}
+      <div
+        data-hub-list
+        className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 rounded-[28px] bg-ink px-5 py-4 text-white opacity-0 shadow-[0_1rem_2.5rem_rgba(20,20,40,0.18)]"
+        style={{ width: LIST.w, height: LIST.h }}
+      >
+        <div data-hub-list-head className="flex items-center gap-1.5 text-[13px] font-semibold opacity-0">
+          <span className="size-2 rounded-full bg-lane" />
+          Lane
+          <span className="ml-auto font-mono text-[10px] font-normal text-white/50">Sources in</span>
+        </div>
+        <ul className="mt-3 space-y-2">
+          {SOURCES.map((name) => (
+            <li key={name} data-hub-row className="flex h-[24px] items-center gap-2.5 text-[12px] text-white/85 opacity-0">
+              <span className="relative size-[16px] shrink-0">
+                <span data-row-pending className="absolute inset-0 rounded-full border border-white/25" />
+                <span data-row-done className="absolute inset-0 flex items-center justify-center rounded-full bg-lane opacity-0">
+                  <Check size={10} strokeWidth={3.5} />
+                </span>
+              </span>
+              {name}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
