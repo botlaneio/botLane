@@ -67,7 +67,7 @@ export function SiteFooter() {
     >
       <SurfaceProvider surface="dark">
       <div className="mx-auto max-w-[75rem] px-6">
-        {/* Closing line + demo */}
+        {/* Closing line */}
         <div className="flex flex-col gap-6 border-b border-white/10 py-14 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-[36rem]">
             <p className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white">
@@ -76,21 +76,6 @@ export function SiteFooter() {
             <p className="mt-4 text-base leading-relaxed text-white/60">
               Put reporting, follow-ups, and collections in Lane&apos;s hands. Keep every final decision in yours.
             </p>
-          </div>
-          <div className="cta-pair flex flex-wrap items-center gap-3">
-            <Link
-              href="/demo"
-              className="group inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-lane-gradient px-5 text-sm font-semibold text-white shadow-sm transition hover:brightness-90"
-            >
-              <span>Book a demo</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/pricing"
-              className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/15 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white/10"
-            >
-              See pricing
-            </Link>
           </div>
         </div>
 
