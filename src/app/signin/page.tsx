@@ -3,15 +3,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { BotLaneLogo } from "@/components/brand/botlane-logo";
 import { SignInForm } from "@/components/auth/auth-forms";
-import { HalftoneGlobe } from "@/components/auth/halftone-globe";
-import "@/components/auth/halftone-globe.css";
+import { LivingOrb } from "@/components/auth/living-orb";
 
 export const metadata: Metadata = {
   title: "Sign In | BotLane",
   description: "Sign in to your BotLane workspace.",
 };
 
-/** Split sign-in: the form on a white half, a graphite brand panel with the halftone sphere on the other. */
+/** Split sign-in: the form on a white half, a graphite brand panel with a living halftone orb on the other. */
 export default function SignInPage() {
   return (
     <div className="grid min-h-dvh bg-white lg:grid-cols-2">
@@ -39,7 +38,7 @@ export default function SignInPage() {
         data-surface="dark"
         className="relative hidden overflow-hidden bg-[radial-gradient(120%_90%_at_70%_30%,#2c2c30_0%,#141416_55%,#0d0d10_100%)] text-white lg:flex lg:flex-col"
       >
-        <HalftoneGlobe className="halftone-globe pointer-events-none absolute top-[8%] -right-[18%] w-[92%] max-w-[56rem]" />
+        <LivingOrb className="pointer-events-none absolute top-[6%] -right-[16%] aspect-square w-[92%] max-w-[56rem]" />
 
         <div className="relative flex justify-end p-6 sm:p-8">
           <Link
