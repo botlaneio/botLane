@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Wordmark } from "../wordmark";
+import { BotLaneLogo } from "../brand/botlane-logo";
 import { SiteFooter } from "../site-footer";
 
 interface AuthShellProps {
@@ -19,7 +19,7 @@ export function AuthShell({ switchPrompt, switchLabel, switchHref, title, subtit
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-white to-surface/70">
       <header className="mx-auto flex w-full max-w-[75rem] items-center justify-between px-6 py-5">
         <Link href="/" aria-label="BotLane home" className="text-ink">
-          <Wordmark className="text-[1.375rem]" />
+          <BotLaneLogo mode="wordmark" wordmarkClassName="text-[1.375rem]" />
         </Link>
         <div className="text-[0.8125rem] text-muted">
           <span className="hidden sm:inline">{switchPrompt} </span>

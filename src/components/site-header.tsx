@@ -13,8 +13,7 @@ import {
   Sliders,
   CheckCircle2,
 } from "lucide-react";
-import { HalftoneMark } from "./halftone-mark";
-import { Wordmark } from "./wordmark";
+import { BotLaneLogo } from "./brand/botlane-logo";
 import { accountCta, useAccountState } from "@/lib/account-state";
 import { DemoModal } from "./demo-modal";
 
@@ -133,6 +132,8 @@ export function SiteHeader() {
   return (
     <>
       <header
+        // Once scrolled the bar paints its own white background, so it is the surface the logo sits on.
+        data-surface={isScrolled ? "light" : undefined}
         className={`sticky top-0 z-40 w-full transition-all duration-300 ease-in-out ${
           isScrolled
             ? "border-b border-[#1d1d1f]/[0.08] bg-white/80 shadow-[0_0.25rem_1.5rem_rgba(0,0,0,0.03)] backdrop-blur-md supports-[backdrop-filter]:bg-white/75"
@@ -146,9 +147,16 @@ export function SiteHeader() {
             aria-label="BotLane home"
             className="group flex items-center gap-0.5 transition-opacity hover:opacity-90 shrink-0"
           >
-            {/* Gathers in once on load, then rests. */}
-            <HalftoneMark size={30} detail="small" intro introDelay={0.15} className="mr-1.5" />
-            <Wordmark className="text-[1.3125rem] text-ink-soft" />
+            {/* Gathers in once on load, then rests; follows the surface under the sticky bar. */}
+            <BotLaneLogo
+              mode="full"
+              size={30}
+              animated="intro"
+              delay={0.15}
+              track
+              symbolClassName="mr-1.5"
+              wordmarkClassName="text-[1.3125rem] text-ink-soft"
+            />
           </Link>
 
           {/* Zone 2: Navigation Links with Mega Menu */}

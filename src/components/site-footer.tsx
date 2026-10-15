@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
-import { HalftoneMark } from "./halftone-mark";
-import { Wordmark } from "./wordmark";
+import { BotLaneLogo } from "./brand/botlane-logo";
+import { SurfaceProvider } from "./brand/surface";
 
 const COLUMNS = [
   {
@@ -36,9 +36,11 @@ const COLUMNS = [
 export function SiteFooter() {
   return (
     <footer
+      data-surface="dark"
       className="relative overflow-hidden bg-[#0b0d17] text-white"
       style={{ "--bl-gradient": "var(--bl-gradient-on-dark)" } as CSSProperties}
     >
+      <SurfaceProvider surface="dark">
       <div className="mx-auto max-w-[75rem] px-6">
         {/* Closing line + demo */}
         <div className="flex flex-col gap-6 border-b border-white/10 py-14 sm:flex-row sm:items-end sm:justify-between">
@@ -71,8 +73,7 @@ export function SiteFooter() {
           <div className="sm:col-span-2 lg:col-span-6">
             <Link href="/" aria-label="BotLane home" className="inline-flex items-center gap-0.5 text-white">
               {/* Pulses continuously in the footer. */}
-              <HalftoneMark size={30} detail="small" state="thinking" pace={1.3} className="mr-1.5" />
-              <Wordmark className="text-xl" />
+              <BotLaneLogo mode="full" size={30} animated="pulse" pace={1.3} symbolClassName="mr-1.5" wordmarkClassName="text-xl" />
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/60">
               An AI coworker for agencies. Lane runs client reporting, lead follow-up and invoice
@@ -124,6 +125,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
+      </SurfaceProvider>
     </footer>
   );
 }

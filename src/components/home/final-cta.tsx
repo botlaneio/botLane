@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
-import { HalftoneMark } from "@/components/halftone-mark";
 import { FadeUp } from "@/components/motion/fade-up";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 export function FinalCta() {
   return (
@@ -16,7 +16,7 @@ export function FinalCta() {
 
         <div className="relative z-10 mx-auto max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1 text-xs text-muted shadow-sm">
-            <HalftoneMark size={16} detail="small" />
+            <BotLaneLogo size={16} decorative />
             <span className="font-semibold text-ink">Hire Lane today</span>
             <span>·</span>
             <span className="text-lane-gradient font-mono font-medium">Reclaim your agency&apos;s Fridays</span>

@@ -16,7 +16,6 @@ import {
   Receipt,
   ShieldCheck,
 } from "lucide-react";
-import { HalftoneMark } from "./halftone-mark";
 import {
   GoogleAdsLogo,
   MetaAdsLogo,
@@ -26,6 +25,7 @@ import {
   GmailLogo,
   TypeformLogo,
 } from "./assemble/company-icons";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 type SystemId = "reporting" | "leads" | "invoices";
 
@@ -233,7 +233,7 @@ export function Hero() {
           variants={rise}
           className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink shadow-2xs"
         >
-          <HalftoneMark size={18} detail="small" intro introDelay={0.2} className="-ml-1" />
+          <BotLaneLogo size={18} animated="intro" delay={0.2} decorative className="-ml-1" />
           <span>Agent Lane</span>
         </motion.div>
 

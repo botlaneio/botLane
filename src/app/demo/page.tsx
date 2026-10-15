@@ -14,7 +14,7 @@ import {
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Select } from "@/components/ui/select";
-import { LaneMarkCycle } from "@/components/lane-mark-cycle";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 const AVAILABLE_DAYS = [
   { day: "Thu", date: "Oct 15", full: "Thursday, October 15" },
@@ -57,7 +57,7 @@ export default function DemoPage() {
         {/* Hero Section */}
         <section className="relative mx-auto max-w-[75rem] px-6 pt-16 pb-14 text-center sm:pt-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
-            <LaneMarkCycle size={14} />
+            <BotLaneLogo size={14} decorative />
             <span>20-Minute Operational Walkthrough</span>
           </div>
 

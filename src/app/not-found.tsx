@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { LaneMarkCycle } from "@/components/lane-mark-cycle";
+import { BotLaneLogo } from "@/components/brand/botlane-logo";
 
 export default function NotFound() {
   return (
@@ -13,7 +13,7 @@ export default function NotFound() {
       <main className="min-h-screen bg-bg flex flex-col justify-center py-20 px-6">
         <div className="mx-auto max-w-[40rem] text-center">
           <div className="mx-auto flex size-14 items-center justify-center rounded-[0.875rem] border border-line bg-white shadow-sm">
-            <LaneMarkCycle size={32} />
+            <BotLaneLogo size={32} decorative />
           </div>
 
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
