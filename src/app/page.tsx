@@ -4,6 +4,7 @@ import { AssembleScene } from "@/components/assemble/assemble-scene";
 import "@/components/assemble/assemble.css";
 import { ThreeSystems } from "@/components/three-systems";
 import { ControlSection } from "@/components/home/control-section";
+import { ReleaseStandardSection } from "@/components/home/release-standard-section";
 import { ToolsSection } from "@/components/home/tools-section";
 import { SavingsSection } from "@/components/home/savings-section";
 import { OnboardingSteps } from "@/components/home/onboarding-steps";
@@ -31,6 +32,9 @@ export default function Home() {
 
         {/* 4. You stay in control */}
         <ControlSection />
+
+        {/* 4b. Release standard: twelve gates, four phases */}
+        <ReleaseStandardSection />
 
         {/* 5. Works with your tools */}
         <ToolsSection />
