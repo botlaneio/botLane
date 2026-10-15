@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A round halftone orb that feels alive: a dense diagonal grid of dots whose
- * outline gently morphs and breathes, with a slow ripple travelling through
- * the dot sizes. Colours come only from the approved logo palette and run
+ * A perfectly round halftone orb that feels alive: a dense diagonal grid of
+ * dots with a crisp circular edge that gently breathes, and a slow ripple
+ * travelling through the dot sizes. Colours come only from the approved logo palette and run
  * diagonally from lilac through Lane red to coral, turning slowly. Drawn on a
  * canvas with no tile or background, paused while off screen, and held still
  * for visitors who prefer reduced motion.
@@ -36,14 +36,7 @@ function mix(t: number) {
   return `rgb(${RGB[RGB.length - 1][1].join(",")})`;
 }
 
-// Small, incommensurate waves: the outline stays round but never sits still.
-const WAVES = [
-  { k: 2, amp: 0.022, speed: 0.29, phase: 0.4 },
-  { k: 3, amp: 0.016, speed: -0.21, phase: 1.9 },
-  { k: 5, amp: 0.008, speed: 0.37, phase: 3.1 },
-];
-
-const COLS = 40; // grid lines across the orb's diameter
+const COLS = 52; // grid lines across the orb's diameter
 
 export function LivingOrb({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,8 +70,10 @@ export function LivingOrb({ className }: { className?: string }) {
       const R = size * 0.46;
       const step = (R * 2) / COLS;
       const maxDot = step * 0.62; // diagonal neighbours sit step·√2 apart
-      const feather = R * 0.2; // width of the soft halftone rim
-      const breathe = 1 + 0.018 * Math.sin(t * 0.55);
+      // Dots shrink in proportion to their distance from the circle over ~3 rows,
+      // so the silhouette is drawn by dot size and reads as a true circle
+      const feather = step * 3.2;
+      const edge = R * (1 + 0.015 * Math.sin(t * 0.55)); // breathes, stays a circle
       // The colour axis turns slowly around the orb
       const turn = -Math.PI / 4 + 0.35 * Math.sin(t * 0.12);
       const ax = Math.cos(turn);
@@ -92,14 +87,11 @@ export function LivingOrb({ className }: { className?: string }) {
           const x = i * step;
           const y = j * step;
           const dist = Math.hypot(x, y);
-          const angle = Math.atan2(y, x);
-          let edge = R * breathe;
-          for (const w of WAVES) edge += R * w.amp * Math.sin(w.k * angle + w.speed * t + w.phase);
           const inside = (edge - dist) / feather; // >1 inside, 0 at the rim
           if (inside <= 0) continue;
-          const rim = inside >= 1 ? 1 : inside * inside * (3 - 2 * inside);
+          const rim = Math.min(1, inside);
           // A slow ripple travelling outward through the dot sizes
-          const ripple = 0.84 + 0.16 * Math.cos((dist / R) * Math.PI * 2.2 - t * 0.9);
+          const ripple = 0.9 + 0.1 * Math.cos((dist / R) * Math.PI * 1.6 - t * 0.9);
           const r = maxDot * rim * ripple;
           if (r < 0.35) continue;
           const g = 0.5 + (x * ax + y * ay) / (R * 2.1);

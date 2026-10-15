@@ -38,11 +38,6 @@ export default function SignInPage() {
         data-surface="dark"
         className="relative hidden overflow-hidden bg-[radial-gradient(120%_90%_at_70%_30%,#2c2c30_0%,#141416_55%,#0d0d10_100%)] text-white lg:flex lg:flex-col"
       >
-        {/* Centred in the panel, both ways */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <LivingOrb className="aspect-square w-[min(72%,62vh)]" />
-        </div>
-
         <div className="relative flex justify-end p-6 sm:p-8">
           <Link
             href="/signup"
@@ -52,7 +47,12 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <div className="relative mt-auto max-w-[30rem] px-10 pb-16 xl:px-14 xl:pb-20">
+        {/* Centred in the space between the Sign up bar and the text, so it never overlaps the copy */}
+        <div className="pointer-events-none relative flex min-h-0 flex-1 items-center justify-center px-10 [container-type:size]">
+          <LivingOrb className="aspect-square w-[min(80cqw,92cqh)]" />
+        </div>
+
+        <div className="relative max-w-[30rem] px-10 pb-16 xl:px-14 xl:pb-20">
           <span className="font-mono text-[0.75rem] uppercase tracking-[0.2em] text-[#ff8a6b]">Agent Lane</span>
           <p className="mt-4 text-[clamp(2rem,3vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em]">
             Your newest hire is already at work<span className="text-lane">.</span>
