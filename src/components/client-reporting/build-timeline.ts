@@ -1,6 +1,6 @@
 import type { AnimationParams, TargetsParam, Timeline } from "animejs";
 import { CARD_IDS, STAGE_IDS, type StoryLayout } from "./layout";
-import { BOX, LIST } from "./pipeline";
+import { CORE } from "./pipeline";
 
 type Anime = typeof import("animejs");
 
@@ -9,8 +9,8 @@ type Anime = typeof import("animejs");
  * stage. Scrolling back plays it in reverse. Scene boundaries are listed in SCENES so the
  * captions and the progress rail stay in step with the visuals.
  */
-/** Scene 02 runs this much longer than the rest were laid out for: the logo, the push-in, the melt and the checklist. */
-const D = 2600;
+/** Scene 02 runs this much longer than the rest were laid out for: the cards land in Lane one row at a time. */
+const D = 700;
 export const END = 10000 + D;
 export const SCENES: [number, number][] = [
   [0, 1200], // 01 the problem
@@ -64,7 +64,6 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
   const faceB = points.map((p) => $('[data-face="b"]', p));
   const gaps = $$("[data-gap]");
   const hub = $("[data-hub]");
-  const hubBox = $("[data-hub-box]");
   const hubCount = $("[data-hub-count]");
   const nodes = STAGE_IDS.map((id) => $(`[data-node="${id}"]`));
   const nodeBoxes = nodes.map((n) => $("[data-node-box]", n));
@@ -86,9 +85,7 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     set(points[i], { translateX: l.scatter[id].x, translateY: l.scatter[id].y });
     set(boxes[i], { rotate: l.scatter[id].rotate, width: l.card.w, height: l.card.h });
   });
-  set(hubBox, { scale: 0.5 });
   set(nodes, { translateX: l.hub.x, translateY: l.hub.y });
-  set(nodeBoxes, { scale: 0.7 });
   set(group, { transformOrigin: `${l.frame.x}px ${l.frame.y}px` });
   set(captions.slice(1), { opacity: 0 });
   set(rails, { scaleX: 0 });
@@ -131,18 +128,21 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     tl.add(box, { translateX: [0, dx], translateY: [0, dy], rotate: [r0, r0 + dr], ease: "inOutSine", duration: 1050 }, i * 45);
   });
 
-  /* ---------- 02 the connection: paths link every source to Lane ---------- */
-  // The hub starts as the botLane logo. The cards travel in and pour into it while the logo
-  // grows and the camera pushes in; then the dots melt into one drop that becomes the red dot
-  // of the Lane tile; then the camera eases out and the tile flows back into the logo.
+  /* ---------- 02 the connection: every source lands in Lane ---------- */
+  // One dark shape carries the whole scene. It appears as a small core; as the cards travel in
+  // it opens into a panel and each card becomes a ticked row; then it folds down to the size of
+  // a pipeline step, turns white and hands over to the Structure step, which the others fan out of.
   const camera = $("[data-camera]");
-  const crisp = $("[data-hub-crisp]");
-  const goo = $("[data-hub-goo]");
-  const blur = $("[data-hub-blur]");
-  const ink = $("[data-hub-ink]");
-  const label = $("[data-hub-label]");
+  const core = $("[data-core]");
+  const coreDot = $("[data-core-dot]");
+  const coreHead = $("[data-core-head]");
+  const coreRows = $$("[data-core-row]");
+  const coreTicks = $$("[data-core-tick]");
+  const node = l.node;
+  const panelH = (n: number) => CORE.head + n * CORE.row + (n ? CORE.pad : 0);
+
   tl.add(hub, { opacity: [0, 1], duration: 260 }, 1250);
-  tl.add(hubBox, { scale: [0.5, 0.72], ease: "outCubic", duration: 360 }, 1250);
+  tl.add(core, { scale: [0.4, 1], ease: "outBack", duration: 360 }, 1250);
   tl.add(routeLines, { draw: ["0 0", "0 1"], duration: 520, delay: A.stagger(90) }, 1320);
   tl.add(gaps, { opacity: [1, 0], duration: 180, delay: A.stagger(40) }, 1560);
   boxes.forEach((box, i) => {
@@ -150,61 +150,43 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     const r0 = l.scatter[CARD_IDS[i]].rotate + dr;
     tl.add(box, { translateX: [dx, 0], translateY: [dy, 0], rotate: [r0, 0], scale: [1, 0.34], ease: "inOutCubic", duration: 420 }, 1720 + i * 60);
   });
-  // Cards travel in and slip under the logo; each arrival makes the logo swell a little.
-  const growth = [0.72, 0.78, 0.84, 0.9, 0.96, 1.02];
+  tl.add(camera, { scale: [1, 1.22], ease: "inOutSine", duration: 1300 }, 2000);
+
+  // The core opens just before the first card lands.
+  tl.add(coreDot, { opacity: [1, 0], scale: [1, 0.4], duration: 140 }, 2520);
+  tl.add(core, { width: [CORE.start, CORE.w], height: [CORE.start, panelH(0)], borderRadius: [CORE.start / 2, 18], ease: "inOutCubic", duration: 180 }, 2520);
+  tl.add(coreHead, { opacity: [0, 1], duration: 160 }, 2620);
+
+  // Each card travels in, slips into the panel and becomes its row.
   points.forEach((p, i) => {
     const path = A.svg.createMotionPath(routes[i]);
     const t = 2080 + i * 130;
+    const land = t + 680;
     tl.add(p, { translateX: path.translateX, translateY: path.translateY, ease: "inOutSine", duration: 680 }, t);
-    tl.add(boxes[i], { opacity: [1, 0], scale: [0.34, 0.12], duration: 180 }, t + 560);
-    tl.add(hubBox, { scale: [growth[i], growth[i + 1]], ease: "outBack", duration: 120 }, t + 600);
+    tl.add(boxes[i], { opacity: [1, 0], scale: [0.34, 0.12], duration: 160 }, land - 140);
+    tl.add(core, { height: [panelH(i), panelH(i + 1)], ease: "outCubic", duration: 120 }, land - 60);
+    tl.add(coreRows[i], { opacity: [0, 1], translateX: [-8, 0], ease: "outCubic", duration: 140 }, land - 20);
+    tl.add(coreTicks[i], { scale: [0.3, 1], ease: "outBack", duration: 160 }, land);
   });
-  tl.add(routes, { opacity: [1, 0], duration: 260 }, 2900);
-  tl.add(camera, { scale: [1, 1.32], ease: "inOutSine", duration: 1200 }, 2100);
-  // The melt: dots go liquid, run together and pour into one drop.
-  tl.add(crisp, { opacity: [1, 0], duration: 80 }, 3300);
-  tl.add(goo, { opacity: [0, 1], duration: 80 }, 3300);
-  tl.add(blur, { stdDeviation: [0.6, 3.2], ease: "inOutSine", duration: 360 }, 3310);
-  tl.add(goo, { scale: [1, 0.07], ease: "inOutCubic", duration: 420 }, 3330);
-  tl.add(hubBox, { scale: [1.02, 1], borderRadius: ["32.8px", "28px"], duration: 280 }, 3420);
-  tl.add(ink, { opacity: [0, 1], duration: 260 }, 3420);
-  tl.add(label, { opacity: [0, 1], duration: 180 }, 3700);
-  tl.add(goo, { opacity: [1, 0], duration: 100 }, 3740);
-  counters.push({ el: hubCount, start: 4240, duration: 460, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
-  // The tile opens into a checklist of the five sources, ticks each one off, and closes again.
-  const list = $("[data-hub-list]");
-  const rows = $$("[data-hub-row]", list);
-  tl.add(list, { opacity: [0, 1], duration: 60 }, 3820);
-  tl.add(list, { scaleX: [BOX / LIST.w, 1], scaleY: [BOX / LIST.h, 1], ease: "inOutCubic", duration: 300 }, 3820);
-  tl.add($("[data-hub-list-head]", list), { opacity: [0, 1], duration: 160 }, 4040);
-  tl.add(rows, { opacity: [0, 1], translateY: [6, 0], duration: 160, delay: A.stagger(40) }, 4060);
-  rows.forEach((row, i) => {
-    const t = 4240 + i * 80;
-    tl.add($("[data-row-pending]", row), { opacity: [1, 0], duration: 80 }, t);
-    tl.add($("[data-row-done]", row), { opacity: [0, 1], scale: [0.4, 1], ease: "outBack", duration: 140 }, t);
-  });
-  tl.add([$("[data-hub-list-head]", list), ...rows], { opacity: [1, 0], duration: 120 }, 4720);
-  tl.add(list, { scaleX: [1, BOX / LIST.w], scaleY: [1, BOX / LIST.h], ease: "inOutCubic", duration: 240 }, 4760);
-  tl.add(list, { opacity: [1, 0], duration: 60 }, 4980);
-  // Camera eases back out, and the tile flows back into the logo.
-  tl.add(camera, { scale: [1.32, 1], ease: "inOutSine", duration: 440 }, 5000);
-  tl.add(label, { opacity: [1, 0], duration: 140 }, 5160);
-  tl.add(goo, { opacity: [0, 1], duration: 80 }, 5180);
-  tl.add(goo, { scale: [0.07, 1], ease: "inOutCubic", duration: 380 }, 5190);
-  tl.add(blur, { stdDeviation: [3.2, 0.6], ease: "inOutSine", duration: 340 }, 5240);
-  tl.add(ink, { opacity: [1, 0], duration: 260 }, 5220);
-  tl.add(hubBox, { borderRadius: ["28px", "32.8px"], duration: 260 }, 5220);
-  tl.add(goo, { opacity: [1, 0], duration: 60 }, 5540);
-  tl.add(crisp, { opacity: [0, 1], duration: 60 }, 5540);
+  counters.push({ el: hubCount, start: 2630, duration: 650, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
+  tl.add(routes, { opacity: [1, 0], duration: 240 }, 3220);
+
+  // Fold down to a pipeline step and hand over to Structure.
+  tl.add(coreRows, { opacity: [1, 0], duration: 120, delay: A.stagger(25, { from: "last" }) }, 3460);
+  tl.add(core, { width: [CORE.w, node.w], height: [panelH(5), node.h], borderRadius: [18, 16], ease: "inOutCubic", duration: 300 }, 3520);
+  tl.add(coreHead, { opacity: [1, 0], duration: 120 }, 3600);
+  tl.add(core, { backgroundColor: ["#1d1d1f", "#ffffff"], ease: "linear", duration: 200 }, 3640);
+  tl.add(camera, { scale: [1.22, 1], ease: "inOutSine", duration: 520 }, 3480);
+  tl.add(nodes[2], { opacity: [0, 1], duration: 100 }, 3820);
+  tl.add(hub, { opacity: [1, 0], duration: 60 }, 3900);
 
   /* ---------- 03 the processing system: collect → validate → structure → review → deliver ---------- */
-  add(hub, { opacity: [1, 0], duration: 240 }, 3180);
-  add(hubBox, { scale: [1, 0.85], duration: 240 }, 3180);
   nodes.forEach((n, i) => {
+    if (i === 2) return;
     const s = l.stages[STAGE_IDS[i]];
-    const t = 3200 + Math.abs(i - 2) * 80; // fan out from the centre
-    add(n, { translateX: [l.hub.x, s.x], translateY: [l.hub.y, s.y], opacity: [0, 1], ease: "outCubic", duration: 520 }, t);
-    add(nodeBoxes[i], { scale: [0.7, 1], ease: "outCubic", duration: 520 }, t);
+    const t = 3240 + Math.abs(i - 2) * 70; // fan out of the Structure step
+    add(n, { translateX: [l.hub.x, s.x], translateY: [l.hub.y, s.y], ease: "outCubic", duration: 520 }, t);
+    add(n, { opacity: [0, 1], duration: 160 }, t);
   });
   const activate = (i: number, t: number) => {
     const n = nodes[i];
