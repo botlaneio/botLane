@@ -121,6 +121,23 @@ html {
   }
 }
 
+/*
+ * Scroll stories on short landscape screens (a phone turned sideways): drop the caption body
+ * and tighten the top so the animated canvas keeps most of the height. Unlayered, so it wins.
+ */
+@media (orientation: landscape) and (max-height: 32rem) {
+  .story-stage {
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  .story-captions {
+    height: 3.75rem;
+  }
+  .story-caption-text {
+    display: none;
+  }
+}
+
 body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
