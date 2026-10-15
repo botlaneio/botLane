@@ -75,8 +75,8 @@ export const SOCIAL_LINKS: Record<"x" | "instagram", string | null> = {
 /** Company details shown in the footer. Only confirmed facts go here. */
 export const COMPANY_INFO = {
   legalName: "BotLane LLC",
-  /** Public contact email. TODO: confirm which botlane.io address to publish. */
-  email: null as string | null,
-  /** Registered office lines (street, city/state/ZIP). TODO: add once confirmed. */
-  registeredAddress: [] as string[],
+  /** Public contact email (confirmed by Solo, 15 Oct 2026). */
+  email: "admin@botlane.io" as string | null,
+  /** Registered office city/state; links to the contact page (full address isn't shown in the footer). */
+  registeredLocality: "Sheridan, Wyoming",
 };
