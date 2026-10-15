@@ -117,7 +117,7 @@ export default function PrivacyPolicyPage() {
               <div className="mt-3 rounded-[0.75rem] border border-line bg-surface/50 p-4 text-xs font-mono text-ink">
                 BotLane LLC · Data Privacy Officer<br />
                 Email: privacy@botlane.io<br />
-                Address: 548 Market St, Suite 89201, San Francisco, CA 94104
+                Address: 30 N Gould St, Ste R, Sheridan, WY 82801
               </div>
             </section>
           </div>

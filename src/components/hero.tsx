@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, MotionConfig, type Variants } from "motion/react";
-import { ArrowRight, Database, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, Plug, ShieldCheck, Wrench } from "lucide-react";
 import { AgentDashboard } from "@/components/dashboard/agent-dashboard";
 
 const EASING: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -35,7 +35,7 @@ export function Hero() {
             </span>
             <span className="hidden h-5 w-px bg-line sm:block" />
             <span className="rounded-full bg-[var(--bl-red-tint)] px-4 py-1.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-lane-ink">
-              Lane – AI workforce
+              Your AI workforce, managed by BotLane
             </span>
           </motion.div>
 
@@ -43,15 +43,16 @@ export function Hero() {
             variants={rise}
             className="mt-7 text-[clamp(3rem,8.2vw,6.75rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink"
           >
-            Meet your newest hire<span className="text-lane">.</span>
+            More clients. Less busywork<span className="text-lane">.</span>
           </motion.h1>
 
           <motion.p
             variants={rise}
             className="mt-6 max-w-[50rem] text-lg leading-[1.45] tracking-[-0.015em] text-muted sm:text-[1.375rem]"
           >
-            Lane takes your scattered operational work — and turns it into client reporting, lead follow-up, and
-            invoice follow-up. <span className="font-medium text-lane">You just approve.</span>
+            Lane handles client reporting, lead follow-ups, and invoice chasing—so your agency can grow without growing
+            its operational workload.{" "}
+            <span className="font-medium text-lane">You stay in control. We keep things moving.</span>
           </motion.p>
 
           <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
@@ -59,7 +60,7 @@ export function Hero() {
               href="/demo"
               className="group inline-flex h-[3.25rem] min-w-[12.25rem] items-center justify-center gap-2.5 rounded-xl bg-lane px-7 text-base font-medium text-white shadow-[0_0.75rem_1.5rem_-0.75rem_rgba(224,49,43,0.7)] transition hover:bg-lane-strong active:scale-[0.98]"
             >
-              Book a demo
+              Meet Lane
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -75,18 +76,18 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted"
           >
             <li className="flex items-center gap-2.5">
-              <Database className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Zero manual spreadsheets
+              <Plug className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Works with your tools
+            </li>
+            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
+            <li className="flex items-center gap-2.5">
+              <Wrench className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Managed by us
             </li>
             <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
             <li className="flex items-center gap-2.5">
               <ShieldCheck className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              100% human approval gated
-            </li>
-            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
-            <li className="flex items-center gap-2.5">
-              <Zap className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Average SLA &lt; 1 second
+              Approved by you
             </li>
           </motion.ul>
         </motion.div>
