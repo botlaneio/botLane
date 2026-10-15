@@ -1,0 +1,81 @@
+/* Footer: a red-orange line that draws across the full width once, led by a glowing ember. */
+.ember-line {
+  position: relative;
+  height: 2px;
+}
+.ember-line__bar {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(224, 49, 43, 0) 0%,
+    #e0312b 14%,
+    #ff6a3d 50%,
+    #e0312b 86%,
+    rgba(224, 49, 43, 0) 100%
+  );
+  box-shadow: 0 0 0.75rem rgba(224, 49, 43, 0.45);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.ember-line__head {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7rem;
+  height: 2px;
+  transform: translate(-100%, -50%);
+  background: linear-gradient(90deg, rgba(255, 106, 61, 0), #ffb48a);
+  opacity: 0;
+}
+.ember-line__head::after {
+  content: "";
+  position: absolute;
+  right: -0.25rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  transform: translateY(-50%);
+  background: #ffd2b8;
+  box-shadow:
+    0 0 0.5rem 0.15rem rgba(255, 106, 61, 0.9),
+    0 0 1.5rem 0.4rem rgba(224, 49, 43, 0.55);
+}
+.ember-line.in-view .ember-line__bar {
+  animation: ember-draw 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.ember-line.in-view .ember-line__head {
+  animation: ember-run 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes ember-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes ember-run {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ember-line .ember-line__bar,
+  .ember-line.in-view .ember-line__bar {
+    animation: none;
+    transform: none;
+  }
+  .ember-line.in-view .ember-line__head {
+    animation: none;
+  }
+}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { BotLaneLogo } from "./brand/botlane-logo";
+import { FooterEmberLine } from "./footer-ember-line";
 import { SurfaceProvider } from "./brand/surface";
 import {
   COMPANY_INFO,
@@ -68,7 +69,7 @@ export function SiteFooter() {
       <SurfaceProvider surface="dark">
       <div className="mx-auto max-w-[75rem] px-6">
         {/* Closing line */}
-        <div className="flex flex-col gap-6 border-b border-white/10 py-14 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-6 py-14 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-[36rem]">
             <p className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white">
               More clients shouldn&apos;t mean <span className="text-lane-gradient">more admin.</span>
@@ -78,6 +79,7 @@ export function SiteFooter() {
             </p>
           </div>
         </div>
+        <FooterEmberLine />
 
         {/* Brand + link columns: stacked on phones, 2-up on tablets, five columns from xl */}
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-14 lg:grid-cols-4 xl:grid-cols-[minmax(0,1.55fr)_repeat(4,minmax(0,1fr))] xl:gap-x-10">
