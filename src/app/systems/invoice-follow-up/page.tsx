@@ -9,9 +9,13 @@ import {
   ChevronDown,
   DollarSign,
   ShieldCheck,
+  UserCheck,
+  Pause,
+  PenLine,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SystemControls, SystemPricing, SystemTools } from "@/components/systems/system-extras";
 import { InvoiceStory } from "@/components/invoice-follow-up/invoice-story";
 
 export default function InvoiceFollowUpPage() {
@@ -100,6 +104,16 @@ export default function InvoiceFollowUpPage() {
             From open invoice to reconciled payment, with every reminder approved by you. Built, managed, and overseen by Botlane.
           </p>
         </section>
+
+        <SystemControls
+          items={[
+            { icon: UserCheck, title: "You approve every reminder", text: "Lane drafts each reminder with the payment link attached. Nothing is sent until you approve it." },
+            { icon: Pause, title: "Pause for an extension", text: "Pause a client's reminders for 7, 14 or 30 days from Slack or the web desk, without touching the rest." },
+            { icon: PenLine, title: "Your wording", text: "Every reminder template can be edited to match your tone and your history with each client." },
+          ]}
+        />
+        <SystemTools system="03" />
+        <SystemPricing system="03" />
 
         {/* Invoicing FAQ */}
         <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">

@@ -10,9 +10,12 @@ import {
   ChevronDown,
   Zap,
   UserCheck,
+  Hand,
+  SlidersHorizontal,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SystemControls, SystemPricing, SystemTools } from "@/components/systems/system-extras";
 import { LeadStory } from "@/components/lead-follow-up/lead-story";
 
 export default function LeadFollowUpPage() {
@@ -101,6 +104,16 @@ export default function LeadFollowUpPage() {
             From form fill to booked call, with every reply approved by you. Built, managed, and overseen by Botlane.
           </p>
         </section>
+
+        <SystemControls
+          items={[
+            { icon: UserCheck, title: "You approve every reply", text: "Lane drafts the reply and each follow-up. Nothing is sent until you approve it." },
+            { icon: Hand, title: "It stops when they reply", text: "The sequence halts as soon as the prospect replies or books, and the lead is assigned to your team." },
+            { icon: SlidersHorizontal, title: "Your qualification rules", text: "Set a minimum budget or other thresholds. Enquiries below them are pointed to self-serve resources." },
+          ]}
+        />
+        <SystemTools system="02" />
+        <SystemPricing system="02" />
 
         {/* Lead FAQ */}
         <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">
