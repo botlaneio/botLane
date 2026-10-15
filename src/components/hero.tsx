@@ -1,556 +1,250 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence, type Variants } from "motion/react";
-import {
-  ArrowRight,
-  Bell,
-  Check,
-  CheckCircle2,
-  Clock,
-  FileText,
-  LayoutGrid,
-  Mail,
-  Play,
-  Receipt,
-  ShieldCheck,
-} from "lucide-react";
-import {
-  GoogleAdsLogo,
-  MetaAdsLogo,
-  GoogleAnalyticsLogo,
-  HubSpotLogo,
-  StripeLogo,
-  GmailLogo,
-  TypeformLogo,
-} from "./assemble/company-icons";
-import { BotLaneLogo } from "@/components/brand/botlane-logo";
-
-type SystemId = "reporting" | "leads" | "invoices";
-
-interface SystemData {
-  id: SystemId;
-  index: string;
-  tab: string;
-  icon: typeof FileText;
-  title: string;
-  meta: string;
-  kpis: { label: string; value: string; delta: string; tone: "ok" | "neutral" }[];
-  lines: string[];
-  intake: { logo: React.ReactNode; name: string; detail: string }[];
-  action: string;
-}
-
-const SYSTEMS: SystemData[] = [
-  {
-    id: "reporting",
-    index: "01",
-    tab: "Reporting",
-    icon: FileText,
-    title: "Weekly Executive Synthesis",
-    meta: "Generated for Board & Client Leadership",
-    kpis: [
-      { label: "ROAS", value: "4.21x", delta: "+0.6x", tone: "ok" },
-      { label: "Total spend", value: "$5,570", delta: "On budget", tone: "ok" },
-      { label: "CAC", value: "$42.10", delta: "-14.2%", tone: "ok" },
-    ],
-    lines: [
-      "Retargeting efficiency scaled sharply after creative refresh.",
-      "Search brand defense maintained 91% impression share.",
-      "All assets reconciled and ready for sign-off.",
-    ],
-    intake: [
-      { logo: <GoogleAdsLogo size={18} />, name: "Google Ads", detail: "4,821 clicks · $3,450 spend" },
-      { logo: <MetaAdsLogo size={18} />, name: "Meta Ads", detail: "142k impressions · $2,120 spend" },
-      { logo: <GoogleAnalyticsLogo size={18} />, name: "Google Analytics 4", detail: "+18.4% WoW conversion volume" },
-    ],
-    action: "Approve & Deliver",
-  },
-  {
-    id: "leads",
-    index: "02",
-    tab: "Lead Intake",
-    icon: Mail,
-    title: "Reply to a new inquiry",
-    meta: "Drafted from your form and CRM history",
-    kpis: [
-      { label: "Deal size", value: "$24,000", delta: "Tier 1", tone: "neutral" },
-      { label: "Inbound age", value: "4 min", delta: "Reply due", tone: "ok" },
-      { label: "Touches", value: "1 of 3", delta: "Day 2 next", tone: "neutral" },
-    ],
-    lines: [
-      "Personal reply written in your tone, citing their request.",
-      "Proposes two times that are free on your calendar.",
-      "Day 2 and day 5 nudges queued, stop when they reply.",
-    ],
-    intake: [
-      { logo: <TypeformLogo size={18} />, name: "Website form", detail: "New inquiry · 50–200 seats" },
-      { logo: <HubSpotLogo size={18} />, name: "HubSpot", detail: "Contact created · no owner yet" },
-      { logo: <GmailLogo size={18} />, name: "Gmail", detail: "No previous thread found" },
-    ],
-    action: "Approve & Send",
-  },
-  {
-    id: "invoices",
-    index: "03",
-    tab: "AR Recovery",
-    icon: Receipt,
-    title: "Invoice reminder, second notice",
-    meta: "Polite follow-up with a pay link",
-    kpis: [
-      { label: "Outstanding", value: "$8,950", delta: "14 days late", tone: "neutral" },
-      { label: "Terms", value: "Net 30", delta: "Per contract", tone: "neutral" },
-      { label: "Reminder", value: "2 of 3", delta: "Firmer tone", tone: "neutral" },
-    ],
-    lines: [
-      "References the invoice, amount and original due date.",
-      "Includes a one-click Stripe payment link.",
-      "Sequence stops automatically once it's paid.",
-    ],
-    intake: [
-      { logo: <StripeLogo size={18} />, name: "Stripe", detail: "Invoice #1094 · overdue 14 days" },
-      { logo: <GmailLogo size={18} />, name: "Gmail", detail: "First reminder sent 7 days ago" },
-    ],
-    action: "Approve & Send",
-  },
-];
+import { motion, MotionConfig, type Variants } from "motion/react";
+import { ArrowRight, Database, ShieldCheck, Zap } from "lucide-react";
+import { AgentDashboard } from "@/components/dashboard/agent-dashboard";
 
 const EASING: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const stagger: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
 };
 
 const rise: Variants = {
-  hidden: { opacity: 0, y: 18, filter: "blur(5px)" },
+  hidden: { opacity: 0, y: 16, filter: "blur(5px)" },
   visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: EASING } },
 };
 
-// One-time intro timeline (ms from page load). It plays once on Lane 01, then stops.
-const INTRO = {
-  syncStart: 500,
-  syncStep: 350,
-  countStart: 1500,
-  countLength: 900,
-  typeStart: 2500,
-  msPerChar: 16,
-  cursorMove: 900,
-  clickHold: 100,
-  cursorFade: 500,
-};
-
-const INTRO_LANE = SYSTEMS[0];
-const TOTAL_CHARS = INTRO_LANE.lines.reduce((sum, line) => sum + line.length, 0);
-const CURSOR_START = INTRO.typeStart + TOTAL_CHARS * INTRO.msPerChar + 250;
-const CLICK_AT = CURSOR_START + INTRO.cursorMove;
-const INTRO_END = CLICK_AT + INTRO.clickHold + INTRO.cursorFade;
-
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
-const easeOut = (p: number) => 1 - Math.pow(1 - p, 3);
-
-/** Counts "$5,570" or "4.21x" up from zero, keeping its prefix, suffix and decimals. */
-function countUp(value: string, progress: number) {
-  const match = value.match(/^([^\d-]*)(-?[\d,]*\.?\d+)(.*)$/);
-  if (!match || progress >= 1) return value;
-  const [, prefix, num, suffix] = match;
-  const target = parseFloat(num.replace(/,/g, ""));
-  const decimals = num.includes(".") ? num.split(".")[1].length : 0;
-  const current = (target * easeOut(progress)).toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-  return `${prefix}${num.includes(",") ? current : current.replace(/,/g, "")}${suffix}`;
-}
-
-/** Splits a running character budget across the bullet lines, in order. */
-function typedLines(lines: string[], chars: number) {
-  let left = chars;
-  return lines.map((line) => {
-    const shown = line.slice(0, Math.max(0, left));
-    left -= line.length;
-    return shown;
-  });
-}
-
 export function Hero() {
-  const [activeId, setActiveId] = useState<SystemId>("reporting");
-  const [manualApproved, setManualApproved] = useState(false);
-  // Milliseconds into the intro; INTRO_END means it has finished (or was skipped)
-  const [t, setT] = useState(0);
+  return (
+    <MotionConfig reducedMotion="user">
+      {/* Pulled up under the sticky header so the background runs to the top of the page. */}
+      <section className="relative -mt-16 overflow-hidden bg-[#f8f8f6] pt-16">
+        <HeroBackdrop />
 
-  const active = SYSTEMS.find((s) => s.id === activeId) ?? SYSTEMS[0];
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+          className="relative mx-auto flex max-w-[75rem] flex-col items-center px-6 pt-12 text-center sm:pt-16"
+        >
+          <motion.div variants={rise} className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+            <span className="flex items-center gap-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-ink-2">
+              <span className="size-2 rounded-full bg-[#22a447]" />3 systems active
+            </span>
+            <span className="hidden h-5 w-px bg-line sm:block" />
+            <span className="rounded-full bg-[var(--bl-red-tint)] px-4 py-1.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-lane-ink">
+              Lane – AI workforce
+            </span>
+          </motion.div>
 
-  // Play the intro once per page load. Reduced-motion visitors see the final frame.
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      const id = requestAnimationFrame(() => setT(INTRO_END));
-      return () => cancelAnimationFrame(id);
-    }
-    let frame = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const elapsed = Math.min(INTRO_END, now - start);
-      setT(elapsed);
-      if (elapsed < INTRO_END) frame = requestAnimationFrame(tick);
+          <motion.h1
+            variants={rise}
+            className="mt-7 text-[clamp(3rem,8.2vw,6.75rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink"
+          >
+            Meet your newest hire<span className="text-lane">.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={rise}
+            className="mt-6 max-w-[50rem] text-lg leading-[1.45] tracking-[-0.015em] text-muted sm:text-[1.375rem]"
+          >
+            Lane takes your scattered operational work — and turns it into client reporting, lead follow-up, and
+            invoice follow-up. <span className="font-medium text-lane">You just approve.</span>
+          </motion.p>
+
+          <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
+            <Link
+              href="/demo"
+              className="group inline-flex h-[3.25rem] min-w-[12.25rem] items-center justify-center gap-2.5 rounded-xl bg-lane px-7 text-base font-medium text-white shadow-[0_0.75rem_1.5rem_-0.75rem_rgba(224,49,43,0.7)] transition hover:bg-lane-strong active:scale-[0.98]"
+            >
+              Book a demo
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="inline-flex h-[3.25rem] min-w-[12.25rem] items-center justify-center rounded-xl border border-[#dcdcde] bg-white/80 px-7 text-base font-medium text-ink backdrop-blur transition hover:bg-white active:scale-[0.98]"
+            >
+              See how it works
+            </Link>
+          </motion.div>
+
+          <motion.ul
+            variants={rise}
+            className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted"
+          >
+            <li className="flex items-center gap-2.5">
+              <Database className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Zero manual spreadsheets
+            </li>
+            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
+            <li className="flex items-center gap-2.5">
+              <ShieldCheck className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              100% human approval gated
+            </li>
+            <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
+            <li className="flex items-center gap-2.5">
+              <Zap className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Average SLA &lt; 1 second
+            </li>
+          </motion.ul>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.45, ease: EASING }}
+          className="relative mx-auto mt-14 max-w-[86rem] px-6 pb-20 sm:px-10"
+        >
+          <FitWidth>
+            <AgentDashboard />
+          </FitWidth>
+        </motion.div>
+      </section>
+    </MotionConfig>
+  );
+}
+
+/**
+ * Lays the dashboard out at its full desktop width and scales it down to fit
+ * narrower screens, so tablets and phones see the same picture, smaller.
+ */
+function FitWidth({ children }: { children: React.ReactNode }) {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState<{ scale: number; height: number } | null>(null);
+
+  useLayoutEffect(() => {
+    const outer = outerRef.current;
+    const inner = innerRef.current;
+    if (!outer || !inner) return;
+    const measure = () => {
+      const scale = Math.min(1, outer.clientWidth / inner.offsetWidth);
+      setFit({ scale, height: inner.offsetHeight * scale });
     };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  const introRunning = t < INTRO_END;
-  const inIntro = activeId === INTRO_LANE.id;
-  // Outside the intro lane, everything shows in its finished state
-  const at = inIntro ? t : INTRO_END;
-
-  const syncedCount = Math.floor((at - INTRO.syncStart) / INTRO.syncStep) + 1;
-  const countProgress = clamp01((at - INTRO.countStart) / INTRO.countLength);
-  const lines = inIntro
-    ? typedLines(active.lines, Math.floor((at - INTRO.typeStart) / INTRO.msPerChar))
-    : active.lines;
-  const typingLine = inIntro && introRunning ? lines.findIndex((l, i) => l.length < active.lines[i].length) : -1;
-  const cursorVisible = inIntro && t >= CURSOR_START && t < INTRO_END;
-  const cursorPressed = t >= CLICK_AT;
-  const approved = manualApproved || (inIntro && t >= CLICK_AT + INTRO.clickHold);
-
-  const pick = (id: SystemId) => {
-    setActiveId(id);
-    setManualApproved(false);
-    setT(INTRO_END);
-  };
-
-  const approve = useCallback(() => {
-    setManualApproved(true);
-    setT(INTRO_END);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(outer);
+    ro.observe(inner);
+    return () => ro.disconnect();
   }, []);
 
   return (
-    <section className="relative mx-auto grid max-w-[75rem] items-center gap-14 px-6 pt-14 pb-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10 lg:pt-20 lg:pb-24">
-      {/* Left: copy */}
-      <motion.div variants={stagger} initial="hidden" animate="visible">
-        <motion.div
-          variants={rise}
-          className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink shadow-2xs"
-        >
-          <BotLaneLogo size={18} animated="intro" delay={0.2} decorative className="-ml-1" />
-          <span>Agent Lane</span>
-        </motion.div>
-
-        <motion.h1
-          variants={rise}
-          className="mt-6 text-[clamp(3rem,6.4vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.055em] text-ink-soft"
-        >
-          Meet your
-          <br />
-          newest hire.
-        </motion.h1>
-
-        <motion.p
-          variants={rise}
-          className="mt-6 max-w-[30rem] text-lg leading-[1.5] tracking-[-0.015em] text-muted sm:text-xl"
-        >
-          Agent Lane takes recurring operational traffic off your plate—drafting client reports,
-          nudging leads, and collecting receivables. Three dedicated lanes;{" "}
-          <span className="text-ink">you just approve.</span>
-        </motion.p>
-
-        <motion.div variants={rise} className="mt-8 flex flex-wrap items-center gap-3.5">
-          <Link
-            href="/demo"
-            className="group inline-flex h-[3.25rem] min-w-[12.5rem] items-center justify-center gap-2.5 rounded-xl bg-btn px-7 text-base font-medium text-white shadow-[0_0.5rem_1.25rem_-0.5rem_rgba(0,0,0,0.45)] transition hover:bg-btn-hover active:scale-[0.98]"
-          >
-            <span>Book a demo</span>
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/how-it-works"
-            className="inline-flex h-[3.25rem] items-center justify-center gap-2.5 rounded-xl border border-line bg-white px-6 text-base font-medium text-ink shadow-2xs transition hover:bg-surface active:scale-[0.98]"
-          >
-            <Play className="h-3.5 w-3.5 fill-ink" />
-            <span>See how it works</span>
-          </Link>
-        </motion.div>
-
-        <motion.div
-          variants={rise}
-          className="mt-9 grid max-w-[32.5rem] grid-cols-3 gap-4 text-[0.8125rem] leading-snug text-muted sm:text-sm"
-        >
-          <div className="flex items-start gap-2.5">
-            <span className="mt-1.5 size-2 shrink-0 rounded-full bg-lane-gradient" />
-            <span>Zero manual spreadsheets</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <ShieldCheck className="mt-0.5 size-[1.125rem] shrink-0 text-ok" />
-            <span>100% human approval gated</span>
-          </div>
-          <div className="flex items-start gap-2.5">
-            <Clock className="mt-0.5 size-[1.125rem] shrink-0 text-muted" />
-            <span>Average SLA &lt; 1 second</span>
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Right: stacked workspace preview */}
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.95, delay: 0.25, ease: EASING }}
-        className="relative lg:[perspective:112.5rem]"
+    <div ref={outerRef} className="relative w-full" style={{ height: fit ? fit.height : undefined }}>
+      <div
+        ref={innerRef}
+        className="mx-auto w-[82rem] origin-top-left"
+        style={{
+          transform: fit && fit.scale < 1 ? `scale(${fit.scale})` : undefined,
+          visibility: fit ? "visible" : "hidden",
+          marginLeft: fit && fit.scale < 1 ? 0 : undefined,
+        }}
       >
-        <div className="relative lg:[transform:rotateY(-7deg)_rotateX(3deg)] lg:[transform-style:preserve-3d]">
-          {/* Ghost windows behind */}
-          <div
-            aria-hidden
-            className="absolute inset-0 -translate-x-6 translate-y-5 rounded-[1.375rem] border border-line/70 bg-white/60 shadow-[0_1.25rem_3.125rem_-1.25rem_rgba(20,20,40,0.12)]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 -translate-x-3 translate-y-2.5 rounded-[1.375rem] border border-line/80 bg-white/80"
-          />
+        {children}
+      </div>
+    </div>
+  );
+}
 
-          {/* Main window */}
-          <div className="relative overflow-hidden rounded-[1.375rem] border border-line bg-white shadow-[0_2.5rem_5rem_-1.875rem_rgba(20,20,40,0.22)]">
-            {/* Chrome */}
-            <div className="flex items-center justify-between border-b border-line bg-surface/60 px-5 py-3.5">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-full bg-neutral-300" />
-                  <span className="size-2.5 rounded-full bg-neutral-300" />
-                  <span className="size-2.5 rounded-full bg-neutral-300" />
-                </div>
-                <span className="text-[0.8125rem] text-muted">workspace.lane.ai</span>
-              </div>
-              <span className="flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-wider text-muted">
-                <span className="size-2 rounded-full bg-emerald-500" />
-                <span>Auto-preview</span>
-              </span>
-            </div>
+/**
+ * Soft white architectural backdrop: a lit back wall, a large sweeping curved
+ * wall rising behind the dashboard, and a glossy Lane-red sphere riding a thin
+ * orbit line on the right. Pure SVG, so it stays crisp and light.
+ */
+function HeroBackdrop() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[62rem] sm:h-[66rem]">
+      <svg
+        className="absolute inset-0 size-full"
+        viewBox="0 0 1600 1000"
+        preserveAspectRatio="xMidYMin slice"
+        fill="none"
+      >
+        <defs>
+          <radialGradient id="hero-light" cx="0.28" cy="0.08" r="0.9">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="0.55" stopColor="#f6f6f4" />
+            <stop offset="1" stopColor="#ebebe8" />
+          </radialGradient>
+          <linearGradient id="hero-pillar" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#ffffff" stopOpacity="0.9" />
+            <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="hero-wall" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#ffffff" />
+            <stop offset="0.35" stopColor="#f3f3f1" />
+            <stop offset="1" stopColor="#e4e4e1" />
+          </linearGradient>
+          <linearGradient id="hero-wall-edge" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.2" />
+            <stop offset="0.5" stopColor="#ffffff" />
+            <stop offset="1" stopColor="#ffffff" stopOpacity="0.2" />
+          </linearGradient>
+          <linearGradient id="hero-orbit" x1="700" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#e0312b" stopOpacity="0" />
+            <stop offset="0.45" stopColor="#e0312b" stopOpacity="0.55" />
+            <stop offset="1" stopColor="#e0312b" stopOpacity="0.8" />
+          </linearGradient>
+          <radialGradient id="hero-sphere" cx="0.36" cy="0.3" r="0.75">
+            <stop offset="0" stopColor="#ff9a8c" />
+            <stop offset="0.28" stopColor="#f2463a" />
+            <stop offset="0.7" stopColor="#d1291f" />
+            <stop offset="1" stopColor="#8f1712" />
+          </radialGradient>
+          <radialGradient id="hero-sphere-shine" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.95" />
+            <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="hero-sphere-glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#e0312b" stopOpacity="0.22" />
+            <stop offset="1" stopColor="#e0312b" stopOpacity="0" />
+          </radialGradient>
+          <filter id="hero-soft" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur stdDeviation="6" />
+          </filter>
+          <filter id="hero-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="22" />
+          </filter>
+        </defs>
 
-            <div className="flex">
-              {/* Icon rail */}
-              <div className="hidden flex-col items-center gap-3 border-r border-line px-3 py-5 sm:flex">
-                <span className="flex size-9 items-center justify-center rounded-[0.625rem] text-faint">
-                  <Bell className="size-4" />
-                </span>
-                {SYSTEMS.map((sys) => {
-                  const Icon = sys.icon;
-                  const isActive = sys.id === activeId;
-                  return (
-                    <button
-                      key={sys.id}
-                      type="button"
-                      onClick={() => pick(sys.id)}
-                      aria-label={sys.tab}
-                      className={`flex size-9 items-center justify-center rounded-[0.625rem] border transition ${
-                        isActive
-                          ? "border-transparent bg-lane-gradient text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
-                          : "border-line bg-white text-muted hover:text-ink"
-                      }`}
-                    >
-                      <Icon className="size-4" />
-                    </button>
-                  );
-                })}
-                <span className="flex size-9 items-center justify-center rounded-[0.625rem] border border-line bg-white text-faint">
-                  <LayoutGrid className="size-4" />
-                </span>
-              </div>
+        {/* Back wall, lit from the upper left */}
+        <rect width="1600" height="1000" fill="url(#hero-light)" />
 
-              <div className="min-w-0 flex-1 p-4 sm:p-5">
-                {/* Lane tabs */}
-                <div className="flex flex-wrap gap-2">
-                  {SYSTEMS.map((sys) => {
-                    const Icon = sys.icon;
-                    const isActive = sys.id === activeId;
-                    return (
-                      <button
-                        key={sys.id}
-                        type="button"
-                        onClick={() => pick(sys.id)}
-                        className={`inline-flex items-center gap-2 rounded-[0.625rem] border px-3 py-1.5 text-xs font-medium transition ${
-                          isActive
-                            ? "border-transparent bg-lane-gradient text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
-                            : "border-line bg-white text-muted hover:text-ink"
-                        }`}
-                      >
-                        <Icon className="size-3.5" />
-                        <span>
-                          Lane {sys.index}
-                          <span className="hidden sm:inline"> · {sys.tab}</span>
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+        {/* Tall soft pillars of light at the edges */}
+        <rect x="40" y="0" width="150" height="1000" fill="url(#hero-pillar)" opacity="0.7" filter="url(#hero-soft)" />
+        <rect x="1440" y="0" width="120" height="1000" fill="url(#hero-pillar)" opacity="0.6" filter="url(#hero-soft)" />
 
-                <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_12.5rem]">
-                  {/* Draft card */}
-                  <div className="rounded-[1rem] border border-line bg-white p-4 shadow-2xs">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={active.id}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.22 }}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-start gap-3">
-                            <span className="mt-0.5 shrink-0 rounded-md bg-surface px-2 py-1 font-mono text-[0.625rem] text-ink">
-                              System {active.index}
-                            </span>
-                            <div>
-                              <div className="text-sm font-semibold text-ink">{active.title}</div>
-                              <div className="text-[0.6875rem] text-muted">{active.meta}</div>
-                            </div>
-                          </div>
-                          <span className="flex shrink-0 items-center gap-1.5 font-mono text-[0.625rem] text-ok">
-                            <span className="size-1.5 rounded-full bg-ok" />
-                            {approved ? "SENT" : "LIVE"}
-                          </span>
-                        </div>
+        {/* Sweeping curved wall: a shadow under it, the wall face, then its lit top edge */}
+        <ellipse cx="800" cy="1420" rx="1180" ry="960" fill="#d9d9d5" opacity="0.5" filter="url(#hero-shadow)" />
+        <ellipse cx="800" cy="1440" rx="1150" ry="960" fill="url(#hero-wall)" />
+        <ellipse cx="800" cy="1440" rx="1150" ry="960" stroke="url(#hero-wall-edge)" strokeWidth="3" />
+        <ellipse cx="800" cy="1500" rx="1020" ry="900" fill="#f1f1ef" opacity="0.55" />
 
-                        <div className="mt-4 grid grid-cols-3 gap-2">
-                          {active.kpis.map((kpi) => (
-                            <div
-                              key={kpi.label}
-                              className="rounded-[0.75rem] border border-line bg-white px-2 py-3 text-center"
-                            >
-                              <div className="text-base font-semibold tracking-tight text-ink tabular-nums sm:text-lg">
-                                {countUp(kpi.value, countProgress)}
-                              </div>
-                              <div className="text-[0.625rem] text-muted sm:text-[0.6875rem]">{kpi.label}</div>
-                              <div
-                                className={`mt-1 text-[0.625rem] font-medium transition-opacity duration-300 sm:text-[0.6875rem] ${
-                                  kpi.tone === "ok" ? "text-ok" : "text-ink-2"
-                                } ${countProgress < 1 ? "opacity-0" : "opacity-100"}`}
-                              >
-                                {kpi.delta}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+        {/* Orbit and the glossy sphere riding it */}
+        <ellipse
+          cx="1130"
+          cy="560"
+          rx="520"
+          ry="250"
+          transform="rotate(18 1130 560)"
+          stroke="url(#hero-orbit)"
+          strokeWidth="1.6"
+        />
+        <g>
+          <circle cx="1490" cy="408" r="120" fill="url(#hero-sphere-glow)" />
+          <ellipse cx="1496" cy="482" rx="48" ry="10" fill="#7a2a24" opacity="0.18" filter="url(#hero-soft)" />
+          <circle cx="1490" cy="408" r="52" fill="url(#hero-sphere)" />
+          <ellipse cx="1472" cy="388" rx="18" ry="12" fill="url(#hero-sphere-shine)" />
+          <circle cx="1490" cy="408" r="52" stroke="#ffffff" strokeOpacity="0.25" strokeWidth="1" />
+        </g>
+      </svg>
 
-                        <ul className="mt-4 space-y-1.5 text-xs leading-relaxed text-ink-2">
-                          {active.lines.map((line, i) => (
-                            <li key={line} className="relative flex items-start gap-2">
-                              <span
-                                className={`mt-[0.4375rem] size-1 shrink-0 rounded-full bg-lane-gradient transition-opacity ${
-                                  lines[i].length ? "opacity-100" : "opacity-0"
-                                }`}
-                              />
-                              {/* Full line keeps the height steady while the typed copy sits on top */}
-                              <span className="invisible">{line}</span>
-                              <span className="absolute left-3 top-0">
-                                {lines[i]}
-                                {typingLine === i && (
-                                  <span className="ml-px inline-block h-3 w-px translate-y-0.5 bg-ink" />
-                                )}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Intake + approve */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex-1 rounded-[1rem] border border-line bg-surface/50 p-3">
-                      <div className="flex items-center justify-between px-1">
-                        <span className="text-xs font-semibold text-ink">Data intake</span>
-                        <span
-                          className={`size-1.5 rounded-full transition-colors ${
-                            syncedCount >= active.intake.length ? "bg-ok" : "bg-lane"
-                          }`}
-                        />
-                      </div>
-                      <div className="mt-2.5 space-y-2">
-                        {active.intake.map((feed, i) => {
-                          const synced = i < syncedCount;
-                          return (
-                            <div
-                              key={feed.name}
-                              className={`flex items-center gap-2.5 rounded-[0.625rem] border border-line bg-white p-2 transition-all duration-300 ${
-                                synced ? "opacity-100" : "translate-y-1 opacity-40"
-                              }`}
-                            >
-                              <span className="flex size-7 shrink-0 items-center justify-center">{feed.logo}</span>
-                              <div className="min-w-0 flex-1">
-                                <div className="truncate text-[0.6875rem] font-medium text-ink">{feed.name}</div>
-                                <div className="truncate text-[0.625rem] text-muted">{feed.detail}</div>
-                              </div>
-                              <Check
-                                className={`size-3 shrink-0 text-ok transition-all duration-300 ${
-                                  synced ? "scale-100 opacity-100" : "scale-50 opacity-0"
-                                }`}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="relative">
-                      {approved ? (
-                        <div className="flex h-11 items-center justify-center gap-2 rounded-[0.75rem] border border-emerald-200 bg-emerald-50 text-xs font-medium text-emerald-800">
-                          <CheckCircle2 className="size-4 text-emerald-600" />
-                          <span>Approved & sent</span>
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={approve}
-                          className={`group flex h-11 w-full items-center justify-center gap-2 rounded-[0.75rem] bg-btn text-xs font-medium text-white shadow-sm transition hover:bg-btn-hover active:scale-[0.98] ${
-                            cursorPressed && inIntro && introRunning ? "scale-[0.97] bg-ink" : ""
-                          }`}
-                        >
-                          <Check className="size-3.5" />
-                          <span>{active.action}</span>
-                          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </button>
-                      )}
-
-                      {/* Pointer that clicks Approve once, at the end of the intro */}
-                      {cursorVisible && (
-                        <motion.svg
-                          aria-hidden
-                          width="18"
-                          height="22"
-                          viewBox="0 0 18 22"
-                          className="pointer-events-none absolute left-1/2 top-1/2 drop-shadow-[0_2px_0.1875rem_rgba(0,0,0,0.25)]"
-                          initial={{ x: 90, y: 80, opacity: 0 }}
-                          animate={{
-                            x: 4,
-                            y: 2,
-                            opacity: t >= CLICK_AT + INTRO.clickHold ? 0 : 1,
-                            scale: cursorPressed ? 0.85 : 1,
-                          }}
-                          transition={{
-                            x: { duration: INTRO.cursorMove / 1000, ease: EASING },
-                            y: { duration: INTRO.cursorMove / 1000, ease: EASING },
-                            opacity: { duration: 0.3 },
-                            scale: { duration: 0.1 },
-                          }}
-                        >
-                          <path
-                            d="M1 1l15 9.5-6.6 1.4 3.9 7.6-2.8 1.4-3.9-7.6L1 18z"
-                            fill="#1d1d1f"
-                            stroke="#fff"
-                            strokeWidth="1.4"
-                            strokeLinejoin="round"
-                          />
-                        </motion.svg>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </section>
+      {/* Fade the backdrop into the page below */}
+      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-b from-transparent to-[#f8f8f6]" />
+    </div>
   );
 }
