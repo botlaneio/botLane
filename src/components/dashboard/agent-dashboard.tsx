@@ -52,6 +52,177 @@ export function AgentDashboard({ className }: { className?: string }) {
   );
 }
 
+/**
+ * The same dashboard for tablets: no sidebar, the search bar carries the brand, and the
+ * panels drop to two columns, so it reads at full size instead of being scaled down.
+ */
+export function AgentDashboardTablet({ className }: { className?: string }) {
+  return (
+    <div
+      className={`relative mx-auto w-full max-w-[60rem] rounded-[1.25rem] border border-line bg-white/90 text-ink shadow-[0_2.5rem_5rem_-2rem_rgba(29,29,31,0.18),0_0.5rem_1.5rem_-0.5rem_rgba(29,29,31,0.08)] backdrop-blur ${className ?? ""}`}
+    >
+      <div className="overflow-hidden rounded-[1.25rem] bg-[#fbfbfa]">
+        <div className="flex items-center gap-4 border-b border-line bg-white px-4 py-2.5">
+          <div className="flex gap-[0.4375rem]">
+            <span className="size-3 rounded-full bg-[#ff5f57]" />
+            <span className="size-3 rounded-full bg-[#febc2e]" />
+            <span className="size-3 rounded-full bg-[#28c840]" />
+          </div>
+          <BotLaneLogo mode="full" size={20} variant="light" decorative symbolClassName="mr-1.5" wordmarkClassName="text-[1.0625rem]" />
+          <div className="ml-auto flex w-full max-w-[18rem] items-center gap-2 rounded-lg bg-surface px-3 py-[0.4375rem] text-[0.75rem] text-faint">
+            <Search className="size-3.5" />
+            Search clients or approvals…
+          </div>
+          <span className="relative text-muted">
+            <Bell className="size-4" />
+            <span className="absolute -right-0.5 -top-0.5 size-[0.4375rem] rounded-full border border-white bg-lane" />
+          </span>
+        </div>
+        <div className="space-y-3 p-4">
+          <SystemCards />
+          <StatTiles cols="grid-cols-2" />
+          <div className="grid grid-cols-[1fr_16rem] gap-3">
+            <WeeklySynthesis kpiCols="grid-cols-2" />
+            <ApprovalQueue />
+          </div>
+        </div>
+      </div>
+      <ApprovalToast className="absolute -right-3 -bottom-6" />
+    </div>
+  );
+}
+
+/**
+ * The same dashboard for phones, laid out like the Lane app on a phone: one column,
+ * bigger type, the approval queue first, and the approval prompt docked at the bottom.
+ */
+export function AgentDashboardPhone({ className }: { className?: string }) {
+  const chips = ["Reporting", "Leads", "Invoices"];
+  const stats = [
+    { value: "24", label: "Clients processed", icon: <ChartColumn className="text-ok" /> },
+    { value: "18", label: "Reports generated", icon: <FileChartColumn className="text-muted" /> },
+    { value: "0", label: "Needs attention", icon: <TriangleAlert className="text-lane" /> },
+    { value: "3", label: "Systems active", icon: <span className="size-2 rounded-full bg-ok" /> },
+  ];
+  const queue = [
+    { title: "Client report", sub: "Acme & Co. · weekly", icon: <ChartColumn className="text-lane" />, tint: true },
+    { title: "Invoice follow-ups", sub: "8 clients", icon: <ReceiptText className="text-ink-2" /> },
+    { title: "Lead replies", sub: "42 leads", icon: <UsersRound className="text-ink-2" /> },
+  ];
+  const kpis = [
+    { label: "Revenue", value: "$128.4k", delta: "12%", up: true, line: [6, 5, 7, 6, 8, 7, 9, 8, 10, 11] },
+    { label: "New leads", value: "342", delta: "24%", up: true, line: [4, 5, 4, 6, 5, 7, 6, 8, 9, 10] },
+  ];
+  return (
+    <div className={`relative mx-auto w-full max-w-[26rem] pb-8 text-ink ${className ?? ""}`}>
+      <div className="overflow-hidden rounded-[1.75rem] border border-line bg-[#fbfbfa] shadow-[0_2rem_4rem_-2rem_rgba(29,29,31,0.22),0_0.5rem_1.5rem_-0.5rem_rgba(29,29,31,0.08)]">
+        <div className="flex items-center gap-3 border-b border-line bg-white px-4 py-3">
+          <BotLaneLogo mode="full" size={22} variant="light" decorative symbolClassName="mr-1.5" wordmarkClassName="text-[1.125rem]" />
+          <span className="relative ml-auto text-muted">
+            <Bell className="size-[1.125rem]" />
+            <span className="absolute -right-0.5 -top-0.5 size-2 rounded-full border border-white bg-lane" />
+          </span>
+          <span className="grid size-8 place-items-center rounded-full bg-gradient-to-br from-[#d9c3b0] to-[#8a6a55] text-[0.75rem] font-semibold text-white">
+            TK
+          </span>
+        </div>
+
+        <div className="space-y-3 p-3.5">
+          <div className="flex gap-1.5">
+            {chips.map((c, i) => (
+              <span
+                key={c}
+                className={`flex-1 rounded-full border py-1.5 text-center text-[0.8125rem] font-medium ${
+                  i === 0 ? "border-lane/50 bg-[var(--bl-red-tint)] text-lane-ink" : "border-line bg-white text-ink-2"
+                }`}
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            {stats.map((s) => (
+              <div key={s.label} className="flex items-center gap-2.5 rounded-xl border border-line bg-white px-3 py-2.5">
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-surface [&_svg]:size-4">{s.icon}</span>
+                <span className="min-w-0 leading-tight">
+                  <span className="block text-[1.25rem] font-semibold tabular-nums">{s.value}</span>
+                  <span className="block truncate text-[0.75rem] text-muted">{s.label}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <section className="rounded-xl border border-line bg-white p-3">
+            <header className="mb-2 flex items-center gap-2">
+              <ShieldCheck className="size-[1.125rem] text-ink-2" />
+              <h3 className="text-[0.9375rem] font-semibold">Approval queue</h3>
+              <span className="grid size-5 place-items-center rounded-full bg-lane text-[0.6875rem] font-semibold text-white">3</span>
+            </header>
+            <ul className="space-y-1.5">
+              {queue.map((q) => (
+                <li key={q.title} className="flex items-center gap-2.5 rounded-lg border border-line px-2.5 py-2">
+                  <span
+                    className={`grid size-9 shrink-0 place-items-center rounded-lg [&_svg]:size-[1.125rem] ${
+                      q.tint ? "bg-[var(--bl-red-tint)]" : "bg-surface"
+                    }`}
+                  >
+                    {q.icon}
+                  </span>
+                  <span className="min-w-0 flex-1 leading-tight">
+                    <span className="block truncate text-[0.875rem] font-medium">{q.title}</span>
+                    <span className="block truncate text-[0.75rem] text-muted">{q.sub}</span>
+                  </span>
+                  <ChevronRight className="size-4 text-faint" />
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="rounded-xl border border-line bg-white p-3">
+            <header className="flex items-center gap-2.5">
+              <span className="grid size-7 place-items-center rounded-md bg-ink text-[0.6875rem] font-bold text-white">A</span>
+              <span className="flex-1 leading-tight">
+                <span className="block text-[0.9375rem] font-semibold">Weekly synthesis</span>
+                <span className="block text-[0.75rem] text-muted">Acme &amp; Co. · Oct 14 – 20</span>
+              </span>
+            </header>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {kpis.map((k) => (
+                <div key={k.label} className="rounded-lg border border-line px-2.5 py-2">
+                  <span className="block text-[0.75rem] text-muted">{k.label}</span>
+                  <span className="block text-[1.125rem] font-semibold tabular-nums">{k.value}</span>
+                  <span className="mt-0.5 flex items-end justify-between gap-1">
+                    <span className={`flex items-center gap-0.5 text-[0.75rem] font-medium ${k.up ? "text-ok" : "text-lane"}`}>
+                      {k.up ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />}
+                      {k.delta}
+                    </span>
+                    <Sparkline points={k.line} color={k.up ? "var(--bl-green)" : "var(--bl-red)"} />
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* The approval prompt, docked over the bottom edge */}
+      <div className="absolute inset-x-3 bottom-0 flex items-center gap-2.5 rounded-2xl border border-line bg-white/95 p-2.5 shadow-[0_1.25rem_3rem_-1rem_rgba(29,29,31,0.3)] backdrop-blur">
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--bl-red-tint)] text-lane">
+          <FileText className="size-[1.125rem]" />
+        </span>
+        <span className="min-w-0 flex-1 leading-tight">
+          <span className="block truncate text-[0.8125rem] font-medium">Report ready for approval</span>
+          <span className="block truncate text-[0.75rem] text-muted">Acme &amp; Co. · weekly</span>
+        </span>
+        <span className="flex shrink-0 items-center gap-1 rounded-lg bg-lane px-3 py-2 text-[0.8125rem] font-medium text-white">
+          Approve <ArrowRight className="size-3.5" />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /* ── Chrome ─────────────────────────────────────────────── */
 
 function Sidebar() {
@@ -166,9 +337,9 @@ function SystemCards() {
 
 /* ── Row 2: stats ───────────────────────────────────────── */
 
-function StatTiles() {
+function StatTiles({ cols = "grid-cols-4" }: { cols?: string }) {
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className={`grid gap-3 ${cols}`}>
       <Stat icon={<ChartColumn className="text-ok" />} value="24" label="Clients processed" />
       <Stat icon={<FileChartColumn className="text-muted" />} value="18" label="Reports generated" />
       <Stat
@@ -243,7 +414,7 @@ function ConnectedSignals() {
   );
 }
 
-function WeeklySynthesis() {
+function WeeklySynthesis({ kpiCols = "grid-cols-[1.4fr_1fr_1fr_1fr]" }: { kpiCols?: string }) {
   const kpis = [
     { label: "Total Revenue", value: "$128,430", delta: "12%", up: true, line: [6, 5, 7, 6, 8, 7, 9, 8, 10, 11] },
     { label: "New Leads", value: "342", delta: "24%", up: true, line: [4, 5, 4, 6, 5, 7, 6, 8, 9, 10] },
@@ -276,7 +447,7 @@ function WeeklySynthesis() {
         </span>
       </div>
 
-      <div className="mt-3 grid grid-cols-[1.4fr_1fr_1fr_1fr] gap-2">
+      <div className={`mt-3 grid gap-2 ${kpiCols}`}>
         {kpis.map((k) => (
           <div key={k.label} className="rounded-lg border border-line px-2.5 py-2">
             <span className="block text-[0.625rem] text-muted">{k.label}</span>
@@ -343,9 +514,9 @@ function ApprovalQueue() {
 }
 
 /** The floating notification that overhangs the dashboard's bottom-right corner. */
-function ApprovalToast() {
+function ApprovalToast({ className = "absolute -right-6 bottom-6" }: { className?: string }) {
   return (
-    <div className="absolute -right-6 bottom-6 flex items-center gap-3 rounded-2xl border border-line bg-white/95 py-3 pl-3 pr-3 shadow-[0_1.25rem_3rem_-1rem_rgba(29,29,31,0.25)] backdrop-blur">
+    <div className={`${className} flex items-center gap-3 rounded-2xl border border-line bg-white/95 py-3 pl-3 pr-3 shadow-[0_1.25rem_3rem_-1rem_rgba(29,29,31,0.25)] backdrop-blur`}>
       <span className="grid size-10 place-items-center rounded-xl bg-[var(--bl-red-tint)] text-lane">
         <FileText className="size-5" />
       </span>
