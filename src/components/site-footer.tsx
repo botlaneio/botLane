@@ -69,11 +69,12 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[75rem] px-6">
         {/* Closing line + demo */}
         <div className="flex flex-col gap-6 border-b border-white/10 py-14 sm:flex-row sm:items-end sm:justify-between">
-          <div>
+          <div className="max-w-[36rem]">
             <p className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-white">
-              Lane prepares.
-              <br />
-              <span className="text-lane-gradient">You approve.</span>
+              More clients shouldn&apos;t mean <span className="text-lane-gradient">more admin.</span>
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-white/60">
+              Put reporting, follow-ups, and collections in Lane&apos;s hands. Keep every final decision in yours.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
