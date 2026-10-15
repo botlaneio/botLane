@@ -13,6 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Makes relative sharing and canonical links absolute (https://botlane.io/...).
+  metadataBase: new URL("https://botlane.io"),
   title: "botLane",
   description:
     "Lane runs client reporting, lead follow-up and invoice follow-up for you. You just approve.",
