@@ -62,10 +62,6 @@ export default function TermsOfServicePage() {
                   <strong>Accuracy of Connected Data:</strong> BotLane relies upon the accuracy and timeliness of data retrieved via third-party
                   APIs (Google Ads, Meta, Stripe, QuickBooks). We are not liable for third-party upstream API outages or discrepancies.
                 </li>
-                <li>
-                  <strong>Autopilot Opt-In:</strong> If you explicitly configure automated dispatch rules (bypassing manual review for specific
-                  low-risk workflows), you accept responsibility for actions taken within your defined rule parameters.
-                </li>
               </ul>
             </section>
 
