@@ -112,7 +112,7 @@ html {
     font-size: 0.8125rem;
     line-height: 1.2;
     text-align: center;
-    white-space: normal;
+    white-space: nowrap;
   }
   .cta-pair > * svg {
     width: 0.875rem;

@@ -63,14 +63,16 @@ export default function LeadFollowUpPage() {
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
-              <span>Book a Lead Cadence Demo</span>
+              <span className="sm:hidden">Book a demo</span>
+              <span className="hidden sm:inline">Book a Lead Cadence Demo</span>
               <ArrowRight size={14} />
             </Link>
             <Link
               href="/pricing"
               className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
-              <span>$600/mo Standalone Retainer</span>
+              <span className="sm:hidden">From $600/mo</span>
+              <span className="hidden sm:inline">$600/mo Standalone Retainer</span>
             </Link>
           </div>
 
@@ -172,14 +174,16 @@ export default function LeadFollowUpPage() {
                 href="/demo"
                 className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
-                <span>Book a Lead Cadence Walkthrough</span>
+                <span className="sm:hidden">Book a walkthrough</span>
+              <span className="hidden sm:inline">Book a Lead Cadence Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
                 className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
-                <span>View Retainer Options</span>
+                <span className="sm:hidden">See pricing</span>
+              <span className="hidden sm:inline">View Retainer Options</span>
               </Link>
             </div>
           </div>
