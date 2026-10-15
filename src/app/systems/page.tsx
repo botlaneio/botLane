@@ -104,19 +104,21 @@ export default function SystemsPage() {
             and getting paid. Here is exactly how Lane automates each one without ever leaving you out of the loop.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="cta-pair mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
-              <span>Book a Systems Walkthrough</span>
+              <span className="sm:hidden">Book a walkthrough</span>
+              <span className="hidden sm:inline">Book a Systems Walkthrough</span>
             </Link>
             <Link
               href="/pricing"
               className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
-              <span>View Retainer Pricing</span>
+              <span className="sm:hidden">See pricing</span>
+              <span className="hidden sm:inline">View Retainer Pricing</span>
             </Link>
           </div>
         </section>

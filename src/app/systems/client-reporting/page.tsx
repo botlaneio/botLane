@@ -38,7 +38,7 @@ export default function ClientReportingPage() {
           </div>
 
           <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
-            Your clients stay informed. <br />
+            Your clients stay informed. <br className="hidden sm:block" />
             Your team stays focused.
           </h1>
 
@@ -47,35 +47,37 @@ export default function ClientReportingPage() {
             writes the executive commentary, and waits for your 30-second approval.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="cta-pair mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
-              <span>Book a Live Reporting Demo</span>
+              <span className="sm:hidden">Book a demo</span>
+              <span className="hidden sm:inline">Book a Live Reporting Demo</span>
               <ArrowRight size={14} />
             </Link>
             <Link
               href="/pricing"
               className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
-              <span>$600/mo Standalone Retainer</span>
+              <span className="sm:hidden">From $600/mo</span>
+              <span className="hidden sm:inline">$600/mo Standalone Retainer</span>
             </Link>
           </div>
 
           {/* Key Stat Badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 border-y border-line py-5 text-xs text-muted">
+          <div className="mt-12 flex flex-col items-center gap-3 border-y border-line py-5 text-xs text-muted sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
             <div className="flex items-center gap-2">
               <Clock size={15} className="text-lane" />
               <span><strong className="text-ink font-mono">3.5 hrs</strong> saved per client / month</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <CheckCircle2 size={15} className="text-emerald-600" />
               <span><strong className="text-ink">100%</strong> human-approved before sending</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <TrendingUp size={15} className="text-ink" />
               <span>Blended ROAS, CPA & spend attribution</span>
@@ -114,19 +116,21 @@ export default function ClientReportingPage() {
             <p className="mx-auto mt-3 max-w-xl text-sm text-white/70">
               Get started with System 01 on a flat $600/mo retainer or deploy the full suite. 30-day money-back guarantee.
             </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
+            <div className="cta-pair mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
                 className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
-                <span>Schedule a 20-min Walkthrough</span>
+                <span className="sm:hidden">Book a walkthrough</span>
+              <span className="hidden sm:inline">Schedule a 20-min Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
                 className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
-                <span>View All Pricing Tiers</span>
+                <span className="sm:hidden">See pricing</span>
+              <span className="hidden sm:inline">View All Pricing Tiers</span>
               </Link>
             </div>
           </div>
@@ -159,11 +163,11 @@ export default function ClientReportingPage() {
                 className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <span className="font-semibold text-sm text-ink">{faq.q}</span>
                   <ChevronDown
                     size={14}
-                    className={`transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
+                    className={`shrink-0 transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
                   />
                 </div>
                 {activeFaq === idx && (

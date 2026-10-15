@@ -48,7 +48,7 @@ export default function InvoiceFollowUpPage() {
           </div>
 
           <h1 className="mt-5 text-[clamp(2.25rem,5vw,4.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-ink">
-            Collect every dollar. <br />
+            Collect every dollar. <br className="hidden sm:block" />
             Without the awkward money chats.
           </h1>
 
@@ -57,35 +57,37 @@ export default function InvoiceFollowUpPage() {
             halt the exact millisecond funds clear in Stripe, QuickBooks, or your bank feed.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="cta-pair mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
             >
               <Sparkles size={15} className="text-lane" />
-              <span>Book an Invoicing Demo</span>
+              <span className="sm:hidden">Book a demo</span>
+              <span className="hidden sm:inline">Book an Invoicing Demo</span>
               <ArrowRight size={14} />
             </Link>
             <Link
               href="/pricing"
               className="inline-flex h-11 items-center rounded-[0.5rem] border border-line bg-white px-5 text-sm font-semibold text-ink shadow-sm transition hover:bg-surface"
             >
-              <span>$600/mo Standalone Retainer</span>
+              <span className="sm:hidden">From $600/mo</span>
+              <span className="hidden sm:inline">$600/mo Standalone Retainer</span>
             </Link>
           </div>
 
           {/* Stats Bar */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 border-y border-line py-5 text-xs text-muted">
+          <div className="mt-12 flex flex-col items-center gap-3 border-y border-line py-5 text-xs text-muted sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
             <div className="flex items-center gap-2">
               <DollarSign size={15} className="text-emerald-600" />
               <span><strong className="text-ink font-mono">18 days</strong> faster AR collection</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <RotateCw size={15} className="text-lane" />
               <span>Automatic bank reconciliation loop</span>
             </div>
-            <span>•</span>
+            <span aria-hidden className="hidden lg:inline">•</span>
             <div className="flex items-center gap-2">
               <ShieldCheck size={15} className="text-ink" />
               <span>Zero awkward chases for paid clients</span>
@@ -143,11 +145,11 @@ export default function InvoiceFollowUpPage() {
                 className="rounded-[0.875rem] border border-line bg-white p-5 cursor-pointer"
                 onClick={() => toggleFaq(idx)}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <span className="font-semibold text-sm text-ink">{faq.q}</span>
                   <ChevronDown
                     size={14}
-                    className={`transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
+                    className={`shrink-0 transition-transform ${activeFaq === idx ? "rotate-180" : ""}`}
                   />
                 </div>
                 {activeFaq === idx && (
@@ -167,19 +169,21 @@ export default function InvoiceFollowUpPage() {
             <p className="mx-auto mt-3 max-w-xl text-sm text-white/70">
               Deploy System 03 on a flat $600/mo retainer or as part of the full suite. 30-day money-back guarantee.
             </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
+            <div className="cta-pair mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
                 className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"
               >
-                <span>Book an Invoicing Walkthrough</span>
+                <span className="sm:hidden">Book a walkthrough</span>
+              <span className="hidden sm:inline">Book an Invoicing Walkthrough</span>
                 <ArrowRight size={13} />
               </Link>
               <Link
                 href="/pricing"
                 className="inline-flex h-11 items-center rounded-[0.5rem] border border-white/20 px-5 text-xs font-semibold text-white hover:bg-white/10"
               >
-                <span>Compare Pricing Tiers</span>
+                <span className="sm:hidden">See pricing</span>
+              <span className="hidden sm:inline">Compare Pricing Tiers</span>
               </Link>
             </div>
           </div>

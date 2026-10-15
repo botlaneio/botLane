@@ -55,7 +55,7 @@ export function Hero() {
             <span className="font-medium text-lane">You stay in control. We keep things moving.</span>
           </motion.p>
 
-          <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
+          <motion.div variants={rise} className="cta-pair mt-9 flex flex-wrap items-center justify-center gap-3.5">
             <Link
               href="/demo"
               className="group inline-flex h-[3.25rem] min-w-[12.25rem] items-center justify-center gap-2.5 rounded-xl bg-lane px-7 text-base font-medium text-white shadow-[0_0.75rem_1.5rem_-0.75rem_rgba(224,49,43,0.7)] transition hover:bg-lane-strong active:scale-[0.98]"

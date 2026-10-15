@@ -139,7 +139,7 @@ export function SystemPricing({ system }: { system: SystemId }) {
               </li>
             ))}
           </ul>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="cta-pair mt-8 flex flex-wrap gap-3">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white transition hover:bg-btn-hover"
@@ -156,7 +156,7 @@ export function SystemPricing({ system }: { system: SystemId }) {
           </div>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           {BUNDLES.map((b) => (
             <Link
               key={b.name}

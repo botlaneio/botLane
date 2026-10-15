@@ -31,13 +31,14 @@ export function FinalCta() {
             Stop drowning in admin work. Start leading your agency.
           </p>
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
+          <div className="cta-pair mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
             <Link
               href="/demo"
               className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-btn px-6 text-sm font-semibold text-white shadow-lg shadow-black/10 transition-all hover:bg-btn-hover active:scale-[0.99] sm:w-auto"
             >
               <Sparkles size={16} className="text-lane" />
-              <span>Book a 20-Minute Demo</span>
+              <span className="sm:hidden">Book a demo</span>
+              <span className="hidden sm:inline">Book a 20-Minute Demo</span>
               <ArrowRight
                 size={14}
                 className="transition-transform duration-200 group-hover:translate-x-1"
@@ -48,7 +49,8 @@ export function FinalCta() {
               href="/pricing"
               className="inline-flex h-12 w-full items-center justify-center rounded-[0.625rem] border border-line bg-white px-6 text-sm font-semibold text-ink shadow-sm transition hover:border-lane/30 hover:bg-surface sm:w-auto"
             >
-              <span>View Flat Retainer Pricing</span>
+              <span className="sm:hidden">See pricing</span>
+              <span className="hidden sm:inline">View Flat Retainer Pricing</span>
             </Link>
           </div>
 

@@ -41,7 +41,8 @@ const CAPTIONS = [
   },
 ];
 
-const MOBILE_QUERY = "(max-width: 767px)";
+// Phones, and tablets held upright: the tall layout fills a portrait screen far better than the wide one.
+const MOBILE_QUERY = "(max-width: 767px), (max-width: 1199px) and (orientation: portrait)";
 const REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
 
 function useMedia(query: string) {
@@ -96,7 +97,8 @@ export function ReportingStory() {
     const canvas = canvasRef.current;
     if (!fit || !canvas) return;
     const resize = () => {
-      const s = Math.min(fit.clientWidth / layout.W, fit.clientHeight / layout.H);
+      // The tall layout on a big upright tablet would otherwise blow up past its designed size.
+      const s = Math.min(fit.clientWidth / layout.W, fit.clientHeight / layout.H, layout.key === "mobile" ? 1.35 : 1);
       canvas.style.transform = `translate(-50%, -50%) scale(${s})`;
     };
     resize();
@@ -174,18 +176,18 @@ export function ReportingStory() {
     <section
       ref={stageRef}
       aria-label="How Client reporting works"
-      className={still ? "relative" : "relative h-[560vh] md:h-[820vh]"}
+      className={still ? "relative" : mobile ? "relative h-[560svh]" : "relative h-[820svh]"}
     >
       <div
         className={
           still
             ? "mx-auto flex max-w-[75rem] flex-col px-6 py-12"
-            : "sticky top-16 mx-auto flex h-[calc(100vh-4rem)] h-[calc(100svh-4rem)] max-w-[75rem] flex-col px-6 pt-6 pb-4 sm:pt-10"
+            : "story-stage sticky top-16 mx-auto flex h-[calc(100svh-4rem)] max-w-[75rem] flex-col px-6 pt-6 pb-4 sm:pt-10"
         }
       >
         {/* Captions: one at a time while scrolling, all listed with reduced motion */}
         <div className="shrink-0">
-          <ol className={still ? "grid gap-6 md:grid-cols-2" : "relative h-[10.5rem] sm:h-[8.5rem] md:h-[7.5rem]"}>
+          <ol className={still ? "grid gap-6 md:grid-cols-2" : "story-captions relative h-[11.5rem] sm:h-[8.5rem] md:h-[7.5rem]"}>
             {CAPTIONS.map((c, i) => (
               <li key={c.title} data-caption className={still ? "" : "absolute inset-x-0 top-0"}>
                 <div className="font-mono text-xs font-semibold text-lane">
@@ -194,7 +196,7 @@ export function ReportingStory() {
                 <h2 className="mt-1.5 text-[clamp(1.375rem,2.6vw,2rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-ink">
                   {c.title}
                 </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{c.text}</p>
+                <p className="story-caption-text mt-2 max-w-2xl text-sm leading-relaxed text-muted">{c.text}</p>
               </li>
             ))}
           </ol>
