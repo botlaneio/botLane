@@ -129,11 +129,9 @@ export function SiteFooter() {
                 <div className={HEADING}>Registered office</div>
                 <address className="mt-3 text-sm not-italic leading-relaxed text-white/60">
                   {COMPANY_INFO.legalName}
-                  {COMPANY_INFO.registeredAddress.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
+                  <Link href="/company/contact" className="block text-white/75 transition hover:text-white">
+                    {COMPANY_INFO.registeredLocality}
+                  </Link>
                 </address>
               </div>
             </div>
