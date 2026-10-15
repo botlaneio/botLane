@@ -174,7 +174,7 @@ export function ReportingStory() {
     <section
       ref={stageRef}
       aria-label="How Client reporting works"
-      className={still ? "relative" : "relative h-[520vh] md:h-[760vh]"}
+      className={still ? "relative" : "relative h-[600vh] md:h-[880vh]"}
     >
       <div
         className={
@@ -212,7 +212,7 @@ export function ReportingStory() {
         {/* Canvas */}
         <div
           ref={fitRef}
-          className={still ? "relative mt-10 w-full" : "relative mt-4 min-h-0 w-full flex-1"}
+          className={still ? "relative mt-10 w-full" : "relative mt-4 min-h-0 w-full flex-1 overflow-clip"}
           style={still ? { aspectRatio: `${layout.W} / ${layout.H}` } : undefined}
           aria-hidden
         >
@@ -221,16 +221,19 @@ export function ReportingStory() {
             className="absolute top-1/2 left-1/2"
             style={{ width: layout.W, height: layout.H, transform: "translate(-50%, -50%)", transformOrigin: "50% 50%" }}
           >
-            <StoryPaths layout={layout} />
-            <Hub layout={layout} />
-            <Pipeline layout={layout} />
-            <div data-group className="absolute inset-0" style={{ zIndex: 3 }}>
-              <Dashboard layout={layout} />
-              <SourceCards layout={layout} />
+            {/* The camera: pushes in on the hub while the cards pour into the logo */}
+            <div data-camera className="absolute inset-0" style={{ transformOrigin: `${layout.hub.x}px ${layout.hub.y}px` }}>
+              <StoryPaths layout={layout} />
+              <Hub layout={layout} />
+              <Pipeline layout={layout} />
+              <div data-group className="absolute inset-0" style={{ zIndex: 3 }}>
+                <Dashboard layout={layout} />
+                <SourceCards layout={layout} />
+              </div>
+              <ReviewPanel layout={layout} />
+              <InboxPanel layout={layout} />
+              <ReportThumb layout={layout} />
             </div>
-            <ReviewPanel layout={layout} />
-            <InboxPanel layout={layout} />
-            <ReportThumb layout={layout} />
           </div>
         </div>
       </div>

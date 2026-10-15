@@ -1,4 +1,4 @@
-import type { Timeline } from "animejs";
+import type { AnimationParams, TargetsParam, Timeline } from "animejs";
 import { CARD_IDS, STAGE_IDS, type StoryLayout } from "./layout";
 
 type Anime = typeof import("animejs");
@@ -8,17 +8,19 @@ type Anime = typeof import("animejs");
  * stage. Scrolling back plays it in reverse. Scene boundaries are listed in SCENES so the
  * captions and the progress rail stay in step with the visuals.
  */
-export const END = 10000;
+/** Scene 02 runs this much longer than the rest were laid out for: the logo, the push-in and the melt. */
+const D = 1500;
+export const END = 10000 + D;
 export const SCENES: [number, number][] = [
   [0, 1200], // 01 the problem
-  [1200, 3000], // 02 the connection
-  [3000, 5400], // 03 the processing system
-  [5400, 7400], // 04 the transformation
-  [7400, 8800], // 05 human control
-  [8800, END], // 06 delivery
+  [1200, 3000 + D], // 02 the connection
+  [3000 + D, 5400 + D], // 03 the processing system
+  [5400 + D, 7400 + D], // 04 the transformation
+  [7400 + D, 8800 + D], // 05 human control
+  [8800 + D, END], // 06 delivery
 ];
 /** The single stable frame shown when motion is reduced: report approved, delivery started. */
-export const STILL_AT = 8860;
+export const STILL_AT = 8860 + D;
 
 const LINE = "#ececef";
 const SURFACE = "#f5f5f7";
@@ -83,7 +85,7 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     set(points[i], { translateX: l.scatter[id].x, translateY: l.scatter[id].y });
     set(boxes[i], { rotate: l.scatter[id].rotate, width: l.card.w, height: l.card.h });
   });
-  set(hubBox, { scale: 0.6 });
+  set(hubBox, { scale: 0.5 });
   set(nodes, { translateX: l.hub.x, translateY: l.hub.y });
   set(nodeBoxes, { scale: 0.7 });
   set(group, { transformOrigin: `${l.frame.x}px ${l.frame.y}px` });
@@ -110,6 +112,9 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     onRender: (self) => renderCounters(self.currentTime),
   });
 
+  // Everything after scene 02 is laid out on the original clock; `at` moves it past the longer scene 02.
+  const add = (targets: TargetsParam, params: AnimationParams, pos: number) => tl.add(targets, params, pos >= 3000 ? pos + D : pos);
+
   /* ---------- captions and progress rail ---------- */
   SCENES.forEach(([s, e], i) => {
     if (i > 0) tl.add(captions[i], { opacity: [0, 1], translateY: [12, 0], duration: 220 }, s);
@@ -126,8 +131,17 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
   });
 
   /* ---------- 02 the connection: paths link every source to Lane ---------- */
+  // The hub starts as the botLane logo. The cards travel in and pour into it while the logo
+  // grows and the camera pushes in; then the dots melt into one drop that becomes the red dot
+  // of the Lane tile; then the camera eases out and the tile flows back into the logo.
+  const camera = $("[data-camera]");
+  const crisp = $("[data-hub-crisp]");
+  const goo = $("[data-hub-goo]");
+  const blur = $("[data-hub-blur]");
+  const ink = $("[data-hub-ink]");
+  const label = $("[data-hub-label]");
   tl.add(hub, { opacity: [0, 1], duration: 260 }, 1250);
-  tl.add(hubBox, { scale: [0.6, 1], ease: "outCubic", duration: 360 }, 1250);
+  tl.add(hubBox, { scale: [0.5, 0.72], ease: "outCubic", duration: 360 }, 1250);
   tl.add(routeLines, { draw: ["0 0", "0 1"], duration: 520, delay: A.stagger(90) }, 1320);
   tl.add(gaps, { opacity: [1, 0], duration: 180, delay: A.stagger(40) }, 1560);
   boxes.forEach((box, i) => {
@@ -135,114 +149,136 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     const r0 = l.scatter[CARD_IDS[i]].rotate + dr;
     tl.add(box, { translateX: [dx, 0], translateY: [dy, 0], rotate: [r0, 0], scale: [1, 0.34], ease: "inOutCubic", duration: 420 }, 1720 + i * 60);
   });
+  // Cards travel in and slip under the logo; each arrival makes the logo swell a little.
+  const growth = [0.72, 0.78, 0.84, 0.9, 0.96, 1.02];
   points.forEach((p, i) => {
     const path = A.svg.createMotionPath(routes[i]);
-    tl.add(p, { translateX: path.translateX, translateY: path.translateY, ease: "inOutSine", duration: 680 }, 2080 + i * 85);
-    tl.add(boxes[i], { opacity: [1, 0], scale: [0.34, 0.18], duration: 160 }, 2700 + i * 85);
+    const t = 2080 + i * 130;
+    tl.add(p, { translateX: path.translateX, translateY: path.translateY, ease: "inOutSine", duration: 680 }, t);
+    tl.add(boxes[i], { opacity: [1, 0], scale: [0.34, 0.12], duration: 180 }, t + 560);
+    tl.add(hubBox, { scale: [growth[i], growth[i + 1]], ease: "outBack", duration: 120 }, t + 600);
   });
-  counters.push({ el: hubCount, start: 2720, duration: 420, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
-  tl.add(hubBox, { scale: [1, 1.07], duration: 140 }, 2880);
-  tl.add(hubBox, { scale: [1.07, 1], duration: 160 }, 3020);
-  tl.add(routes, { opacity: [1, 0], duration: 260 }, 2960);
+  tl.add(routes, { opacity: [1, 0], duration: 260 }, 2900);
+  tl.add(camera, { scale: [1, 1.32], ease: "inOutSine", duration: 1200 }, 2100);
+  // The melt: dots go liquid, run together and pour into one drop.
+  tl.add(crisp, { opacity: [1, 0], duration: 80 }, 3300);
+  tl.add(goo, { opacity: [0, 1], duration: 80 }, 3300);
+  tl.add(blur, { stdDeviation: [0.6, 3.2], ease: "inOutSine", duration: 360 }, 3310);
+  tl.add(goo, { scale: [1, 0.07], ease: "inOutCubic", duration: 420 }, 3330);
+  tl.add(hubBox, { scale: [1.02, 1], borderRadius: ["32.8px", "28px"], duration: 280 }, 3420);
+  tl.add(ink, { opacity: [0, 1], duration: 260 }, 3420);
+  tl.add(label, { opacity: [0, 1], duration: 180 }, 3700);
+  tl.add(goo, { opacity: [1, 0], duration: 100 }, 3740);
+  counters.push({ el: hubCount, start: 3720, duration: 240, to: 5, decimals: 0, ease: (p) => Math.floor(p * 5) / 5 });
+  // Camera eases back out, and the tile flows back into the logo.
+  tl.add(camera, { scale: [1.32, 1], ease: "inOutSine", duration: 440 }, 3960);
+  tl.add(label, { opacity: [1, 0], duration: 140 }, 4060);
+  tl.add(goo, { opacity: [0, 1], duration: 80 }, 4080);
+  tl.add(goo, { scale: [0.07, 1], ease: "inOutCubic", duration: 380 }, 4090);
+  tl.add(blur, { stdDeviation: [3.2, 0.6], ease: "inOutSine", duration: 340 }, 4140);
+  tl.add(ink, { opacity: [1, 0], duration: 260 }, 4120);
+  tl.add(hubBox, { borderRadius: ["28px", "32.8px"], duration: 260 }, 4120);
+  tl.add(goo, { opacity: [1, 0], duration: 60 }, 4440);
+  tl.add(crisp, { opacity: [0, 1], duration: 60 }, 4440);
 
   /* ---------- 03 the processing system: collect → validate → structure → review → deliver ---------- */
-  tl.add(hub, { opacity: [1, 0], duration: 240 }, 3180);
-  tl.add(hubBox, { scale: [1, 0.85], duration: 240 }, 3180);
+  add(hub, { opacity: [1, 0], duration: 240 }, 3180);
+  add(hubBox, { scale: [1, 0.85], duration: 240 }, 3180);
   nodes.forEach((n, i) => {
     const s = l.stages[STAGE_IDS[i]];
     const t = 3200 + Math.abs(i - 2) * 80; // fan out from the centre
-    tl.add(n, { translateX: [l.hub.x, s.x], translateY: [l.hub.y, s.y], opacity: [0, 1], ease: "outCubic", duration: 520 }, t);
-    tl.add(nodeBoxes[i], { scale: [0.7, 1], ease: "outCubic", duration: 520 }, t);
+    add(n, { translateX: [l.hub.x, s.x], translateY: [l.hub.y, s.y], opacity: [0, 1], ease: "outCubic", duration: 520 }, t);
+    add(nodeBoxes[i], { scale: [0.7, 1], ease: "outCubic", duration: 520 }, t);
   });
   const activate = (i: number, t: number) => {
     const n = nodes[i];
-    tl.add($("[data-node-badge]", n), { backgroundColor: [SURFACE, i === 3 ? "#f59e0b" : LANE], color: [MUTED, "#ffffff"], duration: 200 }, t);
-    tl.add(nodeBoxes[i], { borderColor: [LINE, i === 3 ? AMBER : LANE_SOFT], duration: 200 }, t);
-    tl.add($("[data-node-pending]", n), { opacity: [1, 0], duration: 160 }, t);
-    tl.add($("[data-node-done]", n), { opacity: [0, 1], translateY: [6, 0], duration: 220 }, t + 80);
+    add($("[data-node-badge]", n), { backgroundColor: [SURFACE, i === 3 ? "#f59e0b" : LANE], color: [MUTED, "#ffffff"], duration: 200 }, t);
+    add(nodeBoxes[i], { borderColor: [LINE, i === 3 ? AMBER : LANE_SOFT], duration: 200 }, t);
+    add($("[data-node-pending]", n), { opacity: [1, 0], duration: 160 }, t);
+    add($("[data-node-done]", n), { opacity: [0, 1], translateY: [6, 0], duration: 220 }, t + 80);
   };
   activate(0, 3800);
   connectors.forEach((_, c) => {
     const t = 3960 + c * 380;
-    tl.add(connectorLines[c], { draw: ["0 0", "0 1"], ease: "inOutSine", duration: 300 }, t);
+    add(connectorLines[c], { draw: ["0 0", "0 1"], ease: "inOutSine", duration: 300 }, t);
     if (c < 3) {
       const path = A.svg.createMotionPath(connectors[c]);
-      tl.add(packets[c], { translateX: path.translateX, translateY: path.translateY, ease: "inOutSine", duration: 300 }, t);
-      tl.add(packets[c], { opacity: [0, 1], duration: 50 }, t);
-      tl.add(packets[c], { opacity: [1, 0], duration: 60 }, t + 300);
+      add(packets[c], { translateX: path.translateX, translateY: path.translateY, ease: "inOutSine", duration: 300 }, t);
+      add(packets[c], { opacity: [0, 1], duration: 50 }, t);
+      add(packets[c], { opacity: [1, 0], duration: 60 }, t + 300);
       activate(c + 1, t + 300);
     }
   });
 
   /* ---------- 04 the transformation: the cards become a report ---------- */
-  tl.add([...connectors, ...packets], { opacity: 0, duration: 200 }, 5420);
+  add([...connectors, ...packets], { opacity: 0, duration: 200 }, 5420);
   if (l.strip) {
     const { y, x0, x1, scale } = l.strip;
     nodes.forEach((n, i) => {
       const s = l.stages[STAGE_IDS[i]];
-      tl.add(n, { translateX: [s.x, x0 + (i * (x1 - x0)) / 4], translateY: [s.y, y], ease: "inOutCubic", duration: 520 }, 5440 + i * 40);
-      tl.add(nodeBoxes[i], { scale: [1, scale], ease: "inOutCubic", duration: 520 }, 5440 + i * 40);
+      add(n, { translateX: [s.x, x0 + (i * (x1 - x0)) / 4], translateY: [s.y, y], ease: "inOutCubic", duration: 520 }, 5440 + i * 40);
+      add(nodeBoxes[i], { scale: [1, scale], ease: "inOutCubic", duration: 520 }, 5440 + i * 40);
     });
   } else {
-    tl.add(nodes, { opacity: [1, 0], duration: 260, delay: A.stagger(40) }, 5440);
+    add(nodes, { opacity: [1, 0], duration: 260, delay: A.stagger(40) }, 5440);
   }
-  tl.add(frame, { opacity: [0, 1], scale: [0.97, 1], ease: "outCubic", duration: 420 }, 5640);
+  add(frame, { opacity: [0, 1], scale: [0.97, 1], ease: "outCubic", duration: 420 }, 5640);
   CARD_IDS.forEach((id, i) => {
     const t = 5900 + i * 90;
     const tile = l.tiles[id];
-    tl.add(points[i], { translateX: [l.hub.x, tile.x], translateY: [l.hub.y, tile.y], ease: "inOutCubic", duration: 640 }, t);
-    tl.add(boxes[i], { opacity: [0, 1], duration: 180 }, t);
-    tl.add(boxes[i], { scale: [0.18, 1], width: [l.card.w, tile.w], height: [l.card.h, tile.h], ease: "inOutCubic", duration: 640 }, t);
-    tl.add(faceA[i], { opacity: [1, 0], duration: 200 }, t + 220);
-    tl.add(faceB[i], { opacity: [0, 1], duration: 260 }, t + 380);
+    add(points[i], { translateX: [l.hub.x, tile.x], translateY: [l.hub.y, tile.y], ease: "inOutCubic", duration: 640 }, t);
+    add(boxes[i], { opacity: [0, 1], duration: 180 }, t);
+    add(boxes[i], { scale: [0.18, 1], width: [l.card.w, tile.w], height: [l.card.h, tile.h], ease: "inOutCubic", duration: 640 }, t);
+    add(faceA[i], { opacity: [1, 0], duration: 200 }, t + 220);
+    add(faceB[i], { opacity: [0, 1], duration: 260 }, t + 380);
   });
-  tl.add(parts, { opacity: [0, 1], translateY: [14, 0], ease: "outCubic", duration: 380, delay: A.stagger(110) }, 6180);
-  tl.add(chartLine, { draw: ["0 0", "0 1"], ease: "inOutSine", duration: 620 }, 6460);
-  tl.add($("[data-chart-area]"), { opacity: [0, 0.08], duration: 300 }, 6800);
-  tl.add($("[data-chart-dot]"), { opacity: [0, 1], scale: [0.4, 1], duration: 160 }, 7060);
+  add(parts, { opacity: [0, 1], translateY: [14, 0], ease: "outCubic", duration: 380, delay: A.stagger(110) }, 6180);
+  add(chartLine, { draw: ["0 0", "0 1"], ease: "inOutSine", duration: 620 }, 6460);
+  add($("[data-chart-area]"), { opacity: [0, 0.08], duration: 300 }, 6800);
+  add($("[data-chart-dot]"), { opacity: [0, 1], scale: [0.4, 1], duration: 160 }, 7060);
   $$("[data-count]").forEach((el) => {
     const target = Number(el.dataset.count);
     const decimals = Number(el.dataset.decimals ?? 0);
-    counters.push({ el, start: 6420, duration: 620, to: target, decimals, ease: outQuad });
+    counters.push({ el, start: 6420 + D, duration: 620, to: target, decimals, ease: outQuad });
   });
-  tl.add(status("draft"), { opacity: [1, 0], duration: 160 }, 7120);
-  tl.add(status("awaiting"), { opacity: [0, 1], duration: 200 }, 7160);
+  add(status("draft"), { opacity: [1, 0], duration: 160 }, 7120);
+  add(status("awaiting"), { opacity: [0, 1], duration: 200 }, 7160);
 
   /* ---------- 05 human control: review, exception, resolve, approve ---------- */
   const aside = l.frameAside;
-  if (l.strip) tl.add(nodes, { opacity: [1, 0], duration: 240 }, 7400);
-  tl.add(group, { translateX: [0, aside.x], translateY: [0, aside.y], scale: [1, aside.scale], ease: "inOutCubic", duration: 520 }, 7420);
+  if (l.strip) add(nodes, { opacity: [1, 0], duration: 240 }, 7400);
+  add(group, { translateX: [0, aside.x], translateY: [0, aside.y], scale: [1, aside.scale], ease: "inOutCubic", duration: 520 }, 7420);
   const fromSide = l.key === "desktop" ? [48, 0, 0, 0] : [0, 0, 60, 0];
-  tl.add(review, { opacity: [0, 1], translateX: fromSide.slice(0, 2), translateY: fromSide.slice(2), ease: "outCubic", duration: 420 }, 7560);
-  tl.add($$("[data-review-row]"), { opacity: [0, 1], translateY: [8, 0], duration: 220, delay: A.stagger(90) }, 7820);
+  add(review, { opacity: [0, 1], translateX: fromSide.slice(0, 2), translateY: fromSide.slice(2), ease: "outCubic", duration: 420 }, 7560);
+  add($$("[data-review-row]"), { opacity: [0, 1], translateY: [8, 0], duration: 220, delay: A.stagger(90) }, 7820);
   const excRow = $("[data-review-exc]");
   const excTile = $("[data-exceptions]");
-  tl.add(excRow, { borderColor: ["rgba(0,0,0,0)", AMBER], backgroundColor: ["rgba(255,255,255,0)", AMBER_BG], duration: 200 }, 8060);
-  tl.add(excTile, { borderColor: [LINE, AMBER], backgroundColor: ["#ffffff", AMBER_BG], duration: 200 }, 8060);
-  tl.add($$("[data-exc-open]"), { opacity: [1, 0], duration: 180 }, 8300);
-  tl.add($$("[data-exc-closed]"), { opacity: [0, 1], duration: 220 }, 8340);
-  tl.add(excRow, { borderColor: [AMBER, GREEN], backgroundColor: [AMBER_BG, GREEN_BG], duration: 220 }, 8320);
-  tl.add(excTile, { borderColor: [AMBER, GREEN], backgroundColor: [AMBER_BG, GREEN_BG], duration: 220 }, 8320);
+  add(excRow, { borderColor: ["rgba(0,0,0,0)", AMBER], backgroundColor: ["rgba(255,255,255,0)", AMBER_BG], duration: 200 }, 8060);
+  add(excTile, { borderColor: [LINE, AMBER], backgroundColor: ["#ffffff", AMBER_BG], duration: 200 }, 8060);
+  add($$("[data-exc-open]"), { opacity: [1, 0], duration: 180 }, 8300);
+  add($$("[data-exc-closed]"), { opacity: [0, 1], duration: 220 }, 8340);
+  add(excRow, { borderColor: [AMBER, GREEN], backgroundColor: [AMBER_BG, GREEN_BG], duration: 220 }, 8320);
+  add(excTile, { borderColor: [AMBER, GREEN], backgroundColor: [AMBER_BG, GREEN_BG], duration: 220 }, 8320);
   const approve = $("[data-approve]");
-  tl.add(approve, { scale: [1, 0.96], duration: 70 }, 8520);
-  tl.add(approve, { scale: [0.96, 1], backgroundColor: ["#2c2c30", OK], duration: 160 }, 8590);
-  tl.add($("[data-approve-idle]"), { opacity: [1, 0], duration: 120 }, 8590);
-  tl.add($("[data-approve-done]"), { opacity: [0, 1], duration: 160 }, 8620);
-  tl.add(status("awaiting"), { opacity: [1, 0], duration: 140 }, 8640);
-  tl.add(status("approved"), { opacity: [0, 1], duration: 180 }, 8660);
-  tl.add($("[data-delivery-started]"), { opacity: [0, 1], translateY: [6, 0], duration: 160 }, 8700);
+  add(approve, { scale: [1, 0.96], duration: 70 }, 8520);
+  add(approve, { scale: [0.96, 1], backgroundColor: ["#2c2c30", OK], duration: 160 }, 8590);
+  add($("[data-approve-idle]"), { opacity: [1, 0], duration: 120 }, 8590);
+  add($("[data-approve-done]"), { opacity: [0, 1], duration: 160 }, 8620);
+  add(status("awaiting"), { opacity: [1, 0], duration: 140 }, 8640);
+  add(status("approved"), { opacity: [0, 1], duration: 180 }, 8660);
+  add($("[data-delivery-started]"), { opacity: [0, 1], translateY: [6, 0], duration: 160 }, 8700);
 
   /* ---------- 06 delivery: the report reaches the client ---------- */
-  tl.add(review, { opacity: [1, 0], duration: 220 }, 8860);
-  tl.add(inbox, { opacity: [0, 1], duration: 260 }, 8980);
+  add(review, { opacity: [1, 0], duration: 220 }, 8860);
+  add(inbox, { opacity: [0, 1], duration: 260 }, 8980);
   const route = A.svg.createMotionPath($<SVGPathElement>("[data-delivery-path]"));
-  tl.add(thumb, { opacity: [0, 1], scale: [0.7, 1], duration: 160 }, 9080);
-  tl.add(thumb, { translateX: route.translateX, translateY: route.translateY, ease: "inOutCubic", duration: 520 }, 9140);
-  tl.add(thumb, { opacity: [1, 0], scale: [1, 0.6], duration: 140 }, 9620);
-  tl.add($("[data-inbox-new]"), { opacity: [0, 1], translateY: [-10, 0], ease: "outCubic", duration: 240 }, 9620);
-  tl.add(status("approved"), { opacity: [1, 0], duration: 140 }, 9660);
-  tl.add(status("delivered"), { opacity: [0, 1], duration: 180 }, 9680);
-  tl.add($$("[data-inbox-row]"), { opacity: [0, 1], translateY: [6, 0], duration: 200, delay: A.stagger(70) }, 9760);
+  add(thumb, { opacity: [0, 1], scale: [0.7, 1], duration: 160 }, 9080);
+  add(thumb, { translateX: route.translateX, translateY: route.translateY, ease: "inOutCubic", duration: 520 }, 9140);
+  add(thumb, { opacity: [1, 0], scale: [1, 0.6], duration: 140 }, 9620);
+  add($("[data-inbox-new]"), { opacity: [0, 1], translateY: [-10, 0], ease: "outCubic", duration: 240 }, 9620);
+  add(status("approved"), { opacity: [1, 0], duration: 140 }, 9660);
+  add(status("delivered"), { opacity: [0, 1], duration: 180 }, 9680);
+  add($$("[data-inbox-row]"), { opacity: [0, 1], translateY: [6, 0], duration: 200, delay: A.stagger(70) }, 9760);
   tl.add({ end: 0 }, { end: 1, duration: 1 }, END - 1);
 
   if (still) {
