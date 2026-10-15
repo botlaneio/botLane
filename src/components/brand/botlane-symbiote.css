@@ -1,5 +1,6 @@
 /* BotLane Symbiote: the living halftone mark used in the footer.
-   Supplied in BotLaneSymbioteReact.zip; motion values kept as delivered. */
+   Motion from BotLaneSymbioteReact.zip. Cells now swell around their resting size
+   (0.95-1.03) so the mark in motion reads like the approved still image. */
 .botlane-symbiote {
   display: inline-flex;
   flex: none;
@@ -34,9 +35,9 @@
 }
 /* Cells move slightly out of phase, making a slow organic travelling ripple. */
 @keyframes symbiote-cell {
-  0% { transform: translate(0,0) scale(0.87); }
-  43% { transform: translate(calc(var(--dx) * var(--sym-intensity)),calc(var(--dy) * var(--sym-intensity))) scale(1.04); }
-  100% { transform: translate(calc(var(--dx) * var(--sym-intensity) * -0.4),calc(var(--dy) * var(--sym-intensity) * -0.4)) scale(0.92); }
+  0% { transform: translate(0,0) scale(0.95); }
+  43% { transform: translate(calc(var(--dx) * var(--sym-intensity)),calc(var(--dy) * var(--sym-intensity))) scale(1.03); }
+  100% { transform: translate(calc(var(--dx) * var(--sym-intensity) * -0.4),calc(var(--dy) * var(--sym-intensity) * -0.4)) scale(0.97); }
 }
 @media (prefers-reduced-motion: reduce) {
   .botlane-symbiote *, .botlane-symbiote *::before, .botlane-symbiote *::after {
