@@ -5,56 +5,25 @@ import Link from "next/link";
 import {
   RotateCw,
   ArrowRight,
-  CheckCircle2,
   Sparkles,
   ChevronDown,
-  RotateCcw,
   DollarSign,
-  Receipt,
   ShieldCheck,
-  CreditCard,
+  UserCheck,
+  Pause,
+  PenLine,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import {
-  StripeLogo,
-  QuickBooksLogo,
-  PlaidLogo,
-  GmailLogo,
-} from "@/components/assemble/company-icons";
+import { SystemControls, SystemPricing, SystemTools } from "@/components/systems/system-extras";
+import { InvoiceStory } from "@/components/invoice-follow-up/invoice-story";
 
 export default function InvoiceFollowUpPage() {
-  const [approved, setApproved] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
-  const [activeStage, setActiveStage] = useState<number>(1);
 
   const toggleFaq = (idx: number) => {
     setActiveFaq(activeFaq === idx ? null : idx);
   };
-
-  const REMINDER_STAGES = [
-    {
-      stage: "T - 3 Days",
-      label: "Courtesy Advance Notice",
-      tone: "Warm & Helpful",
-      subject: "Upcoming invoice #1084 for October retained services",
-      body: "Hi Elena, just a quick courtesy note that invoice #1084 ($12,400) is scheduled for October 15th. You can review the itemized breakdown or remit via 1-click card/ACH link below.",
-    },
-    {
-      stage: "Due Date + 3",
-      label: "Gentle Ledger Statement",
-      tone: "Polite & Professional",
-      subject: "Statement reminder: Invoice #1084 due date passed",
-      body: "Hi Elena, following up on invoice #1084 ($12,400). Wanted to check if you need any additional PO details or an updated PDF statement for your accounting department.",
-    },
-    {
-      stage: "Due Date + 14",
-      label: "Senior Executive Escalation",
-      tone: "Firm & Clear",
-      subject: "Action requested: Overdue account balance for Meridian",
-      body: "Hi Elena, reaching out as invoice #1084 remains open past our standard 14-day grace window. Please let us know if there is an issue with the transfer so we can assist.",
-    },
-  ];
 
   return (
     <>
@@ -124,188 +93,27 @@ export default function InvoiceFollowUpPage() {
           </div>
         </section>
 
-        {/* How It Works (The Loop Pipeline) */}
-        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
-          <div className="max-w-xl">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Loop Lifecycle
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              How the collection loop resolves AR.
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Most clients don&apos;t withhold payment intentionally—they just lose invoices in busy inboxes.
-            </p>
-          </div>
+        <InvoiceStory />
 
-          <div className="mt-12 grid gap-6 md:grid-cols-4">
-            {[
-              {
-                step: "01",
-                title: "Real-Time Ledger Sync",
-                desc: "Connects to Stripe, QuickBooks Online, Xero, or bank feeds to monitor open invoices and aging buckets.",
-              },
-              {
-                step: "02",
-                title: "Calibrated Reminders",
-                desc: "Starts with a warm courtesy note before the due date, followed by clear itemized statements.",
-              },
-              {
-                step: "03",
-                title: "Frictionless Payment Link",
-                desc: "Every email embeds a secure 1-click credit card, Apple Pay, ACH, or wire link with verified PDF invoice attached.",
-              },
-              {
-                step: "04",
-                title: "Instant Cadence Halt",
-                desc: "The second payment lands, the loop dissolves within 60 seconds. An audit note posts to your Slack ledger.",
-              },
-            ].map((col) => (
-              <div key={col.step} className="rounded-[1.125rem] border border-line bg-white p-6 shadow-sm">
-                <div className="font-mono text-2xl font-bold text-ink">{col.step}</div>
-                <h3 className="mt-4 text-base font-semibold text-ink">{col.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted">{col.desc}</p>
-              </div>
-            ))}
-          </div>
+        {/* Closing */}
+        <section className="mx-auto max-w-[75rem] px-6 pt-20 pb-20 text-center sm:pt-28">
+          <h2 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-ink">
+            Every invoice, followed up.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+            From open invoice to reconciled payment, with every reminder approved by you. Built, managed, and overseen by Botlane.
+          </p>
         </section>
 
-        {/* Tools It Connects */}
-        <section className="mx-auto max-w-[75rem] px-6 py-16 border-t border-line">
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Financial Integrations
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink">
-              Direct connection with your billing system.
-            </h2>
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              { name: "Stripe Billing", icon: StripeLogo, desc: "Monitors subscriptions, one-off invoices, payment intents" },
-              { name: "QuickBooks Online", icon: QuickBooksLogo, desc: "Syncs accounts receivable aging, paid status, ledger sync" },
-              { name: "Plaid Bank Feeds", icon: PlaidLogo, desc: "Verifies incoming wires and ACH transfers directly" },
-              { name: "Gmail / GSuite", icon: GmailLogo, desc: "Sends from your billing desk (e.g. billing@youragency.com)" },
-            ].map((tool) => {
-              const Icon = tool.icon;
-              return (
-                <div key={tool.name} className="rounded-[1rem] border border-line bg-white p-5 text-center shadow-sm">
-                  <div className="mx-auto flex size-12 items-center justify-center rounded-[0.75rem] bg-surface p-2.5">
-                    <Icon size={26} />
-                  </div>
-                  <div className="mt-4 text-sm font-semibold text-ink">{tool.name}</div>
-                  <div className="mt-1 text-xs text-muted leading-snug">{tool.desc}</div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Interactive Approval & Output Workspace */}
-        <section className="mx-auto max-w-[75rem] px-6 py-20 border-t border-line">
-          <div className="max-w-xl">
-            <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-              Aging Ledger & Approval Desk
-            </div>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              What you approve.
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Inspect the aging invoice, review the drafted payment email, and tap Approve & Send.
-            </p>
-          </div>
-
-          <div className="mt-10 rounded-[1.5rem] border border-line bg-white p-6 sm:p-8 shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
-              <div className="flex items-center gap-3">
-                <span className="flex size-9 items-center justify-center rounded-[0.5rem] bg-emerald-500/10 text-emerald-600">
-                  <Receipt size={18} />
-                </span>
-                <div>
-                  <div className="text-sm font-semibold text-ink">
-                    Invoice #1084: $12,400.00 · Meridian Health
-                  </div>
-                  <div className="text-xs text-muted">
-                    Due: 3 days ago · Aging Bucket: 1-15 days · Stripe Link Generated
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setApproved(!approved)}
-                  className={`inline-flex items-center gap-2 rounded-[0.5rem] px-4 py-2 text-xs font-semibold transition ${
-                    approved
-                      ? "bg-emerald-600 text-white shadow-sm"
-                      : "bg-btn text-white hover:bg-btn-hover"
-                  }`}
-                >
-                  {approved ? (
-                    <>
-                      <CheckCircle2 size={14} />
-                      <span>Approved & Dispatched (Payment Link Live)</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles size={14} className="text-lane" />
-                      <span>Approve & Dispatch Reminder</span>
-                    </>
-                  )}
-                </button>
-
-                {approved && (
-                  <button
-                    type="button"
-                    onClick={() => setApproved(false)}
-                    className="flex size-8 items-center justify-center rounded-[0.5rem] border border-line text-muted hover:text-ink"
-                    title="Reset simulation"
-                  >
-                    <RotateCcw size={14} />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Stage Selector */}
-            <div className="mt-6">
-              <div className="flex items-center gap-2 border-b border-line pb-2">
-                {REMINDER_STAGES.map((s, idx) => (
-                  <button
-                    key={s.stage}
-                    type="button"
-                    onClick={() => setActiveStage(idx)}
-                    className={`rounded-[0.5rem] px-3 py-1.5 text-xs font-medium transition ${
-                      activeStage === idx
-                        ? "bg-btn text-white"
-                        : "text-muted hover:text-ink hover:bg-surface"
-                    }`}
-                  >
-                    {s.stage} ({s.label})
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-5 rounded-[1rem] border border-line/80 bg-surface/40 p-5">
-                <div className="flex items-center justify-between text-xs font-mono text-muted border-b border-line/50 pb-2">
-                  <span>Tone: {REMINDER_STAGES[activeStage].tone}</span>
-                  <span className="text-emerald-700 font-semibold">1-Click Stripe Link Ready</span>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-ink font-serif italic">
-                  &ldquo;{REMINDER_STAGES[activeStage].body}&rdquo;
-                </p>
-                <div className="mt-5 pt-3 border-t border-line/50 flex flex-wrap items-center justify-between gap-2 text-[0.6875rem] text-muted">
-                  <span className="flex items-center gap-1.5">
-                    <CreditCard size={13} className="text-emerald-600" />
-                    <span>Includes direct Stripe checkout & ACH remittance details</span>
-                  </span>
-                  <span className="text-lane font-mono">Loop halts within 60s when payment clears</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <SystemControls
+          items={[
+            { icon: UserCheck, title: "You approve every reminder", text: "Lane drafts each reminder with the payment link attached. Nothing is sent until you approve it." },
+            { icon: Pause, title: "Pause for an extension", text: "Pause a client's reminders for 7, 14 or 30 days from Slack or the web desk, without touching the rest." },
+            { icon: PenLine, title: "Your wording", text: "Every reminder template can be edited to match your tone and your history with each client." },
+          ]}
+        />
+        <SystemTools system="03" />
+        <SystemPricing system="03" />
 
         {/* Invoicing FAQ */}
         <section className="mx-auto max-w-[60rem] px-6 py-20 border-t border-line">

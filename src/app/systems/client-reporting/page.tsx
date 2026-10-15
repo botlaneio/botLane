@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Layers, ArrowRight, CheckCircle2, Clock, Sparkles, ChevronDown, TrendingUp } from "lucide-react";
+import { Layers, ArrowRight, CheckCircle2, Clock, Sparkles, ChevronDown, TrendingUp, UserCheck, Palette, CalendarClock } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SystemControls, SystemPricing, SystemTools } from "@/components/systems/system-extras";
 import { ReportingStory } from "@/components/client-reporting/reporting-story";
 
 export default function ClientReportingPage() {
@@ -93,6 +94,16 @@ export default function ClientReportingPage() {
             From scattered updates to consistent client reporting. Built, managed, and overseen by Botlane.
           </p>
         </section>
+
+        <SystemControls
+          items={[
+            { icon: UserCheck, title: "You approve every report", text: "Lane prepares the report and waits. Nothing reaches a client until you approve it." },
+            { icon: Palette, title: "Your branding", text: "Reports carry your agency logo, colours and typography. BotLane stays in the background." },
+            { icon: CalendarClock, title: "Your schedule", text: "Each client gets its own rule, such as Monday at 8am or the 1st of every month." },
+          ]}
+        />
+        <SystemTools system="01" />
+        <SystemPricing system="01" />
 
         {/* CTA Banner */}
         <section className="mx-auto max-w-[75rem] px-6 py-16">

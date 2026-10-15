@@ -51,6 +51,27 @@
   50% { opacity: 0.55; }
 }
 
+/* Breathe: the whole mark swells and settles while the bands ripple out of step,
+   like energy moving through it. Scale only, never brightness. */
+.bl-logo--breathe .bl-logo__svg[data-active="true"] .bl-logo__dots {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bl-logo-breathe calc(5.8s * var(--bl-pace, 1)) ease-in-out infinite;
+}
+.bl-logo--breathe .bl-logo__svg[data-active="true"] .bl-logo__dots path {
+  animation: bl-logo-ripple calc(4.6s * var(--bl-pace, 1)) ease-in-out calc(var(--b, 0) * -0.9s * var(--bl-pace, 1)) infinite alternate;
+}
+@keyframes bl-logo-breathe {
+  0%, 100% { transform: scale(0.97) rotate(-0.4deg); }
+  48% { transform: scale(1.03) rotate(0.5deg); }
+  67% { transform: scale(1.012) rotate(0deg); }
+}
+@keyframes bl-logo-ripple {
+  0% { transform: scale(0.985); }
+  45% { transform: scale(1.03); }
+  100% { transform: scale(0.995); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bl-logo .bl-logo__svg,
   .bl-logo .bl-logo__svg * {

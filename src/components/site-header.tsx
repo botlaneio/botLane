@@ -147,13 +147,13 @@ export function SiteHeader() {
             aria-label="BotLane home"
             className="group flex items-center gap-0.5 transition-opacity hover:opacity-90 shrink-0"
           >
-            {/* Gathers in once on load, then rests; follows the surface under the sticky bar. */}
+            {/* The Ember glow logo, always; gathers in once on load, then rests. */}
             <BotLaneLogo
+              variant="ember-glow"
               mode="full"
               size={30}
               animated="intro"
               delay={0.15}
-              track
               symbolClassName="mr-1.5"
               wordmarkClassName="text-[1.3125rem] text-ink-soft"
             />
