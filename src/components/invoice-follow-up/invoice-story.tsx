@@ -180,13 +180,13 @@ export function InvoiceStory() {
     <section
       ref={stageRef}
       aria-label="How Invoice follow-up works"
-      className={still ? "relative" : mobile ? "relative h-[720vh]" : "relative h-[1000vh]"}
+      className={still ? "relative" : mobile ? "relative h-[720svh]" : "relative h-[1000svh]"}
     >
       <div
         className={
           still
             ? "mx-auto flex max-w-[75rem] flex-col px-6 py-12"
-            : "story-stage sticky top-16 mx-auto flex h-[calc(100vh-4rem)] h-[calc(100svh-4rem)] max-w-[75rem] flex-col px-6 pt-6 pb-4 sm:pt-10"
+            : "story-stage sticky top-16 mx-auto flex h-[calc(100svh-4rem)] max-w-[75rem] flex-col px-6 pt-6 pb-4 sm:pt-10"
         }
       >
         {/* Captions: one at a time while scrolling, all listed with reduced motion */}
