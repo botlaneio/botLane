@@ -27,7 +27,7 @@ export default function TermsOfServicePage() {
           </h1>
 
           <div className="mt-2 text-xs font-mono text-muted">
-            Effective Date: October 13, 2026 · Version 2.4
+            Effective Date: October 15, 2026 · Version 2.5
           </div>
 
           <div className="mt-8 rounded-[1rem] border border-line bg-white p-4.5 text-xs text-ink-2 shadow-sm">
