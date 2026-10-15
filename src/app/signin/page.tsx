@@ -38,7 +38,10 @@ export default function SignInPage() {
         data-surface="dark"
         className="relative hidden overflow-hidden bg-[radial-gradient(120%_90%_at_70%_30%,#2c2c30_0%,#141416_55%,#0d0d10_100%)] text-white lg:flex lg:flex-col"
       >
-        <LivingOrb className="pointer-events-none absolute top-[6%] -right-[16%] aspect-square w-[92%] max-w-[56rem]" />
+        {/* Centred in the panel, both ways */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <LivingOrb className="aspect-square w-[min(72%,62vh)]" />
+        </div>
 
         <div className="relative flex justify-end p-6 sm:p-8">
           <Link

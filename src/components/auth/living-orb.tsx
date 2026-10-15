@@ -3,42 +3,47 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A halftone orb that breathes: a grid of dots whose outline slowly morphs,
- * as if it were alive. Dots are full-size inside the shape and shrink to
- * nothing across its soft edge; colour runs diagonally from coral through
- * Lane red to deep wine and drifts slowly. Drawn on a canvas, paused while
- * off screen, and held still for visitors who prefer reduced motion.
+ * A round halftone orb that feels alive: a dense diagonal grid of dots whose
+ * outline gently morphs and breathes, with a slow ripple travelling through
+ * the dot sizes. Colours come only from the approved logo palette and run
+ * diagonally from lilac through Lane red to coral, turning slowly. Drawn on a
+ * canvas with no tile or background, paused while off screen, and held still
+ * for visitors who prefer reduced motion.
  */
 
-// Coral → Lane red → deep wine, lower left to upper right is wine → coral.
-const STOPS: [number, [number, number, number]][] = [
-  [0, [122, 26, 58]],
-  [0.5, [224, 49, 43]],
-  [1, [255, 138, 107]],
+// Palette taken verbatim from the "botLane Red Logo" file.
+const STOPS: [number, string][] = [
+  [0, "#907adb"],
+  [0.22, "#9a86e0"],
+  [0.45, "#be2921"],
+  [0.62, "#e0312b"],
+  [0.8, "#f56c56"],
+  [1, "#ff8a6b"],
 ];
+
+const RGB = STOPS.map(([p, hex]) => [p, [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16))] as const);
 
 function mix(t: number) {
   const k = Math.min(1, Math.max(0, t));
-  for (let i = 1; i < STOPS.length; i++) {
-    const [p1, c1] = STOPS[i];
-    const [p0, c0] = STOPS[i - 1];
+  for (let i = 1; i < RGB.length; i++) {
+    const [p1, c1] = RGB[i];
+    const [p0, c0] = RGB[i - 1];
     if (k <= p1) {
       const f = (k - p0) / (p1 - p0);
       return `rgb(${c0.map((v, j) => Math.round(v + (c1[j] - v) * f)).join(",")})`;
     }
   }
-  return `rgb(${STOPS[STOPS.length - 1][1].join(",")})`;
+  return `rgb(${RGB[RGB.length - 1][1].join(",")})`;
 }
 
-// Gentle, incommensurate waves so the outline never visibly repeats.
+// Small, incommensurate waves: the outline stays round but never sits still.
 const WAVES = [
-  { k: 2, amp: 0.045, speed: 0.31, phase: 0.4 },
-  { k: 3, amp: 0.03, speed: -0.23, phase: 1.9 },
-  { k: 4, amp: 0.018, speed: 0.41, phase: 3.1 },
-  { k: 5, amp: 0.01, speed: -0.53, phase: 0.7 },
+  { k: 2, amp: 0.022, speed: 0.29, phase: 0.4 },
+  { k: 3, amp: 0.016, speed: -0.21, phase: 1.9 },
+  { k: 5, amp: 0.008, speed: 0.37, phase: 3.1 },
 ];
 
-const COLS = 26; // dots across the orb's resting diameter
+const COLS = 40; // grid lines across the orb's diameter
 
 export function LivingOrb({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -69,30 +74,35 @@ export function LivingOrb({ className }: { className?: string }) {
       ctx.globalAlpha = reduce ? 1 : Math.min(1, t / 1.1);
 
       const c = size / 2;
-      const R = size * 0.42; // resting radius; waves push the edge out to ~0.47
+      const R = size * 0.46;
       const step = (R * 2) / COLS;
-      const maxDot = step * 0.37;
-      const feather = R * 0.34; // width of the soft halftone edge
-      const breathe = 1 + 0.025 * Math.sin(t * 0.6);
-      const drift = 0.08 * Math.sin(t * 0.17);
+      const maxDot = step * 0.62; // diagonal neighbours sit step·√2 apart
+      const feather = R * 0.2; // width of the soft halftone rim
+      const breathe = 1 + 0.018 * Math.sin(t * 0.55);
+      // The colour axis turns slowly around the orb
+      const turn = -Math.PI / 4 + 0.35 * Math.sin(t * 0.12);
+      const ax = Math.cos(turn);
+      const ay = Math.sin(turn);
 
-      // Diagonal grid like a printed halftone
-      const half = Math.ceil(COLS * 0.75);
+      const half = Math.ceil(COLS * 0.56);
       for (let j = -half; j <= half; j++) {
         for (let i = -half; i <= half; i++) {
-          const x = (i + (j % 2 ? 0.5 : 0)) * step;
-          const y = j * step * 0.866;
+          // Checkerboard of a square grid = the 45° screen of a printed halftone
+          if ((i + j) & 1) continue;
+          const x = i * step;
+          const y = j * step;
           const dist = Math.hypot(x, y);
           const angle = Math.atan2(y, x);
           let edge = R * breathe;
           for (const w of WAVES) edge += R * w.amp * Math.sin(w.k * angle + w.speed * t + w.phase);
-          const inside = (edge - dist) / feather; // >1 deep inside, 0 at the rim
+          const inside = (edge - dist) / feather; // >1 inside, 0 at the rim
           if (inside <= 0) continue;
-          const s = inside >= 1 ? 1 : inside * inside * (3 - 2 * inside);
-          const r = maxDot * (0.18 + 0.82 * s);
+          const rim = inside >= 1 ? 1 : inside * inside * (3 - 2 * inside);
+          // A slow ripple travelling outward through the dot sizes
+          const ripple = 0.84 + 0.16 * Math.cos((dist / R) * Math.PI * 2.2 - t * 0.9);
+          const r = maxDot * rim * ripple;
           if (r < 0.35) continue;
-          // Colour along the lower-left → upper-right diagonal
-          const g = 0.5 + (x - y) / (R * 2.6) + drift;
+          const g = 0.5 + (x * ax + y * ay) / (R * 2.1);
           ctx.fillStyle = mix(g);
           ctx.beginPath();
           ctx.arc(c + x, c + y, r, 0, Math.PI * 2);
