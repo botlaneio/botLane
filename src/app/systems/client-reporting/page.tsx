@@ -109,7 +109,7 @@ export default function ClientReportingPage() {
               Interactive 3D Assembly · Funnel Architecture
             </span>
           </div>
-          <div className="overflow-hidden rounded-[1.5rem] border border-line bg-white shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
+          <div className="overflow-x-clip rounded-[1.5rem] border border-line bg-white shadow-[0_1rem_3.125rem_rgba(20,20,40,0.06)]">
             <AssembleController>
               <AssembleScene />
             </AssembleController>
