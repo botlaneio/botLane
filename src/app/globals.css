@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* BotLane tokens — Apple-quiet: white, near-black, one accent taken from the logo:
-   a graphite-to-ember-to-violet gradient, with the violet end as the solid fallback. */
+/* BotLane tokens — Apple-quiet: white, near-black, one accent:
+   the original solid Lane red-orange. */
 :root {
   --bl-bg: #ffffff;
   --bl-ink: #1d1d1f;
@@ -13,13 +13,14 @@
   --bl-faint: #8e8e93;
   --bl-line: #ececef;
   --bl-surface: #f5f5f7;
-  --bl-red: #6d3cf0;
-  --bl-red-strong: #5a2ed0;
-  --bl-red-ink: #3f1fa0;
-  --bl-red-tint: #efeafd;
-  --bl-gradient: linear-gradient(110deg, #121214 0%, #b8402c 48%, #6d3cf0 100%);
+  --bl-red: #e0312b;
+  --bl-red-strong: #d1291f;
+  --bl-red-ink: #b3261e;
+  --bl-red-tint: #fdeceb;
+  /* The original solid Lane red-orange; kept as a "gradient" token so the lane-gradient utilities still work. */
+  --bl-gradient: linear-gradient(110deg, #e0312b 0%, #e0312b 100%);
   /* Lighter take for dark backgrounds (footer): the near-black start would vanish there. */
-  --bl-gradient-on-dark: linear-gradient(110deg, #ff7a52 0%, #d04a6a 45%, #8f7bff 100%);
+  --bl-gradient-on-dark: linear-gradient(110deg, #ff4a3d 0%, #ff4a3d 100%);
   --bl-green: #1a7f37;
   --bl-green-tint: #e8f5ec;
 }

@@ -88,5 +88,5 @@ export const REPORT_BARS = [
   [64, "#e4e5ea"],
   [58, "#e4e5ea"],
   [76, "#1d1d1f"],
-  [92, "linear-gradient(to top, #121214, #b8402c 48%, #6d3cf0)"],
+  [92, "#e0312b"],
 ] as const;

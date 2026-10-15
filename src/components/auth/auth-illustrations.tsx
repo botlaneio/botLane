@@ -84,7 +84,7 @@ export function SignInIllustration() {
               <div className="min-w-0 flex-1 p-5">
                 <motion.span
                   {...enter({ opacity: 0, x: -12 }, 0.5)}
-                  className="inline-flex items-center gap-2 rounded-[0.625rem] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(90,44,184,0.7)]"
+                  className="inline-flex items-center gap-2 rounded-[0.625rem] bg-lane px-3 py-1.5 text-xs font-medium text-white shadow-[0_0.375rem_0.875rem_-0.375rem_rgba(224,49,43,0.7)]"
                 >
                   <FileText className="size-3.5" />
                   Lane 01 · Reporting

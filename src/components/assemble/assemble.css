@@ -86,7 +86,7 @@
 }
 .bl-chip:hover {
   transform: translateY(-3px);
-  box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(90, 44, 184, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
+  box-shadow: inset 0 1px 0 #ffffff, 0 8px 24px rgba(224,49,43, 0.10), 0 20px 40px rgba(20, 20, 40, 0.10);
 }
 .bl-chip:hover .bl-border-beam {
   opacity: 1 !important;
@@ -110,10 +110,10 @@
     from 0deg,
     transparent 0deg,
     transparent 260deg,
-    rgba(109, 60, 240, 0.05) 300deg,
-    rgba(109, 60, 240, 0.14) 330deg,
-    rgba(109, 60, 240, 0.22) 348deg,
-    rgba(109, 60, 240, 0.12) 355deg,
+    rgba(209, 41, 31, 0.05) 300deg,
+    rgba(209, 41, 31, 0.14) 330deg,
+    rgba(209, 41, 31, 0.22) 348deg,
+    rgba(209, 41, 31, 0.12) 355deg,
     transparent 360deg
   );
   animation: bl-beam-rotate 3.6s linear infinite;

@@ -81,14 +81,13 @@ function Slot({ x, y, w, h, z, children }: { x: number; y: number; w: number; h:
 const stack: CSSProperties = { position: "absolute", left: 0, top: 0 };
 const hidden: CSSProperties = { ...stack, opacity: 0 };
 
-/** The accent gradient (graphite, ember, violet) for SVG strokes and fills, spread across x1..x2. */
+/** The accent (solid Lane red-orange) for SVG strokes and fills, spread across x1..x2. */
 function LaneGradient({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
     <defs>
       <linearGradient id={id} gradientUnits="userSpaceOnUse" x1={x1} y1={0} x2={x2} y2={0}>
-        <stop offset="0" stopColor="#121214" />
-        <stop offset="0.48" stopColor="#b8402c" />
-        <stop offset="1" stopColor="#6d3cf0" />
+        <stop offset="0" stopColor="#e0312b" />
+        <stop offset="1" stopColor="#e0312b" />
       </linearGradient>
     </defs>
   );
@@ -249,7 +248,7 @@ export function AssembleScene() {
                   </div>
                 </div>
                 <div data-ring="" aria-hidden="true" className="pointer-events-none absolute -inset-[3px] rounded-[22px] border-2 border-lane-gradient"
-                  style={{ boxShadow: "0 0 0 6px rgba(90,44,184,0.10)", opacity: 0 }} />
+                  style={{ boxShadow: "0 0 0 6px rgba(224,49,43,0.10)", opacity: 0 }} />
                 <div className="absolute inset-x-[18px] top-[18px] flex items-center gap-3">
                   <div className="relative size-11 flex-none overflow-hidden rounded-full border border-[#dcdce3] shadow-[0_2px_8px_rgba(20,20,40,0.08)]">
                     <Image
@@ -373,7 +372,7 @@ export function AssembleScene() {
             <Slot x={24} y={236} w={240} h={108} z={32}>
               <div data-lead="" className="bl-card bl-fill flex flex-col gap-2.5 rounded-[18px] p-4">
                 <div className="flex items-center gap-3">
-                  <div className="relative size-10 flex-none overflow-hidden rounded-full border border-[#d6c9f2] shadow-[0_2px_6px_rgba(90,44,184,0.12)]">
+                  <div className="relative size-10 flex-none overflow-hidden rounded-full border border-[#f5c6c4] shadow-[0_2px_6px_rgba(224,49,43,0.12)]">
                     <Image
                       src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80"
                       alt="Zuheb"
@@ -391,7 +390,7 @@ export function AssembleScene() {
                     </div>
                   </div>
                 </div>
-                <div className={`${mono} self-start rounded-full bg-[#efeafd] px-2.5 py-1 text-[11px] tracking-[0.06em] uppercase`}><span className="text-lane-gradient">New lead</span></div>
+                <div className={`${mono} self-start rounded-full bg-[#fdeceb] px-2.5 py-1 text-[11px] tracking-[0.06em] uppercase`}><span className="text-lane-gradient">New lead</span></div>
               </div>
             </Slot>
             {TOUCHES.map((t, i) => (
@@ -454,7 +453,7 @@ export function AssembleScene() {
                 <div key={i} data-dot="" className="bl-traveller size-2.5 rounded-[3px]"
                   style={{ left: -5, top: -5, background: i === 3 ? "var(--bl-gradient)" : "#1d1d1f" }} />
               ))}
-              <div data-av="" className="bl-traveller flex size-7 items-center justify-center rounded-full bg-lane-gradient text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(90,44,184,0.35)]"
+              <div data-av="" className="bl-traveller flex size-7 items-center justify-center rounded-full bg-lane-gradient text-[11px] font-semibold text-white shadow-[0_4px_10px_rgba(224,49,43,0.35)]"
                 style={{ left: -14, top: -14 }}>SC</div>
               <div data-coin="" className="bl-traveller flex size-7 items-center justify-center rounded-full border-2 border-ink bg-white text-sm font-semibold text-ink shadow-[0_4px_10px_rgba(20,20,40,0.18)]"
                 style={{ left: -14, top: -14 }}>$</div>
