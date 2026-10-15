@@ -81,6 +81,15 @@ function Slot({ x, y, w, h, z, children }: { x: number; y: number; w: number; h:
 const stack: CSSProperties = { position: "absolute", left: 0, top: 0 };
 const hidden: CSSProperties = { ...stack, opacity: 0 };
 
+/** The botLane logo tile (28px) placed inside a finale card's SVG drawing, centred on y=44. */
+function FinaleMark({ x }: { x: number }) {
+  return (
+    <foreignObject x={x} y={30} width={28} height={28}>
+      <HalftoneMark size={28} detail="small" className="block ![height:28px] ![width:28px]" />
+    </foreignObject>
+  );
+}
+
 /** The accent (solid Lane red-orange) for SVG strokes and fills, spread across x1..x2. */
 function LaneGradient({ id, x1, x2 }: { id: string; x1: number; x2: number }) {
   return (
@@ -484,15 +493,15 @@ function Finale() {
           <svg width="100%" height={88} viewBox="0 0 260 88" fill="none" strokeLinecap="round" aria-hidden="true">
             <LaneGradient id="bl-grad-trio-0" x1={0} x2={260} />
             <g stroke="#cfd0d7" strokeWidth={2}>
-              <path d="M14 12 C 70 12 70 44 112 44" /><path d="M14 32 C 70 32 70 44 112 44" />
-              <path d="M14 56 C 70 56 70 44 112 44" /><path d="M14 76 C 70 76 70 44 112 44" />
+              <path d="M14 12 C 70 12 70 44 116 44" /><path d="M14 32 C 70 32 70 44 116 44" />
+              <path d="M14 56 C 70 56 70 44 116 44" /><path d="M14 76 C 70 76 70 44 116 44" />
             </g>
             <g fill="#1d1d1f">
               <rect x={8} y={8} width={8} height={8} rx={2} /><rect x={8} y={28} width={8} height={8} rx={2} />
               <rect x={8} y={52} width={8} height={8} rx={2} /><rect x={8} y={72} width={8} height={8} rx={2} />
             </g>
-            <rect x={112} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={134} cy={44} r={4} fill="#c9bdf5" />
-            <path d="M148 44 H 180" stroke="url(#bl-grad-trio-0)" strokeWidth={3} /><circle cx={180} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-0)" strokeWidth={2} />
+            <FinaleMark x={116} />
+            <path d="M144 44 H 180" stroke="url(#bl-grad-trio-0)" strokeWidth={3} /><circle cx={180} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-0)" strokeWidth={2} />
             <path d="M187 44 H 204" stroke="#cfd0d7" strokeWidth={2} />
             <rect x={204} y={18} width={44} height={52} rx={7} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
             <g fill="#1d1d1f">
@@ -506,9 +515,9 @@ function Finale() {
           <svg width="100%" height={88} viewBox="0 0 260 88" fill="none" strokeLinecap="round" aria-hidden="true">
             <LaneGradient id="bl-grad-trio-1" x1={0} x2={260} />
             <circle cx={16} cy={44} r={9} fill="url(#bl-grad-trio-1)" />
-            <path d="M25 44 H 56" stroke="#cfd0d7" strokeWidth={2} />
-            <rect x={56} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={78} cy={44} r={4} fill="#c9bdf5" />
-            <path d="M92 44 H 116" stroke="url(#bl-grad-trio-1)" strokeWidth={3} /><circle cx={116} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-1)" strokeWidth={2} />
+            <path d="M25 44 H 60" stroke="#cfd0d7" strokeWidth={2} />
+            <FinaleMark x={60} />
+            <path d="M88 44 H 116" stroke="url(#bl-grad-trio-1)" strokeWidth={3} /><circle cx={116} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-1)" strokeWidth={2} />
             <path d="M123 44 H 224" stroke="#cfd0d7" strokeWidth={2} />
             <g fill="#1a7f37"><circle cx={146} cy={44} r={5} /><circle cx={172} cy={44} r={5} /><circle cx={198} cy={44} r={5} /></g>
             <rect x={224} y={28} width={30} height={32} rx={6} fill="#fff" stroke="#1a7f37" strokeWidth={2} />
@@ -520,9 +529,9 @@ function Finale() {
           <svg width="100%" height={88} viewBox="0 0 260 88" fill="none" strokeLinecap="round" aria-hidden="true">
             <LaneGradient id="bl-grad-trio-2" x1={0} x2={260} />
             <rect x={6} y={32} width={24} height={24} rx={5} fill="#fff" stroke="#1d1d1f" strokeWidth={2} />
-            <path d="M30 44 H 52" stroke="#cfd0d7" strokeWidth={2} />
-            <rect x={52} y={32} width={36} height={24} rx={7} fill="#17151d" /><circle cx={74} cy={44} r={4} fill="#c9bdf5" />
-            <path d="M88 44 H 110" stroke="url(#bl-grad-trio-2)" strokeWidth={3} /><circle cx={110} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-2)" strokeWidth={2} />
+            <path d="M30 44 H 56" stroke="#cfd0d7" strokeWidth={2} />
+            <FinaleMark x={56} />
+            <path d="M84 44 H 110" stroke="url(#bl-grad-trio-2)" strokeWidth={3} /><circle cx={110} cy={44} r={7} fill="#fff" stroke="url(#bl-grad-trio-2)" strokeWidth={2} />
             <path d="M117 44 H 150" stroke="#cfd0d7" strokeWidth={2} />
             <circle cx={186} cy={44} r={36} stroke="#cfd0d7" strokeWidth={2} />
             <path d="M150 44 A 36 36 0 0 1 222 44" stroke="url(#bl-grad-trio-2)" strokeWidth={3} />
