@@ -27,7 +27,7 @@ export default function TermsOfServicePage() {
           </h1>
 
           <div className="mt-2 text-xs font-mono text-muted">
-            Effective Date: October 13, 2026 · Version 2.4
+            Effective Date: October 15, 2026 · Version 2.5
           </div>
 
           <div className="mt-8 rounded-[1rem] border border-line bg-white p-4.5 text-xs text-ink-2 shadow-sm">
@@ -61,10 +61,6 @@ export default function TermsOfServicePage() {
                 <li>
                   <strong>Accuracy of Connected Data:</strong> BotLane relies upon the accuracy and timeliness of data retrieved via third-party
                   APIs (Google Ads, Meta, Stripe, QuickBooks). We are not liable for third-party upstream API outages or discrepancies.
-                </li>
-                <li>
-                  <strong>Autopilot Opt-In:</strong> If you explicitly configure automated dispatch rules (bypassing manual review for specific
-                  low-risk workflows), you accept responsibility for actions taken within your defined rule parameters.
                 </li>
               </ul>
             </section>

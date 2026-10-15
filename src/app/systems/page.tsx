@@ -60,7 +60,7 @@ const SYSTEMS_MATRIX: SystemComparison[] = [
     cadence: "Instant qualification + 3 polite graduated nudges until meeting booked.",
     inputs: ["Typeform", "HubSpot CRM", "Gmail / GSuite", "Google Calendar", "Calendly"],
     preparedDeliverable: "Contextual, research-backed email reply referencing prospect company & pain points.",
-    humanApprovalStep: "Pre-dispatch sanity check (or autopilot mode for high-confidence leads).",
+    humanApprovalStep: "Pre-dispatch sanity check. Every reply waits for your approval.",
     outputDestination: "Direct prospect inbox from your authentic team email address.",
     agencyImpact: "+34% increase in discovery call conversion due to 180s initial response speed.",
   },
