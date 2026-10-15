@@ -88,7 +88,7 @@ export default function SystemsPage() {
       <SiteHeader />
       <main className="min-h-screen bg-bg">
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[75rem] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
+        <section className="phone-left relative mx-auto max-w-[75rem] px-6 pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <BotLaneLogo size={14} decorative />
             <span>Systems Comparison & Blueprint</span>

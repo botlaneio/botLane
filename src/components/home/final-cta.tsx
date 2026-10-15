@@ -14,7 +14,7 @@ export function FinalCta() {
           <div className="size-[31.25rem] rounded-full bg-radial from-lane/30 via-transparent to-transparent blur-3xl" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-2xl">
+        <div className="phone-left relative z-10 mx-auto max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1 text-xs text-muted shadow-sm">
             <BotLaneLogo size={16} decorative />
             <span className="font-semibold text-ink">Hire Lane today</span>
