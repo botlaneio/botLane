@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ArticleView } from "@/components/blog/article-view";
 import { ARTICLES } from "@/components/blog/articles";
-import { BLOG_POSTS } from "@/components/blog/posts";
+import { BLOG_POSTS, SITE_URL } from "@/components/blog/posts";
 
 // Only written articles get a page; every other slug is a 404. All pages are prerendered.
 export const dynamicParams = false;
@@ -24,10 +24,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const found = find(slug);
   if (!found) return {};
   const { post, article } = found;
+  const url = `${SITE_URL}/blog/${post.slug}`;
   return {
-    title: `${post.title} | BotLane Blog`,
+    title: article.seoTitle,
     description: article.dek,
-    openGraph: { type: "article", title: post.title, description: article.dek },
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: article.dek,
+      siteName: "BotLane",
+      ...(post.isoDate ? { publishedTime: post.isoDate } : {}),
+    },
   };
 }
 

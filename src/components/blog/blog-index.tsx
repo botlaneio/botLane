@@ -8,6 +8,9 @@ import { BLOG_CATEGORIES, BLOG_POSTS, type BlogCategory, type BlogPost } from ".
 
 type Filter = "All" | BlogCategory;
 
+// Only offer filters that have at least one post behind them.
+const USED_CATEGORIES = BLOG_CATEGORIES.filter((c) => BLOG_POSTS.some((p) => p.category === c));
+
 export function BlogIndex() {
   const [filter, setFilter] = useState<Filter>("All");
   const [query, setQuery] = useState("");
@@ -34,7 +37,7 @@ export function BlogIndex() {
           aria-label="Filter articles by topic"
           className="-mx-6 flex min-w-0 gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] lg:mx-0 lg:flex-1 lg:px-0 lg:pb-2 lg:[scrollbar-width:thin] lg:[scrollbar-color:var(--bl-line)_transparent] [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block lg:[&::-webkit-scrollbar]:h-1.5 lg:[&::-webkit-scrollbar-thumb]:rounded-full lg:[&::-webkit-scrollbar-thumb]:bg-line"
         >
-          {(["All", ...BLOG_CATEGORIES] as Filter[]).map((c) => {
+          {(["All", ...USED_CATEGORIES] as Filter[]).map((c) => {
             const active = c === filter;
             return (
               <button

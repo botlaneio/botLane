@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { BlogArt } from "./blog-art";
 import { readingMinutes, type Article, type ArticleBlock } from "./articles";
-import { BLOG_POSTS, type BlogPost } from "./posts";
+import { BLOG_POSTS, SITE_URL, type BlogPost } from "./posts";
 
 /** Anchor id for a section heading, e.g. "Where to start" → "where-to-start". */
 export function headingId(text: string) {
@@ -86,6 +86,32 @@ function Block({ block }: { block: ArticleBlock }) {
           <p className="mt-2 text-ink"><Inline text={block.text} /></p>
         </aside>
       );
+    case "template":
+      return (
+        <figure className="mt-8 overflow-hidden rounded-[0.875rem] border border-line bg-white">
+          <figcaption className="border-b border-line bg-surface px-5 py-2.5 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">
+            {block.title}
+          </figcaption>
+          <div className="space-y-3 px-5 py-4 text-[0.9375rem] leading-relaxed text-ink">
+            {block.lines.map((line) => (
+              <p key={line}><Inline text={line} /></p>
+            ))}
+          </div>
+        </figure>
+      );
+    case "compare":
+      return (
+        <div className="mt-5 grid gap-3 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+          <div className="rounded-[0.75rem] border border-line bg-surface/60 p-4">
+            <div className="font-mono text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-faint">Before</div>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted">{block.before}</p>
+          </div>
+          <div className="rounded-[0.75rem] border border-lane/20 bg-white p-4">
+            <div className="font-mono text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-lane">After</div>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink">{block.after}</p>
+          </div>
+        </div>
+      );
     case "quote":
       return (
         <blockquote className="mt-8 border-l-2 border-lane pl-5 text-[1.1875rem] leading-relaxed text-ink">
@@ -99,8 +125,36 @@ export function ArticleView({ post, article }: { post: BlogPost; article: Articl
   const sections = article.body.filter((b): b is Extract<ArticleBlock, { type: "h2" }> => b.type === "h2");
   const more = BLOG_POSTS.filter((p) => p.slug !== post.slug && p.href).slice(0, 3);
 
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: article.dek,
+      ...(post.isoDate ? { datePublished: post.isoDate, dateModified: post.isoDate } : {}),
+      mainEntityOfPage: url,
+      author: { "@type": "Organization", name: "BotLane", url: SITE_URL },
+      publisher: { "@type": "Organization", name: "BotLane LLC", url: SITE_URL },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+        { "@type": "ListItem", position: 3, name: post.title, item: url },
+      ],
+    },
+  ];
+
   return (
     <article>
+      <script
+        type="application/ld+json"
+        // Static JSON from our own post data; "<" is escaped so it can't close the tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       {/* Header */}
       <header className="mx-auto max-w-[75rem] px-6 pt-10 sm:pt-14">
         <Link
