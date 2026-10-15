@@ -219,7 +219,7 @@ export function ArticleView({ post, article }: { post: BlogPost; article: Articl
               Lane prepares the reports, replies and reminders. Your team approves every one before it goes out.
             </p>
           </div>
-          <div className="flex shrink-0 flex-wrap gap-3">
+          <div className="cta-pair flex shrink-0 flex-wrap gap-3">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"

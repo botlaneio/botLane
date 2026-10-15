@@ -77,7 +77,7 @@ export function SiteFooter() {
               Put reporting, follow-ups, and collections in Lane&apos;s hands. Keep every final decision in yours.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="cta-pair flex flex-wrap items-center gap-3">
             <Link
               href="/demo"
               className="group inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-lane-gradient px-5 text-sm font-semibold text-white shadow-sm transition hover:brightness-90"

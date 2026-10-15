@@ -47,7 +47,7 @@ export default function ClientReportingPage() {
             writes the executive commentary, and waits for your 30-second approval.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="cta-pair mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/demo"
               className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-btn px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-btn-hover"
@@ -114,7 +114,7 @@ export default function ClientReportingPage() {
             <p className="mx-auto mt-3 max-w-xl text-sm text-white/70">
               Get started with System 01 on a flat $600/mo retainer or deploy the full suite. 30-day money-back guarantee.
             </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
+            <div className="cta-pair mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <Link
                 href="/demo"
                 className="inline-flex h-11 items-center gap-2 rounded-[0.5rem] bg-white px-5 text-xs font-semibold text-ink hover:bg-white/90"

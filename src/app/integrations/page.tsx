@@ -184,7 +184,7 @@ export default function IntegrationsPage() {
                 before you sign up.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="cta-pair flex flex-wrap gap-3">
               <Link
                 href="/demo"
                 className="inline-flex items-center gap-1.5 rounded-[0.5rem] bg-btn px-5 py-3 text-sm font-semibold text-white transition hover:bg-btn-hover"

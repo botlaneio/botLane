@@ -31,7 +31,7 @@ export function FinalCta() {
             Stop drowning in admin work. Start leading your agency.
           </p>
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
+          <div className="cta-pair mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
             <Link
               href="/demo"
               className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-btn px-6 text-sm font-semibold text-white shadow-lg shadow-black/10 transition-all hover:bg-btn-hover active:scale-[0.99] sm:w-auto"
