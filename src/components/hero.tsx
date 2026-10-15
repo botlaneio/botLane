@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, MotionConfig, type Variants } from "motion/react";
-import { ArrowRight, Database, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, Plug, ShieldCheck, Wrench } from "lucide-react";
 import { AgentDashboard } from "@/components/dashboard/agent-dashboard";
 
 const EASING: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -35,23 +35,23 @@ export function Hero() {
             </span>
             <span className="hidden h-5 w-px bg-line sm:block" />
             <span className="rounded-full bg-[var(--bl-red-tint)] px-4 py-1.5 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-lane-ink">
-              Lane – AI workforce
+              Managed AI operations for agencies
             </span>
           </motion.div>
 
           <motion.h1
             variants={rise}
-            className="mt-7 text-[clamp(3rem,8.2vw,6.75rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-ink"
+            className="mt-7 max-w-[62rem] text-[clamp(2.5rem,5.6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-ink"
           >
-            Meet your newest hire<span className="text-lane">.</span>
+            Your team runs the campaigns. Lane prepares the reporting<span className="text-lane">.</span>
           </motion.h1>
 
           <motion.p
             variants={rise}
             className="mt-6 max-w-[50rem] text-lg leading-[1.45] tracking-[-0.015em] text-muted sm:text-[1.375rem]"
           >
-            Lane takes your scattered operational work — and turns it into client reporting, lead follow-up, and
-            invoice follow-up. <span className="font-medium text-lane">You just approve.</span>
+            BotLane connects your tools, assembles review-ready client deliverables and handles recurring follow-up,
+            so your people can focus on client work. <span className="font-medium text-lane">You stay in control.</span>
           </motion.p>
 
           <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
@@ -75,18 +75,18 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted"
           >
             <li className="flex items-center gap-2.5">
-              <Database className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Zero manual spreadsheets
+              <Plug className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Works in the tools you use
             </li>
             <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
             <li className="flex items-center gap-2.5">
               <ShieldCheck className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              100% human approval gated
+              Every send needs your approval
             </li>
             <li className="hidden h-5 w-px bg-line sm:block" aria-hidden />
             <li className="flex items-center gap-2.5">
-              <Zap className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
-              Average SLA &lt; 1 second
+              <Wrench className="size-[1.125rem] text-ink-2" strokeWidth={1.5} />
+              Set up and run by BotLane
             </li>
           </motion.ul>
         </motion.div>
