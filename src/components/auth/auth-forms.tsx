@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Building2, Eye, EyeOff, Info, KeyRound, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Info, KeyRound } from "lucide-react";
 
 function GoogleIcon() {
   return (
@@ -26,54 +26,6 @@ function MicrosoftIcon() {
   );
 }
 
-function Field({
-  label,
-  icon: Icon,
-  children,
-}: {
-  label: string;
-  icon: typeof Mail;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className="text-sm font-medium text-ink">{label}</span>
-      <span className="relative mt-1.5 block">
-        <Icon className="pointer-events-none absolute top-1/2 left-3.5 size-[1.125rem] -translate-y-1/2 text-muted" />
-        {children}
-      </span>
-    </label>
-  );
-}
-
-const inputClass =
-  "h-11 w-full rounded-[0.625rem] border border-line bg-white pr-11 pl-11 text-sm text-ink placeholder:text-faint outline-none transition focus:border-ink/30 focus:ring-4 focus:ring-ink/[0.04]";
-
-function PasswordInput({ placeholder, autoComplete }: { placeholder: string; autoComplete: string }) {
-  const [shown, setShown] = useState(false);
-  return (
-    <>
-      <input
-        name="password"
-        type={shown ? "text" : "password"}
-        required
-        minLength={8}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        className={inputClass}
-      />
-      <button
-        type="button"
-        onClick={() => setShown(!shown)}
-        aria-label={shown ? "Hide password" : "Show password"}
-        className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-muted transition hover:text-ink"
-      >
-        {shown ? <EyeOff className="size-[1.125rem]" /> : <Eye className="size-[1.125rem]" />}
-      </button>
-    </>
-  );
-}
-
 /** Accounts aren't open yet, so every way in ends here instead of pretending to sign the visitor in. */
 function NotOpenYet() {
   return (
@@ -86,38 +38,6 @@ function NotOpenYet() {
         </Link>
       </div>
     </div>
-  );
-}
-
-function SocialButtons({ onClick }: { onClick: () => void }) {
-  return (
-    <>
-      <div className="my-5 flex items-center gap-4 text-xs text-muted">
-        <span className="h-px flex-1 bg-line" />
-        or continue with
-        <span className="h-px flex-1 bg-line" />
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          onClick={onClick}
-          aria-label="Continue with Google"
-          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[0.625rem] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
-        >
-          <GoogleIcon />
-          Google
-        </button>
-        <button
-          type="button"
-          onClick={onClick}
-          aria-label="Continue with Microsoft"
-          className="flex h-11 w-full items-center justify-center gap-2.5 rounded-[0.625rem] border border-line bg-white text-sm font-medium text-ink transition hover:bg-surface"
-        >
-          <MicrosoftIcon />
-          Microsoft
-        </button>
-      </div>
-    </>
   );
 }
 
@@ -135,12 +55,6 @@ function Checkbox({ name, required, defaultChecked, children }: { name: string; 
     </label>
   );
 }
-
-const cardClass =
-  "rounded-[1.375rem] border border-line bg-white p-6 shadow-[0_1.25rem_3.125rem_-1.5rem_rgba(20,20,40,0.16)] sm:p-7";
-
-const submitClass =
-  "group flex h-11 w-full items-center justify-center gap-2 rounded-[0.625rem] bg-btn text-sm font-medium text-white shadow-[0_0.5rem_1.25rem_-0.625rem_rgba(0,0,0,0.5)] transition hover:bg-btn-hover active:scale-[0.99]";
 
 function SsoIcon() {
   return <KeyRound className="size-[1.0625rem]" aria-hidden />;
@@ -253,46 +167,97 @@ export function SignInForm() {
   );
 }
 
+/** Sign-up form in the split layout, matching the sign-in form. */
 export function SignUpForm() {
   const [notice, setNotice] = useState(false);
+  const [shown, setShown] = useState(false);
 
   return (
-    <div className={cardClass}>
+    <div>
+      <div className="grid grid-cols-2 gap-2.5">
+        <button type="button" onClick={() => setNotice(true)} className={providerClass}>
+          <GoogleIcon />
+          Google
+        </button>
+        <button type="button" onClick={() => setNotice(true)} className={providerClass}>
+          <MicrosoftIcon />
+          Microsoft
+        </button>
+      </div>
+
+      <div className="my-7 flex items-center gap-4 text-xs uppercase tracking-[0.12em] text-muted">
+        <span className="h-px flex-1 bg-line" />
+        or
+        <span className="h-px flex-1 bg-line" />
+      </div>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
           setNotice(true);
         }}
-        className="space-y-4"
       >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Full name" icon={User}>
-            <input name="name" required autoComplete="name" placeholder="John Doe" className={inputClass} />
-          </Field>
-          <Field label="Company" icon={Building2}>
-            <input name="company" required autoComplete="organization" placeholder="Acme Corp" className={inputClass} />
-          </Field>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="block">
+            <span className="text-[0.9375rem] font-medium text-ink">Full name</span>
+            <input name="name" required autoComplete="name" className={`${plainInputClass} mt-2`} />
+          </label>
+          <label className="block">
+            <span className="text-[0.9375rem] font-medium text-ink">Company</span>
+            <input name="company" required autoComplete="organization" className={`${plainInputClass} mt-2`} />
+          </label>
         </div>
-        <Field label="Work email" icon={Mail}>
-          <input name="email" type="email" required autoComplete="email" placeholder="you@acmecorp.com" className={inputClass} />
-        </Field>
-        <Field label="Password" icon={Lock}>
-          <PasswordInput placeholder="Create a password (min 8 characters)" autoComplete="new-password" />
-        </Field>
-        <Checkbox name="terms" required>
-          I agree to the{" "}
-          <Link href="/legal/terms" className="text-lane hover:underline">Terms of Service</Link> and{" "}
-          <Link href="/legal/privacy" className="text-lane hover:underline">Privacy Policy</Link>.
-        </Checkbox>
-        <button type="submit" className={submitClass}>
+        <label className="mt-5 block">
+          <span className="text-[0.9375rem] font-medium text-ink">Work email</span>
+          <input name="email" type="email" required autoComplete="email" className={`${plainInputClass} mt-2`} />
+        </label>
+        <label className="mt-5 block">
+          <span className="text-[0.9375rem] font-medium text-ink">Password</span>
+          <span className="relative mt-2 block">
+            <input
+              name="password"
+              type={shown ? "text" : "password"}
+              required
+              minLength={8}
+              autoComplete="new-password"
+              placeholder="At least 8 characters"
+              className={`${plainInputClass} pr-12`}
+            />
+            <button
+              type="button"
+              onClick={() => setShown(!shown)}
+              aria-label={shown ? "Hide password" : "Show password"}
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-ink-2 transition hover:text-ink"
+            >
+              {shown ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+            </button>
+          </span>
+        </label>
+
+        <div className="mt-6">
+          <Checkbox name="terms" required>
+            I agree to the{" "}
+            <Link href="/legal/terms" className="text-lane hover:underline">terms</Link> and{" "}
+            <Link href="/legal/privacy" className="text-lane hover:underline">privacy policy</Link>.
+          </Checkbox>
+        </div>
+
+        <button
+          type="submit"
+          className="mt-6 flex h-12 w-full items-center justify-center rounded-[0.625rem] bg-lane text-[0.9375rem] font-medium text-white shadow-[0_0.75rem_1.5rem_-0.875rem_rgba(224,49,43,0.8)] transition hover:bg-lane-strong active:scale-[0.99]"
+        >
           Create account
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
         </button>
       </form>
 
       {notice && <NotOpenYet />}
 
-      <SocialButtons onClick={() => setNotice(true)} />
+      <p className="mt-6 text-center text-[0.9375rem] text-muted">
+        Already have an account?{" "}
+        <Link href="/signin" className="font-medium text-lane hover:underline">
+          Sign in
+        </Link>
+      </p>
     </div>
   );
 }

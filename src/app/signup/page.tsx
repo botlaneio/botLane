@@ -1,35 +1,29 @@
 import type { Metadata } from "next";
-import { AuthShell } from "@/components/auth/auth-shell";
+import { AuthSplit } from "@/components/auth/auth-split";
 import { SignUpForm } from "@/components/auth/auth-forms";
-import { SignUpIllustration } from "@/components/auth/auth-illustrations";
+import { ORB_LILAC } from "@/components/auth/living-orb";
 
 export const metadata: Metadata = {
   title: "Create Account | BotLane",
   description: "Create your BotLane workspace.",
 };
 
+/** Split sign-up, mirrored from sign-in: the graphite orb panel on the left, the form on the right. */
 export default function SignUpPage() {
   return (
-    <AuthShell
-      switchPrompt="Already have an account?"
-      switchLabel="Sign in"
-      switchHref="/signin"
-      title={
-        <>
-          Get started with
-          <br />
-          BotLane.
-        </>
-      }
-      subtitle={
-        <>
-          Three operational lanes. Zero congestion.
-          <br />
-          Set up your workspace in minutes.
-        </>
-      }
+    <AuthSplit
+      panelSide="left"
+      title="Create your botLane account"
       form={<SignUpForm />}
-      aside={<SignUpIllustration />}
+      switchLink={{ label: "Sign in", href: "/signin" }}
+      panel={{
+        eyebrow: "Three lanes",
+        eyebrowClassName: "text-[#bfb1f0]",
+        heading: "Give your team its newest hire",
+        body: "Client reporting, lead follow-up and invoice follow-up, with every send approved by you.",
+        cta: { label: "See pricing", href: "/pricing" },
+        orbStops: ORB_LILAC,
+      }}
     />
   );
 }
