@@ -122,6 +122,26 @@ html {
 }
 
 /*
+ * Centred sections whose buttons sit left on phones: on phones the text, badges and rows in
+ * them line up on the left too. Unlayered, so it wins over the Tailwind utilities.
+ */
+@media (width < 40rem) {
+  .phone-left {
+    text-align: left;
+    align-items: flex-start;
+  }
+  .phone-left > .mx-auto {
+    margin-left: 0;
+  }
+  .phone-left > .justify-center {
+    justify-content: flex-start;
+  }
+  .phone-left > .flex-col.items-center {
+    align-items: flex-start;
+  }
+}
+
+/*
  * Scroll stories on short landscape screens (a phone turned sideways): drop the caption body
  * and tighten the top so the animated canvas keeps most of the height. Unlayered, so it wins.
  */

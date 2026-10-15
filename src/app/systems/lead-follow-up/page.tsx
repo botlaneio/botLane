@@ -41,7 +41,7 @@ export default function LeadFollowUpPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative mx-auto max-w-[75rem] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
+        <section className="phone-left relative mx-auto max-w-[75rem] px-6 pt-8 pb-16 text-center sm:pt-12 sm:pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-lane/20 bg-lane/5 px-3 py-1 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-lane">
             <GitCommit size={13} />
             <span>System 02 · The Line</span>
@@ -162,7 +162,7 @@ export default function LeadFollowUpPage() {
 
         {/* CTA Banner */}
         <section className="mx-auto max-w-[75rem] px-6 py-16">
-          <div className="rounded-[1.5rem] border border-line bg-ink p-8 text-center text-white sm:p-14">
+          <div className="phone-left rounded-[1.5rem] border border-line bg-ink p-8 text-center text-white sm:p-14">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Turn your inbound leads into booked meetings.
             </h2>

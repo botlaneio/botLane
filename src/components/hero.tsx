@@ -27,7 +27,7 @@ export function Hero() {
           variants={stagger}
           initial="hidden"
           animate="visible"
-          className="relative mx-auto flex max-w-[75rem] flex-col items-center px-6 pt-12 text-center sm:pt-16"
+          className="phone-left relative mx-auto flex max-w-[75rem] flex-col items-center px-6 pt-12 text-center sm:pt-16"
         >
           <motion.div variants={rise} className="flex flex-wrap items-center justify-center gap-3 sm:gap-5">
             <span className="flex items-center gap-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-ink-2">

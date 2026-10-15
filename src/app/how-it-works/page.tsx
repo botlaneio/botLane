@@ -4,6 +4,7 @@ import { Check, X, ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { HowItWorksHero } from "@/components/how-it-works-hero";
+import { FlowStory } from "@/components/how-it-works/flow-story";
 import { OnboardingSteps } from "@/components/home/onboarding-steps";
 import { ControlSection } from "@/components/home/control-section";
 import { FinalCta } from "@/components/home/final-cta";
@@ -36,6 +37,8 @@ export default function HowItWorksPage() {
       <SiteHeader />
       <main className="min-h-screen">
         <HowItWorksHero />
+
+        <FlowStory />
 
         {/* What Lane does and doesn't do */}
         <section className="mx-auto max-w-[75rem] border-t border-line px-6 py-24">
