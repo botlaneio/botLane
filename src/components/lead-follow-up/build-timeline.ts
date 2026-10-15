@@ -8,16 +8,17 @@ type Anime = typeof import("animejs");
  * stage. Scrolling back plays it in reverse. Scene boundaries are listed in SCENES so the
  * captions and the progress rail stay in step with the visuals.
  */
-export const END = 10000;
+export const END = 11800;
 export const SCENES: [number, number][] = [
   [0, 1400], // 01 every enquiry starts a clock
   [1400, 2800], // 02 Lane picks it up
   [2800, 4600], // 03 research
   [4600, 6600], // 04 draft, approved by you
   [6600, 8400], // 05 the Line
-  [8400, END], // 06 booked, sequence stops
+  [8400, 10200], // 06 booked, sequence stops
+  [10200, END], // 07 handed to your team
 ];
-/** The single stable frame shown when motion is reduced: the call booked, the rest cancelled. */
+/** The single stable frame shown when motion is reduced: the lead handed to your team. */
 export const STILL_AT = END;
 
 /** Largest single seek, in timeline units. Bigger jumps are split so every tween they cross is rendered. */
@@ -203,6 +204,27 @@ export function buildStory(root: HTMLElement, l: LeadLayout, A: Anime, still: bo
   add($("[data-touch-end]", touches[1]), { opacity: [0, 1], duration: 180 }, 9800);
   add(touches[1], { opacity: [1, 0.55], duration: 200 }, 9820);
   add($("[data-station-dot]", stations[2]), { backgroundColor: [LANE, GREY], duration: 200 }, 9820);
+
+  /* ---------- 07 handed to your team: the calendar card grows into the handover ---------- */
+  const fade = 0.12;
+  add([lead, touches[0], ...stations, bookMark, $("[data-paths]")], { opacity: [1, fade], duration: 360 }, 10260);
+  add(touches[1], { opacity: [0.55, fade], duration: 360 }, 10260);
+  const b = l.booked;
+  const h = l.handover;
+  add(
+    booked,
+    {
+      translateX: [0, h.x - h.w / 2 - (b.x - b.w / 2)],
+      translateY: [0, h.y - h.h / 2 - (b.y - b.h / 2)],
+      width: [b.w, h.w],
+      height: [b.h, h.h],
+      ease: "inOutCubic",
+      duration: 620,
+    },
+    10380,
+  );
+  add($$("[data-handover-part]"), { opacity: [0, 1], translateY: [8, 0], ease: "outCubic", duration: 260, delay: A.stagger(150) }, 10900);
+  add($("[data-handover-stage]"), { backgroundColor: ["#f5f5f7", LANE], color: ["#6e6e73", "#ffffff"], duration: 220 }, 11280);
   tl.add({ end: 0 }, { end: 1, duration: 1 }, END - 1);
 
   if (still) {

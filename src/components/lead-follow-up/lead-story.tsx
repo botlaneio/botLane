@@ -8,7 +8,7 @@ import { Booked, Lead, LineMarks, ResponseClock, Touches } from "./lead-parts";
  * Lead follow-up, demonstrated. A tall section with a sticky stage; scrolling through it
  * seeks one anime.js timeline (see build-timeline.ts) across six scenes:
  * the waiting enquiry → Lane picks it up → research → the draft you approve → the follow-up
- * Line → the call is booked and the rest of the sequence stops.
+ * Line → the call is booked and the rest of the sequence stops → the lead is handed to your team.
  * With reduced motion the stage is a single, stable frame and every caption is listed.
  */
 
@@ -37,6 +37,10 @@ const CAPTIONS = [
     title: "They book. Lane stops.",
     text: "The discovery call lands on your calendar, the deal moves forward in HubSpot and every remaining follow-up is cancelled.",
   },
+  {
+    title: "Your team takes it from here",
+    text: "Lane marks the lead as engaged in HubSpot and assigns it to the right person on your team. From the booked call on, the conversation is yours.",
+  },
 ];
 
 const MOBILE_QUERY = "(max-width: 767px)";
@@ -58,6 +62,7 @@ function StoryPaths({ layout }: { layout: LeadLayout }) {
   const { line, stems, bookStem } = pathsFor(layout);
   return (
     <svg
+      data-paths
       className="absolute top-0 left-0 overflow-visible"
       width={layout.W}
       height={layout.H}
@@ -168,7 +173,7 @@ export function LeadStory() {
     <section
       ref={stageRef}
       aria-label="How Lead follow-up works"
-      className={still ? "relative" : "relative h-[520vh] md:h-[760vh]"}
+      className={still ? "relative" : "relative h-[680vh] md:h-[960vh]"}
     >
       <div
         className={
@@ -183,7 +188,7 @@ export function LeadStory() {
             {CAPTIONS.map((c, i) => (
               <li key={c.title} data-caption className={still ? "" : "absolute inset-x-0 top-0"}>
                 <div className="font-mono text-xs font-semibold text-lane">
-                  0{i + 1} <span className="text-faint">/ 06</span>
+                  0{i + 1} <span className="text-faint">/ 0{CAPTIONS.length}</span>
                 </div>
                 <h2 className="mt-1.5 text-[clamp(1.375rem,2.6vw,2rem)] font-semibold leading-[1.1] tracking-[-0.035em] text-ink">
                   {c.title}
@@ -193,7 +198,7 @@ export function LeadStory() {
             ))}
           </ol>
           {!still && (
-            <div className="mt-3 grid grid-cols-6 gap-1.5" aria-hidden>
+            <div className="mt-3 grid grid-cols-7 gap-1.5" aria-hidden>
               {CAPTIONS.map((c) => (
                 <span key={c.title} className="h-[2px] overflow-hidden rounded-full bg-line">
                   <span data-rail className="block h-full origin-left bg-lane" />

@@ -28,6 +28,8 @@ export type LeadLayout = {
   /** Scene 06: where on the Line the call is booked, and the calendar card. */
   bookedAt: number;
   booked: Box;
+  /** Scene 07: the calendar card grows into the handover card, here. */
+  handover: Box;
 };
 
 /** A point a fraction of the way along the Line. */
@@ -82,6 +84,7 @@ export const DESKTOP: LeadLayout = {
   stems: true,
   bookedAt: 0.72,
   booked: { x: 760, y: 236, w: 320, h: 176 },
+  handover: { x: 600, y: 320, w: 420, h: 392 },
 };
 
 export const MOBILE: LeadLayout = {
@@ -102,4 +105,5 @@ export const MOBILE: LeadLayout = {
   stems: false,
   bookedAt: 0.72,
   booked: { x: 190, y: 150, w: 320, h: 176 },
+  handover: { x: 190, y: 340, w: 344, h: 412 },
 };

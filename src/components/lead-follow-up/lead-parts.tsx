@@ -1,4 +1,4 @@
-import { CalendarCheck, Check, Clock, Sparkles } from "lucide-react";
+import { CalendarCheck, Check, Clock, Sparkles, UserRound } from "lucide-react";
 import { PANEL, TICKS, along, type Box, type LeadLayout } from "./layout";
 
 /**
@@ -290,7 +290,7 @@ export function Booked({ layout }: { layout: LeadLayout }) {
   return (
     <div
       data-booked
-      className="absolute flex flex-col rounded-[18px] border border-line bg-white p-4 opacity-0 shadow-[0_1.25rem_3rem_rgba(20,20,40,0.12)]"
+      className="absolute flex flex-col overflow-hidden rounded-[18px] border border-line bg-white p-4 opacity-0 shadow-[0_1.25rem_3rem_rgba(20,20,40,0.12)]"
       style={{ ...at(layout.booked), zIndex: 5 }}
     >
       <div className="flex items-center gap-3">
@@ -316,6 +316,34 @@ export function Booked({ layout }: { layout: LeadLayout }) {
           Remaining follow-ups cancelled
         </li>
       </ul>
+
+      {/* Scene 07: revealed as the card grows into the handover */}
+      <div className="mt-4 border-t border-line pt-4">
+        <div data-handover-part className="font-mono text-[10.5px] font-semibold tracking-wide text-lane uppercase opacity-0">Handed to your team</div>
+        <div data-handover-part className="mt-3 flex items-center gap-3 opacity-0">
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-ink text-white">
+            <UserRound size={16} />
+          </span>
+          <div className="min-w-0">
+            <div className="text-[13.5px] font-semibold text-ink">Assigned to Alex</div>
+            <div className="truncate text-[11.5px] text-muted">alex@youragency.com · takes the call</div>
+          </div>
+        </div>
+        <div data-handover-part className="mt-4 opacity-0">
+          <div className="text-[11px] text-faint">HubSpot</div>
+          <div className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium">
+            <span className="rounded-full bg-surface px-2.5 py-1 text-muted">Enquiry</span>
+            <span className="h-px w-3 bg-line" />
+            <span className="rounded-full bg-surface px-2.5 py-1 text-muted">Engaged</span>
+            <span className="h-px w-3 bg-line" />
+            <span data-handover-stage className="rounded-full bg-surface px-2.5 py-1 text-muted">Discovery booked</span>
+          </div>
+        </div>
+        <div data-handover-part className="mt-4 flex items-center gap-2 rounded-[10px] bg-surface px-3 py-2 text-[11.5px] text-ink-2 opacity-0">
+          <span className="size-2 shrink-0 rounded-full bg-lane" />
+          First reply approved in 2m 14s · booked after Touch 2
+        </div>
+      </div>
     </div>
   );
 }
