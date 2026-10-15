@@ -15,11 +15,14 @@ export function FinalCta() {
         </div>
 
         <div className="phone-left relative z-10 mx-auto max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1 text-xs text-muted shadow-sm">
+          <div className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-white px-3 py-1 text-xs text-muted shadow-sm">
             <BotLaneLogo size={16} decorative />
             <span className="font-semibold text-ink">Hire Lane today</span>
             <span>·</span>
-            <span className="text-lane-gradient font-mono font-medium">Reclaim your agency&apos;s Fridays</span>
+            <span className="text-lane-gradient font-mono font-medium">
+              <span className="sm:hidden">Reclaim your Fridays</span>
+              <span className="hidden sm:inline">Reclaim your agency&apos;s Fridays</span>
+            </span>
           </div>
 
           <h2 className="mt-6 text-[clamp(2.5rem,5.2vw,4.5rem)] font-bold leading-[0.98] tracking-[-0.045em] text-ink">
