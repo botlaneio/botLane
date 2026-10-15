@@ -134,7 +134,7 @@ export function ArticleView({ post, article }: { post: BlogPost; article: Articl
       description: article.dek,
       ...(post.isoDate ? { datePublished: post.isoDate, dateModified: post.isoDate } : {}),
       mainEntityOfPage: url,
-      author: { "@type": "Organization", name: "BotLane", url: SITE_URL },
+      author: { "@type": "Organization", name: "BotLane Editorial", url: `${SITE_URL}/blog` },
       publisher: { "@type": "Organization", name: "BotLane LLC", url: SITE_URL },
     },
     {
@@ -176,7 +176,7 @@ export function ArticleView({ post, article }: { post: BlogPost; article: Articl
           </h1>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-[1.125rem]">{article.dek}</p>
           <div className="mt-6 text-[0.8125rem] text-muted">
-            By <span className="font-medium text-ink">The BotLane team</span>
+            By <span className="font-medium text-ink">BotLane Editorial</span>
           </div>
         </div>
         <div className="mt-10 aspect-[16/8] overflow-hidden rounded-[1rem] bg-surface sm:aspect-[3/1]">
