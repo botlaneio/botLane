@@ -295,12 +295,11 @@ export const ARTICLES: Record<string, Article> = {
       { type: "h2", text: "How we connect" },
       {
         type: "p",
-        text: "We connect through each platform’s official sign-in and permissions, which you authorise. That means you can see exactly what has been connected inside the tool itself, and you can remove that access there at any time.",
+        text: "We connect through each platform’s official sign-in and permissions, which you authorise.",
       },
       {
         type: "ul",
         items: [
-          "**Only what a lane needs.** We ask for the access a lane uses to do its job, not blanket access to everything.",
           "**Your data stays yours.** Your data stays in your environment, and we don’t train on it.",
           "**Your voice, your addresses.** Replies and reminders go out from your team’s email, in your wording, after a person approves them.",
         ],

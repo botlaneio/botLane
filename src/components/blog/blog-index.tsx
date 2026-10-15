@@ -27,12 +27,12 @@ export function BlogIndex() {
 
   return (
     <section className="mx-auto max-w-[75rem] px-6 pb-20 sm:pb-24">
-      {/* Filters + search */}
+      {/* Filters + search. The filters always stay on one line and scroll sideways when they don't fit. */}
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
         <div
           role="group"
           aria-label="Filter articles by topic"
-          className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+          className="-mx-6 flex min-w-0 gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] lg:mx-0 lg:flex-1 lg:px-0 lg:pb-2 lg:[scrollbar-width:thin] lg:[scrollbar-color:var(--bl-line)_transparent] [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block lg:[&::-webkit-scrollbar]:h-1.5 lg:[&::-webkit-scrollbar-thumb]:rounded-full lg:[&::-webkit-scrollbar-thumb]:bg-line"
         >
           {(["All", ...BLOG_CATEGORIES] as Filter[]).map((c) => {
             const active = c === filter;
