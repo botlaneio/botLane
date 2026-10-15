@@ -23,6 +23,8 @@ export type FlowLayout = {
   drafts: Pt[];
   slots: Pt[];
   desk: Pt & { w: number; h: number };
+  /** Phones only: the desk first appears around the drafts, then grows into the space the tools leave. */
+  deskFrom?: Pt & { w: number; h: number };
   /** Scene 06: where approved work goes, and the straight wire each item travels along. */
   dest: { w: number; h: number };
   dests: Pt[];
@@ -88,8 +90,10 @@ export const DESKTOP: FlowLayout = {
   sendTo: SLOT_Y.map((y) => ({ x: DEST_X - 85, y })),
 };
 
-const DESK_M = { x: 190, y: 436, w: 352, h: 330 };
-const SLOT_M = [348, 436, 524];
+/* Phones: the desk fills the canvas once the tools and core have left, so the cards can be large. */
+const DESK_M = { x: 190, y: 280, w: 364, h: 520 };
+const DRAFT_M = [346, 470, 594];
+const SLOT_M = [170, 300, 430];
 const DEST_M = [70, 190, 310];
 
 export const MOBILE: FlowLayout = {
@@ -109,10 +113,11 @@ export const MOBILE: FlowLayout = {
   core: { x: 190, y: 186 },
   coreSize: 64,
   scope: { x: 190, y: 246 },
-  card: { w: 300, h: 76 },
-  drafts: SLOT_M.map((y) => ({ x: 204, y })),
+  card: { w: 336, h: 112 },
+  drafts: DRAFT_M.map((y) => ({ x: 204, y })),
   slots: SLOT_M.map((y) => ({ x: 190, y })),
   desk: DESK_M,
+  deskFrom: { x: 204, y: 450, w: 364, h: 420 },
   dest: { w: 108, h: 44 },
   dests: DEST_M.map((x) => ({ x, y: 660 })),
   sendFrom: DEST_M.map(() => ({ x: 190, y: DESK_M.y + DESK_M.h / 2 })),
