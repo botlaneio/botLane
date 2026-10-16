@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
-import { DESKTOP, LANDSCAPE, MOBILE } from "./layout";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { DESKTOP_H, LANDSCAPE, MOBILE, desktopLayout } from "./layout";
 import { Numerals, ReleaseCard, Strip } from "./story-parts";
 
 /**
@@ -66,7 +66,10 @@ export function ReleaseStory() {
   const mobile = useMedia(MOBILE_QUERY);
   const sideways = useMedia(SIDEWAYS_QUERY);
   const still = useMedia(REDUCE_QUERY);
-  const layout = sideways ? LANDSCAPE : mobile ? MOBILE : DESKTOP;
+  // Desktop canvas height, in canvas units, chosen to fill the space under the captions.
+  const [desktopH, setDesktopH] = useState(DESKTOP_H.min);
+  const desktop = useMemo(() => desktopLayout(desktopH), [desktopH]);
+  const layout = sideways ? LANDSCAPE : mobile ? MOBILE : desktop;
 
   const stageRef = useRef<HTMLElement>(null);
   const fitRef = useRef<HTMLDivElement>(null);
@@ -78,6 +81,16 @@ export function ReleaseStory() {
     const canvas = canvasRef.current;
     if (!fit || !canvas) return;
     const resize = () => {
+      if (layout.key === "desktop" && !still) {
+        // Fill the height the width leaves free, in steps so small resizes don't rebuild the story.
+        const fitW = Math.min(fit.clientWidth / layout.W, 1);
+        const want = Math.floor(fit.clientHeight / fitW / DESKTOP_H.step) * DESKTOP_H.step;
+        const H = Math.min(DESKTOP_H.max, Math.max(DESKTOP_H.min, want));
+        if (H !== layout.H) {
+          setDesktopH(H);
+          return;
+        }
+      }
       // The tall layout on a big upright tablet would otherwise blow up past its designed size.
       const s = Math.min(fit.clientWidth / layout.W, fit.clientHeight / layout.H, layout.key === "mobile" ? 1.35 : 1);
       canvas.style.transform = `translate(-50%, -50%) scale(${s})`;
@@ -86,7 +99,7 @@ export function ReleaseStory() {
     const ro = new ResizeObserver(resize);
     ro.observe(fit);
     return () => ro.disconnect();
-  }, [layout]);
+  }, [layout, still]);
 
   // Build the timeline; rebuild when the layout or motion preference changes.
   useEffect(() => {
