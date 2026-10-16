@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ChevronDown, FileCheck2, Info, ShieldCheck, UserCheck } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ReleaseStory } from "@/components/release-standard/release-story";
 import { GATE_OUTCOMES, RELEASE_PHASES } from "@/components/trust/release-gates";
 
 export const metadata: Metadata = {
@@ -78,6 +79,9 @@ export default function ReleaseStandardPage() {
             ))}
           </div>
         </section>
+
+        {/* The standard, walked through as a scroll story */}
+        <ReleaseStory />
 
         {/* Phases and gates */}
         {RELEASE_PHASES.map((phase) => (
