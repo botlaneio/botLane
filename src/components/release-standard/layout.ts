@@ -94,7 +94,7 @@ function sampleLane(legs: Pt[][], radius: number) {
 }
 
 /** Lane legs: start → gate 1 → … → gate 12 → production. A leg that changes side turns at `runs[i]`. */
-function buildLane(start: Pt, stops: Pt[], runs: number[], end: Pt, radius: number) {
+export function buildLane(start: Pt, stops: Pt[], runs: number[], end: Pt, radius: number) {
   const legs: Pt[][] = [[start, stops[0]]];
   for (let i = 0; i < stops.length - 1; i++) {
     const a = stops[i];
