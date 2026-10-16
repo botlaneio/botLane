@@ -15,7 +15,11 @@ export type Box = Pt & { w: number; h: number };
 export type Rect = Pt & { w: number; h: number };
 
 export type StoryLayout = {
-  key: "desktop" | "mobile";
+  key: "desktop" | "mobile" | "landscape";
+  /** Small type and controls (phones, upright or sideways). */
+  compact: boolean;
+  /** How a panel lays out its three drawings: in rows beside their titles, or in three columns. */
+  panelStyle: "rows" | "columns";
   W: number;
   H: number;
   strip: { w: number; h: number };
@@ -115,7 +119,13 @@ export const railPath = (rail: Pt[]) => rail.map((p, i) => `${i ? "L" : "M"}${p.
 
 type Side = "left" | "right";
 type Spec = {
-  key: "desktop" | "mobile";
+  key: "desktop" | "mobile" | "landscape";
+  compact: boolean;
+  panelStyle: "rows" | "columns";
+  /** The camera centres each card on `cy` (else it holds each phase and drifts). */
+  follow: boolean;
+  /** Production and the decisions: one above the other, or side by side. */
+  finish: "stacked" | "side";
   W: number;
   H: number;
   barH: number;
@@ -142,7 +152,13 @@ type Spec = {
 function build(s: Spec): StoryLayout {
   const sideOfPhase = (p: number): Side => (p % 2 === 0 ? "right" : "left");
   const cardsH = 3 * s.card.h + 2 * s.card.gap;
-  const blockH = s.stacked ? s.panelH + 10 + cardsH : Math.max(s.panelH, cardsH);
+  // A pinned side panel needs its block to run on below the last card, so it is still fully in
+  // view while the camera is on that card.
+  const blockH = s.stacked
+    ? s.panelH + 10 + cardsH
+    : s.follow
+      ? Math.max(s.panelH, cardsH + s.panelH - s.card.h)
+      : Math.max(s.panelH, cardsH);
   const view = (s.H + s.barH) / 2;
   const cy = s.cy ?? view;
   const cards: Pt[] = [];
@@ -157,8 +173,8 @@ function build(s: Spec): StoryLayout {
     const side = sideOfPhase(p);
     const T = 40 + p * (blockH + s.phaseGap);
     blocks.push({ top: T, bottom: T + blockH });
-    panels.push({ x: s.panel[side].x, y: s.stacked ? T : T + (blockH - s.panelH) / 2, w: s.panel[side].w, h: s.panelH });
-    const cardsTop = s.stacked ? T + s.panelH + 10 : T + (blockH - cardsH) / 2;
+    panels.push({ x: s.panel[side].x, y: s.stacked || s.follow ? T : T + (blockH - s.panelH) / 2, w: s.panel[side].w, h: s.panelH });
+    const cardsTop = s.stacked ? T + s.panelH + 10 : s.follow ? T : T + (blockH - cardsH) / 2;
     for (let j = 0; j < 3; j++) {
       const c = { x: s.cardX[side], y: cardsTop + j * (s.card.h + s.card.gap) };
       cards.push(c);
@@ -167,21 +183,30 @@ function build(s: Spec): StoryLayout {
       const lx = s.laneX[side];
       stops.push({ x: lx, y: mid });
       ticks.push([{ x: lx, y: mid }, { x: side === "right" ? c.x + s.card.w : c.x, y: mid }]);
-      camGate.push(s.stacked ? mid : T + blockH / 2 + (j - 1) * s.drift);
+      camGate.push(s.follow ? mid : T + blockH / 2 + (j - 1) * s.drift);
       runs.push(T + blockH + s.phaseGap / 2);
     }
   }
   const prodY = 40 + 4 * (blockH + s.phaseGap);
-  const production = { x: (s.W - s.production.w) / 2, y: prodY, ...s.production };
-  const approvals = { x: (s.W - s.approvals.w) / 2, y: prodY + s.production.h + s.approvals.gap, w: s.approvals.w, h: s.approvals.h };
-  const lane = buildLane({ x: stops[0].x, y: 0 }, stops, runs, { x: s.W / 2, y: prodY - 16 }, s.radius);
+  const side = s.finish === "side";
+  const rowW = s.production.w + s.approvals.gap + s.approvals.w;
+  const production = side
+    ? { x: (s.W - rowW) / 2, y: prodY + (s.approvals.h - s.production.h) / 2, ...s.production }
+    : { x: (s.W - s.production.w) / 2, y: prodY, ...s.production };
+  const approvals = side
+    ? { x: (s.W - rowW) / 2 + s.production.w + s.approvals.gap, y: prodY, w: s.approvals.w, h: s.approvals.h }
+    : { x: (s.W - s.approvals.w) / 2, y: prodY + s.production.h + s.approvals.gap, w: s.approvals.w, h: s.approvals.h };
+  const end = side ? { x: production.x + production.w / 2, y: production.y - 14 } : { x: s.W / 2, y: prodY - 16 };
+  const lane = buildLane({ x: stops[0].x, y: 0 }, stops, runs, end, s.radius);
   const depth = 0.5;
   // Each numeral crosses the camera line while the camera is in the gap after its phase.
   const numerals = [0, 1, 2, 3].map((p) => ({ x: s.W / 2, y: (1 - depth) * cy + depth * (blocks[p].bottom + s.phaseGap / 2) }));
   // The finish frames production and the decisions together in the space under the bar.
-  const finishMid = prodY + (s.production.h + s.approvals.gap + s.approvals.h) / 2;
+  const finishMid = side ? prodY + s.approvals.h / 2 : prodY + (s.production.h + s.approvals.gap + s.approvals.h) / 2;
   return {
     key: s.key,
+    compact: s.compact,
+    panelStyle: s.panelStyle,
     W: s.W,
     H: s.H,
     strip: { w: s.W, h: approvals.y + approvals.h + 80 },
@@ -210,6 +235,10 @@ function build(s: Spec): StoryLayout {
 /* ---------- desktop: illustration panel and gate cards side by side, swapping sides each phase ---------- */
 export const DESKTOP = build({
   key: "desktop",
+  compact: false,
+  panelStyle: "rows",
+  follow: false,
+  finish: "stacked",
   W: 1200,
   H: 540,
   barH: 64,
@@ -235,6 +264,10 @@ export const DESKTOP = build({
  */
 export const MOBILE = build({
   key: "mobile",
+  compact: true,
+  panelStyle: "columns",
+  follow: true,
+  finish: "stacked",
   W: 380,
   H: 520,
   barH: 60,
@@ -242,7 +275,7 @@ export const MOBILE = build({
   cardX: { right: 8, left: 40 },
   laneX: { right: 362, left: 18 },
   panel: { right: { x: 8, w: 332 }, left: { x: 40, w: 332 } },
-  panelH: 150,
+  panelH: 164,
   stacked: true,
   phaseGap: 90,
   radius: 16,
@@ -253,4 +286,35 @@ export const MOBILE = build({
   approvals: { w: 364, h: 248, gap: 24 },
   release: { big: { x: 190, y: 280, w: 350, h: 120 }, bar: { x: 190, y: 30, w: 380, h: 60 } },
   numeralSize: 220,
+});
+
+/*
+ * Phones turned sideways: a wide, short canvas beside a caption column. The panel and cards sit
+ * side by side and swap sides each phase, as on desktop; the camera centres one card at a time
+ * near the top while the panel pins beside it, and the finish puts production beside the decisions.
+ */
+export const LANDSCAPE = build({
+  key: "landscape",
+  compact: true,
+  panelStyle: "rows",
+  follow: true,
+  finish: "side",
+  W: 640,
+  H: 300,
+  barH: 44,
+  card: { w: 300, h: 118, gap: 10 },
+  cardX: { right: 310, left: 30 },
+  laneX: { right: 626, left: 14 },
+  panel: { right: { x: 14, w: 282 }, left: { x: 344, w: 282 } },
+  panelH: 232,
+  stacked: false,
+  phaseGap: 70,
+  radius: 14,
+  drift: 0,
+  cy: 111,
+  pinTop: 52,
+  production: { w: 200, h: 110 },
+  approvals: { w: 364, h: 232, gap: 16 },
+  release: { big: { x: 320, y: 160, w: 420, h: 100 }, bar: { x: 320, y: 22, w: 640, h: 44 } },
+  numeralSize: 180,
 });

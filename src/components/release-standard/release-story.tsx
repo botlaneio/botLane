@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { DESKTOP, MOBILE } from "./layout";
+import { DESKTOP, LANDSCAPE, MOBILE } from "./layout";
 import { Numerals, ReleaseCard, Strip } from "./story-parts";
 
 /**
@@ -46,6 +46,8 @@ const CAPTIONS = [
 
 // Phones, and tablets held upright: the tall layout fills a portrait screen far better than the wide one.
 const MOBILE_QUERY = "(max-width: 767px), (max-width: 1199px) and (orientation: portrait)";
+// Phones turned sideways: a wide, short canvas beside a caption column (see globals.css).
+const SIDEWAYS_QUERY = "(orientation: landscape) and (max-height: 32rem)";
 const REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
 
 function useMedia(query: string) {
@@ -62,8 +64,9 @@ function useMedia(query: string) {
 
 export function ReleaseStory() {
   const mobile = useMedia(MOBILE_QUERY);
+  const sideways = useMedia(SIDEWAYS_QUERY);
   const still = useMedia(REDUCE_QUERY);
-  const layout = mobile ? MOBILE : DESKTOP;
+  const layout = sideways ? LANDSCAPE : mobile ? MOBILE : DESKTOP;
 
   const stageRef = useRef<HTMLElement>(null);
   const fitRef = useRef<HTMLDivElement>(null);
@@ -155,7 +158,7 @@ export function ReleaseStory() {
     <section
       ref={stageRef}
       aria-label="The 12-Gate Release Standard, step by step"
-      className={`release-story relative border-t border-line ${still ? "" : mobile ? "h-[760svh]" : "h-[980svh]"}`}
+      className={`release-story relative border-t border-line ${still ? "" : layout.key === "desktop" ? "h-[980svh]" : "h-[760svh]"}`}
     >
       <div
         className={
@@ -165,7 +168,7 @@ export function ReleaseStory() {
         }
       >
         {/* Captions: one at a time while scrolling, all listed with reduced motion */}
-        <div className="shrink-0">
+        <div className="story-caption-col shrink-0">
           <ol className={still ? "grid gap-6 md:grid-cols-2" : "story-captions relative h-[11.5rem] sm:h-[8.5rem] md:h-[7.5rem]"}>
             {CAPTIONS.map((c, i) => (
               <li key={c.title} data-caption className={still ? "" : "absolute inset-x-0 top-0"}>
@@ -193,7 +196,7 @@ export function ReleaseStory() {
         {/* Canvas */}
         <div
           ref={fitRef}
-          className={still ? "relative mt-10 w-full" : "relative mt-4 min-h-0 w-full flex-1 overflow-clip"}
+          className={still ? "relative mt-10 w-full" : "story-canvas relative mt-4 min-h-0 w-full flex-1 overflow-clip"}
           style={still ? { aspectRatio: `${layout.W} / ${layout.H}` } : undefined}
           aria-hidden
         >

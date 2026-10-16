@@ -69,7 +69,7 @@ function Status({ compact }: { compact: boolean }) {
 }
 
 export function ReleaseCard({ layout }: { layout: StoryLayout }) {
-  const compact = layout.key === "mobile";
+  const { compact } = layout;
   return (
     <div
       data-release
@@ -104,7 +104,7 @@ export function ReleaseCard({ layout }: { layout: StoryLayout }) {
 function Rail({ layout }: { layout: StoryLayout }) {
   const d = railPath(layout.rail);
   const { barrier } = layout;
-  const desktop = layout.key === "desktop";
+  const desktop = !layout.compact;
   const w = desktop ? 3 : 2.5;
   return (
     <svg
@@ -138,7 +138,8 @@ function Rail({ layout }: { layout: StoryLayout }) {
 
 /** One panel per phase: its heading and a drawing for each of its three gates. */
 function Panels({ layout }: { layout: StoryLayout }) {
-  const desktop = layout.key === "desktop";
+  const rows = layout.panelStyle === "rows";
+  const desktop = !layout.compact;
   return (
     <>
       {RELEASE_PHASES.map((phase, p) => {
@@ -170,18 +171,29 @@ function Panels({ layout }: { layout: StoryLayout }) {
                 <span className="ml-auto font-mono text-[10px] text-faint">{range}</span>
               </div>
             )}
-            <div className={desktop ? "mt-4 flex flex-1 flex-col justify-between" : "mt-2 grid flex-1 grid-cols-3 gap-2"}>
+            <div className={rows ? `flex flex-1 flex-col justify-between ${desktop ? "mt-4" : "mt-2"}` : "mt-2 grid flex-1 grid-cols-3 gap-2"}>
               {phase.gates.map((gate) =>
-                desktop ? (
-                  <div key={gate.id} className="flex items-center gap-5">
-                    <div className="h-[94px] w-[126px] shrink-0 rounded-[15px] bg-[#f8f8f9] p-1">
+                rows ? (
+                  <div key={gate.id} className={`flex items-center ${desktop ? "gap-5" : "gap-2.5"}`}>
+                    <div
+                      className={`shrink-0 bg-[#f8f8f9] ${desktop ? "h-[94px] w-[126px] rounded-[15px] p-1" : "h-[54px] w-[72px] rounded-[10px]"}`}
+                    >
                       <GateArt id={gate.id} className="h-full w-full" />
                     </div>
-                    <div className="min-w-0">
-                      <div className="font-mono text-[12px] font-semibold text-lane">{gate.number}</div>
-                      <div className="text-[16px] font-semibold tracking-[-0.015em] text-ink">{gate.title}</div>
-                      <p className="mt-0.5 text-[14px] leading-[1.4] text-muted">{gate.purpose}</p>
-                    </div>
+                    {desktop ? (
+                      <div className="min-w-0">
+                        <div className="font-mono text-[12px] font-semibold text-lane">{gate.number}</div>
+                        <div className="text-[16px] font-semibold tracking-[-0.015em] text-ink">{gate.title}</div>
+                        <p className="mt-0.5 text-[14px] leading-[1.4] text-muted">{gate.purpose}</p>
+                      </div>
+                    ) : (
+                      <div className="min-w-0">
+                        <div className="truncate text-[12.5px] font-semibold text-ink">
+                          <span className="font-mono text-lane">{gate.number}</span> {gate.title}
+                        </div>
+                        <p className="line-clamp-2 text-[11px] leading-[1.3] text-muted">{gate.purpose}</p>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div key={gate.id} className="flex min-w-0 flex-col">
@@ -251,8 +263,7 @@ function EvidenceRow({ label, compact }: { label: string; compact: boolean }) {
 }
 
 function GateCards({ layout }: { layout: StoryLayout }) {
-  const { card } = layout;
-  const compact = layout.key === "mobile";
+  const { card, compact } = layout;
   const footer = `absolute inset-0 flex items-center gap-1.5 whitespace-nowrap ${compact ? "text-[12px]" : "text-[13.5px]"}`;
   return (
     <>
@@ -310,20 +321,20 @@ function GateCards({ layout }: { layout: StoryLayout }) {
 
 function Production({ layout }: { layout: StoryLayout }) {
   const p = layout.production;
-  const compact = layout.key === "mobile";
+  const { compact } = layout;
   return (
     <div
       data-prod
       className={`absolute flex overflow-hidden bg-ink text-white opacity-0 shadow-[0_20px_44px_-24px_rgba(20,20,40,0.5)] ${
-        compact ? "items-center gap-4 rounded-[18px] px-5" : "flex-col justify-between rounded-[22px] p-5"
+        compact ? "items-center gap-3 rounded-[18px] px-4" : "flex-col justify-between rounded-[22px] p-5"
       }`}
       style={rectStyle(p)}
     >
-      <span className={`flex shrink-0 items-center justify-center rounded-full bg-white/10 ${compact ? "size-[48px]" : "size-[52px]"}`}>
-        <Lock size={compact ? 20 : 26} />
+      <span className={`flex shrink-0 items-center justify-center rounded-full bg-white/10 ${compact ? "size-[42px]" : "size-[52px]"}`}>
+        <Lock size={compact ? 18 : 26} />
       </span>
       <div>
-        <div className={`font-semibold tracking-[-0.03em] ${compact ? "text-[22px]" : "text-[28px]"}`}>Production</div>
+        <div className={`font-semibold tracking-[-0.03em] ${compact ? "text-[20px]" : "text-[28px]"}`}>Production</div>
         <div className={`mt-1 leading-snug text-white/60 ${compact ? "text-[12.5px]" : "text-[13px]"}`}>
           Locked until people decide
         </div>
@@ -340,7 +351,7 @@ function Token({ layout }: { layout: StoryLayout }) {
   const p = layout.rail[0];
   return (
     <div data-token className="absolute top-0 left-0 opacity-0" style={{ transform: `translate(${p.x}px, ${p.y}px)` }}>
-      {layout.key === "desktop" ? (
+      {!layout.compact ? (
         <span className="absolute top-0 left-0 flex h-[28px] -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 rounded-full bg-lane px-3 font-mono text-[12px] font-semibold whitespace-nowrap text-white shadow-[0_0_0_5px_rgba(224,49,43,0.16)]">
           <span className="size-1.5 rounded-full bg-white" />
           {RELEASE.version}
@@ -377,7 +388,7 @@ const DECISIONS = [
 ];
 
 function Approvals({ layout }: { layout: StoryLayout }) {
-  const compact = layout.key === "mobile";
+  const { compact } = layout;
   return (
     <div
       data-approvals

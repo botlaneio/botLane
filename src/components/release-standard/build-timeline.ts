@@ -190,7 +190,7 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
       top: [big.top, bar.top],
       width: [big.width, bar.width],
       height: [big.height, bar.height],
-      borderRadius: ["18px", l.key === "desktop" ? "16px" : "14px"],
+      borderRadius: ["18px", l.compact ? "14px" : "16px"],
       ease: "inOutCubic",
       duration: 650,
     },
