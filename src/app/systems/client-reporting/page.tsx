@@ -1,15 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Layers, ArrowRight, CheckCircle2, Clock, Sparkles, ChevronDown, TrendingUp, UserCheck, Palette, CalendarClock } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SystemControls, SystemPricing, SystemTools } from "@/components/systems/system-extras";
 import { ReportingStory } from "@/components/client-reporting/reporting-story";
+import { DemoFunnelDialog } from "@/modules/demo-funnel/funnel-dialog";
+import { clientReportingDemo } from "@/systems-demo/client-reporting/config";
 
 export default function ClientReportingPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
+  // Demo booking popup (in progress): opens on #book-demo. The CTAs still go to /demo until launch.
+  const [demoOpen, setDemoOpen] = useState(false);
+  useEffect(() => {
+    const sync = () => setDemoOpen(window.location.hash === "#book-demo");
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+  const closeDemo = (open: boolean) => {
+    setDemoOpen(open);
+    if (!open && window.location.hash === "#book-demo") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  };
 
   const toggleFaq = (idx: number) => {
     setActiveFaq(activeFaq === idx ? null : idx);
@@ -180,6 +196,7 @@ export default function ClientReportingPage() {
 
       </main>
       <SiteFooter />
+      <DemoFunnelDialog config={clientReportingDemo} open={demoOpen} onOpenChange={closeDemo} />
     </>
   );
 }
