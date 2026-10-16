@@ -163,10 +163,10 @@ html {
  * the caption body, so the canvas keeps enough height to stay legible. Unlayered, so it wins.
  */
 @media (orientation: portrait) and (max-width: 47.9375rem) and (max-height: 40rem) {
-  .release-story .story-captions {
+  :is(.release-story, .home-story) .story-captions {
     height: 5.75rem;
   }
-  .release-story .story-caption-text {
+  :is(.release-story, .home-story) .story-caption-text {
     display: none;
   }
 }
@@ -176,38 +176,38 @@ html {
  * canvas (body text included), so the wide, short canvas gets the full height. Unlayered, so it wins.
  */
 @media (orientation: landscape) and (max-height: 32rem) {
-  .release-story .story-stage {
+  :is(.release-story, .home-story) .story-stage {
     flex-direction: row;
     gap: 1.25rem;
   }
-  .release-story .story-caption-col {
+  :is(.release-story, .home-story) .story-caption-col {
     display: flex;
     width: 13rem;
     flex-direction: column;
     justify-content: center;
   }
-  .release-story .story-captions {
+  :is(.release-story, .home-story) .story-captions {
     height: 12.5rem;
   }
-  .release-story .story-caption-text {
+  :is(.release-story, .home-story) .story-caption-text {
     display: block;
     font-size: 0.8125rem;
   }
-  .release-story .story-caption-col h2 {
+  :is(.release-story, .home-story) .story-caption-col h2 {
     font-size: 1.125rem;
   }
-  .release-story .story-canvas {
+  :is(.release-story, .home-story) .story-canvas {
     margin-top: 0;
   }
 }
 @media (orientation: landscape) and (max-height: 32rem) and (max-width: 47.9375rem) {
-  .release-story .story-caption-col {
+  :is(.release-story, .home-story) .story-caption-col {
     width: 10rem;
   }
-  .release-story .story-caption-col h2 {
+  :is(.release-story, .home-story) .story-caption-col h2 {
     font-size: 1rem;
   }
-  .release-story .story-caption-text {
+  :is(.release-story, .home-story) .story-caption-text {
     font-size: 0.75rem;
   }
 }

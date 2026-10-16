@@ -1,7 +1,5 @@
 import { Hero } from "@/components/hero";
-import { AssembleController } from "@/components/assemble/assemble-controller";
-import { AssembleScene } from "@/components/assemble/assemble-scene";
-import "@/components/assemble/assemble.css";
+import { HomeStory } from "@/components/home-story/home-story";
 import { ThreeSystems } from "@/components/three-systems";
 import { ControlSection } from "@/components/home/control-section";
 import { ReleaseStandardSection } from "@/components/home/release-standard-section";
@@ -22,10 +20,8 @@ export default function Home() {
         {/* 1. Hero: "More clients. Less busywork." */}
         <Hero />
 
-        {/* 2. Scroll board: funnel · line · loop */}
-        <AssembleController>
-          <AssembleScene />
-        </AssembleController>
+        {/* 2. Scroll story: the three systems zigzag down the page (funnel · line · loop) */}
+        <HomeStory />
 
         {/* 3. Three systems: Client reporting · Lead follow-up · Invoice follow-up */}
         <ThreeSystems />
