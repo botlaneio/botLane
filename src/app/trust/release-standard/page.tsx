@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ChevronDown, FileCheck2, Info, ShieldCheck, UserCheck } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { ReleaseStory } from "@/components/release-standard/release-story";
 import { GATE_OUTCOMES, RELEASE_PHASES } from "@/components/trust/release-gates";
 
 export const metadata: Metadata = {
@@ -79,82 +80,82 @@ export default function ReleaseStandardPage() {
           </div>
         </section>
 
-        {/* Phases and gates */}
-        {RELEASE_PHASES.map((phase) => (
-          <section
-            key={phase.name}
-            aria-labelledby={`phase-${phase.numeral}`}
-            className="mx-auto max-w-[75rem] border-t border-line px-6 py-14 sm:py-16"
-          >
-            <div className="grid gap-8 lg:grid-cols-[16rem_1fr]">
-              <div>
-                <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">
-                  Phase {phase.numeral}
-                </div>
-                <h2
-                  id={`phase-${phase.numeral}`}
-                  className="mt-2 text-[clamp(1.75rem,3.4vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink"
-                >
-                  {phase.name}
-                </h2>
-                <p className="mt-2 text-sm text-muted">{phase.summary}</p>
-              </div>
+        {/* The standard, walked through as a scroll story */}
+        <ReleaseStory />
 
-              <div className="space-y-3">
-                {phase.gates.map((gate) => (
-                  <details
-                    key={gate.id}
-                    id={gate.id}
-                    className="group rounded-[1rem] border border-line bg-white transition-[border-color,box-shadow] open:border-lane/25 open:shadow-[0_0.625rem_1.5rem_rgba(20,20,40,0.06)]"
-                  >
-                    <summary className="flex cursor-pointer list-none items-start gap-4 p-5 [&::-webkit-details-marker]:hidden">
-                      <span className="mt-0.5 font-mono text-sm font-semibold text-lane">{gate.number}</span>
-                      <span className="flex-1">
-                        <span className="block text-base font-semibold tracking-[-0.01em] text-ink">{gate.title}</span>
-                        <span className="mt-1 block text-sm leading-relaxed text-muted">{gate.purpose}</span>
-                      </span>
-                      <ChevronDown
-                        size={18}
-                        aria-hidden
-                        className="mt-0.5 shrink-0 text-faint transition-transform group-open:rotate-180"
-                      />
-                    </summary>
-
-                    <div className="grid gap-5 border-t border-line/70 px-5 pt-4 pb-5 sm:grid-cols-2 sm:pl-[3.25rem]">
-                      <div>
-                        <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-ink">
-                          Evidence expected
-                        </div>
-                        <ul className="mt-2.5 space-y-1.5">
-                          {gate.evidence.map((item) => (
-                            <li key={item} className="flex items-start gap-2 text-sm text-ink-2">
-                              <span className="mt-2 size-1 shrink-0 rounded-full bg-ink-2" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="space-y-4">
-                        <div>
-                          <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane">
-                            Rejected if
-                          </div>
-                          <p className="mt-2.5 text-sm leading-relaxed text-ink-2">{gate.rejectIf}</p>
-                        </div>
-                        {gate.platformNote && (
-                          <div className="rounded-[0.75rem] border border-line bg-surface/60 p-3.5 text-xs leading-relaxed text-muted">
-                            <span className="font-semibold text-ink">Platform note: </span>
-                            {gate.platformNote}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </details>
-                ))}
-              </div>
+        {/* Full gate reference: the story shows the gates; this keeps the reject rules and platform notes */}
+        <section aria-labelledby="gate-reference" className="mx-auto max-w-[75rem] border-t border-line px-6 py-14 sm:py-16">
+          <div className="grid gap-8 lg:grid-cols-[16rem_1fr]">
+            <div>
+              <div className="font-mono text-xs font-semibold uppercase tracking-wider text-lane">Reference</div>
+              <h2
+                id="gate-reference"
+                className="mt-2 text-[clamp(1.75rem,3.4vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink"
+              >
+                Full gate reference
+              </h2>
+              <p className="mt-2 text-sm text-muted">
+                Open any gate for the evidence it expects and what gets a release rejected.
+              </p>
             </div>
-          </section>
-        ))}
+
+            <div className="space-y-6">
+              {RELEASE_PHASES.map((phase) => (
+                <div key={phase.name}>
+                  <div className="mb-2 font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-faint">
+                    Phase {phase.numeral} · <span className="text-ink-2">{phase.name}</span>
+                  </div>
+                  <div className="divide-y divide-line overflow-hidden rounded-[1rem] border border-line bg-white">
+                    {phase.gates.map((gate) => (
+                      <details key={gate.id} id={gate.id} className="group">
+                        <summary className="flex cursor-pointer list-none items-center gap-4 px-5 py-3.5 [&::-webkit-details-marker]:hidden">
+                          <span className="font-mono text-sm font-semibold text-lane">{gate.number}</span>
+                          <span className="flex-1 text-[0.9375rem] font-semibold tracking-[-0.01em] text-ink">{gate.title}</span>
+                          <ChevronDown
+                            size={18}
+                            aria-hidden
+                            className="shrink-0 text-faint transition-transform group-open:rotate-180"
+                          />
+                        </summary>
+
+                        <div className="grid gap-5 px-5 pt-1 pb-5 sm:grid-cols-2 sm:pl-[3.25rem]">
+                          <p className="text-sm leading-relaxed text-muted sm:col-span-2">{gate.purpose}</p>
+                          <div>
+                            <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-ink">
+                              Evidence expected
+                            </div>
+                            <ul className="mt-2.5 space-y-1.5">
+                              {gate.evidence.map((item) => (
+                                <li key={item} className="flex items-start gap-2 text-sm text-ink-2">
+                                  <span className="mt-2 size-1 shrink-0 rounded-full bg-ink-2" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="space-y-4">
+                            <div>
+                              <div className="font-mono text-[0.6875rem] font-semibold uppercase tracking-wider text-lane">
+                                Rejected if
+                              </div>
+                              <p className="mt-2.5 text-sm leading-relaxed text-ink-2">{gate.rejectIf}</p>
+                            </div>
+                            {gate.platformNote && (
+                              <div className="rounded-[0.75rem] border border-line bg-surface/60 p-3.5 text-xs leading-relaxed text-muted">
+                                <span className="font-semibold text-ink">Platform note: </span>
+                                {gate.platformNote}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Outcomes */}
         <section className="mx-auto max-w-[75rem] border-t border-line px-6 py-16 sm:py-20">
