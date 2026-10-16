@@ -44,10 +44,10 @@ const rectStyle = (r: Rect) => ({ left: r.x, top: r.y, width: r.w, height: r.h }
 
 function Status({ compact }: { compact: boolean }) {
   const chip = `absolute inset-0 flex items-center gap-1.5 rounded-full border whitespace-nowrap font-medium ${
-    compact ? "px-2 text-[11px]" : "px-2.5 text-[12px]"
+    compact ? "px-2 text-[10.5px]" : "px-2.5 text-[12px]"
   }`;
   return (
-    <span className={`relative block shrink-0 ${compact ? "h-[22px] w-[146px]" : "h-[26px] w-[170px]"}`}>
+    <span className={`relative block shrink-0 ${compact ? "h-[22px] w-[136px]" : "h-[26px] w-[170px]"}`}>
       <span data-h-demo className={`${chip} border-line bg-surface text-ink-2`}>
         <span className="size-1.5 rounded-full bg-[#a1a1aa]" />
         Works in the demo
@@ -74,30 +74,24 @@ export function ReleaseCard({ layout }: { layout: StoryLayout }) {
     <div
       data-release
       className={`absolute flex items-center overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_18px_40px_-24px_rgba(20,20,40,0.3)] ${
-        compact ? "gap-3 px-4" : "gap-4 px-5"
+        compact ? "gap-2.5 px-3" : "gap-4 px-5"
       }`}
       style={{ ...boxStyle(layout.release.big), zIndex: 6 }}
     >
       <span
-        className={`flex shrink-0 items-center justify-center rounded-[12px] bg-ink text-white ${compact ? "size-[38px]" : "size-[42px]"}`}
+        className={`flex shrink-0 items-center justify-center rounded-[11px] bg-ink text-white ${compact ? "size-[34px]" : "size-[42px]"}`}
       >
         <GitCommitHorizontal size={compact ? 18 : 20} />
       </span>
       <div className="min-w-0 flex-1">
-        <div className={`truncate font-semibold tracking-[-0.01em] text-ink ${compact ? "text-[15px]" : "text-[17px]"}`}>
-          {RELEASE.name} <span className="font-mono text-muted">{RELEASE.version}</span>
+        <div className={`truncate font-semibold tracking-[-0.01em] text-ink ${compact ? "text-[14.5px]" : "text-[17px]"}`}>
+          {RELEASE.name} {!compact && <span className="font-mono text-muted">{RELEASE.version}</span>}
         </div>
-        <div className={`mt-0.5 flex items-center gap-2 font-mono text-faint ${compact ? "text-[10.5px]" : "text-[11.5px]"}`}>
-          <span>commit {RELEASE.commit}</span>
-          {compact && <span>· Illustrative</span>}
+        <div className={`mt-0.5 truncate font-mono text-faint ${compact ? "text-[10.5px]" : "text-[11.5px]"}`}>
+          {compact ? `${RELEASE.commit} · Illustrative` : `commit ${RELEASE.commit}`}
         </div>
-        {compact && (
-          <div className="mt-1.5">
-            <Status compact />
-          </div>
-        )}
       </div>
-      {!compact && <Status compact={false} />}
+      <Status compact={compact} />
       {!compact && (
         <span className="shrink-0 font-mono text-[10px] font-semibold tracking-wider text-faint uppercase">Illustrative</span>
       )}
@@ -151,21 +145,23 @@ function Panels({ layout }: { layout: StoryLayout }) {
         const r = layout.panels[p];
         const range = `gates ${phase.gates[0].number}–${phase.gates[2].number}`;
         return (
+          // The outer box carries the phones' pinning offset; the inner one its own entrance.
+          <div key={phase.name} data-panel-pin className="absolute" style={{ ...rectStyle(r), zIndex: 4 }}>
           <div
-            key={phase.name}
             data-panel
-            className={`absolute flex flex-col overflow-hidden border border-line bg-white opacity-0 shadow-[0_24px_60px_-34px_rgba(20,20,40,0.35)] ${
-              desktop ? "rounded-[26px] p-6" : "rounded-[18px] px-3.5 pt-3 pb-3"
+            className={`flex h-full flex-col overflow-hidden border border-line bg-white opacity-0 shadow-[0_24px_60px_-34px_rgba(20,20,40,0.35)] ${
+              desktop ? "rounded-[26px] px-6 py-5" : "rounded-[18px] px-3 pt-2.5 pb-2"
             }`}
-            style={rectStyle(r)}
           >
             {desktop ? (
               <div>
                 <div className="font-mono text-[13px] font-semibold tracking-wider text-lane uppercase">
                   Phase {phase.numeral} <span className="text-faint">· {range}</span>
                 </div>
-                <div className="mt-1.5 text-[40px] leading-none font-semibold tracking-[-0.045em] text-ink">{phase.name}</div>
-                <p className="mt-2 text-[14px] text-muted">{phase.summary}</p>
+                <div className="mt-1.5 flex items-baseline gap-3">
+                  <span className="text-[36px] leading-none font-semibold tracking-[-0.045em] text-ink">{phase.name}</span>
+                  <span className="truncate text-[14px] text-muted">{phase.summary}</span>
+                </div>
               </div>
             ) : (
               <div className="flex items-baseline gap-2">
@@ -174,17 +170,17 @@ function Panels({ layout }: { layout: StoryLayout }) {
                 <span className="ml-auto font-mono text-[10px] text-faint">{range}</span>
               </div>
             )}
-            <div className={desktop ? "mt-5 flex flex-1 flex-col justify-between" : "mt-2.5 grid flex-1 grid-cols-3 gap-2"}>
+            <div className={desktop ? "mt-4 flex flex-1 flex-col justify-between" : "mt-2 grid flex-1 grid-cols-3 gap-2"}>
               {phase.gates.map((gate) =>
                 desktop ? (
                   <div key={gate.id} className="flex items-center gap-5">
-                    <div className="h-[104px] w-[140px] shrink-0 rounded-[16px] bg-[#f8f8f9] p-1">
+                    <div className="h-[94px] w-[126px] shrink-0 rounded-[15px] bg-[#f8f8f9] p-1">
                       <GateArt id={gate.id} className="h-full w-full" />
                     </div>
                     <div className="min-w-0">
                       <div className="font-mono text-[12px] font-semibold text-lane">{gate.number}</div>
                       <div className="text-[16px] font-semibold tracking-[-0.015em] text-ink">{gate.title}</div>
-                      <p className="mt-0.5 text-[13px] leading-[1.45] text-muted">{gate.purpose}</p>
+                      <p className="mt-0.5 text-[14px] leading-[1.4] text-muted">{gate.purpose}</p>
                     </div>
                   </div>
                 ) : (
@@ -192,13 +188,14 @@ function Panels({ layout }: { layout: StoryLayout }) {
                     <div className="aspect-[4/3] w-full rounded-[11px] bg-[#f8f8f9]">
                       <GateArt id={gate.id} className="h-full w-full" />
                     </div>
-                    <div className="mt-1.5 text-[10.5px] leading-[1.25] font-semibold text-ink">
+                    <div className="mt-1 text-[11.5px] leading-[1.2] font-semibold text-ink">
                       <span className="font-mono text-lane">{gate.number}</span> {gate.title}
                     </div>
                   </div>
                 ),
               )}
             </div>
+          </div>
           </div>
         );
       })}
@@ -233,7 +230,7 @@ export function Numerals({ layout }: { layout: StoryLayout }) {
 function EvidenceRow({ label, compact }: { label: string; compact: boolean }) {
   const icon = compact ? 11 : 12;
   return (
-    <div data-row className={`flex items-center gap-2.5 ${compact ? "h-[21px] text-[12px]" : "h-[24px] text-[13px]"}`}>
+    <div data-row className={`flex items-center gap-2.5 ${compact ? "h-[21px] text-[13px]" : "h-[22px] text-[14px]"}`}>
       <span className="relative size-[18px] shrink-0">
         <span data-r-req className="absolute inset-[3px] rounded-full border-[1.5px] border-[#c7c7cc]" />
         <span data-r-att className="absolute inset-0 flex items-center justify-center rounded-full bg-ink text-white opacity-0">
@@ -256,7 +253,7 @@ function EvidenceRow({ label, compact }: { label: string; compact: boolean }) {
 function GateCards({ layout }: { layout: StoryLayout }) {
   const { card } = layout;
   const compact = layout.key === "mobile";
-  const footer = `absolute inset-0 flex items-center gap-1.5 whitespace-nowrap ${compact ? "text-[11px]" : "text-[12.5px]"}`;
+  const footer = `absolute inset-0 flex items-center gap-1.5 whitespace-nowrap ${compact ? "text-[12px]" : "text-[13.5px]"}`;
   return (
     <>
       {GATES.map((gate, i) => (
@@ -268,12 +265,12 @@ function GateCards({ layout }: { layout: StoryLayout }) {
         >
           <div
             className={`relative flex h-full flex-col overflow-hidden border border-line bg-white shadow-[0_14px_34px_-22px_rgba(20,20,40,0.32)] ${
-              compact ? "rounded-[15px] px-3.5 pt-2.5" : "rounded-[18px] px-5 pt-3.5"
+              compact ? "rounded-[15px] px-3.5 pt-2.5" : "rounded-[18px] px-5 pt-3"
             }`}
           >
             <span data-gate-bar className="absolute inset-x-0 top-0 h-[4px] origin-left bg-ink" style={{ transform: "scaleX(0)" }} />
             <div className="flex items-baseline gap-2.5">
-              <span className={`font-mono leading-none font-semibold tracking-[-0.04em] text-lane ${compact ? "text-[22px]" : "text-[28px]"}`}>
+              <span className={`font-mono leading-none font-semibold tracking-[-0.04em] text-lane ${compact ? "text-[22px]" : "text-[26px]"}`}>
                 {gate.number}
               </span>
               <span className={`truncate font-semibold tracking-[-0.015em] text-ink ${compact ? "text-[15px]" : "text-[18px]"}`}>{gate.title}</span>
@@ -286,7 +283,7 @@ function GateCards({ layout }: { layout: StoryLayout }) {
                 <EvidenceRow key={label} label={label} compact={compact} />
               ))}
             </div>
-            <div className={`relative mt-auto border-t border-line/80 ${compact ? "h-[26px]" : "h-[32px]"}`}>
+            <div className={`relative mt-auto border-t border-line/80 ${compact ? "h-[26px]" : "h-[28px]"}`}>
               <span data-f-req className={`${footer} text-faint`}>
                 <span className="size-1.5 rounded-full bg-[#c7c7cc]" />
                 Evidence required

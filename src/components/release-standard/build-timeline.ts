@@ -35,6 +35,7 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
   const parallax = $("[data-parallax]");
   const numerals = $$("[data-numeral]");
   const panels = $$("[data-panel]");
+  const pins = $$("[data-panel-pin]");
   const arts = $$<SVGSVGElement>("[data-art]");
   const gates = $$("[data-gate]");
   const ticks = $$("[data-tick]");
@@ -51,6 +52,15 @@ export function buildStory(root: HTMLElement, l: StoryLayout, A: Anime, still: b
     const dy = l.cy - cam.fy;
     strip.style.transform = `translateY(${dy}px)`;
     parallax.style.transform = `translateY(${dy * l.depth}px)`;
+    // Phones: each panel stops under the bar while its cards pass, then leaves with its block.
+    const { pinTop } = l;
+    if (pinTop === null) return;
+    pins.forEach((pin, p) => {
+      const natural = l.panels[p].y + dy;
+      const limit = l.blocks[p].bottom + dy - l.panels[p].h;
+      const offset = Math.max(0, Math.min(pinTop, limit) - natural);
+      pin.style.transform = offset ? `translateY(${offset}px)` : "";
+    });
   };
 
   /* ---------- starting state ---------- */

@@ -155,7 +155,7 @@ export function ReleaseStory() {
     <section
       ref={stageRef}
       aria-label="The 12-Gate Release Standard, step by step"
-      className={still ? "relative border-t border-line" : mobile ? "relative h-[700svh] border-t border-line" : "relative h-[980svh] border-t border-line"}
+      className={`release-story relative border-t border-line ${still ? "" : mobile ? "h-[760svh]" : "h-[980svh]"}`}
     >
       <div
         className={

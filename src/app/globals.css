@@ -158,6 +158,19 @@ html {
   }
 }
 
+/*
+ * The Release Standard story on short upright phones (iPhone SE class): keep the step titles, drop
+ * the caption body, so the canvas keeps enough height to stay legible. Unlayered, so it wins.
+ */
+@media (orientation: portrait) and (max-width: 47.9375rem) and (max-height: 40rem) {
+  .release-story .story-captions {
+    height: 5.75rem;
+  }
+  .release-story .story-caption-text {
+    display: none;
+  }
+}
+
 body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
