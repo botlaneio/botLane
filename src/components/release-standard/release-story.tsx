@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { DESKTOP, MOBILE } from "./layout";
-import { Approvals, ReleaseCard, Strip } from "./story-parts";
+import { Numerals, ReleaseCard, Strip } from "./story-parts";
 
 /**
  * The 12-Gate Release Standard, walked through. A tall section with a sticky stage; scrolling
@@ -202,9 +202,9 @@ export function ReleaseStory() {
             className="absolute top-1/2 left-1/2 overflow-hidden"
             style={{ width: layout.W, height: layout.H, transform: "translate(-50%, -50%)", transformOrigin: "50% 50%" }}
           >
+            <Numerals layout={layout} />
             <Strip layout={layout} />
             <ReleaseCard layout={layout} />
-            <Approvals layout={layout} />
           </div>
         </div>
       </div>

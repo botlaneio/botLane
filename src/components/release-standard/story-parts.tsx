@@ -1,11 +1,13 @@
 import { CircleAlert, GitCommitHorizontal, Lock, Paperclip, UserCheck } from "lucide-react";
 import { RELEASE_PHASES } from "@/components/trust/release-gates";
-import { railPath, type Box, type StoryLayout } from "./layout";
+import { GateArt } from "./gate-art";
+import { railPath, type Box, type Rect, type StoryLayout } from "./layout";
 
 /**
- * The pieces of the Release Standard story. Every element is on screen as one element from
- * start to finish: the release card shrinks into a bar, the gate cards stay put on the strip
- * while the camera moves, and each status is a set of stacked states the timeline cross-fades.
+ * The pieces of the Release Standard story. Every element is one element from start to finish:
+ * the release card shrinks into a bar, each phase's illustration panel and gate cards rise into
+ * place on the strip and stay there while the camera slides down, and each status is a set of
+ * stacked states the timeline cross-fades.
  * Nothing here is a record of a real release: the canvas is labelled illustrative, evidence is
  * only ever "attached for review", and both approvals are left waiting for a person.
  */
@@ -36,6 +38,7 @@ export const BLOCKED_GATE = 7;
 export const BLOCKED_ROW = 1;
 
 const boxStyle = (b: Box) => ({ left: b.x - b.w / 2, top: b.y - b.h / 2, width: b.w, height: b.h });
+const rectStyle = (r: Rect) => ({ left: r.x, top: r.y, width: r.w, height: r.h });
 
 /* ---------- release card / bar ---------- */
 
@@ -108,6 +111,7 @@ function Rail({ layout }: { layout: StoryLayout }) {
   const d = railPath(layout.rail);
   const { barrier } = layout;
   const desktop = layout.key === "desktop";
+  const w = desktop ? 3 : 2.5;
   return (
     <svg
       className="absolute top-0 left-0 overflow-visible"
@@ -116,14 +120,20 @@ function Rail({ layout }: { layout: StoryLayout }) {
       viewBox={`0 0 ${layout.strip.w} ${layout.strip.h}`}
       aria-hidden
     >
-      <path data-rail-base d={d} fill="none" stroke="#dcdce2" strokeWidth={desktop ? 2.5 : 2} strokeLinecap="round" strokeLinejoin="round" />
-      <path data-rail-done d={d} fill="none" stroke="#e0312b" strokeWidth={desktop ? 3 : 2.5} strokeLinecap="round" strokeLinejoin="round" />
+      <path data-rail-base d={d} fill="none" stroke="#dcdce2" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" />
+      <path data-rail-done d={d} fill="none" stroke="#e0312b" strokeWidth={w + 0.5} strokeLinecap="round" strokeLinejoin="round" />
+      {layout.ticks.map(([a, b], i) => (
+        <g key={i}>
+          <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#dcdce2" strokeWidth={w} strokeLinecap="round" strokeDasharray="1 6" />
+          <line data-tick x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="#e0312b" strokeWidth={w} strokeLinecap="round" opacity={0} />
+        </g>
+      ))}
       <rect
         data-barrier
-        x={desktop ? barrier.x - 4 : barrier.x - 20}
-        y={desktop ? barrier.y - 24 : barrier.y - 4}
-        width={desktop ? 8 : 40}
-        height={desktop ? 48 : 8}
+        x={barrier.x - (desktop ? 26 : 22)}
+        y={barrier.y - 4}
+        width={desktop ? 52 : 44}
+        height={8}
         rx={4}
         fill="#e0312b"
         style={{ transformBox: "fill-box", transformOrigin: "50% 50%" }}
@@ -132,28 +142,98 @@ function Rail({ layout }: { layout: StoryLayout }) {
   );
 }
 
-function PhaseHeadings({ layout }: { layout: StoryLayout }) {
+/** One panel per phase: its heading and a drawing for each of its three gates. */
+function Panels({ layout }: { layout: StoryLayout }) {
   const desktop = layout.key === "desktop";
   return (
     <>
-      {RELEASE_PHASES.map((phase, i) => (
-        <div key={phase.name} data-phase className="absolute opacity-0" style={{ left: layout.phases[i].x, top: layout.phases[i].y }}>
-          <div className={`font-mono font-semibold tracking-wider text-lane uppercase ${desktop ? "text-[16px]" : "text-[12px]"}`}>
-            Phase {phase.numeral}
+      {RELEASE_PHASES.map((phase, p) => {
+        const r = layout.panels[p];
+        const range = `gates ${phase.gates[0].number}–${phase.gates[2].number}`;
+        return (
+          <div
+            key={phase.name}
+            data-panel
+            className={`absolute flex flex-col overflow-hidden border border-line bg-white opacity-0 shadow-[0_24px_60px_-34px_rgba(20,20,40,0.35)] ${
+              desktop ? "rounded-[26px] p-6" : "rounded-[18px] px-3.5 pt-3 pb-3"
+            }`}
+            style={rectStyle(r)}
+          >
+            {desktop ? (
+              <div>
+                <div className="font-mono text-[13px] font-semibold tracking-wider text-lane uppercase">
+                  Phase {phase.numeral} <span className="text-faint">· {range}</span>
+                </div>
+                <div className="mt-1.5 text-[40px] leading-none font-semibold tracking-[-0.045em] text-ink">{phase.name}</div>
+                <p className="mt-2 text-[14px] text-muted">{phase.summary}</p>
+              </div>
+            ) : (
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-[10.5px] font-semibold tracking-wider text-lane uppercase">Phase {phase.numeral}</span>
+                <span className="text-[19px] leading-none font-semibold tracking-[-0.035em] text-ink">{phase.name}</span>
+                <span className="ml-auto font-mono text-[10px] text-faint">{range}</span>
+              </div>
+            )}
+            <div className={desktop ? "mt-5 flex flex-1 flex-col justify-between" : "mt-2.5 grid flex-1 grid-cols-3 gap-2"}>
+              {phase.gates.map((gate) =>
+                desktop ? (
+                  <div key={gate.id} className="flex items-center gap-5">
+                    <div className="h-[104px] w-[140px] shrink-0 rounded-[16px] bg-[#f8f8f9] p-1">
+                      <GateArt id={gate.id} className="h-full w-full" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-mono text-[12px] font-semibold text-lane">{gate.number}</div>
+                      <div className="text-[16px] font-semibold tracking-[-0.015em] text-ink">{gate.title}</div>
+                      <p className="mt-0.5 text-[13px] leading-[1.45] text-muted">{gate.purpose}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={gate.id} className="flex min-w-0 flex-col">
+                    <div className="aspect-[4/3] w-full rounded-[11px] bg-[#f8f8f9]">
+                      <GateArt id={gate.id} className="h-full w-full" />
+                    </div>
+                    <div className="mt-1.5 text-[10.5px] leading-[1.25] font-semibold text-ink">
+                      <span className="font-mono text-lane">{gate.number}</span> {gate.title}
+                    </div>
+                  </div>
+                ),
+              )}
+            </div>
           </div>
-          <div className={`font-semibold leading-none tracking-[-0.04em] text-ink ${desktop ? "mt-1 text-[46px]" : "mt-0.5 text-[30px]"}`}>
-            {phase.name}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </>
+  );
+}
+
+/** Giant outlined phase numerals on a slower layer behind the lane. */
+export function Numerals({ layout }: { layout: StoryLayout }) {
+  return (
+    <div data-parallax className="absolute top-0 left-0" style={{ width: layout.W, height: 0, zIndex: 0 }} aria-hidden>
+      {RELEASE_PHASES.map((phase, i) => (
+        <span
+          key={phase.name}
+          data-numeral
+          className="absolute font-semibold leading-none tracking-[-0.06em] whitespace-nowrap text-transparent opacity-0 select-none"
+          style={{
+            left: layout.numerals[i].x,
+            top: layout.numerals[i].y,
+            fontSize: layout.numeralSize,
+            transform: "translate(-50%, -50%)",
+            WebkitTextStroke: "1.5px #e4e4e9",
+          }}
+        >
+          {phase.numeral}
+        </span>
+      ))}
+    </div>
   );
 }
 
 function EvidenceRow({ label, compact }: { label: string; compact: boolean }) {
   const icon = compact ? 11 : 12;
   return (
-    <div data-row className={`flex items-center gap-2.5 ${compact ? "h-[25px] text-[12.5px]" : "h-[32px] text-[13px]"}`}>
+    <div data-row className={`flex items-center gap-2.5 ${compact ? "h-[21px] text-[12px]" : "h-[24px] text-[13px]"}`}>
       <span className="relative size-[18px] shrink-0">
         <span data-r-req className="absolute inset-[3px] rounded-full border-[1.5px] border-[#c7c7cc]" />
         <span data-r-att className="absolute inset-0 flex items-center justify-center rounded-full bg-ink text-white opacity-0">
@@ -176,7 +256,7 @@ function EvidenceRow({ label, compact }: { label: string; compact: boolean }) {
 function GateCards({ layout }: { layout: StoryLayout }) {
   const { card } = layout;
   const compact = layout.key === "mobile";
-  const footer = `absolute inset-0 flex items-center gap-1.5 whitespace-nowrap ${compact ? "text-[11.5px]" : "text-[12px]"}`;
+  const footer = `absolute inset-0 flex items-center gap-1.5 whitespace-nowrap ${compact ? "text-[11px]" : "text-[12.5px]"}`;
   return (
     <>
       {GATES.map((gate, i) => (
@@ -188,34 +268,25 @@ function GateCards({ layout }: { layout: StoryLayout }) {
         >
           <div
             className={`relative flex h-full flex-col overflow-hidden border border-line bg-white shadow-[0_14px_34px_-22px_rgba(20,20,40,0.32)] ${
-              compact ? "rounded-[16px] px-4 pt-3" : "rounded-[20px] px-5 pt-5"
+              compact ? "rounded-[15px] px-3.5 pt-2.5" : "rounded-[18px] px-5 pt-3.5"
             }`}
           >
-            <span data-gate-bar className="absolute inset-x-0 top-0 h-[5px] origin-left bg-ink" style={{ transform: "scaleX(0)" }} />
-            {compact ? (
-              <div className="flex items-baseline gap-2.5">
-                <span className="font-mono text-[28px] leading-none font-semibold tracking-[-0.04em] text-lane">{gate.number}</span>
-                <span className="truncate text-[16px] font-semibold tracking-[-0.01em] text-ink">{gate.title}</span>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-start justify-between">
-                  <span className="font-mono text-[54px] leading-none font-semibold tracking-[-0.05em] text-lane">{gate.number}</span>
-                  <span className="font-mono text-[11px] font-semibold tracking-wider text-faint uppercase">Gate</span>
-                </div>
-                <div className="mt-4 text-[20px] font-semibold tracking-[-0.02em] text-ink">{gate.title}</div>
-                <p className="mt-1.5 h-[58px] overflow-hidden text-[13px] leading-[1.48] text-muted">{gate.purpose}</p>
-              </>
-            )}
-            <div className={compact ? "mt-1.5" : "mt-3 border-t border-line/80 pt-2.5"}>
+            <span data-gate-bar className="absolute inset-x-0 top-0 h-[4px] origin-left bg-ink" style={{ transform: "scaleX(0)" }} />
+            <div className="flex items-baseline gap-2.5">
+              <span className={`font-mono leading-none font-semibold tracking-[-0.04em] text-lane ${compact ? "text-[22px]" : "text-[28px]"}`}>
+                {gate.number}
+              </span>
+              <span className={`truncate font-semibold tracking-[-0.015em] text-ink ${compact ? "text-[15px]" : "text-[18px]"}`}>{gate.title}</span>
               {!compact && (
-                <div className="mb-0.5 font-mono text-[10px] font-semibold tracking-wider text-faint uppercase">Evidence</div>
+                <span className="ml-auto font-mono text-[10px] font-semibold tracking-wider text-faint uppercase">Evidence</span>
               )}
+            </div>
+            <div className={compact ? "mt-1" : "mt-1.5"}>
               {gate.short.map((label) => (
                 <EvidenceRow key={label} label={label} compact={compact} />
               ))}
             </div>
-            <div className={`relative mt-auto border-t border-line/80 ${compact ? "h-[30px]" : "h-[44px]"}`}>
+            <div className={`relative mt-auto border-t border-line/80 ${compact ? "h-[26px]" : "h-[32px]"}`}>
               <span data-f-req className={`${footer} text-faint`}>
                 <span className="size-1.5 rounded-full bg-[#c7c7cc]" />
                 Evidence required
@@ -231,7 +302,7 @@ function GateCards({ layout }: { layout: StoryLayout }) {
             </div>
             <span
               data-gate-ring
-              className={`pointer-events-none absolute inset-0 border-2 border-lane opacity-0 ${compact ? "rounded-[16px]" : "rounded-[20px]"}`}
+              className={`pointer-events-none absolute inset-0 border-2 border-lane opacity-0 ${compact ? "rounded-[15px]" : "rounded-[18px]"}`}
             />
           </div>
         </div>
@@ -247,15 +318,15 @@ function Production({ layout }: { layout: StoryLayout }) {
     <div
       data-prod
       className={`absolute flex overflow-hidden bg-ink text-white opacity-0 shadow-[0_20px_44px_-24px_rgba(20,20,40,0.5)] ${
-        compact ? "items-center gap-4 rounded-[18px] px-5" : "flex-col justify-between rounded-[22px] p-6"
+        compact ? "items-center gap-4 rounded-[18px] px-5" : "flex-col justify-between rounded-[22px] p-5"
       }`}
-      style={{ left: p.x, top: p.y, width: p.w, height: p.h }}
+      style={rectStyle(p)}
     >
-      <span className={`flex shrink-0 items-center justify-center rounded-full bg-white/10 ${compact ? "size-[48px]" : "size-[64px]"}`}>
+      <span className={`flex shrink-0 items-center justify-center rounded-full bg-white/10 ${compact ? "size-[48px]" : "size-[52px]"}`}>
         <Lock size={compact ? 20 : 26} />
       </span>
       <div>
-        <div className={`font-semibold tracking-[-0.03em] ${compact ? "text-[22px]" : "text-[30px]"}`}>Production</div>
+        <div className={`font-semibold tracking-[-0.03em] ${compact ? "text-[22px]" : "text-[28px]"}`}>Production</div>
         <div className={`mt-1 leading-snug text-white/60 ${compact ? "text-[12.5px]" : "text-[13px]"}`}>
           Locked until people decide
         </div>
@@ -289,12 +360,13 @@ export function Strip({ layout }: { layout: StoryLayout }) {
     <div
       data-strip
       className="absolute top-0 left-0"
-      style={{ width: layout.strip.w, height: layout.strip.h, transformOrigin: "0 0", zIndex: 2 }}
+      style={{ width: layout.strip.w, height: layout.strip.h, zIndex: 2 }}
     >
       <Rail layout={layout} />
-      <PhaseHeadings layout={layout} />
+      <Panels layout={layout} />
       <GateCards layout={layout} />
       <Production layout={layout} />
+      <Approvals layout={layout} />
       <Token layout={layout} />
     </div>
   );
@@ -307,7 +379,7 @@ const DECISIONS = [
   { title: "Deployment authorization", question: "Can it go to production now?" },
 ];
 
-export function Approvals({ layout }: { layout: StoryLayout }) {
+function Approvals({ layout }: { layout: StoryLayout }) {
   const compact = layout.key === "mobile";
   return (
     <div
@@ -315,7 +387,7 @@ export function Approvals({ layout }: { layout: StoryLayout }) {
       className={`absolute flex flex-col rounded-[22px] border border-line bg-[#fbfbfa] opacity-0 shadow-[0_24px_60px_-28px_rgba(20,20,40,0.28)] ${
         compact ? "p-4" : "p-5"
       }`}
-      style={{ ...boxStyle(layout.approvals), zIndex: 5 }}
+      style={rectStyle(layout.approvals)}
     >
       <div className="flex items-center justify-between gap-3">
         <span className={`flex items-center gap-2 font-semibold text-ink ${compact ? "text-[14px]" : "text-[15px]"}`}>

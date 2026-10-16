@@ -1,132 +1,103 @@
 /**
  * Coordinates for the Release Standard story, in canvas units. The canvas is a fixed-size box
- * scaled to fit the sticky viewport. Inside it, the twelve gates sit on one long "strip" with
- * its own coordinates; a camera (scale plus the strip point held at a canvas point) moves over
- * that strip, so the story can zoom from all twelve gates down to one phase and back out.
+ * scaled to fit the sticky viewport. Inside it, the four phases sit on one tall "strip" as
+ * blocks that zigzag down the page: each block is an illustration panel of its three gates on
+ * one side and the three gate cards on the other, and the sides swap from phase to phase. The
+ * lane the release travels runs down the outer edge beside the cards and crosses the page
+ * between phases. As the visitor scrolls down, a camera slides the strip up so the release
+ * travels downward with them; a slower layer of phase numerals behind it gives the depth.
  */
 
 export type Pt = { x: number; y: number };
 /** A box by its centre. */
 export type Box = Pt & { w: number; h: number };
-/** Strip point (fx, fy) shown at canvas point (cx, cy), at scale s. */
-export type Cam = { fx: number; fy: number; cx: number; cy: number; s: number };
+/** A box by its top-left corner. */
+export type Rect = Pt & { w: number; h: number };
 
 export type StoryLayout = {
   key: "desktop" | "mobile";
   W: number;
   H: number;
   strip: { w: number; h: number };
-  /** Gate cards: size, and each card's top-left corner on the strip. */
+  /** Gate cards: size, each card's top-left corner on the strip, and which side of the page it sits on. */
   card: { w: number; h: number };
   cards: Pt[];
-  /** Phase headings: top-left corner on the strip. */
-  phases: Pt[];
-  /** The production endpoint, top-left corner on the strip. */
-  production: Pt & { w: number; h: number };
-  /** The rail the release travels along, as waypoints; gateStop[i] is where it halts at gate i. */
+  sides: ("left" | "right")[];
+  /** One illustration panel per phase. */
+  panels: Rect[];
+  /** The production endpoint and, below it, the two human decisions. */
+  production: Rect;
+  approvals: Rect;
+  /** The lane, sampled as a polyline; gateStop[i] is where the release halts at gate i. */
   rail: Pt[];
   gateStop: number[];
   prodStop: number;
-  /** Where the blocking bar drops across the rail, right after gate 08. */
+  /** Short connectors from the lane to each card's edge. */
+  ticks: [Pt, Pt][];
+  /** Where the blocking bar drops across the lane, just after gate 08. */
   barrier: Pt;
   /** The release card: large and alone in scene 01, then a bar across the top for the rest. */
   release: { big: Box; bar: Box };
-  /** Scene 07: the two human decisions, in canvas units. */
-  approvals: Box;
-  cams: { overview: Cam; phases: Cam[]; final: Cam };
+  /** Camera: the strip point held at canvas line `cy`. One stop per gate, plus start and finish. */
+  cy: number;
+  camStart: number;
+  camGate: number[];
+  camFinal: number;
+  /** Parallax layer: giant phase numerals moving at `depth` × the strip's speed. */
+  depth: number;
+  numerals: Pt[];
+  numeralSize: number;
 };
 
-/* ---------- desktop: twelve gates in one row, three per phase ---------- */
-const D_CARD = { w: 330, h: 380 };
-const D_PHASE_X = [0, 1200, 2400, 3600];
-const D_RAIL_Y = 100;
-const D_CARDS = D_PHASE_X.flatMap((px) => [0, 1, 2].map((j) => ({ x: px + j * 360, y: 130 })));
-const D_PROD = { x: 4800, y: 130, w: 240, h: 380 };
-const D_STRIP = { w: 5040, h: 510 };
-const D_FIT = 1140 / D_STRIP.w;
+/* ---------- lane drawing: orthogonal legs with rounded corners, sampled to points ---------- */
 
-export const DESKTOP: StoryLayout = {
-  key: "desktop",
-  W: 1200,
-  H: 660,
-  strip: D_STRIP,
-  card: D_CARD,
-  cards: D_CARDS,
-  phases: D_PHASE_X.map((x) => ({ x, y: 0 })),
-  production: D_PROD,
-  rail: [
-    { x: -60, y: D_RAIL_Y },
-    ...D_CARDS.map((c) => ({ x: c.x + D_CARD.w / 2, y: D_RAIL_Y })),
-    { x: D_PROD.x + D_PROD.w / 2, y: D_RAIL_Y },
-  ],
-  gateStop: D_CARDS.map((_, i) => i + 1),
-  prodStop: D_CARDS.length + 1,
-  barrier: { x: D_CARDS[7].x + D_CARD.w + 15, y: D_RAIL_Y },
-  release: {
-    big: { x: 600, y: 310, w: 560, h: 132 },
-    bar: { x: 600, y: 32, w: 1200, h: 64 },
-  },
-  approvals: { x: 600, y: 452, w: 640, h: 248 },
-  cams: {
-    overview: { fx: D_STRIP.w / 2, fy: D_STRIP.h / 2, cx: 600, cy: 372, s: D_FIT },
-    phases: D_PHASE_X.map((px) => ({ fx: px + 525, fy: D_STRIP.h / 2, cx: 600, cy: 372, s: 1 })),
-    final: { fx: D_STRIP.w / 2, fy: D_STRIP.h / 2, cx: 600, cy: 196, s: D_FIT },
-  },
-};
-
-/* ---------- phones and upright tablets: the four phases as a 2 × 2 grid, three gates stacked in each ---------- */
-const M_CARD = { w: 332, h: 168 };
-const M_BLOCKS: Pt[] = [
-  { x: 0, y: 0 },
-  { x: 420, y: 0 },
-  { x: 0, y: 680 },
-  { x: 420, y: 680 },
-];
-const M_RAIL_X = 10;
-const M_CARD_Y = (j: number) => 70 + j * 180;
-const M_CARDS = M_BLOCKS.flatMap((b) => [0, 1, 2].map((j) => ({ x: b.x + 28, y: b.y + M_CARD_Y(j) })));
-const M_PROD = { x: 210, y: 1380, w: 360, h: 130 };
-const M_STRIP = { w: 780, h: 1510 };
-
-// Each block: in at the top of its rail, a stop beside every gate, out at the bottom.
-const M_RAIL: Pt[] = [];
-const M_STOPS: number[] = [];
-for (const b of M_BLOCKS) {
-  M_RAIL.push({ x: b.x + M_RAIL_X, y: b.y + 56 });
-  for (let j = 0; j < 3; j++) {
-    M_STOPS.push(M_RAIL.length);
-    M_RAIL.push({ x: b.x + M_RAIL_X, y: b.y + M_CARD_Y(j) + M_CARD.h / 2 });
+function sampleLane(legs: Pt[][], radius: number) {
+  const pts: Pt[] = [];
+  const stops: number[] = [];
+  const push = (p: Pt) => {
+    const last = pts[pts.length - 1];
+    if (!last || Math.hypot(last.x - p.x, last.y - p.y) > 0.01) pts.push(p);
+  };
+  for (const leg of legs) {
+    push(leg[0]);
+    for (let i = 1; i < leg.length - 1; i++) {
+      const [a, b, c] = [leg[i - 1], leg[i], leg[i + 1]];
+      const lin = Math.hypot(b.x - a.x, b.y - a.y);
+      const lout = Math.hypot(c.x - b.x, c.y - b.y);
+      const r = Math.min(radius, lin / 2, lout / 2);
+      if (r < 0.5) {
+        push(b);
+        continue;
+      }
+      const p0 = { x: b.x - ((b.x - a.x) / lin) * r, y: b.y - ((b.y - a.y) / lin) * r };
+      const p2 = { x: b.x + ((c.x - b.x) / lout) * r, y: b.y + ((c.y - b.y) / lout) * r };
+      for (let k = 0; k <= 10; k++) {
+        const t = k / 10;
+        const u = 1 - t;
+        push({ x: u * u * p0.x + 2 * u * t * b.x + t * t * p2.x, y: u * u * p0.y + 2 * u * t * b.y + t * t * p2.y });
+      }
+    }
+    push(leg[leg.length - 1]);
+    stops.push(pts.length - 1);
   }
-  M_RAIL.push({ x: b.x + M_RAIL_X, y: b.y + 620 });
+  return { pts, stops };
 }
-M_RAIL.push({ x: M_PROD.x + M_PROD.w / 2, y: M_PROD.y - 14 });
 
-export const MOBILE: StoryLayout = {
-  key: "mobile",
-  W: 380,
-  H: 700,
-  strip: M_STRIP,
-  card: M_CARD,
-  cards: M_CARDS,
-  phases: M_BLOCKS.map((b) => ({ x: b.x + 28, y: b.y + 4 })),
-  production: M_PROD,
-  rail: M_RAIL,
-  gateStop: M_STOPS,
-  prodStop: M_RAIL.length - 1,
-  barrier: { x: M_BLOCKS[2].x + M_RAIL_X, y: M_CARDS[7].y + M_CARD.h + 6 },
-  release: {
-    big: { x: 190, y: 310, w: 350, h: 132 },
-    bar: { x: 190, y: 42, w: 380, h: 84 },
-  },
-  approvals: { x: 190, y: 552, w: 364, h: 248 },
-  cams: {
-    overview: { fx: M_STRIP.w / 2, fy: M_STRIP.h / 2, cx: 190, cy: 398, s: 0.39 },
-    phases: M_BLOCKS.map((b) => ({ fx: b.x + 182, fy: b.y + 300, cx: 190, cy: 398, s: 1 })),
-    final: { fx: M_PROD.x + M_PROD.w / 2, fy: M_PROD.y + M_PROD.h / 2, cx: 190, cy: 300, s: 0.86 },
-  },
-};
+/** Lane legs: start → gate 1 → … → gate 12 → production. A leg that changes side turns at `runs[i]`. */
+function buildLane(start: Pt, stops: Pt[], runs: number[], end: Pt, radius: number) {
+  const legs: Pt[][] = [[start, stops[0]]];
+  for (let i = 0; i < stops.length - 1; i++) {
+    const a = stops[i];
+    const b = stops[i + 1];
+    legs.push(a.x === b.x ? [a, b] : [a, { x: a.x, y: runs[i] }, { x: b.x, y: runs[i] }, b]);
+  }
+  const last = stops[stops.length - 1];
+  const runEnd = runs[stops.length - 1];
+  legs.push([last, { x: last.x, y: runEnd }, { x: end.x, y: runEnd }, end]);
+  const { pts, stops: idx } = sampleLane(legs, radius);
+  return { rail: pts, gateStop: idx.slice(0, stops.length), prodStop: idx[idx.length - 1] };
+}
 
-/** Rail length up to each waypoint, as a fraction of the whole rail. */
 export function railFractions(rail: Pt[]) {
   const cum = [0];
   for (let i = 1; i < rail.length; i++) cum.push(cum[i - 1] + Math.hypot(rail[i].x - rail[i - 1].x, rail[i].y - rail[i - 1].y));
@@ -134,4 +105,134 @@ export function railFractions(rail: Pt[]) {
   return cum.map((c) => c / total);
 }
 
-export const railPath = (rail: Pt[]) => rail.map((p, i) => `${i ? "L" : "M"}${p.x},${p.y}`).join(" ");
+export const railPath = (rail: Pt[]) => rail.map((p, i) => `${i ? "L" : "M"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+
+type Side = "left" | "right";
+type Spec = {
+  key: "desktop" | "mobile";
+  W: number;
+  H: number;
+  barH: number;
+  card: { w: number; h: number; gap: number };
+  /** Card column x, lane x and panel for each side the cards can sit on. Phase I's cards sit on the right. */
+  cardX: Record<Side, number>;
+  laneX: Record<Side, number>;
+  panel: Record<Side, { x: number; w: number }>;
+  panelH: number;
+  /** Desktop: panel beside the cards. Phones: panel above the cards, in the same column. */
+  stacked: boolean;
+  phaseGap: number;
+  radius: number;
+  /** How far the camera drifts down per gate inside a phase. */
+  drift: number;
+  production: { w: number; h: number };
+  approvals: { w: number; h: number; gap: number };
+  release: { big: Box; bar: Box };
+  numeralSize: number;
+};
+
+function build(s: Spec): StoryLayout {
+  const sideOfPhase = (p: number): Side => (p % 2 === 0 ? "right" : "left");
+  const cardsH = 3 * s.card.h + 2 * s.card.gap;
+  const blockH = s.stacked ? s.panelH + 12 + cardsH : Math.max(s.panelH, cardsH);
+  const cards: Pt[] = [];
+  const sides: Side[] = [];
+  const panels: Rect[] = [];
+  const stops: Pt[] = [];
+  const ticks: [Pt, Pt][] = [];
+  const camGate: number[] = [];
+  const runs: number[] = [];
+  for (let p = 0; p < 4; p++) {
+    const side = sideOfPhase(p);
+    const T = 40 + p * (blockH + s.phaseGap);
+    panels.push({ x: s.panel[side].x, y: s.stacked ? T : T + (blockH - s.panelH) / 2, w: s.panel[side].w, h: s.panelH });
+    const cardsTop = s.stacked ? T + s.panelH + 12 : T + (blockH - cardsH) / 2;
+    for (let j = 0; j < 3; j++) {
+      const c = { x: s.cardX[side], y: cardsTop + j * (s.card.h + s.card.gap) };
+      cards.push(c);
+      sides.push(side);
+      const cy = c.y + s.card.h / 2;
+      const lx = s.laneX[side];
+      stops.push({ x: lx, y: cy });
+      ticks.push([{ x: lx, y: cy }, { x: side === "right" ? c.x + s.card.w : c.x, y: cy }]);
+      camGate.push(T + blockH / 2 + (j - 1) * s.drift);
+      runs.push(T + blockH + s.phaseGap / 2);
+    }
+  }
+  const prodY = 40 + 4 * (blockH + s.phaseGap);
+  const production = { x: (s.W - s.production.w) / 2, y: prodY, ...s.production };
+  const approvals = { x: (s.W - s.approvals.w) / 2, y: prodY + s.production.h + s.approvals.gap, w: s.approvals.w, h: s.approvals.h };
+  const lane = buildLane({ x: stops[0].x, y: 0 }, stops, runs, { x: s.W / 2, y: prodY - 16 }, s.radius);
+  const view = (s.H + s.barH) / 2;
+  const depth = 0.5;
+  // Each numeral crosses the screen's centre line while the camera is in the gap after its phase.
+  const numerals = [0, 1, 2, 3].map((p) => ({
+    x: s.W / 2,
+    y: (1 - depth) * view + depth * (40 + p * (blockH + s.phaseGap) + blockH + s.phaseGap / 2),
+  }));
+  return {
+    key: s.key,
+    W: s.W,
+    H: s.H,
+    strip: { w: s.W, h: approvals.y + approvals.h + 80 },
+    card: { w: s.card.w, h: s.card.h },
+    cards,
+    sides,
+    panels,
+    production,
+    approvals,
+    ...lane,
+    ticks,
+    barrier: { x: stops[7].x, y: stops[7].y + s.card.h / 2 + s.card.gap / 2 },
+    release: s.release,
+    cy: view,
+    camStart: camGate[0],
+    camGate,
+    camFinal: prodY + (s.production.h + s.approvals.gap + s.approvals.h) / 2,
+    depth,
+    numerals,
+    numeralSize: s.numeralSize,
+  };
+}
+
+/* ---------- desktop: illustration panel and gate cards side by side, swapping sides each phase ---------- */
+export const DESKTOP = build({
+  key: "desktop",
+  W: 1200,
+  H: 660,
+  barH: 64,
+  card: { w: 440, h: 160, gap: 14 },
+  cardX: { right: 660, left: 100 },
+  laneX: { right: 1140, left: 60 },
+  panel: { right: { x: 100, w: 520 }, left: { x: 580, w: 520 } },
+  panelH: 508,
+  stacked: false,
+  phaseGap: 190,
+  radius: 40,
+  drift: 26,
+  production: { w: 300, h: 180 },
+  approvals: { w: 640, h: 250, gap: 36 },
+  release: { big: { x: 600, y: 330, w: 560, h: 132 }, bar: { x: 600, y: 32, w: 1200, h: 64 } },
+  numeralSize: 300,
+});
+
+/* ---------- phones and upright tablets: panel above the cards, the column swapping sides each phase ---------- */
+export const MOBILE = build({
+  key: "mobile",
+  W: 380,
+  H: 700,
+  barH: 76,
+  card: { w: 332, h: 128, gap: 8 },
+  cardX: { right: 8, left: 40 },
+  laneX: { right: 362, left: 18 },
+  panel: { right: { x: 8, w: 332 }, left: { x: 40, w: 332 } },
+  panelH: 172,
+  stacked: true,
+  phaseGap: 100,
+  radius: 16,
+  drift: 0,
+  production: { w: 340, h: 110 },
+  approvals: { w: 364, h: 248, gap: 24 },
+  release: { big: { x: 190, y: 330, w: 350, h: 132 }, bar: { x: 190, y: 38, w: 380, h: 76 } },
+  numeralSize: 220,
+});
