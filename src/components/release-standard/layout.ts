@@ -232,15 +232,24 @@ function build(s: Spec): StoryLayout {
   };
 }
 
-/* ---------- desktop: illustration panel and gate cards side by side, swapping sides each phase ---------- */
-export const DESKTOP = build({
+/*
+ * ---------- desktop: illustration panel and gate cards side by side, swapping sides each phase ----------
+ * The canvas is 1200 wide; its height follows the space on screen (540 to 860), so a screen that is
+ * narrow for its height (a tablet held sideways) fills with canvas instead of blank bands. The extra
+ * height goes to the camera's drift: each phase travels further up the screen as its gates pass.
+ */
+export const DESKTOP_H = { min: 540, max: 860, step: 40 };
+
+export function desktopLayout(H = DESKTOP_H.min): StoryLayout {
+  const extra = H - DESKTOP_H.min;
+  return build({
   key: "desktop",
   compact: false,
   panelStyle: "rows",
   follow: false,
   finish: "stacked",
   W: 1200,
-  H: 540,
+  H,
   barH: 64,
   card: { w: 440, h: 136, gap: 12 },
   cardX: { right: 660, left: 100 },
@@ -250,12 +259,15 @@ export const DESKTOP = build({
   stacked: false,
   phaseGap: 170,
   radius: 40,
-  drift: 20,
+  drift: 20 + Math.min(100, extra / 3),
   production: { w: 300, h: 170 },
   approvals: { w: 640, h: 232, gap: 28 },
-  release: { big: { x: 600, y: 300, w: 560, h: 132 }, bar: { x: 600, y: 32, w: 1200, h: 64 } },
-  numeralSize: 300,
-});
+  release: { big: { x: 600, y: H / 2 + 30, w: 560, h: 132 }, bar: { x: 600, y: 32, w: 1200, h: 64 } },
+  numeralSize: 300 + Math.min(80, extra / 4),
+  });
+}
+
+export const DESKTOP = desktopLayout();
 
 /*
  * Phones and upright tablets: the panel sits above its cards in one column that swaps sides each
